@@ -3,7 +3,7 @@
 > **For:** the planning project where topics, aesthetics and scripts are developed.
 > **Pair it with:** `brand.md` (the visual and sound style contract — read it for colors, type,
 > captions, annotations, motion, safe zones and sound taste; this file never repeats it).
-> **Version:** v0.9.3 · 2026-11-15 · phase: *base components and formats done → first short next*
+> **Version:** v0.9.4 · 2026-11-15 · phase: *base components and formats done → first short next*
 >
 > This file describes **what can be asked for**, not how it is built. If a script asks for
 > something listed here, it can be made. If it asks for something not listed, flag it as a
@@ -62,8 +62,10 @@ idea  →  script  →  animation  →  check  →  voice  →  sound  →  fina
    needs something that doesn't exist yet, a new component is built first.
 4. **Visual check.** Still frames are rendered at phone size and inspected: is the text
    readable, is anything cut off, does the first frame work as a thumbnail?
-5. **Voice.** ElevenLabs reads each line. The real timing of every spoken word is captured, so
-   captions and on-screen moments land exactly on the word.
+5. **Voice.** ElevenLabs reads each line (the channel voice on Eleven v4 Turbo). Each line gets
+   one light delivery direction (intrigued, awed, emphatic…) added at this step, matched to the
+   beat; it shapes the reading and never appears on screen. The real timing of every spoken word
+   is captured, so captions and on-screen moments land exactly on the word.
 6. **Sound.** Subtle sound effects are placed on key moments (a soft whoosh on a transition, a
    gentle impact on the reveal), plus an optional quiet music bed.
 7. **Final video.** Rendered at 1080×1920, 30 frames per second.
@@ -475,9 +477,11 @@ What worked and what didn't. Newest first.
   the drop matched the curve of the *orbit*, not of the ground.)
 - **Scripts break on wrong facts, so fact-check before animating.** A planned phishing example
   turned out to be impossible in real browsers; the script changed, and the video improved.
-- **Write for ~2.4 words per second.** Measured with the channel voice: it speaks at ~2.45 words/s
-  on its own (slower on lines with commas or long words). Budgeted at 2.7, the last lines had to be
-  sped up by up to 26%, which sounds rushed. Short, plain sentences keep it natural.
+- **Write for ~2.4 words per second.** Measured with the channel voice: it averages ~2.5 words/s,
+  but lines with commas or an emphatic ending drop to ~2.05. Budgeted at 2.7, those lines had to be
+  sped up by ~30%, which sounds rushed. Short, plain sentences keep it natural.
+- **Eleven v4 sounds much better than v2.** Chosen by ear, with one delivery direction per line;
+  v4 Turbo costs half and sounds the same to us, so it's the default.
 - **Comment-bait endings feel dated.** End on the payoff and loop.
 - **Sound stays under the voice.** Calm, sparse effects on the 2–3 key moments; never noise
   textures under narration.

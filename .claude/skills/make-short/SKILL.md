@@ -71,8 +71,9 @@ tail: trim the composition so it ends shortly after the payoff, not seconds of d
 
 VO rules: total words ≈ length × 2.4 (e.g. 45 s ≈ 110 words); estimate line windows at **~2.4 words/sec with slack to the next
 line's start** (tighter forces audible atempo squeeze). Measured 2026-11-15 with the channel voice
-(`shorts/_calibration/`): natural pace 2.45 w/s overall, 2.1–2.8 per line (lines with commas or
-long words are slowest); windows at 2.7 w/s needed up to 1.26× squeeze. Give comma-heavy lines extra room. Facts must be verified before animating. From `guion.md`, write `script.md` + `beats.json`
+(`shorts/_calibration/`): v4 Turbo with delivery tags 2.55 w/s overall, 2.05–2.8 per line (v2 was
+2.45); lines with commas or an emphatic ending are slowest and needed 1.32× squeeze at 2.7 w/s
+windows (over the 1.3 cap). Give comma-heavy lines extra room. Facts must be verified before animating. From `guion.md`, write `script.md` + `beats.json`
 (vo lines with estimated start/end; timeline in global SECONDS) — HERO NUMBER / KEYWORD /
 ANNOTATIONS per beat carry straight over.
 
@@ -128,8 +129,15 @@ python tools/gen_voice.py --beats shorts/<slug>/beats.json \
   into beats.json AND `vo.gen.ts`. The shot imports `{ VO } from './vo.gen'` — captions then
   highlight on the exact spoken word. Never estimate when a voice track exists.
 - Clips are cached by text-hash: rewriting one line only re-bills that line.
-- Voice: the channel voice `JYUzXNeyCPmymMkfcicu` is gen_voice.py's default (no `--voice`
-  needed; pass `--voice` only to audition another voice).
+- Voice: the channel voice `JYUzXNeyCPmymMkfcicu` on **Eleven v4 Turbo** (`eleven_v4_turbo`,
+  ×0.5 credits) are gen_voice.py's defaults (no `--voice`/`--model` needed; pass them only to
+  audition). v4 takes only Stability + Similarity; no Style/Speed, no SSML `<break>`.
+- **Delivery tags (we write them; the API has no "auto tags").** The app's "Enhance" button is an
+  LLM writing tags into the text; by API we do that job: put ONE light, narration-fit tag at the
+  start of each line's `tts` (`"tts": "[awed] That light has crossed…"`; tags used in the
+  calibration: `[intrigued]`, `[building excitement]`, `[awed]`, `[emphatic]`). Match the beat's
+  intent (hook = intrigue, payoff = awe/emphasis); never comedic or theatrical tags. Tags are
+  filtered out of the word map and never captioned. They count as billed characters.
 - ElevenLabs is paid: state roughly what will be generated before calling it.
 - **Pronunciation (guion.md `PRONUNCIATION:`):** for a name the voice may misread, add a per-line
   `tts` field in beats.json next to `text` (e.g. `"text": "Quasars outshine galaxies."`,

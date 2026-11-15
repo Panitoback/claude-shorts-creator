@@ -30,7 +30,7 @@ import urllib.request
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DEFAULT_VOICE = "JYUzXNeyCPmymMkfcicu"  # the channel voice (CLAUDE.md)
-DEFAULT_MODEL = "eleven_multilingual_v2"
+DEFAULT_MODEL = "eleven_v4_turbo"  # chosen 2026-11-15 by ear (v4 family >> v2); x0.5 credits
 MAX_ATEMPO = 1.3  # never speed a line up more than 30%
 
 
@@ -64,11 +64,19 @@ def tts_line(key, voice, model, text, prev_text, next_text, out_path):
     """TTS with character-level timestamps -> writes the mp3 AND <out_path>.words.json
     (per-word start/end seconds in the RAW clip) so captions can sync exactly.
 
-    `text` may contain eleven_v3 audio tags like [excited] — they steer delivery and are
+    `text` may contain v3/v4 audio tags like [awed] — they steer delivery and are
     FILTERED out of the word map (never captioned). If the model rejects /with-timestamps,
     falls back to plain TTS with an empty word map (captions then use estimated timing)."""
     body = {"text": text, "model_id": model}
-    if not model.startswith("eleven_v3"):
+    if model.startswith("eleven_v4"):
+        # v4 / v4 Turbo use only Stability and Similarity (no Style/Speed, no SSML). Context
+        # stitching was accepted in the 2026-11-15 calibration, so it stays.
+        body["voice_settings"] = {"stability": 0.5, "similarity_boost": 0.75}
+        if prev_text:
+            body["previous_text"] = prev_text
+        if next_text:
+            body["next_text"] = next_text
+    elif not model.startswith("eleven_v3"):
         # v3 rejects the classic settings block AND previous/next context stitching;
         # server defaults are right for it
         body["voice_settings"] = {"stability": 0.5, "similarity_boost": 0.75, "style": 0.3,

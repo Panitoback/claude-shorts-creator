@@ -31,8 +31,10 @@ vertical shorts where every pixel is Remotion TSX.
   4. ▶ first short: "What is a quasar?"
   5. custom skills `script-to-short` and `new-component` (then §6 of PROJECT_CONTEXT becomes final)
   6. Manim — only for physics/equation scenes, rendered as clips inside Remotion
-- **Channel voice:** ElevenLabs `JYUzXNeyCPmymMkfcicu` ("Jon"), gen_voice.py's default. Narration
-  pace ~2.4 words/s (measured with it; re-measure with `shorts/_calibration/` if the voice changes).
+- **Channel voice:** ElevenLabs `JYUzXNeyCPmymMkfcicu` ("Jon") on **Eleven v4 Turbo**, both
+  gen_voice.py defaults. We write one delivery tag per line in `tts` (the API has no "auto tags";
+  see make-short Stage 4). Narration pace ~2.4 words/s (measured with it; re-measure with
+  `shorts/_calibration/` if the voice or model changes).
 - **Still open:** channel name.
 - **SFX library:** off-brand clips live in `media/library/sfx/legacy/` (`"legacy": true` in the
   catalog): never used or regenerated. **Every inherited clip, including the 14 kept in `clips/`,

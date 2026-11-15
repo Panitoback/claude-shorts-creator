@@ -7,275 +7,279 @@
     {
       "text": "A quasar is a black hole that refuses to stay quiet.",
       "start": 0.3,
-      "end": 4.24,
+      "end": 4.21,
       "words": [
         {
           "w": "A",
-          "start": 0.3,
-          "end": 0.404
+          "start": 0.44,
+          "end": 0.46
         },
         {
           "w": "quasar",
-          "start": 0.486,
-          "end": 0.95
+          "start": 0.54,
+          "end": 1.18
         },
         {
           "w": "is",
-          "start": 1.008,
-          "end": 1.089
+          "start": 1.26,
+          "end": 1.34
         },
         {
           "w": "a",
-          "start": 1.148,
-          "end": 1.182
+          "start": 1.42,
+          "end": 1.5
         },
         {
           "w": "black",
-          "start": 1.264,
-          "end": 1.554
+          "start": 1.58,
+          "end": 1.9
         },
         {
           "w": "hole",
-          "start": 1.612,
-          "end": 1.879
+          "start": 1.98,
+          "end": 2.22
         },
         {
           "w": "that",
-          "start": 1.914,
-          "end": 2.03
+          "start": 2.3,
+          "end": 2.38
         },
         {
           "w": "refuses",
-          "start": 2.088,
-          "end": 2.61
+          "start": 2.46,
+          "end": 3.26
         },
         {
           "w": "to",
-          "start": 2.68,
-          "end": 2.75
+          "start": 3.34,
+          "end": 3.42
         },
         {
           "w": "stay",
-          "start": 2.808,
-          "end": 3.028
+          "start": 3.54,
+          "end": 3.66
         },
         {
           "w": "quiet.",
-          "start": 3.098,
-          "end": 4.247
+          "start": 3.74,
+          "end": 4.3
         }
-      ]
+      ],
+      "tts": "[intrigued] A quasar is a black hole that refuses to stay quiet."
     },
     {
       "text": "Gas spirals in so fast that it heats up and glows brighter than a trillion suns.",
       "start": 4.42,
-      "end": 10.35,
+      "end": 10.34,
       "words": [
         {
           "w": "Gas",
-          "start": 4.42,
-          "end": 4.741
+          "start": 4.576,
+          "end": 4.81
         },
         {
           "w": "spirals",
-          "start": 4.785,
-          "end": 5.25
+          "start": 4.888,
+          "end": 5.356
         },
         {
           "w": "in",
-          "start": 5.316,
-          "end": 5.404
+          "start": 5.473,
+          "end": 5.59
         },
         {
           "w": "so",
-          "start": 5.515,
-          "end": 5.726
+          "start": 5.668,
+          "end": 5.902
         },
         {
           "w": "fast",
-          "start": 5.836,
-          "end": 6.301
+          "start": 6.059,
+          "end": 6.527
         },
         {
           "w": "that",
-          "start": 6.534,
-          "end": 6.699
+          "start": 6.605,
+          "end": 6.683
         },
         {
           "w": "it",
-          "start": 6.743,
-          "end": 6.82
+          "start": 6.761,
+          "end": 6.839
         },
         {
           "w": "heats",
-          "start": 6.887,
-          "end": 7.163
+          "start": 6.917,
+          "end": 7.151
         },
         {
           "w": "up",
-          "start": 7.242,
-          "end": 7.363
+          "start": 7.229,
+          "end": 7.385
         },
         {
           "w": "and",
-          "start": 7.418,
-          "end": 7.496
+          "start": 7.463,
+          "end": 7.619
         },
         {
           "w": "glows",
-          "start": 7.562,
-          "end": 7.861
+          "start": 7.658,
+          "end": 8.009
         },
         {
           "w": "brighter",
-          "start": 7.95,
-          "end": 8.303
+          "start": 8.126,
+          "end": 8.399
         },
         {
           "w": "than",
-          "start": 8.348,
-          "end": 8.469
+          "start": 8.477,
+          "end": 8.555
         },
         {
           "w": "a",
-          "start": 8.502,
-          "end": 8.524
+          "start": 8.789,
+          "end": 8.828
         },
         {
           "w": "trillion",
-          "start": 8.58,
-          "end": 9.011
+          "start": 8.867,
+          "end": 9.414
         },
         {
           "w": "suns.",
-          "start": 9.122,
-          "end": 10.35
+          "start": 9.492,
+          "end": 10.428
         }
-      ]
+      ],
+      "tts": "[building excitement] Gas spirals in so fast that it heats up and glows brighter than a trillion suns."
     },
     {
       "text": "That light has crossed billions of light-years just to reach us tonight.",
       "start": 10.4,
-      "end": 14.84,
+      "end": 14.72,
       "words": [
         {
           "w": "That",
-          "start": 10.4,
-          "end": 10.632
+          "start": 10.48,
+          "end": 10.72
         },
         {
           "w": "light",
-          "start": 10.693,
-          "end": 10.904
+          "start": 10.8,
+          "end": 11.04
         },
         {
           "w": "has",
-          "start": 10.935,
-          "end": 11.015
+          "start": 11.12,
+          "end": 11.2
         },
         {
           "w": "crossed",
-          "start": 11.076,
-          "end": 11.389
+          "start": 11.28,
+          "end": 11.76
         },
         {
           "w": "billions",
-          "start": 11.499,
-          "end": 11.944
+          "start": 11.84,
+          "end": 12.32
         },
         {
           "w": "of",
-          "start": 11.984,
-          "end": 12.035
+          "start": 12.4,
+          "end": 12.48
         },
         {
           "w": "light-years",
-          "start": 12.116,
-          "end": 12.62
+          "start": 12.56,
+          "end": 13.2
         },
         {
           "w": "just",
-          "start": 12.862,
-          "end": 13.125
+          "start": 13.28,
+          "end": 13.44
         },
         {
           "w": "to",
-          "start": 13.155,
-          "end": 13.215
+          "start": 13.56,
+          "end": 13.68
         },
         {
           "w": "reach",
-          "start": 13.316,
-          "end": 13.508
+          "start": 13.8,
+          "end": 13.92
         },
         {
           "w": "us",
-          "start": 13.548,
-          "end": 13.629
+          "start": 14.0,
+          "end": 14.16
         },
         {
           "w": "tonight.",
-          "start": 13.679,
-          "end": 14.84
+          "start": 14.28,
+          "end": 14.72
         }
-      ]
+      ],
+      "tts": "[awed] That light has crossed billions of light-years just to reach us tonight."
     },
     {
       "text": "One quasar can outshine every star in its galaxy, combined.",
       "start": 14.89,
-      "end": 18.6,
+      "end": 18.64,
       "words": [
         {
           "w": "One",
-          "start": 14.89,
-          "end": 15.129
+          "start": 15.013,
+          "end": 15.198
         },
         {
           "w": "quasar",
-          "start": 15.175,
-          "end": 15.569
+          "start": 15.259,
+          "end": 15.69
         },
         {
           "w": "can",
-          "start": 15.615,
-          "end": 15.717
+          "start": 15.752,
+          "end": 15.875
         },
         {
           "w": "outshine",
-          "start": 15.753,
-          "end": 16.175
+          "start": 15.936,
+          "end": 16.428
         },
         {
           "w": "every",
-          "start": 16.249,
-          "end": 16.534
+          "start": 16.49,
+          "end": 16.736
         },
         {
           "w": "star",
-          "start": 16.598,
-          "end": 16.856
+          "start": 16.798,
+          "end": 16.982
         },
         {
           "w": "in",
-          "start": 16.892,
-          "end": 16.938
+          "start": 17.044,
+          "end": 17.105
         },
         {
           "w": "its",
-          "start": 16.984,
-          "end": 17.085
+          "start": 17.198,
+          "end": 17.29
         },
         {
           "w": "galaxy,",
-          "start": 17.121,
-          "end": 17.663
+          "start": 17.382,
+          "end": 18.111
         },
         {
           "w": "combined.",
-          "start": 17.828,
-          "end": 18.6
+          "start": 18.315,
+          "end": 18.705
         }
-      ]
+      ],
+      "tts": "[emphatic] One quasar can outshine every star in its galaxy, combined."
     }
   ],
   "voiceStatus": "elevenlabs:JYUzXNeyCPmymMkfcicu"
