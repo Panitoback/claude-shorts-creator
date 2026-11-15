@@ -201,7 +201,7 @@ export const ComponentGallery: React.FC = () => (
       <BlackHole x={480} y={1110} r={40} ring={0.5} />
       <AccretionDisk x={480} y={1110} shadowR={40} luminosity={0.15} tilt={0.32} angle={6} layer="front" />
       <Small x={480} y={1200}>{'luminosity 0.15 (dormant) · tilt 0.32'}</Small>
-      <Header n={12} title="Accretion disk" note="hot near-white inside → gold → orange · approaching side brighter · far side bent over and under the shadow" />
+      <Header n={12} title="Accretion disk" note="one smooth gradient: near-white inside → gold → orange · approaching side brighter · far side bent over and under the shadow" />
     </Sequence>
 
     {/* 13 JETS */}
@@ -212,7 +212,7 @@ export const ComponentGallery: React.FC = () => (
       <BlackHole x={480} y={800} r={34} />
       <AccretionDisk x={480} y={800} shadowR={34} layer="front" />
       <Small x={640} y={1180}>{'knots travel outward'}</Small>
-      <Header n={13} title="Jets" note="narrow tapered beams along the spin axis · cool blue-white · traveling knots · switch on with luminosity" />
+      <Header n={13} title="Jets" note="narrow cones along the spin axis, widening and fading · cool blue-white · traveling knots · switch on with luminosity" />
     </Sequence>
 
     {/* 14 HOST GALAXY */}
@@ -226,7 +226,7 @@ export const ComponentGallery: React.FC = () => (
     {/* 15 QUASAR — luminosity drives everything */}
     <Sequence from={PAGE * 14} durationInFrames={PAGE}>
       <QuasarSweep />
-      <Header n={15} title="Quasar · luminosity 0 → 1" note="disk clips to near-white · corona up to 2.5× the disk · jets switch on · galaxy and stars dim" />
+      <Header n={15} title="Quasar · luminosity 0 → 1" note="disk clips to near-white · corona up to 3× the disk · jets switch on · galaxy and stars nearly vanish" />
     </Sequence>
   </AbsoluteFill>
   </Grain>

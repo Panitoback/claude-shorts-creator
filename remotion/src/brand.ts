@@ -64,7 +64,7 @@ export const QUASAR = {
   disk: ['#fffaf0', '#ffe9b8', '#ffd58a', '#ff9a3d', '#d9561a', '#7a2a10'], // inner (hottest) → outer
   photonRing: '#fff1d6',
   corona: ['#fffaf0', '#ffd58a'], // core → falloff
-  coronaMax: 2.5, // corona radius at full luminosity, × the disk's outer radius (a star's is 1.5)
+  coronaMax: 3, // corona radius at full luminosity, × the disk's outer radius (a star's is 1.5)
   jet: '#e6eeff', // cool blue-white, never neon
   galaxy: '#f1e6d2', // warm ivory haze
 } as const;

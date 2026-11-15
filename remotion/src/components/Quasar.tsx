@@ -20,7 +20,7 @@ export type QuasarProps = {
   shadowR: number; // black-hole shadow radius, px — everything scales from it
   luminosity?: number; // 0 dormant … 1 full quasar (default 1)
   angle?: number; // disk in-plane rotation, degrees (default -8); jets are perpendicular
-  tilt?: number; // disk tilt (default 0.2)
+  tilt?: number; // disk tilt (default 0.15: the near side crosses the shadow as a band, black above and below)
   diskOuter?: number; // × shadowR (default 4.6)
   jets?: boolean; // default true
   jetLength?: number; // px (default shadowR × 14)
@@ -32,13 +32,14 @@ export type QuasarProps = {
 export const quasarExposure = (l: number) => {
   const L = clamp01(l);
   const seg = (a: number, b: number, c: number) => (L <= 0.5 ? a + (b - a) * (L / 0.5) : b + (c - b) * ((L - 0.5) / 0.5));
-  return { galaxy: seg(1, 0.6, 0.15), stars: seg(1, 0.6, 0.25) };
+  // at full power the camera exposes for the quasar: galaxy and sky nearly gone (it outshines them)
+  return { galaxy: seg(1, 0.6, 0.05), stars: seg(1, 0.55, 0.08) };
 };
 
 let uid = 0;
 
 export const Quasar: React.FC<QuasarProps> = ({
-  x, y, shadowR, luminosity = 1, angle = -8, tilt = 0.2, diskOuter = 4.6, jets = true, jetLength, at = 0, warm = false,
+  x, y, shadowR, luminosity = 1, angle = -8, tilt = 0.15, diskOuter = 4.6, jets = true, jetLength, at = 0, warm = false,
 }) => {
   const f = useCurrentFrame();
   const id = React.useMemo(() => `qs${uid++}`, []);
@@ -46,7 +47,7 @@ export const Quasar: React.FC<QuasarProps> = ({
   const L = clamp01(luminosity);
   const glow = ramp(f, s + 4, MOTION.glowIn);
   const rOut = shadowR * diskOuter;
-  const coronaR = rOut * (1 + (QUASAR.coronaMax - 1) * L); // 1× dormant → 2.5× at full
+  const coronaR = rOut * (1 + (QUASAR.coronaMax - 1) * L); // 1× dormant → coronaMax (3×) at full
   const c = L * glow;
   const common = { x, y, shadowR, luminosity: L, angle, tilt, outer: diskOuter, at, warm };
 
@@ -61,17 +62,17 @@ export const Quasar: React.FC<QuasarProps> = ({
           <radialGradient id={`${id}c`} cx="50%" cy="50%" r="50%">
             {/* center: gold and translucent (disk + arcs stay readable); the MID falloff is
                 where the power is: bright and wide, so the glow fills the frame around it */}
-            <stop offset="0%" stopColor={QUASAR.corona[1]} stopOpacity={0.55 * c} />
-            <stop offset="18%" stopColor={QUASAR.corona[1]} stopOpacity={0.52 * c} />
-            <stop offset="38%" stopColor={QUASAR.corona[1]} stopOpacity={0.36 * c} />
-            <stop offset="62%" stopColor={QUASAR.corona[1]} stopOpacity={0.15 * c} />
-            <stop offset="82%" stopColor={QUASAR.corona[1]} stopOpacity={0.04 * c} />
+            <stop offset="0%" stopColor={QUASAR.corona[1]} stopOpacity={0.62 * c} />
+            <stop offset="20%" stopColor={QUASAR.corona[1]} stopOpacity={0.58 * c} />
+            <stop offset="42%" stopColor={QUASAR.corona[1]} stopOpacity={0.42 * c} />
+            <stop offset="66%" stopColor={QUASAR.corona[1]} stopOpacity={0.2 * c} />
+            <stop offset="86%" stopColor={QUASAR.corona[1]} stopOpacity={0.06 * c} />
             <stop offset="100%" stopColor={QUASAR.corona[1]} stopOpacity={0} />
           </radialGradient>
         </defs>
         {c > 0 && <circle cx={x} cy={y} r={coronaR} fill={`url(#${id}c)`} />}
       </svg>
-      {jets && <Jets x={x} y={y} length={jetLength ?? shadowR * 14} width={shadowR * 0.22} angle={angle} luminosity={L} at={at} warm={warm} />}
+      {jets && <Jets x={x} y={y} length={jetLength ?? shadowR * 14} width={shadowR * 0.42} angle={angle} luminosity={L} at={at} warm={warm} />}
       <AccretionDisk {...common} layer="back" />
       <BlackHole x={x} y={y} r={shadowR} ring={0.45 + 0.55 * L} at={at} warm={warm} />
       <AccretionDisk {...common} layer="front" />

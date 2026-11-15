@@ -32,7 +32,7 @@ effects.** Concretely:
 
 - **Inner disk clips to near-white** (`#fffaf0` and up) and grades outward through gold
   (`PALETTE.gold`, `BODY.sun` tones) to deep orange at the outer edge.
-- **Its corona is stronger than any GlowingBody:** wider (about 2.5× the disk's radius, against
+- **Its corona is stronger than any GlowingBody:** wider (about 3× the disk's radius, against
   1.5× for a star) and brighter at the core. Still a radial gradient, never a blur.
 - **True `#000` shadow at the center**: the deepest black in the channel, right next to the
   brightest white, for maximum contrast. (This settles open question 2 below: yes.)
@@ -48,7 +48,7 @@ effects.** Concretely:
 |---|---|---|---|---|---|
 | 0 (dormant) | dim orange, no white | none | off | full brightness | full (opacity 1) |
 | 0.5 | gold, core starting to clip | 1.5× disk radius, medium | faint | ~60% | ~0.6 |
-| 1 (quasar) | clipped near-white core → gold → orange | 2.5× disk radius, strongest on the channel | full | ~15% (a ghost) | ~0.25 |
+| 1 (quasar) | wide near-white inner band (white-hot edge) → gold → orange | 3× disk radius, strongest on the channel | full | ~5% (nearly gone) | ~0.08 |
 
 Animating `luminosity` from 0 to 1 is the "switch-on" moment of the short, and it costs nothing
 extra: it only changes gradient stops and opacities. The Starfield already has an `opacity` prop,
@@ -105,8 +105,10 @@ brand's editorial style rather than the movie render.
 
 ## 3. Jets
 
-### 3A. Tapered beams with traveling knots — *recommended*
-Two very narrow tapered wedges along the spin axis (opposite directions), cool blue-white,
+### 3A. Narrow cones with traveling knots — *built*
+Two narrow cones along the spin axis (opposite directions): very thin at the core and slowly
+widening with distance, like real jets (built as such after review; an earlier version tapered
+to a point, which is wrong). Cool blue-white,
 opacity fading to zero with distance. A few brighter "knots" (small soft ellipses) travel outward
 along each beam and fade, which shows flow without particles. The jets come in *after* the disk
 is established (light follows the object).

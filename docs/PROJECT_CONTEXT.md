@@ -3,7 +3,7 @@
 > **For:** the planning project where topics, aesthetics and scripts are developed.
 > **Pair it with:** `brand.md` (the visual and sound style contract — read it for colors, type,
 > captions, annotations, motion, safe zones and sound taste; this file never repeats it).
-> **Version:** v0.9.1 · 2026-11-15 · phase: *base components and formats done → first short next*
+> **Version:** v0.9.2 · 2026-11-15 · phase: *base components and formats done → first short next*
 >
 > This file describes **what can be asked for**, not how it is built. If a script asks for
 > something listed here, it can be made. If it asks for something not listed, flag it as a
@@ -148,10 +148,10 @@ shadow beside a near-white disk), never by flares, rays or haze.
 | Component | What it shows | Options you can ask for |
 |---|---|---|
 | **Black hole** | A perfectly black shadow (the channel's only pure black) hugged by a thin warm photon ring | size, position, ring strength, which side of the ring is brighter |
-| **Accretion disk** | A tilted glowing disk around the shadow: hottest and near-white inside, grading to gold and deep orange; the side coming toward us brighter; the far side seen bent over and under the shadow | size, tilt (how edge-on), angle, brightness (dormant orange → blazing), slow drift on/off |
-| **Jets** | Two thin beams of plasma along the spin axis, cool blue-white, tapering and fading with distance, with bright knots traveling outward | length, angle, brightness (they switch on as the quasar brightens) |
+| **Accretion disk** | A tilted glowing disk around the shadow, one smooth gradient (holds up in a zoom): hottest and near-white inside, grading to gold and deep orange; the side coming toward us brighter; its near side crossing in front of the shadow as a band; the far side seen as bright bands bent over the top and under the bottom of the shadow | size, tilt (how edge-on), angle, brightness (dormant orange → blazing), slow drift on/off |
+| **Jets** | Two thin beams of plasma along the spin axis, cool blue-white, like real jets: very narrow at the core and slowly widening (a narrow cone), fading toward the ends, with bright knots traveling outward | length, angle, brightness (they switch on as the quasar brightens) |
 | **Host galaxy** | A calm, distant elliptical galaxy: soft warm haze and a few hundred stars | size, shape, angle, brightness |
-| **Quasar** | All of the above together, driven by one **luminosity** dial: as it rises, the disk turns white-hot, the glow grows up to 2.5× the disk, the jets switch on, and the host galaxy and background stars dim (as if the camera were exposing for the quasar) | size, position, luminosity (or a "switch-on" from dormant to full), angle and tilt, jets on/off |
+| **Quasar** | All of the above together, driven by one **luminosity** dial: as it rises, the disk turns white-hot, the glow grows up to 3× the disk, the jets switch on, and the host galaxy and background stars all but vanish (as if the camera were exposing for the quasar) | size, position, luminosity (or a "switch-on" from dormant to full), angle and tilt, jets on/off |
 
 ### 3.5 Planned (not built yet)
 
@@ -427,6 +427,13 @@ BEATS:
 ## 7. Learnings
 
 What worked and what didn't. Newest first.
+
+- **Anything the camera will zoom into has to be smooth.** Stepped color rings in the disk read
+  as vinyl or Saturn's rings up close; the disk is now one continuous gradient.
+- **The near side of the disk must be solid.** A see-through disk crossing the shadow looked
+  like a half-lit moon. Opaque, it reads as a band passing in front of the black hole.
+- **Real jets widen, they don't taper.** They start very narrow at the core and open slowly
+  into a narrow cone, fading toward their ends.
 
 - **A glow brighter than the object hides the object.** A near-white halo around the quasar
   swallowed the disk: it shrank to an orange line and the shadow read like an eye. The white

@@ -6,7 +6,7 @@
 > **Reference scene:** the `BrandReference` composition is this document rendered on screen. If
 > it looks right, the brand is right.
 >
-> v1.3 · 2026-11-15 · direction: *Deep Field hybrid* (cinematic and editorial, with a few
+> v1.4 · 2026-11-15 · direction: *Deep Field hybrid* (cinematic and editorial, with a few
 > scientific annotations)
 
 ---
@@ -108,8 +108,12 @@ sans. Both are free Google fonts, so nothing has to be installed.
 - **Quasars are the brightest thing on the channel, by contrast alone:** a pure-black shadow
   (§2's single exception) beside an inner disk that clips to near-white and grades to gold, with
   a corona stronger than any star's. The near-white stays on the disk's inner edge and its
-  lensed far side; the corona around them is gold, so the disk keeps its shape. Jets are thin,
-  soft-edged and taper and fade with distance, never solid bars. As a quasar brightens, its galaxy and the background stars
+  lensed far side; the corona around them is gold, so the disk keeps its shape. The disk is one smooth
+  gradient, never stepped rings; its near side crosses in front of the shadow as one opaque
+  band, and its far side shows as bright bands bent over the top and under the bottom. Jets are
+  narrow cones like real ones: very thin at the core, slowly widening, soft-edged and fading
+  toward their ends, never solid bars. At full power the corona reaches 3× the disk, and the host
+  galaxy and stars all but vanish (the camera exposes for the quasar). As a quasar brightens, its galaxy and the background stars
   dim. Still no flares, rays or frame-wide haze.
 - **Honest scale.** **When a scene is about size or distance, the sizes are true to scale.** If a
   true-scale object would be invisible, draw it at the smallest visible size (about 4 px), mark

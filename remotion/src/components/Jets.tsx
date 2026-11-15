@@ -4,17 +4,17 @@ import { CANVAS, MOTION, QUASAR } from '../brand';
 import { ramp, startOf } from './anim';
 import { clamp01 } from './color';
 
-// JETS (design note 3A) — two very narrow beams along the spin axis, cool blue-white (a true-color
-// depiction, brand §2), widest at the core and TAPERING to nothing at the tip, fading with
-// distance, with soft edges and a few brighter "knots" traveling outward to show flow. No flare,
-// no rays, never a solid bar: thin and calm. Soft edges come from three nested tapered layers
-// (wide faint halo → bright thin core), not a blur. They switch on with `luminosity` (off below
-// ~0.25, full by ~0.8), and arrive after the disk (light follows the object).
+// JETS (design note 3A) — two narrow CONES along the spin axis, cool blue-white (a true-color
+// depiction, brand §2), like real jets: very narrow at the core and slowly WIDENING with
+// distance, fading out toward the far ends, with soft edges and a few brighter "knots" traveling
+// outward to show flow. No flare, no rays, never a solid bar: thin and calm. Soft edges come from
+// three nested layers (wide faint halo → bright thin core), not a blur. They switch on with
+// `luminosity` (off below ~0.25, full by ~0.8), and arrive after the disk (light follows the object).
 export type JetsProps = {
   x: number;
   y: number;
   length: number; // px from the center to each tip
-  width?: number; // half-width at the base (widest point, soft halo included), px (default length × 0.016)
+  width?: number; // half-width at the far end (widest point, soft halo included), px (default length × 0.03)
   angle?: number; // axis direction, degrees from vertical (default 0 = straight up/down)
   luminosity?: number; // 0..1 (default 1)
   knots?: number; // traveling knots per jet (default 3)
@@ -35,10 +35,10 @@ export const Jets: React.FC<JetsProps> = ({
   const inP = ramp(f, s + MOTION.overlap, MOTION.glowIn);
   const on = clamp01((luminosity - 0.25) / 0.55) * inP;
   if (on <= 0) return null;
-  const wB = width ?? length * 0.016;
-  // half-width along the jet, t = 0 (base) … 1 (tip): a slow taper that closes to a point
-  const wAt = (t: number) => wB * Math.pow(1 - t, 0.8);
-  // a tapered spindle of relative width `k`, as a smooth outline (left side up, right side down)
+  const wT = width ?? length * 0.03;
+  // half-width along the jet, t = 0 (base) … 1 (far end): a narrow cone, ~1/10 as wide at the core
+  const wAt = (t: number) => wT * (0.1 + 0.9 * t);
+  // a cone of relative width `k`, as a smooth outline (left side up, right side down)
   const spindle = (k: number) => {
     const n = 16;
     const left: string[] = [];
