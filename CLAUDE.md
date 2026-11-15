@@ -36,12 +36,14 @@ vertical shorts where every pixel is Remotion TSX.
   see make-short Stage 4). Narration pace ~2.4 words/s (measured with it; re-measure with
   `shorts/_calibration/` if the voice or model changes).
 - **Still open:** channel name.
-- **SFX library:** the 22 clips in `media/library/sfx/clips/` were all generated with **our**
-  ElevenLabs account (2026-11-15, `eleven_text_to_sound_v3`; recipes in `palette.json`, source/
-  model/license per clip in `catalog.json`). Anything new must be generated with ours too. The
+- **SFX library:** every clip in `media/library/sfx/clips/` is ours: 34 generated with **our**
+  ElevenLabs account (`eleven_text_to_sound_v3`, ~10 credits/s measured) and 4 physics sounds
+  synthesized in code (`tools/synth_sfx.py`: redshift glide, pulsar ticks at a real period,
+  gravitational-wave chirp; free, deterministic). Recipes in `palette.json`, source/model/license
+  per clip in `catalog.json`. Anything new must be generated with ours too. The
   original author's clips are never used: off-brand ones in `legacy/` (`"legacy": true`), the
-  replaced ones in `superseded/` (`"superseded": true`, `superseded_by`). Audition file:
-  `media/library/sfx/audition/`.
+  replaced ones in `superseded/` (`"superseded": true`, `superseded_by`). Audition files
+  (`tools/sfx_audition.py`): `media/library/sfx/audition/`.
 - `shorts/short-12-orbit` is the one **inherited example, in the old look**: a technique
   reference only (its `lib/orbit.tsx` has real orbital physics worth reusable components), not
   channel content.
@@ -60,7 +62,7 @@ skills win.
 ## Layout
 
 ```
-tools/            Python tools: gen_voice, gen_sfx, gen_music, mix_sfx, mix_music
+tools/            Python tools: gen_voice, gen_sfx, synth_sfx, sfx_audition, gen_music, mix_sfx, mix_music
 remotion/         the Remotion project — src/components/ (the channel's base kit, brand style),
                   src/lib/ (shared + inherited kits), src/shots/short-N/, src/shots/gallery/
 media/            Remotion's public root: library/ (reusable: sfx, music, logos)

@@ -44,6 +44,14 @@ Sound taste is a brand contract — read **`brand/brand.md` §7** every time. Th
   `"superseded": true` (ids ending `--inherited`) were replaced on 2026-11-15 by clips generated
   with the channel's own account; `superseded_by` names the replacement. Never proposed or mixed.
   Every clip in `clips/` is ours (source/model/license recorded per clip); new ones must be too.
+- **`"not_under_narration": true`** (e.g. `solar-flare-surge`, it has crackle): place it only in a
+  gap in the voice, never over speech; `mix_sfx.py --print` flags these for a check.
+- **Physics sounds come from code, not the API.** `redshift-slide`, `pulsar-ticks`,
+  `pulsar-ticks-fast`, `gw-chirp` are synthesized by `tools/synth_sfx.py` (free, deterministic).
+  When a short needs the REAL number (another pulsar's period, a different glide), make a variant:
+  one-off for one video → `python tools/synth_sfx.py --kind pulsar --set period=0.089 --out
+  media/projects/<proj>/vela.mp3`; reusable → add a palette entry with a `"synth"` block and run
+  `--only <id>`. `--list` shows the kinds and parameters.
 - **Library-first, always.** Reuse an existing clip before generating. Name/tag clips GENERICALLY
   (`whoosh-soft`, `pop-reveal`, `tick-soft`) so future videos reuse them — the library is the
   durable asset, each video is one draw from it. Only genuinely-missing sounds get added to

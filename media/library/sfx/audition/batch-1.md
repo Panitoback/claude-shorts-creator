@@ -1,6 +1,6 @@
-# SFX library audition
+# SFX audition: batch-1
 
-`sfx-audition.mp3`: every clip in `clips/` in palette order, 1.2 s of silence between clips, as
+`batch-1.mp3`: every clip in `clips/` in palette order, 1.2 s of silence between clips, as
 normalized in the library (~−20 LUFS, −1.5 dBFS peak). All generated 2026-11-15 with the channel's
 ElevenLabs account, model `eleven_text_to_sound_v3`. Regenerate this file after any library change.
 

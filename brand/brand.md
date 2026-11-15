@@ -6,7 +6,7 @@
 > **Reference scene:** the `BrandReference` composition is this document rendered on screen. If
 > it looks right, the brand is right.
 >
-> v1.5 · 2026-11-15 · direction: *Deep Field hybrid* (cinematic and editorial, with a few
+> v1.6 · 2026-11-15 · direction: *Deep Field hybrid* (cinematic and editorial, with a few
 > scientific annotations)
 
 ---
@@ -146,7 +146,9 @@ the edit and never become the show. Choose every cue by its FUNCTION:
 | **Emphasis** | impact / pop / swell | "this moment matters"; lands on the reveal | `impact-soft`, `impact-deep-soft`, `pop-reveal`, `impact-cosmic` (the one hero payoff), `glow-swell` (something lights up) |
 | **Snap** | click | small, satisfying, alive | `ui-click-soft`, `tick-soft` (counters, rulers), `number-settle` (a count lands) |
 | **Texture** | sparkle / chime / rumble | color under a moment | `sparkle-soft`, `warm-shimmer`, `chime-discovery`, `deep-rumble` (massive objects) |
-| **Ambient** | seamless 30 s loop | a quiet bed under the whole short | `space-drone-loop`, `space-air-loop` (well under the voice) |
+| **Ambient** | seamless 30 s loop | a quiet bed under the whole short | `space-drone-loop`, `space-air-loop`, `accretion-swirl-loop` (black holes) (well under the voice) |
+| **Cosmic events** | signature sounds | the object or event itself, named in the script | `supernova`, `stellar-collapse`, `star-ignite`, `gamma-flash`, `jet-launch`, `light-speed-pass`, `photon-travel`, `event-horizon-fade`, `spaghettify-stretch`, `radiation-hum`, `solar-flare-surge` (crackle: **pauses only**, flagged `not_under_narration`) |
+| **Physics (code)** | synthesized from the real numbers | the sound IS the data | `redshift-slide` (falling pitch), `pulsar-ticks` (a real period: 1.34 s), `pulsar-ticks-fast` (716 Hz), `gw-chirp` (black-hole merger); new variants from `tools/synth_sfx.py` |
 
 - **Always under the voice.** Quiet and tasteful, never louder than the narration. Silence is part
   of the mix; never fill wall to wall. Space is quiet, and the mix can be too.
@@ -160,9 +162,11 @@ the edit and never become the show. Choose every cue by its FUNCTION:
 - **Levels.** Library clips are normalized to about −20 LUFS with a −1.5 dBFS peak ceiling. Under
   continuous narration, start transitions and whooshes at **−3**, pops and impacts at **0 to +3**,
   snaps at **0 to +7**, and layered hero risers at **0 to +2**.
-- **No static or glitch textures under narration.** They read as noise at any gain.
-- **Source:** the ElevenLabs Sound Effects API, the channel's only outside service. Every clip's
-  `source` and `license` is recorded in the catalog.
+- **No static or glitch textures under narration.** They read as noise at any gain. Clips with any
+  crackle carry `"not_under_narration": true` and only go in a gap in the voice.
+- **Source:** the ElevenLabs Sound Effects API (the channel's only outside service, our account),
+  or synthesized in code for physics sounds (`source: "synthesized (code)"`). Every clip's
+  `source`, `model` and `license` is recorded in the catalog.
 - **The library is the durable asset:** `media/library/sfx/` (`catalog.json` + `clips/`). It grows
   with every video, so reuse before generating.
 - **Music bed (optional):** slow, ambient and warm, sitting well under the voice. Avoid epic

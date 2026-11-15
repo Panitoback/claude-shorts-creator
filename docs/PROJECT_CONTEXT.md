@@ -3,7 +3,7 @@
 > **For:** the planning project where topics, aesthetics and scripts are developed.
 > **Pair it with:** `brand.md` (the visual and sound style contract — read it for colors, type,
 > captions, annotations, motion, safe zones and sound taste; this file never repeats it).
-> **Version:** v0.9.5 · 2026-11-15 · phase: *base components and formats done → first short next*
+> **Version:** v0.9.6 · 2026-11-15 · phase: *base components and formats done → first short next*
 >
 > This file describes **what can be asked for**, not how it is built. If a script asks for
 > something listed here, it can be made. If it asks for something not listed, flag it as a
@@ -69,7 +69,11 @@ idea  →  script  →  animation  →  check  →  voice  →  sound  →  fina
 6. **Sound.** Subtle sound effects are placed on key moments (a soft whoosh on a transition, a
    gentle impact on the reveal), plus an optional quiet music bed or space ambience. The sound
    palette (whooshes, risers, soft impacts, ticks, chimes, a deep rumble for massive objects,
-   two ambient beds) is listed in `brand.md` §7; a script can name a sound moment in plain words.
+   ambient beds, signature sounds for cosmic events such as a supernova or a star igniting) is
+   listed in `brand.md` §7; a script can name a sound moment in plain words. Some sounds are made
+   from the real numbers: a pulsar ticking at its actual rotation period, light "redshifting" as a
+   falling tone, the chirp of two black holes merging. A script can ask for a specific pulsar or
+   merger and it will be built to match.
 7. **Final video.** Rendered at 1080×1920, 30 frames per second.
 
 ### What to hand off for a new short

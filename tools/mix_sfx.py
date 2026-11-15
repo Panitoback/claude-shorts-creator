@@ -127,10 +127,10 @@ def main():
         print(f"  {e['at_s']:>7.2f}  {e['sfx_id']:<14} {e.get('gain_db', 0):>4}dB  {e.get('cue', '')[:64]}{opt}")
     if missing:
         print("  MISSING from library (run tools/gen_sfx.py):", ", ".join(sorted(missing)))
-    inherited = sorted({e["sfx_id"] for e in events if e["clip"].get("regenerate_before_publish")})
-    if inherited:
-        print("  NOTE inherited clips (made with the original author's account) — regenerate with ours "
-              "before publishing (python tools/gen_sfx.py --regen-inherited):", ", ".join(inherited))
+    pause_only = sorted({e["sfx_id"] for e in events if e["clip"].get("not_under_narration")})
+    if pause_only:
+        print("  CHECK pause-only clips (crackle; never under narration, brand §7) — make sure each sits "
+              "in a gap in the voice:", ", ".join(pause_only))
     if flags["print"]:
         return
     if not events:

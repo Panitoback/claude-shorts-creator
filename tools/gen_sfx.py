@@ -118,13 +118,18 @@ def normalize_clip(path, target_lufs, ceiling_db):
         if peak + gain > ceiling_db:      # would clip -> clamp to the ceiling
             gain = ceiling_db - peak
         apply_gain(path, gain)
-    peak = measure_peak_db(path)
-    if peak is not None and peak > ceiling_db:  # mp3 re-encode overshoot: trim back under the ceiling
+    for _ in range(3):  # mp3 re-encode overshoot (sharp transients): trim back under the ceiling
+        peak = measure_peak_db(path)
+        if peak is None or peak <= ceiling_db:
+            break
         apply_gain(path, ceiling_db - peak - 0.3)
     return measure_lufs(path), measure_peak_db(path)
 
 
-CREDITS_PER_S = 40  # ElevenLabs SFX price with an explicit duration (we never use auto duration)
+# usage flags copied from a palette recipe into its catalog entry
+PASS_THROUGH = ("loop", "not_under_narration", "usage_note")
+
+CREDITS_PER_S = 10  # explicit duration, eleven_text_to_sound_v3: measured 2026-11-15 (docs list 40/s, the v2 price)
 
 
 def generate(api_key, prompt, duration_s, prompt_influence, model, loop=False):
@@ -185,7 +190,8 @@ def main():
         inherited = {i for i, c in by_id.items() if c.get("regenerate_before_publish") and i not in legacy_ids}
         only = inherited if only is None else only & inherited
         force = True
-    sounds = [s for s in palette["sounds"] if s["id"] not in legacy_ids]
+    # recipes with a "synth" block are rendered by tools/synth_sfx.py (code, no API), never here
+    sounds = [s for s in palette["sounds"] if s["id"] not in legacy_ids and "synth" not in s]
     if regen_inherited:
         missing_recipe = sorted(only - {s["id"] for s in sounds})
         if missing_recipe:
@@ -205,7 +211,7 @@ def main():
             "id": s["id"], "file": rel, "category": s.get("category", ""),
             "tags": s.get("tags", []), "duration_s": dur, "peak_dbfs": peak,
             "loudness_lufs": lufs, "source": SOURCE, "model": model, "license": LICENSE,
-            "prompt": s["prompt"], **({"loop": True} if s.get("loop") else {}), "used_in": by_id.get(s["id"], {}).get("used_in", []),
+            "prompt": s["prompt"], **{k: s[k] for k in PASS_THROUGH if k in s}, "used_in": by_id.get(s["id"], {}).get("used_in", []),
         }
 
     def write_catalog():
