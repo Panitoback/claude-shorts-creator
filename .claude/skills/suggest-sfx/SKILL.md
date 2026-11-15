@@ -40,14 +40,12 @@ Sound taste is a brand contract — read **`brand/brand.md` §7** every time. Th
   never proposed, never put in a sfx-plan, never regenerated (`mix_sfx.py` refuses them,
   `gen_sfx.py` skips them even though their recipes are still in `palette.json`). If a sound is
   only covered by a legacy clip, treat it as a miss: propose a brand-fit (brand §7) recipe.
-- **Inherited clips must be regenerated before publishing.** Every clip that came with the fork
-  carries `"regenerate_before_publish": true`: it was generated with the original author's
-  ElevenLabs account, not the channel's. Fine for auditions; before a short goes `final`/
-  `published`, regenerate the ones it uses with our key (`python tools/gen_sfx.py
-  --regen-inherited`, or `--force --only id1,id2`; paid, so say what will be generated first)
-  and re-mix. `mix_sfx.py --print` lists any inherited clip a plan uses.
+- `superseded/*.mp3` — **the original author's clips, ignore them.** Entries with
+  `"superseded": true` (ids ending `--inherited`) were replaced on 2026-11-15 by clips generated
+  with the channel's own account; `superseded_by` names the replacement. Never proposed or mixed.
+  Every clip in `clips/` is ours (source/model/license recorded per clip); new ones must be too.
 - **Library-first, always.** Reuse an existing clip before generating. Name/tag clips GENERICALLY
-  (`ui-toggle-on`, `whoosh-soft`, `pop-reveal`) so future videos reuse them — the library is the
+  (`whoosh-soft`, `pop-reveal`, `tick-soft`) so future videos reuse them — the library is the
   durable asset, each video is one draw from it. Only genuinely-missing sounds get added to
   `palette.json` and generated.
 

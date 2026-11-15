@@ -67,7 +67,9 @@ idea  →  script  →  animation  →  check  →  voice  →  sound  →  fina
    beat; it shapes the reading and never appears on screen. The real timing of every spoken word
    is captured, so captions and on-screen moments land exactly on the word.
 6. **Sound.** Subtle sound effects are placed on key moments (a soft whoosh on a transition, a
-   gentle impact on the reveal), plus an optional quiet music bed.
+   gentle impact on the reveal), plus an optional quiet music bed or space ambience. The sound
+   palette (whooshes, risers, soft impacts, ticks, chimes, a deep rumble for massive objects,
+   two ambient beds) is listed in `brand.md` §7; a script can name a sound moment in plain words.
 7. **Final video.** Rendered at 1080×1920, 30 frames per second.
 
 ### What to hand off for a new short

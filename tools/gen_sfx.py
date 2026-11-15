@@ -20,8 +20,9 @@ Usage:
                                           # regenerate every clip flagged regenerate_before_publish
                                           # (inherited from the original author's account) with OUR key
 
-LEGACY: catalog entries with "legacy": true (off-brand clips moved to media/library/sfx/legacy/)
-are never generated, regenerated or re-normalized, even if their recipe is still in palette.json.
+LEGACY / SUPERSEDED: catalog entries with "legacy": true (off-brand clips in media/library/sfx/legacy/)
+or "superseded": true (the original author's clips, replaced 2026-11-15 by our own generations, kept
+in superseded/ for reference) are never generated, regenerated, re-normalized or mixed.
 
 Needs ELEVENLABS_API_KEY in .env (see .env.example). ffmpeg/ffprobe on PATH.
 """
@@ -117,16 +118,24 @@ def normalize_clip(path, target_lufs, ceiling_db):
         if peak + gain > ceiling_db:      # would clip -> clamp to the ceiling
             gain = ceiling_db - peak
         apply_gain(path, gain)
+    peak = measure_peak_db(path)
+    if peak is not None and peak > ceiling_db:  # mp3 re-encode overshoot: trim back under the ceiling
+        apply_gain(path, ceiling_db - peak - 0.3)
     return measure_lufs(path), measure_peak_db(path)
 
 
-def generate(api_key, prompt, duration_s, prompt_influence, model):
+CREDITS_PER_S = 40  # ElevenLabs SFX price with an explicit duration (we never use auto duration)
+
+
+def generate(api_key, prompt, duration_s, prompt_influence, model, loop=False):
     body = {
         "text": prompt,
-        "duration_seconds": float(duration_s),
+        "duration_seconds": float(duration_s),  # 0.5..30 s, always explicit
         "prompt_influence": float(prompt_influence),
         "model_id": model,
     }
+    if loop:
+        body["loop"] = True  # seamless loop (ambient beds)
     req = urllib.request.Request(
         API_URL, data=json.dumps(body).encode("utf-8"),
         headers={"xi-api-key": api_key, "Content-Type": "application/json", "Accept": "audio/mpeg"},
@@ -152,7 +161,7 @@ def main():
     pinf = d.get("prompt_influence", 0.45)
     target_lufs = d.get("target_lufs", -20.0)
     ceiling_db = d.get("ceiling_dbfs", -1.5)
-    model = d.get("model", "eleven_text_to_sound_v2")
+    model = d.get("model", "eleven_text_to_sound_v3")
 
     catalog = {"note": "", "clips": []}
     if os.path.exists(CATALOG):
@@ -162,15 +171,16 @@ def main():
                        "tools/gen_sfx.py from palette.json. Clips are loudness-normalized mp3 in "
                        "media/library/sfx/clips/. Read by tools/mix_sfx.py and /suggest-sfx. "
                        "\"legacy\": true = off-brand clip moved to legacy/, never used or regenerated. "
-                       "\"regenerate_before_publish\": true = inherited from the original author's "
-                       "account; regenerate with ours (gen_sfx.py --regen-inherited) before publishing. Grows every "
+                       "\"superseded\": true = the original author's clip, replaced by our own generation "
+                       "(superseded_by), kept in superseded/ for reference, never used. Every active clip was "
+                       "generated with the channel's ElevenLabs account (source/model/license per clip). Grows every "
                        "video (library-first). Note: SFX that must live INSIDE a Remotion TSX shot "
                        "go in remotion/public/media/library/sfx/ via staticFile(); this library is for the "
                        f"post-mix (tools/mix_sfx.py). Loudness-normalized to ~{target_lufs} LUFS with a "
                        f"{ceiling_db} dBFS peak ceiling, so a plan's per-cue gain_db is perceptually "
                        "meaningful (see each video's sfx-plan.json).")
     by_id = {c["id"]: c for c in catalog.get("clips", [])}
-    legacy_ids = {i for i, c in by_id.items() if c.get("legacy")}
+    legacy_ids = {i for i, c in by_id.items() if c.get("legacy") or c.get("superseded")}
     if regen_inherited:
         inherited = {i for i, c in by_id.items() if c.get("regenerate_before_publish") and i not in legacy_ids}
         only = inherited if only is None else only & inherited
@@ -195,7 +205,7 @@ def main():
             "id": s["id"], "file": rel, "category": s.get("category", ""),
             "tags": s.get("tags", []), "duration_s": dur, "peak_dbfs": peak,
             "loudness_lufs": lufs, "source": SOURCE, "model": model, "license": LICENSE,
-            "prompt": s["prompt"], "used_in": by_id.get(s["id"], {}).get("used_in", []),
+            "prompt": s["prompt"], **({"loop": True} if s.get("loop") else {}), "used_in": by_id.get(s["id"], {}).get("used_in", []),
         }
 
     def write_catalog():
@@ -233,12 +243,17 @@ def main():
             continue
         todo.append((s, rel, path))
 
-    print(f"palette: {len(sounds)} sounds ({len(legacy_ids)} legacy ignored) | to generate: {len(todo)} | skip (exist): {len(skip)}")
+    print(f"palette: {len(sounds)} sounds ({len(legacy_ids)} legacy/superseded ignored) | to generate: {len(todo)} | skip (exist): {len(skip)}")
     if skip:
         print("  skipping (library-first):", ", ".join(skip))
     if dry:
+        total = 0.0
         for s, rel, _ in todo:
-            print(f"  WOULD generate {s['id']} -> {rel}  ({s['duration_s']}s)  \"{s['prompt'][:60]}...\"")
+            cr = s["duration_s"] * CREDITS_PER_S
+            total += s["duration_s"]
+            lp = "  loop" if s.get("loop") else ""
+            print(f"  WOULD generate {s['id']:<18} {s['duration_s']:>5}s  ~{cr:>5.0f} cr{lp}  \"{s['prompt'][:50]}...\"")
+        print(f"  TOTAL {len(todo)} clips, {total:.1f}s  ~{total * CREDITS_PER_S:.0f} credits")
         return
     if todo and not api_key:
         sys.exit("ELEVENLABS_API_KEY not set in .env — cannot generate. (Add it, or use --dry-run.)")
@@ -246,7 +261,8 @@ def main():
     for s, rel, path in todo:
         print(f"\n-> {s['id']}  ({s['duration_s']}s)")
         try:
-            audio = generate(api_key, s["prompt"], s["duration_s"], pinf, model)
+            audio = generate(api_key, s["prompt"], s["duration_s"], s.get("prompt_influence", pinf), model,
+                             loop=s.get("loop", False))
         except urllib.error.HTTPError as e:
             sys.exit(f"ElevenLabs HTTP {e.code}: {e.read().decode('utf-8', 'ignore')[:400]}")
         with open(path, "wb") as f:

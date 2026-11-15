@@ -6,7 +6,7 @@
 > **Reference scene:** the `BrandReference` composition is this document rendered on screen. If
 > it looks right, the brand is right.
 >
-> v1.4 · 2026-11-15 · direction: *Deep Field hybrid* (cinematic and editorial, with a few
+> v1.5 · 2026-11-15 · direction: *Deep Field hybrid* (cinematic and editorial, with a few
 > scientific annotations)
 
 ---
@@ -141,12 +141,12 @@ the edit and never become the show. Choose every cue by its FUNCTION:
 
 | Function | Sound | Its job | Calm sub-types |
 |---|---|---|---|
-| **Motion** | whoosh | direction and speed; carry one beat into the next | `whoosh-soft`, `whoosh-wind` |
-| **Tension** | riser | "something is coming"; hold before a reveal | `riser-soft` (NO cymbal urgency) |
-| **Emphasis** | impact / pop | "this moment matters"; lands on the reveal | `impact-soft`, `impact-deep-soft`, `pop-reveal` |
-| **Snap** | click | small, satisfying, alive | `ui-click-soft`, `ui-toggle-on` |
-
-Plus extras like `chime-reward` for a gift moment.
+| **Motion** | whoosh | direction and speed; carry one beat into the next | `whoosh-soft`, `whoosh-wind`, `whoosh-deep` (big zoom), `whoosh-reverse` (time), `swish-light` (small element) |
+| **Tension** | riser | "something is coming"; hold before a reveal | `riser-soft`, `riser-long` (6 s), `riser-shimmer` (NO cymbal urgency) |
+| **Emphasis** | impact / pop / swell | "this moment matters"; lands on the reveal | `impact-soft`, `impact-deep-soft`, `pop-reveal`, `impact-cosmic` (the one hero payoff), `glow-swell` (something lights up) |
+| **Snap** | click | small, satisfying, alive | `ui-click-soft`, `tick-soft` (counters, rulers), `number-settle` (a count lands) |
+| **Texture** | sparkle / chime / rumble | color under a moment | `sparkle-soft`, `warm-shimmer`, `chime-discovery`, `deep-rumble` (massive objects) |
+| **Ambient** | seamless 30 s loop | a quiet bed under the whole short | `space-drone-loop`, `space-air-loop` (well under the voice) |
 
 - **Always under the voice.** Quiet and tasteful, never louder than the narration. Silence is part
   of the mix; never fill wall to wall. Space is quiet, and the mix can be too.

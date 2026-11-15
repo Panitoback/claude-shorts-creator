@@ -83,9 +83,12 @@ def main():
     catalog_path = rp(plan.get("catalog", "media/library/sfx/catalog.json"))
     with open(catalog_path, encoding="utf-8") as f:
         catalog = json.load(f)
-    # legacy clips (off-brand, kept in media/library/sfx/legacy/ for reference) are never mixed
+    # legacy clips (off-brand, in media/library/sfx/legacy/) and superseded clips (the original
+    # author's, replaced by our own generations, in superseded/) are never mixed
     legacy_ids = {c["id"] for c in catalog.get("clips", []) if c.get("legacy")}
-    lib = {c["id"]: c for c in catalog.get("clips", []) if not c.get("legacy")}
+    superseded = {c["id"].removesuffix("--inherited"): c.get("superseded_by", "")
+                  for c in catalog.get("clips", []) if c.get("superseded")}
+    lib = {c["id"]: c for c in catalog.get("clips", []) if not c.get("legacy") and not c.get("superseded")}
 
     preview = proj(preview_override or render.get("preview", "video-1/output/video-1-preview.mp4"))
     out = proj(out_override or render.get("out", "video-1/output/video-1-first60-sfx.mp4"))
@@ -102,7 +105,9 @@ def main():
             continue
         clip = lib.get(e["sfx_id"])
         if not clip:
-            missing.add(e["sfx_id"] + (" (legacy: off-brand, pick a brand clip)" if e["sfx_id"] in legacy_ids else ""))
+            why = (" (legacy: off-brand, pick a brand clip)" if e["sfx_id"] in legacy_ids
+                   else f" (superseded: use {superseded[e['sfx_id']]})" if e["sfx_id"] in superseded else "")
+            missing.add(e["sfx_id"] + why)
             continue
         f = rp(os.path.join("media", "library", "sfx", clip["file"]))
         if not os.path.exists(f):
