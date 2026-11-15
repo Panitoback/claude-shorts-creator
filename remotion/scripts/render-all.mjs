@@ -2,6 +2,7 @@
 //   node scripts/render-all.mjs                 -> render all
 //   node scripts/render-all.mjs LevelsOverview  -> render only these ids
 //   node scripts/render-all.mjs --still         -> render a poster PNG per shot instead of video
+//   add --safe to any of these to draw the safe-zone overlay (QA only)
 // Opaque shots -> out/<id>.mp4 (h264). transparent:true shots -> out/<id>.mov (ProRes 4444 + alpha).
 // Rendered at scale 2 (author 1080p -> 4K output) to composite crisply over the 4K master.
 import { bundle } from '@remotion/bundler';
@@ -14,6 +15,8 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const args = process.argv.slice(2);
 const stillMode = args.includes('--still');
 const scaleArg = args.find((a) => a.startsWith('--scale='));
+// --safe: draw the safe-zone debug overlay (brand/brand.md §9) — QA only, never for finals.
+const inputProps = args.includes('--safe') ? { safeOverlay: true } : {};
 const SCALE = scaleArg ? Number(scaleArg.split('=')[1]) : 2;
 const onlyIds = args.filter((a) => !a.startsWith('--'));
 
@@ -29,21 +32,21 @@ const serveUrl = await bundle({ entryPoint: path.join(root, 'src', 'index.ts'), 
 let n = 0;
 for (const shot of manifest) {
   if (onlyIds.length && !onlyIds.includes(shot.id)) continue;
-  const composition = await selectComposition({ serveUrl, id: shot.id });
+  const composition = await selectComposition({ serveUrl, id: shot.id, inputProps });
 
   if (stillMode) {
-    const out = path.join(outDir, `${shot.id}.png`);
+    const out = path.join(outDir, `${shot.id}${inputProps.safeOverlay ? '-safe' : ''}.png`);
     await renderStill({
-      serveUrl, composition, output: out, scale: SCALE, overwrite: true,
+      serveUrl, composition, inputProps, output: out, scale: SCALE, overwrite: true,
       frame: Math.floor(composition.durationInFrames * 0.6),
       imageFormat: shot.transparent ? 'png' : 'jpeg',
     });
     console.log('  still ->', path.relative(root, out));
   } else {
     const transparent = !!shot.transparent;
-    const out = path.join(outDir, `${shot.id}.${transparent ? 'mov' : 'mp4'}`);
+    const out = path.join(outDir, `${shot.id}${inputProps.safeOverlay ? '-safe' : ''}.${transparent ? 'mov' : 'mp4'}`);
     await renderMedia({
-      serveUrl, composition, outputLocation: out, scale: SCALE, overwrite: true,
+      serveUrl, composition, inputProps, outputLocation: out, scale: SCALE, overwrite: true,
       codec: transparent ? 'prores' : 'h264',
       proResProfile: transparent ? '4444' : undefined,
       pixelFormat: transparent ? 'yuva444p10le' : 'yuv420p',

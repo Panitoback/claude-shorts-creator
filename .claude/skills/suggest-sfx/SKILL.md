@@ -13,12 +13,12 @@ The shape: a **declarative plan** (`sfx-plan.json`) is the source of truth → a
 (`tools/mix_sfx.py`) → a **library** grows (`media/library/sfx/`) → a **hard USER-AUDIT gate**
 before anything is mixed.
 
-Sound taste is a brand contract — read **`brand.md` §7** every time. The house style is calm/premium
+Sound taste is a brand contract — read **`brand/brand.md` §7** every time. The house style is calm/premium
 (Linear / Anthropic / Vercel), felt-not-heard, always under the voice. NOT MrBeast-loud.
 
 ## Inputs (read these first, every session)
 
-- **`brand.md` §7 (Sound design)** — the SFX taste contract: subtlety, density, palette, levels,
+- **`brand/brand.md` §7 (Sound design)** — the SFX taste contract: subtlety, density, palette, levels,
   sync, signature motifs, source policy. Non-negotiable.
 - **`shorts/short-N-<niche>/beats.json`** — the beats and REAL per-word voice times (written back
   by `gen_voice.py`). Sync cues to these words (a pop on "boom", a chime on "free").

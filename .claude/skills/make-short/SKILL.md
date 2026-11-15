@@ -1,14 +1,20 @@
 ---
 name: make-short
-description: Build a fully-synthetic vertical short (1080×1920, ~40s) end-to-end from a topic — script + beats.json, linked TSX beats over a persistent canvas, phone-scale QA, render, ElevenLabs voice with exact word-synced captions, SFX audition, optional music bed. Use when the user wants to "make a short", "create a shorts video", build a TSX short for a niche (chess, math, algorithms, dev tips, Excel…), add voice/captions to a short, or continue the short-N series in this repo. Defers raw TSX crash rules to vidtsx-2d-generator and SFX taste to suggest-sfx + brand §7.
+description: Build a fully-synthetic vertical short (1080×1920, ~40s) for the universe channel end-to-end from the user's script (shorts/<slug>/guion.md, written in their planning project) — beats.json, linked TSX beats over a persistent canvas, phone-scale QA, render, ElevenLabs voice with exact word-synced captions, SFX audition, optional music bed. Use when the user wants to "make a short", "produce guion.md", "create a shorts video", add voice/captions to a short, or re-render one. Defers raw TSX crash rules to vidtsx-2d-generator and SFX taste to suggest-sfx + brand/brand.md §7.
 ---
 
 # make-short — fully-TSX vertical shorts, end to end
 
-Everything is code: no footage, no stock. One short = one Remotion composition fed by a
-beats contract, with voice and SFX layered on after render. Proven across the 12 example
-shorts in `shorts/`. The idea bank + niche ranking lives in **`IDEAS.md`** — read it when
-picking a topic, and grow it when brainstorming.
+Everything is code: no footage, no stock, **no AI-generated images or video**. One short = one
+Remotion composition fed by a beats contract, with voice and SFX layered on after render.
+
+**Input comes from the user's planning project**, not from here: `shorts/<slug>/guion.md`, in
+the handoff format of `docs/PROJECT_CONTEXT.md` §6. Topics and wording are the user's — don't
+invent topics or silently rewrite the script. Fact-check it; if a fact is wrong, a line is too
+long for its window, or a beat asks for something not buildable, flag it and propose the fix.
+Visual style is fixed by **`brand/brand.md`** (code twin `remotion/src/brand.ts`) — read it first.
+The 11 shorts already in `shorts/` are inherited examples in the OLD look: useful for technique
+(frame math, captions, loops), not for style.
 
 Run everything from the **repo root**. Tools are stdlib-only Python 3.10+; `ffmpeg`/`node`
 must be on PATH; API keys live in `.env` (see `.env.example`).
@@ -16,22 +22,28 @@ must be on PATH; API keys live in `.env` (see `.env.example`).
 ## Artifact contract
 
 ```
-shorts/short-N-<niche>/
-  script.md        — hook, beat sheet table (time | on screen | VO), production notes
+shorts/<slug>/
+  guion.md         — the user's script from the planning project (source of truth for content)
+  script.md        — production beat sheet derived from guion.md (time | on screen | VO), notes
   beats.json       — machine contract: format, vo[] (text+start/end+words), beats[], niche timeline
   voice/           — per-line TTS clips + voice.wav        (gen_voice.py)   [gitignored]
   sfx-plan.json    — cue sheet on the global timeline       (mix_sfx.py)
-  output/          — short-N-sfx.mp4 (+ music auditions)                    [gitignored]
-remotion/src/shots/short-N/
-  ShortN<Name>.tsx — THE composition (registered by npm run gen)
+  output/          — <slug>-sfx.mp4 (+ music auditions)                    [gitignored]
+remotion/src/shots/<slug>/
+  <Name>.tsx       — THE composition (registered by npm run gen)
   vo.gen.ts        — AUTO-GENERATED VO with exact word times (never hand-edit)
 ```
 
-Shared kit: `remotion/src/lib/shorts.tsx` (Captions, Kicker, BigTitle, Stamp, PauseCard,
-StatChip, ProgressBar, ShortsBackdrop, SAFE areas, prog helper). Niche libs so far: `lib/chess.tsx`,
-`lib/math.tsx`, `lib/algo.tsx`, `lib/sheet.tsx`, `lib/piano.tsx`, `lib/prob.tsx`, `lib/map.tsx`,
-`lib/orbit.tsx`, `lib/chart.tsx`… **Add at most ONE new niche lib per short**,
-generic enough for a series.
+**Brand first:** build every visual from the tokens in `remotion/src/brand.ts` (PALETTE, BODY,
+TYPE, CAPTION, ANNOTATION, MOTION, EASE, SAFE) — never hard-coded colors, fonts or timings.
+`shots/brand/BrandReference.tsx` is the brand rendered: copy its patterns (hero number + unit +
+subject, glowing body, marker + leader line, scale bar, caption with gold keyword).
+`lib/sky.ts` = starfield (`makeStars`, `starTint`, `clearZones` — always clear stars behind text).
+Max 2 annotations per scene; honest scale when the scene is about size.
+
+Inherited kit (old look — restyle before reuse): `lib/shorts.tsx` (Captions, ProgressBar, prog
+helper…), `lib/orbit.tsx` (real orbital physics + Globe/Trajectory). **Add at most ONE new
+reusable component lib per short.**
 
 ## Stage 1 — script + beats
 
@@ -49,12 +61,13 @@ tail: trim the composition so it ends shortly after the payoff, not seconds of d
 
 VO rules: ~100 words total, estimate line windows at **~2.7 words/sec with slack to the next
 line's start** (tighter forces audible atempo squeeze — 3.3wps needed a 1.3× squeeze; 2.7wps
-peaked at 1.11×). Facts must be verified before scripting. Write `script.md` + `beats.json`
-(vo lines with estimated start/end; niche timeline in global SECONDS).
+peaked at 1.11×). Facts must be verified before animating. From `guion.md`, write `script.md` + `beats.json`
+(vo lines with estimated start/end; timeline in global SECONDS) — HERO NUMBER / KEYWORD /
+ANNOTATIONS per beat carry straight over.
 
 ## Stage 2 — the composition
 
-- One `.tsx` under `remotion/src/shots/short-N/`, `compositionConfig` 1080×1920 @30, ~42s.
+- One `.tsx` under `remotion/src/shots/<slug>/`, `compositionConfig` 1080×1920 @30, ~42s.
   Follow vidtsx-2d-generator's hard rules (frame-based only, monotonic ranges, Easing.bezier).
 - Beats = `<Sequence>` scenes over ONE persistent canvas (the board/equation/array is the
   continuity — rewinds and evolutions happen in a single component's timeline, not cuts).
@@ -64,43 +77,48 @@ peaked at 1.11×). Facts must be verified before scripting. Write `script.md` + 
 - Frame-0 rule: hook scene uses `warm` props (BigTitle/EqRow) and negative `at`s so highlights/
   stamps are already on at f0. Loop scene reverses the hook's punch-in (settle 1.06→1 vs grow
   1→1.06) so the video loops seamlessly.
-- Safe areas: captions block centered ~y1500; nothing critical in bottom 340px / right 160px.
+- Safe zones (brand §9): everything important inside `SAFE_RECT` (x 60→900, y 210→1420);
+  captions in the caption lane (`CAPTION.centerY` 1350, ≤720 px wide, symmetric).
+- Caption keyword = gold italic serif (`TYPE.keyword`); one per chunk, from guion.md KEYWORD.
 
 ## Stage 3 — QA (do not skip, it catches real bugs every time)
 
 ```
 cd remotion && npm run gen        # frames.mjs does NOT run gen-registry itself
-node scripts/frames.mjs ShortNName 0,<beat-boundaries+hero-frames>,<last> --scale=0.5
+node scripts/frames.mjs <Id> 0,<beat-boundaries+hero-frames>,<last> --scale=0.5
+node scripts/frames.mjs <Id> 0,<hero-frames> --scale=0.5 --safe   # safe-zone overlay pass
 ```
 READ every PNG (phone scale). Checklist: frame 0 composed & thumbnail-grade · every reveal
 synced to its beat · nothing covering the payoff element · kickers swap with the narration ·
-captions clear of UI zones · loop frame ≈ frame 0. Fix, re-render frames, only then:
+nothing important outside the safe rectangle in the `--safe` pass · stars cleared behind text ·
+≤2 annotations per scene · loop frame ≈ frame 0. Fix, re-render frames, only then:
 
 ```
-node scripts/render-all.mjs ShortNName --scale=1     # -> remotion/out/ShortNName.mp4
+node scripts/render-all.mjs <Id> --scale=1     # -> remotion/out/<Id>.mp4
 ```
 
 ## Stage 4 — voice (ElevenLabs, word-exact captions)
 
 ```
-python tools/gen_voice.py --beats shorts/short-N-<niche>/beats.json \
-    --voice TX3LPaxmHKxFdv7VOQHJ --emit-ts remotion/src/shots/short-N/vo.gen.ts
+python tools/gen_voice.py --beats shorts/<slug>/beats.json \
+    --voice TX3LPaxmHKxFdv7VOQHJ --emit-ts remotion/src/shots/<slug>/vo.gen.ts
 ```
 - Per-line TTS with `/with-timestamps` → REAL per-word times (tempo-scaled, global) written
   into beats.json AND `vo.gen.ts`. The shot imports `{ VO } from './vo.gen'` — captions then
   highlight on the exact spoken word. Never estimate when a voice track exists.
 - Clips are cached by text-hash: rewriting one line only re-bills that line.
-- Voice: the examples use ElevenLabs premade "Liam" (`TX3LPaxmHKxFdv7VOQHJ`); swap in any voice
-  (including your own clone) with the `--voice` flag + regen.
+- Voice: the examples use ElevenLabs premade "Liam" (`TX3LPaxmHKxFdv7VOQHJ`); the channel voice
+  is not chosen yet — ask before the first paid generation, then use `--voice`.
+- ElevenLabs is paid: state roughly what will be generated before calling it.
 - Then re-render the composition (captions retimed) and mux:
   `ffmpeg -i remotion/out/<Id>.mp4 -i shorts/.../voice/voice.wav -map 0:v -map 1:a -c:v copy
    -c:a aac -b:a 192k -t 42 remotion/out/<Id>-voiced.mp4`
 
 ## Stage 5 — SFX (the suggest-sfx machinery, shorts flavor)
 
-Read `brand.md` §7 + `media/library/sfx/catalog.json`. Library-first; add generic recipes to
+Read `brand/brand.md` §7 + `media/library/sfx/catalog.json`. Library-first; add generic recipes to
 `palette.json` + `python tools/gen_sfx.py` only for genuine misses. Author
-`shorts/short-N-<niche>/sfx-plan.json` (preview = the -voiced.mp4, out = output/short-N-sfx.mp4).
+`shorts/<slug>/sfx-plan.json` (preview = the -voiced.mp4, out = output/<slug>-sfx.mp4).
 
 Shorts taste adaptations: **diegetic action sounds are the content** (piece thocks, digit
 pops) and may exceed long-form density; decorative cues stay `optional: true`; layer the 2–3
@@ -108,8 +126,8 @@ hero moments (capture+stamp, carry flight+landing+chime). Cue times from EXACT l
 `at_s = (move.at + move.dur + sequence_from) / fps`.
 
 ```
-PYTHONIOENCODING=utf-8 python tools/mix_sfx.py shorts/short-N-<niche>/sfx-plan.json --print
-PYTHONIOENCODING=utf-8 python tools/mix_sfx.py shorts/short-N-<niche>/sfx-plan.json
+PYTHONIOENCODING=utf-8 python tools/mix_sfx.py shorts/<slug>/sfx-plan.json --print
+PYTHONIOENCODING=utf-8 python tools/mix_sfx.py shorts/<slug>/sfx-plan.json
 ```
 The mix is an AUDITION — the user's ear is the audit gate before anything is called final.
 Update catalog `used_in` afterwards.
@@ -117,11 +135,13 @@ Update catalog `used_in` afterwards.
 ## Stage 6 — music (optional, per video)
 
 Library beds in `media/library/music/` (gen_music.py to grow). Audition over the SFX mix:
-`python tools/mix_music.py --all --base shorts/short-N-<niche>/output/short-N-sfx.mp4`
+`python tools/mix_music.py --all --base shorts/<slug>/output/<slug>-sfx.mp4`
 (or `--bed <id>`). Hard-ducked under voice.
 
 ## Done =
 
-script.md + beats.json authored (facts verified) · composition QA'd frame-by-frame · rendered
-at scale 1 · voice generated with word-exact captions and muxed · SFX plan authored + audition
-mixed (~−15.5 LUFS, awaiting the user's ear) · library used_in updated · IDEAS.md queue updated.
+script.md + beats.json derived from guion.md (facts verified) · composition QA'd frame-by-frame
+(incl. `--safe` pass) · rendered at scale 1 · voice generated with word-exact captions and muxed ·
+SFX plan authored + audition mixed (~−15.5 LUFS, awaiting the user's ear) · library used_in
+updated · **`PRODUCED.md` row added/updated** · anything learned added to the Learnings section of
+`docs/PROJECT_CONTEXT.md` (then tell the user it changed so they re-upload it).

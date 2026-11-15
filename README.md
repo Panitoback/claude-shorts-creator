@@ -73,7 +73,7 @@ Three Claude Code **skills** encode the craft:
 The official [Remotion skills](https://github.com/remotion-dev/skills) (`remotion-*`) are
 installed alongside as general Remotion reference (pinned in `skills-lock.json`).
 
-`brand.md` is the style contract (palette, type, motion, SFX taste) — swap it for your own
+`brand/brand.md` is the style contract (palette, type, motion, SFX taste) — swap it for your own
 brand and every future short follows it.
 
 ## Quickstart
@@ -107,8 +107,8 @@ remotion/         the Remotion project — shared kits in src/lib/,
 media/library/    reusable assets: SFX clips + music beds (catalogued, loudness-normalized)
 media/projects/   media for one specific video (created on demand)
 shorts/           the 11 TSX example productions
-brand.md          the style contract — make it yours
-IDEAS.md          the TSX-shorts niche/idea bank
+brand/brand.md    the style contract — make it yours
+PRODUCED.md       log of the shorts produced (title, format, date, status)
 ```
 
 ## License

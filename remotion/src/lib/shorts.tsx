@@ -10,7 +10,9 @@ export const SHORT = { W: 1080, H: 1920, FPS: 30 } as const;
 // bottom is LARGE on YouTube Shorts: the handle + title + description + right-side action
 // buttons occupy the lower ~500px — captions must sit ABOVE ~y1420 or they collide (ch-3
 // lesson from a real mobile screenshot).
-export const SAFE = { top: 150, bottom: 500, right: 160, left: 60 } as const;
+// Safe zones now live in the brand tokens (brand/brand.md §9). Re-exported for the old kit.
+export { SAFE } from '../brand';
+import { SAFE } from '../brand';
 
 export const EASE_OUT = Easing.bezier(0.33, 1, 0.68, 1);
 export const EASE_INOUT = Easing.bezier(0.37, 0, 0.63, 1);
