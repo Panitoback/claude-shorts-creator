@@ -52,20 +52,23 @@ export const Quasar: React.FC<QuasarProps> = ({
 
   return (
     <>
-      {/* corona: local radial gradient, strongest on the channel; never a blur, never frame-wide */}
+      {/* corona: local radial gradient, strongest on the channel; never a blur, never frame-wide.
+          It stays GOLD and semi-transparent even at its center: the near-white belongs to the
+          disk's inner edge and the lensed far side alone. A near-white corona core swallowed
+          them (the disk shrank to an orange line and the shadow read like an eye). */}
       <svg width={CANVAS.W} height={CANVAS.H} style={{ position: 'absolute', left: 0, top: 0, overflow: 'visible' }}>
         <defs>
           <radialGradient id={`${id}c`} cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stopColor={QUASAR.corona[0]} stopOpacity={0.95 * c} />
-            <stop offset="14%" stopColor={QUASAR.corona[0]} stopOpacity={0.7 * c} />
-            <stop offset="30%" stopColor={QUASAR.corona[1]} stopOpacity={0.32 * c} />
-            <stop offset="60%" stopColor={QUASAR.corona[1]} stopOpacity={0.08 * c} />
+            <stop offset="0%" stopColor={QUASAR.corona[1]} stopOpacity={0.5 * c} />
+            <stop offset="16%" stopColor={QUASAR.corona[1]} stopOpacity={0.38 * c} />
+            <stop offset="34%" stopColor={QUASAR.corona[1]} stopOpacity={0.2 * c} />
+            <stop offset="62%" stopColor={QUASAR.corona[1]} stopOpacity={0.06 * c} />
             <stop offset="100%" stopColor={QUASAR.corona[1]} stopOpacity={0} />
           </radialGradient>
         </defs>
         {c > 0 && <circle cx={x} cy={y} r={coronaR} fill={`url(#${id}c)`} />}
       </svg>
-      {jets && <Jets x={x} y={y} length={jetLength ?? shadowR * 14} width={shadowR * 0.34} angle={angle} luminosity={L} at={at} warm={warm} />}
+      {jets && <Jets x={x} y={y} length={jetLength ?? shadowR * 14} width={shadowR * 0.22} angle={angle} luminosity={L} at={at} warm={warm} />}
       <AccretionDisk {...common} layer="back" />
       <BlackHole x={x} y={y} r={shadowR} ring={0.45 + 0.55 * L} at={at} warm={warm} />
       <AccretionDisk {...common} layer="front" />
