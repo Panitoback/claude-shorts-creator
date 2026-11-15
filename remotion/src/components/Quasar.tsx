@@ -59,10 +59,13 @@ export const Quasar: React.FC<QuasarProps> = ({
       <svg width={CANVAS.W} height={CANVAS.H} style={{ position: 'absolute', left: 0, top: 0, overflow: 'visible' }}>
         <defs>
           <radialGradient id={`${id}c`} cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stopColor={QUASAR.corona[1]} stopOpacity={0.5 * c} />
-            <stop offset="16%" stopColor={QUASAR.corona[1]} stopOpacity={0.38 * c} />
-            <stop offset="34%" stopColor={QUASAR.corona[1]} stopOpacity={0.2 * c} />
-            <stop offset="62%" stopColor={QUASAR.corona[1]} stopOpacity={0.06 * c} />
+            {/* center: gold and translucent (disk + arcs stay readable); the MID falloff is
+                where the power is: bright and wide, so the glow fills the frame around it */}
+            <stop offset="0%" stopColor={QUASAR.corona[1]} stopOpacity={0.55 * c} />
+            <stop offset="18%" stopColor={QUASAR.corona[1]} stopOpacity={0.52 * c} />
+            <stop offset="38%" stopColor={QUASAR.corona[1]} stopOpacity={0.36 * c} />
+            <stop offset="62%" stopColor={QUASAR.corona[1]} stopOpacity={0.15 * c} />
+            <stop offset="82%" stopColor={QUASAR.corona[1]} stopOpacity={0.04 * c} />
             <stop offset="100%" stopColor={QUASAR.corona[1]} stopOpacity={0} />
           </radialGradient>
         </defs>

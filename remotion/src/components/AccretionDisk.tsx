@@ -34,6 +34,11 @@ export type AccretionDiskProps = {
 };
 
 const N = 10; // temperature bands
+// lensed far-side arcs, × shadowR: half-width at the sides (rx) and reach above/below (ry)
+const LENS = [
+  { k: 'top', rx: 1.3, ry: 2.05, op: 0.95 },
+  { k: 'bottom', rx: 1.22, ry: 1.62, op: 0.85 },
+] as const;
 
 let uid = 0;
 
@@ -51,13 +56,29 @@ export const AccretionDisk: React.FC<AccretionDiskProps> = ({
   const bw = (rOut - rIn) / N;
   // dormant disks start further down the temperature ramp; a full quasar starts at near-white
   const shift = (1 - L) * 0.55;
-  const colorAt = (u: number) => rampColor(QUASAR.disk, shift + u * (1 - shift));
+  // as it brightens, the near-white inner band WIDENS (the disk "burns"): the first `hot` of the
+  // disk stays at the white end of the ramp, the rest grades gold → orange as before
+  const hot = 0.32 * L * L;
+  const colorAt = (u: number) => rampColor(QUASAR.disk, shift + clamp01((u - hot) / (1 - hot)) * (1 - shift));
   const alpha = (0.4 + 0.6 * L) * inP;
   const dir = approaching === 'left' ? 1 : -1;
   const bands = Array.from({ length: N }, (_, i) => {
     const rr = rIn + bw * (i + 0.5);
     return { rr, c: colorAt(i / (N - 1)), op: 1 - 0.55 * (i / (N - 1)) };
   });
+
+  // Doppler tint layers: the same bands re-stroked near-white on the approaching side and deep
+  // red on the receding side. Real color shifts, not transparency: dimming by opacity just shows
+  // the (equally bright) corona through the disk, so the asymmetry never read.
+  const tintLayer = (mask: string, color: string, opOf: (i: number) => number) => (
+    <g mask={`url(#${id}${mask})`}>
+      <g transform={`scale(1 ${tilt})`}>
+        {bands.map((b, i) => (
+          <circle key={i} cx={0} cy={0} r={b.rr} fill="none" stroke={color} strokeOpacity={opOf(i)} strokeWidth={bw * 1.15} />
+        ))}
+      </g>
+    </g>
+  );
 
   const half = (h: 'back' | 'front') => (
     <g clipPath={`url(#${id}${h})`} mask={`url(#${id}m)`} opacity={alpha}>
@@ -66,6 +87,10 @@ export const AccretionDisk: React.FC<AccretionDiskProps> = ({
       {bands.map((b, i) => (
         <circle key={i} cx={0} cy={0} r={b.rr} fill="none" stroke={b.c} strokeOpacity={b.op} strokeWidth={bw * 1.15} />
       ))}
+      </g>
+      {tintLayer('ap', QUASAR.disk[0], (i) => (0.2 + 0.5 * L) * (1 - 0.6 * (i / (N - 1))))}
+      {tintLayer('rc', QUASAR.disk[5], () => 0.15 + 0.45 * L)}
+      <g transform={`scale(1 ${tilt})`}>
       {drift !== 0 &&
         [0.25, 0.5, 0.75].map((u, i) => {
           const rr = rIn + (rOut - rIn) * u;
@@ -94,19 +119,37 @@ export const AccretionDisk: React.FC<AccretionDiskProps> = ({
         <clipPath id={`${id}front`}>
           <rect x={-rOut * 1.5} y={0} width={rOut * 3} height={rOut * 1.5} />
         </clipPath>
-        {/* Doppler beaming: the approaching side brighter */}
+        {/* Doppler beaming, approaching side brighter: a mild opacity falloff (m) plus the two
+            tint layers, near-white over the approaching half (ap), deep red over the receding (rc) */}
         <linearGradient id={`${id}d`} x1={dir > 0 ? 0 : 1} y1={0.5} x2={dir > 0 ? 1 : 0} y2={0.5}>
           <stop offset="0%" stopColor="#fff" stopOpacity={1} />
-          <stop offset="100%" stopColor="#fff" stopOpacity={0.42} />
+          <stop offset="100%" stopColor="#fff" stopOpacity={0.55} />
         </linearGradient>
-        <mask id={`${id}m`} maskUnits="userSpaceOnUse" x={-rOut * 1.6} y={-rOut * 1.6} width={rOut * 3.2} height={rOut * 3.2}>
-          <rect x={-rOut * 1.1} y={-rOut} width={rOut * 2.2} height={rOut * 2} fill={`url(#${id}d)`} />
-        </mask>
-        <radialGradient id={`${id}l`} gradientUnits="userSpaceOnUse" cx={0} cy={0} r={shadowR * 1.6}>
-          <stop offset={`${(100 * 1.07 / 1.6).toFixed(0)}%`} stopColor={colorAt(0)} />
-          <stop offset="85%" stopColor={colorAt(0.35)} />
-          <stop offset="100%" stopColor={colorAt(0.6)} stopOpacity={0} />
-        </radialGradient>
+        <linearGradient id={`${id}da`} x1={dir > 0 ? 0 : 1} y1={0.5} x2={dir > 0 ? 1 : 0} y2={0.5}>
+          <stop offset="0%" stopColor="#fff" stopOpacity={1} />
+          <stop offset="55%" stopColor="#fff" stopOpacity={0} />
+        </linearGradient>
+        <linearGradient id={`${id}dr`} x1={dir > 0 ? 0 : 1} y1={0.5} x2={dir > 0 ? 1 : 0} y2={0.5}>
+          <stop offset="45%" stopColor="#fff" stopOpacity={0} />
+          <stop offset="100%" stopColor="#fff" stopOpacity={1} />
+        </linearGradient>
+        {(['m', 'ap', 'rc'] as const).map((k) => (
+          <mask key={k} id={`${id}${k}`} maskUnits="userSpaceOnUse" x={-rOut * 1.6} y={-rOut * 1.6} width={rOut * 3.2} height={rOut * 3.2}>
+            <rect x={-rOut * 1.1} y={-rOut} width={rOut * 2.2} height={rOut * 2} fill={`url(#${id}${k === 'm' ? 'd' : k === 'ap' ? 'da' : 'dr'})`} />
+          </mask>
+        ))}
+        {/* lensed far side: a BROAD band arching over the top and under the bottom, hot at the
+            shadow and fading outward. Elliptical gradients (one per arc) so the band is thick at
+            the top/bottom and tapers to nothing at the sides: a silhouette, not an outline. */}
+        {LENS.map((a) => (
+          <radialGradient key={a.k} id={`${id}l${a.k}`} gradientUnits="userSpaceOnUse" cx={0} cy={0} r={shadowR * a.rx}
+            gradientTransform={`scale(1 ${(a.ry / a.rx).toFixed(4)})`}>
+            <stop offset="50%" stopColor={colorAt(0)} />
+            <stop offset="70%" stopColor={colorAt(0.25)} stopOpacity={0.92} />
+            <stop offset="88%" stopColor={colorAt(0.55)} stopOpacity={0.45} />
+            <stop offset="100%" stopColor={colorAt(0.8)} stopOpacity={0} />
+          </radialGradient>
+        ))}
       </defs>
       <g transform={`translate(${x} ${y}) rotate(${angle})`}>
         {(layer === 'back' || layer === 'both') && (
@@ -114,8 +157,9 @@ export const AccretionDisk: React.FC<AccretionDiskProps> = ({
             {half('back')}
             {lensed && (
               <g opacity={alpha} mask={`url(#${id}m)`}>
-                <path d={crescent(true, shadowR * 1.2, shadowR * 1.56)} fill={`url(#${id}l)`} opacity={0.95} />
-                <path d={crescent(false, shadowR * 1.12, shadowR * 1.2)} fill={`url(#${id}l)`} opacity={0.7} />
+                {LENS.map((a) => (
+                  <path key={a.k} d={crescent(a.k === 'top', shadowR * a.rx, shadowR * a.ry)} fill={`url(#${id}l${a.k})`} opacity={a.op} />
+                ))}
               </g>
             )}
           </>
