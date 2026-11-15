@@ -24,10 +24,13 @@ vertical shorts where every pixel is Remotion TSX.
 - **Phase order (set by the user, don't skip ahead):**
   1. ✅ cleanup (generative tracks removed) · 2. ✅ visual identity (`brand/brand.md`)
   3. ▶ **components + formats** in the brand style (formats: Scale, Impossible Fact, How It Works)
+     - TODO (captions component): when a VO line's `tts` differs from its `text`, display the
+       `text` words mapped onto the TTS word timestamps (today captions show the TTS words).
   4. first short: "What is a quasar?"
   5. custom skills `script-to-short` and `new-component` (then §6 of PROJECT_CONTEXT becomes final)
   6. Manim — only for physics/equation scenes, rendered as clips inside Remotion
-- **Still open:** channel name; channel voice (ElevenLabs voice ID).
+- **Still open:** channel name; channel voice (ElevenLabs voice ID); recalibrate the ~2.7 words/s
+  rate after the first generation with the chosen channel voice (it was measured with Liam).
 - `shorts/short-12-orbit` is the one **inherited example, in the old look**: a technique
   reference only (its `lib/orbit.tsx` has real orbital physics worth reusable components), not
   channel content.

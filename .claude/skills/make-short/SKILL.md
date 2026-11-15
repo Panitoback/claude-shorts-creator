@@ -116,6 +116,14 @@ python tools/gen_voice.py --beats shorts/<slug>/beats.json \
 - Voice: the examples use ElevenLabs premade "Liam" (`TX3LPaxmHKxFdv7VOQHJ`); the channel voice
   is not chosen yet — ask before the first paid generation, then use `--voice`.
 - ElevenLabs is paid: state roughly what will be generated before calling it.
+- **Pronunciation (guion.md `PRONUNCIATION:`):** for a name the voice may misread, add a per-line
+  `tts` field in beats.json next to `text` (e.g. `"text": "Quasars outshine galaxies."`,
+  `"tts": "Kway-zars outshine galaxies."`). gen_voice.py sends `tts` to ElevenLabs (and hashes it
+  for the cache) instead of `text`. **Caveat:** the word timestamps — and therefore the captions —
+  come from the TTS text, so a respelling would show on screen. Until the captions component
+  maps `text` words onto TTS timings (TODO in CLAUDE.md, components phase), only use `tts` for
+  pronunciation-neutral changes (punctuation, hyphenation, casing, spacing), or accept the
+  respelling on screen for that line.
 - Then re-render the composition (captions retimed) and mux:
   `ffmpeg -i remotion/out/<Id>.mp4 -i shorts/.../voice/voice.wav -map 0:v -map 1:a -c:v copy
    -c:a aac -b:a 192k -t <durationSec> remotion/out/<Id>-voiced.mp4`

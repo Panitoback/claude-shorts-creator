@@ -3,7 +3,7 @@
 > **For:** the planning project where topics, aesthetics and scripts are developed.
 > **Pair it with:** `brand.md` (the visual and sound style contract — read it for colors, type,
 > captions, annotations, motion, safe zones and sound taste; this file never repeats it).
-> **Version:** v0.6 · 2026-11-15 · phase: *visual identity done → components and formats next*
+> **Version:** v0.7 · 2026-11-15 · phase: *visual identity done → components and formats next*
 >
 > This file describes **what can be asked for**, not how it is built. If a script asks for
 > something listed here, it can be made. If it asks for something not listed, flag it as a
@@ -13,7 +13,7 @@
 
 ## 1. What this channel is
 
-- **Vertical shorts about the universe for YouTube Shorts, TikTok and Instagram Reels.** Vertical video (phone screen), usually 30–120 seconds, depending on the format (see section 5).
+- **Vertical shorts about the universe for YouTube Shorts, TikTok and Instagram Reels.** Usually 30–120 seconds, depending on the format (see section 5).
   Space, scale, light, gravity, time, planets, stars, the things that make the cosmos feel
   unreal but are true.
 - **Every frame is animated with code.** There is no footage, no stock video, no photos, and
@@ -255,11 +255,18 @@ SOURCES:
 BEATS:
 > VO word budgets assume ~2.7 words per second. Total narration ≈ TARGET LENGTH × 2.7 words
 >   (e.g. 45 s ≈ 120 words, 90 s ≈ 240 words). Stay within the format's range in §5.
+> VO is spoken AND captioned exactly as written (captions come from the
+>   voice's word timestamps). Write it as it should sound and read: no
+>   symbols or abbreviations (× % ~ km/s → 'times', 'percent', 'about',
+>   'kilometers per second'); big numbers as in §5 ('1.3 million');
+>   catalog names written as spoken, or avoided.
 > HERO NUMBER: `value unit / "subject" / label "LABEL"`, any part optional. Value + unit
 >   ≤ 10 characters ("1.3 million" ✓, "1,300,000 Earths" ✗). Write big numbers in words.
 > KEYWORD: the word that turns gold in the caption. At most one per ~4 spoken words, and it
 >   must carry the idea ("Sun", "falling"), not just be long.
-> ANNOTATIONS: at most 2 per beat. Each one is a short label plus the fact it states.
+> KEYWORD must appear verbatim in that beat's VO (same spelling and
+>   form, e.g. 'quasars' not 'quasar').
+> ANNOTATIONS: at most 2 on screen at once. Each one is a short label plus the fact it states.
 >   Types: marker + leader line · scale bar · data label.
 
 1. HOOK (0–3 s) [VO ≤ 8 words]
@@ -302,6 +309,8 @@ BEATS:
 
 NEW COMPONENTS NEEDED: <anything not in PROJECT_CONTEXT §3, in plain words; "none" if none>
 NOTES: <optional: voice delivery hints, music mood, anything else>
+PRONUNCIATION: <word — how to say it, e.g. 'quasar — KWAY-zar'; only
+  for names the voice may misread>
 ```
 
 ### Before handing off: checklist
@@ -310,7 +319,8 @@ NOTES: <optional: voice delivery hints, music mood, anything else>
       within its share
 - [ ] Every fact in VO, on screen or in an annotation is listed in SOURCES
 - [ ] Hero numbers ≤ 10 characters; big numbers written in words
-- [ ] ≤ 2 annotations per beat; ≤ 1 keyword per ~4 spoken words
+- [ ] At most 2 annotations on screen at once; ≤ 1 keyword per ~4 spoken words
+- [ ] VO has no symbols/abbreviations; every KEYWORD appears verbatim in its VO
 - [ ] SCALE stated for any scene about size or distance
 - [ ] The HOOK FRAME already shows the surprising thing
 - [ ] The LOOP returns to the hook, with no call to action
@@ -332,7 +342,7 @@ SOURCES:
 
 BEATS:
 1. HOOK (0–3 s)
-   VO: "You could fit 1.3 million Earths inside the Sun."
+   VO: "1.3 million Earths fit inside the Sun."
    VISUAL: the Sun with a soft halo; Earth as a tiny dot to its left
    HERO NUMBER: 1.3 million / "Earths" / label "BY VOLUME"
    KEYWORD: Sun

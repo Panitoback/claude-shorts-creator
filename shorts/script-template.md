@@ -25,11 +25,18 @@ SOURCES:
 BEATS:
 > VO word budgets assume ~2.7 words per second. Total narration ≈ TARGET LENGTH × 2.7 words
 >   (e.g. 45 s ≈ 120 words, 90 s ≈ 240 words). Stay within the format's range in §5.
+> VO is spoken AND captioned exactly as written (captions come from the
+>   voice's word timestamps). Write it as it should sound and read: no
+>   symbols or abbreviations (× % ~ km/s → 'times', 'percent', 'about',
+>   'kilometers per second'); big numbers as in §5 ('1.3 million');
+>   catalog names written as spoken, or avoided.
 > HERO NUMBER: `value unit / "subject" / label "LABEL"`, any part optional. Value + unit
 >   ≤ 10 characters ("1.3 million" ✓, "1,300,000 Earths" ✗). Write big numbers in words.
 > KEYWORD: the word that turns gold in the caption. At most one per ~4 spoken words, and it
 >   must carry the idea ("Sun", "falling"), not just be long.
-> ANNOTATIONS: at most 2 per beat. Each one is a short label plus the fact it states.
+> KEYWORD must appear verbatim in that beat's VO (same spelling and
+>   form, e.g. 'quasars' not 'quasar').
+> ANNOTATIONS: at most 2 on screen at once. Each one is a short label plus the fact it states.
 >   Types: marker + leader line · scale bar · data label.
 
 1. HOOK (0–3 s) [VO ≤ 8 words]
@@ -72,6 +79,8 @@ BEATS:
 
 NEW COMPONENTS NEEDED: <anything not in PROJECT_CONTEXT §3, in plain words; "none" if none>
 NOTES: <optional: voice delivery hints, music mood, anything else>
+PRONUNCIATION: <word — how to say it, e.g. 'quasar — KWAY-zar'; only
+  for names the voice may misread>
 
 ---
 
@@ -81,7 +90,8 @@ NOTES: <optional: voice delivery hints, music mood, anything else>
       within its share
 - [ ] Every fact in VO, on screen or in an annotation is listed in SOURCES
 - [ ] Hero numbers ≤ 10 characters; big numbers written in words
-- [ ] ≤ 2 annotations per beat; ≤ 1 keyword per ~4 spoken words
+- [ ] At most 2 annotations on screen at once; ≤ 1 keyword per ~4 spoken words
+- [ ] VO has no symbols/abbreviations; every KEYWORD appears verbatim in its VO
 - [ ] SCALE stated for any scene about size or distance
 - [ ] The HOOK FRAME already shows the surprising thing
 - [ ] The LOOP returns to the hook, with no call to action
@@ -104,7 +114,7 @@ SOURCES:
 
 BEATS:
 1. HOOK (0–3 s)
-   VO: "You could fit 1.3 million Earths inside the Sun."
+   VO: "1.3 million Earths fit inside the Sun."
    VISUAL: the Sun with a soft halo; Earth as a tiny dot to its left
    HERO NUMBER: 1.3 million / "Earths" / label "BY VOLUME"
    KEYWORD: Sun
