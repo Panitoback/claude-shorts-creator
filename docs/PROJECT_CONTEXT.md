@@ -3,7 +3,7 @@
 > **For:** the planning project where topics, aesthetics and scripts are developed.
 > **Pair it with:** `brand.md` (the visual and sound style contract — read it for colors, type,
 > captions, annotations, motion, safe zones and sound taste; this file never repeats it).
-> **Version:** v0.5 · 2026-11-15 · phase: *visual identity done → components and formats next*
+> **Version:** v0.6 · 2026-11-15 · phase: *visual identity done → components and formats next*
 >
 > This file describes **what can be asked for**, not how it is built. If a script asks for
 > something listed here, it can be made. If it asks for something not listed, flag it as a
@@ -13,7 +13,7 @@
 
 ## 1. What this channel is
 
-- **YouTube Shorts about the universe.** Vertical video (phone screen), usually 30–120 seconds, depending on the format (see section 5).
+- **Vertical shorts about the universe for YouTube Shorts, TikTok and Instagram Reels.** Vertical video (phone screen), usually 30–120 seconds, depending on the format (see section 5).
   Space, scale, light, gravity, time, planets, stars, the things that make the cosmos feel
   unreal but are true.
 - **Every frame is animated with code.** There is no footage, no stock video, no photos, and
@@ -92,6 +92,8 @@ brand.
 > come next (3.3). What 3.1–3.2 list was inherited from the earlier example videos and still
 > wears the old look. It will be restyled or retired. Stamps, pause cards and colored chips in
 > particular may not survive the new minimalist style.
+> Until restyled, scripts should not request Stamp, Stat chip or Pause card; describe the need
+> in plain words instead and it will be built in the new style.
 
 ### 3.1 Always available (used in every short)
 
@@ -202,7 +204,7 @@ Ideas for future formats (to be decided): *scale ladder* (zooming from small to 
   non-followers). Only with explicit approval.
 - These ranges are **provisional**. Revisit them once we have retention data from the first
   5–10 shorts.
-- **Scene length:** most beats are 3–8 seconds. A single visual held longer than ~8 seconds
+- **Scene length:** each scene or reveal step lasts 3–8 seconds; a beat can contain several steps. A single visual held longer than ~8 seconds
   needs something changing on screen.
 - **Hook:** the first spoken line should land within the first 3 seconds.
 
@@ -251,7 +253,8 @@ SOURCES:
 ---
 
 BEATS:
-> VO word budgets assume ~2.7 words per second. Total narration: ~100 words (max ~110).
+> VO word budgets assume ~2.7 words per second. Total narration ≈ TARGET LENGTH × 2.7 words
+>   (e.g. 45 s ≈ 120 words, 90 s ≈ 240 words). Stay within the format's range in §5.
 > HERO NUMBER: `value unit / "subject" / label "LABEL"`, any part optional. Value + unit
 >   ≤ 10 characters ("1.3 million" ✓, "1,300,000 Earths" ✗). Write big numbers in words.
 > KEYWORD: the word that turns gold in the caption. At most one per ~4 spoken words, and it
@@ -266,7 +269,7 @@ BEATS:
    KEYWORD: <word>
    ANNOTATIONS: <optional, max 2>
 
-2. SETUP [VO ≤ 24 words]
+2. SETUP [VO ~20% of total narration]
    VO: "<build the tension the hook promised>"
    VISUAL: <...>
    HERO NUMBER: <optional>
@@ -275,16 +278,16 @@ BEATS:
 
 3. QUIZ (optional, ~2.5 s) [VO ≤ 7 words]
    VO: "<a question the viewer can try to answer>"
-   VISUAL: <...>
+   VISUAL: use a title or caption, not the legacy Pause card (see §3 status)
 
-4. REVEAL [VO ≤ 48 words, in 2–4 steps]
+4. REVEAL [VO ~45% of total narration, 2–4 steps; longer shorts may use several SETUP/REVEAL pairs]
    VO: "<step 1>" / "<step 2>" / "<step 3>"
    VISUAL: <what changes on screen at each step; ideally the same scene evolving, not cuts>
    HERO NUMBER: <optional>
    KEYWORD: <word(s)>
    ANNOTATIONS: <optional, max 2 on screen at once>
 
-5. TWIST [VO ≤ 21 words]
+5. TWIST [VO ~20% of total narration]
    VO: "<the reframe: the line worth sending to a friend>"
    VISUAL: <...>
    HERO NUMBER: <optional>
@@ -303,7 +306,8 @@ NOTES: <optional: voice delivery hints, music mood, anything else>
 
 ### Before handing off: checklist
 
-- [ ] Total VO ≈ 100 words (≤ 110), and each beat is within its word budget
+- [ ] Total VO ≈ TARGET LENGTH × 2.7 words, within the format's range in §5; each beat roughly
+      within its share
 - [ ] Every fact in VO, on screen or in an annotation is listed in SOURCES
 - [ ] Hero numbers ≤ 10 characters; big numbers written in words
 - [ ] ≤ 2 annotations per beat; ≤ 1 keyword per ~4 spoken words
@@ -379,5 +383,7 @@ editorial, warm, with sparse scientific annotations. It is written up in `brand.
 name is still open.
 
 **Next: components and formats.** The planned components (3.3) get built in the brand style, and
-the channel's formats (section 4) get defined. After that come the Manim skill and the custom
-skills (`script-to-short`, `new-component`). Section 6 becomes final when `script-to-short` exists.
+the channel's formats (Scale, Impossible Fact, How It Works) get defined in section 4. Then: first
+short, 'What is a quasar?'. Then the custom skills (`script-to-short`, `new-component`); section 6
+becomes final when `script-to-short` exists. Then Manim, only for physics/equation scenes,
+rendered as clips inside Remotion.

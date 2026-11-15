@@ -23,7 +23,8 @@ SOURCES:
 ---
 
 BEATS:
-> VO word budgets assume ~2.7 words per second. Total narration: ~100 words (max ~110).
+> VO word budgets assume ~2.7 words per second. Total narration ≈ TARGET LENGTH × 2.7 words
+>   (e.g. 45 s ≈ 120 words, 90 s ≈ 240 words). Stay within the format's range in §5.
 > HERO NUMBER: `value unit / "subject" / label "LABEL"`, any part optional. Value + unit
 >   ≤ 10 characters ("1.3 million" ✓, "1,300,000 Earths" ✗). Write big numbers in words.
 > KEYWORD: the word that turns gold in the caption. At most one per ~4 spoken words, and it
@@ -38,7 +39,7 @@ BEATS:
    KEYWORD: <word>
    ANNOTATIONS: <optional, max 2>
 
-2. SETUP [VO ≤ 24 words]
+2. SETUP [VO ~20% of total narration]
    VO: "<build the tension the hook promised>"
    VISUAL: <...>
    HERO NUMBER: <optional>
@@ -47,16 +48,16 @@ BEATS:
 
 3. QUIZ (optional, ~2.5 s) [VO ≤ 7 words]
    VO: "<a question the viewer can try to answer>"
-   VISUAL: <...>
+   VISUAL: use a title or caption, not the legacy Pause card (see §3 status)
 
-4. REVEAL [VO ≤ 48 words, in 2–4 steps]
+4. REVEAL [VO ~45% of total narration, 2–4 steps; longer shorts may use several SETUP/REVEAL pairs]
    VO: "<step 1>" / "<step 2>" / "<step 3>"
    VISUAL: <what changes on screen at each step; ideally the same scene evolving, not cuts>
    HERO NUMBER: <optional>
    KEYWORD: <word(s)>
    ANNOTATIONS: <optional, max 2 on screen at once>
 
-5. TWIST [VO ≤ 21 words]
+5. TWIST [VO ~20% of total narration]
    VO: "<the reframe: the line worth sending to a friend>"
    VISUAL: <...>
    HERO NUMBER: <optional>
@@ -76,7 +77,8 @@ NOTES: <optional: voice delivery hints, music mood, anything else>
 
 ## Before handing off — checklist
 
-- [ ] Total VO ≈ 100 words (≤ 110), and each beat is within its word budget
+- [ ] Total VO ≈ TARGET LENGTH × 2.7 words, within the format's range in §5; each beat roughly
+      within its share
 - [ ] Every fact in VO, on screen or in an annotation is listed in SOURCES
 - [ ] Hero numbers ≤ 10 characters; big numbers written in words
 - [ ] ≤ 2 annotations per beat; ≤ 1 keyword per ~4 spoken words
