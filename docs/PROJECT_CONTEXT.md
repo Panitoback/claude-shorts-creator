@@ -3,7 +3,7 @@
 > **For:** the planning project where topics, aesthetics and scripts are developed.
 > **Pair it with:** `brand.md` (the visual and sound style contract — read it for colors, type,
 > captions, annotations, motion, safe zones and sound taste; this file never repeats it).
-> **Version:** v0.8 · 2026-11-15 · phase: *base components and formats done → first short next*
+> **Version:** v0.8.1 · 2026-11-15 · phase: *base components and formats done → first short next*
 >
 > This file describes **what can be asked for**, not how it is built. If a script asks for
 > something listed here, it can be made. If it asks for something not listed, flag it as a
@@ -99,9 +99,9 @@ All of these can arrive already in place on the first frame, so they work in a h
 
 | Component | What it shows | Options you can ask for |
 |---|---|---|
-| **Starfield** | The background sky: faint stars in real temperature colors, a few brighter ones with a soft halo, slow twinkle. Always kept clear behind text. | density, how many bright stars, twinkle on/off |
+| **Starfield** | The background sky: mostly faint stars in real temperature colors, a few bright ones with a tiny halo that twinkle. Kept clear behind text and around planets; tuned to survive platform compression. | density, how many bright stars, twinkle on/off, overall brightness (dims when something very luminous is on screen) |
 | **Glowing body** | A sun or star: limb-darkened disc with a soft halo that blooms in after the disc and breathes gently | size, position, kind by temperature: *sun* (yellow), *red*, *white*, *blue*; glow strength |
-| **Planet / moon** | A sphere lit from one side, night side falling to black. True muted colors. | which body (Mercury, Venus, Earth, Moon, Mars, Jupiter, Saturn, Uranus, Neptune), size, position, light direction, how much is lit (phase); cloud bands, ring, thin atmosphere (on by default where real) |
+| **Planet / moon** | A sphere lit from one side, night side falling to black, true muted colors, with each body's signature features: Earth's real continents (+ soft clouds), the Moon's maria and bright craters, cratered Mercury, Mars's polar caps and dark regions, Jupiter's belts and Great Red Spot, Saturn's soft bands and ring with the Cassini division, Venus's faint cloud swirls, Neptune's streaks; Uranus nearly featureless (accurate). Small bodies (under ~60 px) are simplified to color and shading. | which body (Mercury, Venus, Earth, Moon, Mars, Jupiter, Saturn, Uranus, Neptune), size, position, light direction, how much is lit (phase), which side faces us, slow rotation (e.g. Earth turning), axial tilt (Uranus ~98° with its faint ring), atmosphere glow (Earth by default), the warm wash behind it when it's the hero |
 | **Hero number** | Big serif number that counts up, gold italic unit, subject line under it, small label above | value, unit, subject, label, count up or just appear, starting value, size (hero or secondary). Long values shrink to fit the safe area. |
 | **Caption with keyword** | The narration, a few words at a time; each word brightens as it is spoken; the keyword turns gold italic with a small pop | the keyword(s) per beat, matched regardless of capitals or surrounding punctuation ("Sun" matches "Sun," and "sun."). Captions always show the VO *as written*, even when the voice was given a phonetic spelling (PRONUNCIATION). |
 | **Marker + leader line** | A ring that settles around an object, a thin blue line, a label (+ value) | what it points at, label, value, which side the label sits (below, above, left, right), a dot for objects too small to see |
@@ -410,6 +410,14 @@ BEATS:
 ## 7. Learnings
 
 What worked and what didn't. Newest first.
+
+- **Compression eats faint stars, and flicker is what it eats first.** In a low-bitrate
+  re-encode test, faint twinkling stars and a sky fading in were erased even by our own master
+  encode. Fix: bigger, brighter faint stars that hold still (only bright ones twinkle), the sky
+  present from frame 0, and a near-invisible grain against banding in dark glows. Avoid scripts
+  that rely on a sky slowly fading in mid-short.
+- **Planets need their signature, not just their color.** Color-only planets looked alike; one
+  or two real features each (continents, maria, Great Red Spot…) make them instantly readable.
 
 - **Captions show the script, not the phonetic spelling.** When a name needs a phonetic spelling
   for the voice (PRONUNCIATION), the caption still shows the written word, timed to the voice.

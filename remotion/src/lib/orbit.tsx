@@ -158,7 +158,7 @@ export const trajPath = (v: View, tr: Traj, t = 1): string => {
 // =============================================================================
 const D2R = Math.PI / 180;
 
-const orthoPt = (lon: number, lat: number, lon0: number, lat0: number): [number, number, number] => {
+export const orthoPt = (lon: number, lat: number, lon0: number, lat0: number): [number, number, number] => {
   const la = lat * D2R;
   const dl = (lon - lon0) * D2R;
   const l0 = lat0 * D2R;
@@ -170,7 +170,7 @@ const orthoPt = (lon: number, lat: number, lon0: number, lat0: number): [number,
 };
 
 // A ring, cut into the runs of it that face us, each closed back along the limb so it fills.
-const orthoRingPath = (
+export const orthoRingPath = (
   ring: [number, number][],
   v: View,
   lon0: number,

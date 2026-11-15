@@ -44,15 +44,15 @@ export const GLOW_PRESETS: Record<GlowKind, { disc: readonly string[]; corona: s
 // Planets and moons (§5): lit color, base color, night-side color. Muted true colors.
 export type PlanetKind = 'mercury' | 'venus' | 'earth' | 'moon' | 'mars' | 'jupiter' | 'saturn' | 'uranus' | 'neptune';
 export const PLANET_PRESETS: Record<PlanetKind, { lit: string; base: string; dark: string; bands?: boolean; ring?: boolean; atmosphere?: string }> = {
-  mercury: { lit: '#cfcac3', base: '#8f8a84', dark: '#2f2c29' },
+  mercury: { lit: '#c9bba8', base: '#857a6c', dark: '#2a2520' }, // warmer, darker than the Moon
   venus: { lit: '#f4e2bd', base: '#d9bb83', dark: '#5a4526' },
   earth: { lit: '#a9cdf5', base: '#4a7fc1', dark: '#14284a', atmosphere: '#9cc7ff' },
   moon: { lit: '#dcd8ce', base: '#9a978f', dark: '#2e2c29' },
   mars: { lit: '#eaa47e', base: '#c1643a', dark: '#4a1d10' },
   jupiter: { lit: '#f0dcc2', base: '#c9a27c', dark: '#4e3a27', bands: true },
   saturn: { lit: '#f3e5c4', base: '#d6bd8c', dark: '#5a4b31', bands: true, ring: true },
-  uranus: { lit: '#d6f3f5', base: '#8fd0d8', dark: '#244c52' },
-  neptune: { lit: '#a3bcf6', base: '#4b70dd', dark: '#16245a' },
+  uranus: { lit: '#dff6f6', base: '#a3dade', dark: '#2a5257' }, // pale cyan, nearly featureless
+  neptune: { lit: '#8aa8f2', base: '#3558cc', dark: '#0e1a4e' }, // deeper blue than Uranus
 };
 
 // True mean radii in km (for honest scale, §5).
