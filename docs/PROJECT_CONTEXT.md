@@ -3,7 +3,7 @@
 > **For:** the planning project where topics, aesthetics and scripts are developed.
 > **Pair it with:** `brand.md` (the visual and sound style contract — read it for colors, type,
 > captions, annotations, motion, safe zones and sound taste; this file never repeats it).
-> **Version:** v0.7 · 2026-11-15 · phase: *visual identity done → components and formats next*
+> **Version:** v0.8 · 2026-11-15 · phase: *base components and formats done → first short next*
 >
 > This file describes **what can be asked for**, not how it is built. If a script asks for
 > something listed here, it can be made. If it asks for something not listed, flag it as a
@@ -88,27 +88,41 @@ A *component* is a reusable visual building block that a script can ask for by d
 it. Options are what you can specify; anything not specified uses a sensible default from the
 brand.
 
-> **Status:** the visual identity is set (see `brand.md`), so the channel's own space components
-> come next (3.3). What 3.1–3.2 list was inherited from the earlier example videos and still
-> wears the old look. It will be restyled or retired. Stamps, pause cards and colored chips in
-> particular may not survive the new minimalist style.
-> Until restyled, scripts should not request Stamp, Stat chip or Pause card; describe the need
-> in plain words instead and it will be built in the new style.
+> **Status:** the channel's **base kit (3.1) is built** in the brand style and is what scripts
+> should ask for. 3.2–3.3 were inherited from earlier example videos and still wear the old look.
+> Don't request the old Captions, Backdrop, Stamp, Stat chip or Pause card: the base kit replaces
+> them, or describe the need in plain words and it will be built in the new style.
 
-### 3.1 Always available (used in every short)
+### 3.1 Base kit (built, brand style)
+
+All of these can arrive already in place on the first frame, so they work in a hook.
 
 | Component | What it shows | Options you can ask for |
 |---|---|---|
-| **Captions** | The narration on screen, a few words at a time, the spoken word highlighted | highlight color, size, vertical position, words per caption (default 4) |
+| **Starfield** | The background sky: faint stars in real temperature colors, a few brighter ones with a soft halo, slow twinkle. Always kept clear behind text. | density, how many bright stars, twinkle on/off |
+| **Glowing body** | A sun or star: limb-darkened disc with a soft halo that blooms in after the disc and breathes gently | size, position, kind by temperature: *sun* (yellow), *red*, *white*, *blue*; glow strength |
+| **Planet / moon** | A sphere lit from one side, night side falling to black. True muted colors. | which body (Mercury, Venus, Earth, Moon, Mars, Jupiter, Saturn, Uranus, Neptune), size, position, light direction, how much is lit (phase); cloud bands, ring, thin atmosphere (on by default where real) |
+| **Hero number** | Big serif number that counts up, gold italic unit, subject line under it, small label above | value, unit, subject, label, count up or just appear, starting value, size (hero or secondary). Long values shrink to fit the safe area. |
+| **Caption with keyword** | The narration, a few words at a time; each word brightens as it is spoken; the keyword turns gold italic with a small pop | the keyword(s) per beat, matched regardless of capitals or surrounding punctuation ("Sun" matches "Sun," and "sun."). Captions always show the VO *as written*, even when the voice was given a phonetic spelling (PRONUNCIATION). |
+| **Marker + leader line** | A ring that settles around an object, a thin blue line, a label (+ value) | what it points at, label, value, which side the label sits (below, above, left, right), a dot for objects too small to see |
+| **Scale bar** | A measured span with end ticks that draws from its center outward, with a label | what it spans, label, second line, label above or below |
+| **Data label** | A free-standing fact next to an object: small label + serif value, no line | label, value, alignment, value in gold italic when it is *the* number of the scene |
+| **Scale comparison** | Two or more bodies side by side at **true relative size**, names underneath. Anything that would be smaller than a few pixels is drawn as a dot with a ring, so it stays findable without lying about its size. | which bodies (any planet/moon above, the Sun, or a star with its real radius), the names, an optional value under each, bottoms aligned or centers aligned |
+
+Annotations (marker, scale bar, data label) count toward the **max 2 on screen at once**.
+
+### 3.2 Inherited kit (old look)
+
+| Component | What it shows | Options you can ask for |
+|---|---|---|
 | **Progress bar** | A thin line across the top that fills as the short plays | color |
 | **Big title** | One to three lines of large headline text, e.g. the hook | text per line, color per line, a smaller subtitle, size, position |
 | **Kicker** | A small label above the main visual ("STEP 2", "THE TWIST") | text, color, when it appears and disappears |
-| **Stamp** | A word slapped on at an angle for emphasis ("WRONG", "FALLING") | text, color, position, size, tilt, timing |
-| **Stat chip** | A small card with a label and a value ("Speed · 7.7 km/s") | label, value, color, position, width, timing |
-| **Pause card** | A "pause and guess" card that invites the viewer to answer | title, subtitle, how long it stays, accent color |
-| **Backdrop** | The background behind everything | base color, glow color |
 
-### 3.2 Space and orbits (inherited from the "Astronauts are falling" short)
+Replaced, don't request: Captions → *Caption with keyword*; Backdrop → *Starfield*; Stamp,
+Stat chip, Pause card → retired.
+
+### 3.3 Space and orbits (inherited from the "Astronauts are falling" short)
 
 | Component | What it shows | Options you can ask for |
 |---|---|---|
@@ -123,36 +137,27 @@ brand.
 | **Equality panel** | Two quantities side by side that turn out to be equal | both labels and values, the "=" appearing on cue, a footnote with the condition |
 
 Real physics is available behind these: orbital speed, escape velocity, orbital period and
-gravity at any altitude around Earth are *calculated*, not typed in.
+gravity at any altitude around Earth are *calculated*, not typed in. They get restyled into the
+brand when a short needs them.
 
-### 3.3 Planned (not built yet)
+### 3.4 Planned (not built yet)
 
-These come straight from the brand. Most already appear, as a one-off, in the reference scene;
-next they become reusable building blocks with options:
+| Component (planned) | Status |
+|---|---|
+| **Black hole, accretion disk, jets, host galaxy** (for "What is a quasar?") | Look being designed; not available until a direction is approved |
+| Orbit diagram, distance/zoom ruler, light ray, timeline | Ideas, not designed |
 
-| Component (planned) | What it will show | Options you'll be able to ask for (expected) |
-|---|---|---|
-| **Starfield** | The background sky: faint stars in real colors, slowly twinkling | density, how many bright stars |
-| **Glowing body** | A sun or star: bright disc with a soft halo | size, color/temperature, glow strength |
-| **Planet / moon** | A shaded sphere lit from one side | which body, size, light direction |
-| **Hero number** | Big serif number that counts up, with gold unit and subject line | value, unit, subject, small label above, count speed |
-| **Caption with keyword** | Narration on screen, the keyword in gold italic | which word is the keyword |
-| **Marker + leader line** | A ring around a tiny object, a thin line, a label | object, label text, value |
-| **Scale bar** | A measured bar with end ticks and a label | what it spans, label text |
-| **Data label** | A small blue fact next to an object | text, value |
-| **Scale comparison** | Two or more bodies side by side at true scale | which bodies |
-
-Further ideas, not yet designed: orbit diagram, distance/zoom ruler, light ray, timeline.
-Entries move into 3.1–3.2 as they get built.
+Anything else: list it under NEW COMPONENTS NEEDED in the script.
 
 ---
 
 ## 4. Formats
 
-A *format* is a reusable structure for a short. Formats for this channel are not defined yet;
-they will be designed with the components. Until then, every short follows the base structure:
+A *format* is a reusable structure for a short: what it promises the viewer, how long it runs,
+and which components carry it. Every format is built on the six-beat base below. Lengths and
+word budgets are in §5.
 
-### Base format: the six-beat short
+### Base: the six-beat short
 
 | Beat | Time | Purpose |
 |---|---|---|
@@ -163,10 +168,54 @@ they will be designed with the components. Until then, every short follows the b
 | **Twist** | ~20% | A reframe or bonus insight: the "send this to a friend" moment. |
 | **Loop** | last ~3–4 s | The last frame visually matches the first, so the replay is seamless. |
 
-Longer shorts (How It Works) may repeat Setup/Reveal pairs, one idea per beat.
+### The three formats at a glance
 
-Ideas for future formats (to be decided): *scale ladder* (zooming from small to huge),
-*myth vs fact*, *"what if"*, *one number explained*.
+| Format | Promise to the viewer | Length | Hook frame | Carried by |
+|---|---|---|---|---|
+| **Impossible Fact** | "That can't be true." One counter-intuitive fact, proven fast | 30–60 s | The fact itself, already on screen: hero number or title + the object | Hero number, Caption with keyword, Data label, Marker, Glowing body / Planet |
+| **Scale** | "I finally *feel* how big that is." A size, distance or time next to something familiar | 40–75 s | The big thing and the familiar thing already side by side, or the hero number over the big thing | Scale comparison, Hero number, Scale bar, Marker, Glowing body / Planet |
+| **How It Works** | "Oh, *that's* how it works." A mechanism explained step by step | 60–120 s | The end result, visible and striking (what the short will explain) | Any of the base kit, often plus one new component for the mechanism |
+
+### Impossible Fact
+
+- **Hook:** say the fact plainly, not as a tease. The first line *is* the claim
+  ("A day on Venus is longer than its year.").
+- **Setup:** why it sounds impossible: the intuition the viewer brings.
+- **Quiz** (works well here): "Why?" or "Guess the number."
+- **Reveal:** the reason in 2–3 steps, each step proven by one annotation or one number.
+- **Twist:** a consequence or an even stranger corollary.
+- **Loop:** back to the hook frame.
+- **Rules:** the fact must be literally true as worded (no "basically"); one fact per short;
+  every number in SOURCES.
+
+### Scale
+
+- **Hook:** the comparison is already visible, or the hero number sits over the big object
+  ("1.3 million Earths").
+- **Setup:** introduce the familiar reference (Earth, a city, a human, a second of time) and
+  mark it.
+- **Quiz** (optional): "How many fit?" / "How long would it take?"
+- **Reveal:** a ladder of 2–4 comparisons, each one bigger (or smaller) than the last; each
+  step adds one new body or one new scale bar.
+- **Twist:** flip the reference: the giant becomes a dot next to the next giant.
+- **Loop:** back to the opening comparison.
+- **Rules:** keep **one reference object** constant through the short so the viewer never loses
+  their footing. SCALE must say *true* for comparison scenes (true relative size is the default
+  for Scale comparison). If a scene can't be to scale, say *not to scale* and it will be labeled.
+
+### How It Works
+
+- **Hook:** show the end result (the glowing quasar, the eclipse, the tide), not the diagram.
+- **Setup:** the question, in one line ("But black holes don't shine. So what does?").
+- **Steps:** 2–4 SETUP → REVEAL pairs, **one idea per step**. Ideally the same scene evolving
+  (one element added per step) rather than cuts to new scenes.
+- **Twist:** what the mechanism implies (scale, age, a surprising consequence).
+- **Loop:** back to the end result, now understood.
+- **Rules:** at most one new element appears per step; at most 2 annotations on screen at once.
+  If a step needs something that isn't in §3, list it under NEW COMPONENTS NEEDED: this format
+  is where new components come from.
+
+Ideas for future formats (to be decided): *myth vs fact*, *"what if"*, *one number explained*.
 
 ---
 
@@ -362,6 +411,14 @@ BEATS:
 
 What worked and what didn't. Newest first.
 
+- **Captions show the script, not the phonetic spelling.** When a name needs a phonetic spelling
+  for the voice (PRONUNCIATION), the caption still shows the written word, timed to the voice.
+- **Keywords match regardless of capitals and punctuation.** "Sun" in KEYWORD lights up "Sun,"
+  in the VO. It still has to be the same word (§6).
+- **True scale is brutal, and that's the point.** Next to the Sun, Earth is about 4 px: it is
+  drawn as a dot with a ring rather than enlarged. Name labels need room too, so one comparison
+  row fits about 5 bodies.
+
 - **The bottom of the screen is bigger than it looks.** On a real phone, YouTube's title and
   description reach about 500 px up from the bottom, so captions sit higher than you'd guess.
 - **Big numbers must be short.** At headline size, "1.3 million" fills the safe width; the
@@ -392,8 +449,11 @@ What worked and what didn't. Newest first.
 editorial, warm, with sparse scientific annotations. It is written up in `brand.md`. The channel
 name is still open.
 
-**Next: components and formats.** The planned components (3.3) get built in the brand style, and
-the channel's formats (Scale, Impossible Fact, How It Works) get defined in section 4. Then: first
-short, 'What is a quasar?'. Then the custom skills (`script-to-short`, `new-component`); section 6
-becomes final when `script-to-short` exists. Then Manim, only for physics/equation scenes,
-rendered as clips inside Remotion.
+**Components and formats: done (base).** The base kit (3.1) is built in the brand style and the
+three formats (Impossible Fact, Scale, How It Works) are defined in section 4. The quasar pieces
+(black hole, accretion disk, jets, host galaxy) are being designed; they get built once a look is
+approved.
+
+**Next: first short, 'What is a quasar?'** Then the custom skills (`script-to-short`,
+`new-component`); section 6 becomes final when `script-to-short` exists. Then Manim, only for
+physics/equation scenes, rendered as clips inside Remotion.

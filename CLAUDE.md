@@ -23,10 +23,11 @@ vertical shorts where every pixel is Remotion TSX.
   `brand/brand.md`). Record what worked and what didn't in its Learnings section.
 - **Phase order (set by the user, don't skip ahead):**
   1. ✅ cleanup (generative tracks removed) · 2. ✅ visual identity (`brand/brand.md`)
-  3. ▶ **components + formats** in the brand style (formats: Scale, Impossible Fact, How It Works)
-     - TODO (captions component): when a VO line's `tts` differs from its `text`, display the
-       `text` words mapped onto the TTS word timestamps (today captions show the TTS words).
-  4. first short: "What is a quasar?"
+  3. ✅ **components + formats**: base kit in `remotion/src/components/` (review it in the
+     `ComponentGallery` composition); formats Scale / Impossible Fact / How It Works in
+     PROJECT_CONTEXT §4. Quasar pieces (black hole, disk, jets, host galaxy): design only, in
+     `docs/design-notes/quasar-components.md`, waiting for the user to pick a direction.
+  4. ▶ first short: "What is a quasar?"
   5. custom skills `script-to-short` and `new-component` (then §6 of PROJECT_CONTEXT becomes final)
   6. Manim — only for physics/equation scenes, rendered as clips inside Remotion
 - **Still open:** channel name; channel voice (ElevenLabs voice ID); recalibrate the ~2.7 words/s
@@ -50,7 +51,8 @@ skills win.
 
 ```
 tools/            Python tools: gen_voice, gen_sfx, gen_music, mix_sfx, mix_music
-remotion/         the Remotion project — src/lib/ (shared + niche kits), src/shots/short-N/
+remotion/         the Remotion project — src/components/ (the channel's base kit, brand style),
+                  src/lib/ (shared + inherited kits), src/shots/short-N/, src/shots/gallery/
 media/            Remotion's public root: library/ (reusable: sfx, music, logos)
                   + projects/<proj>/ (media for ONE video, created on demand)
 shorts/           TSX shorts: script.md, beats.json, sfx-plan.json each
@@ -77,8 +79,10 @@ skills-lock.json  pins the installed remotion-* skills (`npx skills install` res
   `staticFile('projects/<proj>/x')`. Reuse before you generate — check the catalogs first.
 - **Gitignored media:** `shorts/*/voice/` and `shorts/*/output/` are regenerable and never
   committed.
-- **Brand:** `brand/brand.md` and `remotion/src/brand.ts` change together. New shots use the
-  brand tokens (PALETTE, TYPE, CAPTION, ANNOTATION, MOTION, SAFE), never hard-coded values.
+- **Brand:** `brand/brand.md` and `remotion/src/brand.ts` change together. New shots are built
+  from `remotion/src/components/` + the brand tokens (PALETTE, TYPE, CAPTION, ANNOTATION, MOTION,
+  SAFE), never hard-coded values. New reusable components go in `src/components/` and get a page
+  in `ComponentGallery`.
   `BrandReference` is the brand rendered: re-check it after any token change.
 - **Safe zones:** QA every shot with `--safe` (frames.mjs / render-all.mjs) or `safeOverlay` in
   Studio; nothing important outside the safe rectangle.

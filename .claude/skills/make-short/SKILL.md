@@ -37,13 +37,18 @@ remotion/src/shots/<slug>/
 
 **Brand first:** build every visual from the tokens in `remotion/src/brand.ts` (PALETTE, BODY,
 TYPE, CAPTION, ANNOTATION, MOTION, EASE, SAFE) — never hard-coded colors, fonts or timings.
-`shots/brand/BrandReference.tsx` is the brand rendered: copy its patterns (hero number + unit +
-subject, glowing body, marker + leader line, scale bar, caption with gold keyword).
-`lib/sky.ts` = starfield (`makeStars`, `starTint`, `clearZones` — always clear stars behind text).
-Max 2 annotations per scene; honest scale when the scene is about size.
+**Base kit — use it first:** `remotion/src/components/` (import from `../../components`):
+`Starfield` (pass text blocks as `clear`), `GlowingBody`, `Planet`, `HeroNumber`,
+`KeywordCaptions`, `Marker`, `ScaleBar`, `DataLabel`, `ScaleComparison`. Every component takes
+`at` (start frame, local to its Sequence) and `warm` (fully arrived at frame 0 — use in the hook).
+See them all in the `ComponentGallery` composition (and its source for usage).
+`shots/brand/BrandReference.tsx` is the brand rendered as one scene.
+Max 2 annotations per scene; honest scale when the scene is about size. The formats (Impossible
+Fact, Scale, How It Works) and which components carry each are in PROJECT_CONTEXT §4.
 
-Inherited kit (old look — restyle before reuse): `lib/shorts.tsx` (Captions, ProgressBar, prog
-helper…), `lib/orbit.tsx` (real orbital physics + Globe/Trajectory). **Add at most ONE new
+Inherited kit (old look): `lib/shorts.tsx` — ProgressBar, BigTitle, Kicker, prog helper are still
+usable; do NOT use its Captions/Stamp/StatChip/PauseCard/ShortsBackdrop (replaced or retired).
+`lib/orbit.tsx` (real orbital physics + Globe/Trajectory) — restyle to the brand before reuse. **Add at most ONE new
 reusable component lib per short.**
 
 ## Stage 1 — script + beats
@@ -77,7 +82,8 @@ ANNOTATIONS per beat carry straight over.
   Follow vidtsx-2d-generator's hard rules (frame-based only, monotonic ranges, Easing.bezier).
 - Beats = `<Sequence>` scenes over ONE persistent canvas (the board/equation/array is the
   continuity — rewinds and evolutions happen in a single component's timeline, not cuts).
-- `Captions lines={VO}` + `ProgressBar` mounted at the ROOT (global time), scenes beneath.
+- `KeywordCaptions lines={VO} keywords={[...]}` (+ optional `ProgressBar`) mounted at the ROOT
+  (global time), scenes beneath. `keywords` = the guion's KEYWORD words (case/punctuation-insensitive).
 - **THE recurring bug: frames inside a `<Sequence>` are LOCAL.** Converting a global beat
   second to a scene cue is `local_f = global_s*fps − sequence_from`. Check every cue twice.
 - Frame-0 rule: hook scene uses `warm` props (BigTitle/EqRow) and negative `at`s so highlights/
@@ -119,11 +125,9 @@ python tools/gen_voice.py --beats shorts/<slug>/beats.json \
 - **Pronunciation (guion.md `PRONUNCIATION:`):** for a name the voice may misread, add a per-line
   `tts` field in beats.json next to `text` (e.g. `"text": "Quasars outshine galaxies."`,
   `"tts": "Kway-zars outshine galaxies."`). gen_voice.py sends `tts` to ElevenLabs (and hashes it
-  for the cache) instead of `text`. **Caveat:** the word timestamps — and therefore the captions —
-  come from the TTS text, so a respelling would show on screen. Until the captions component
-  maps `text` words onto TTS timings (TODO in CLAUDE.md, components phase), only use `tts` for
-  pronunciation-neutral changes (punctuation, hyphenation, casing, spacing), or accept the
-  respelling on screen for that line.
+  for the cache) instead of `text`. The word timestamps come from the TTS text, but
+  `KeywordCaptions` shows the `text` words mapped onto those timings (by character position), so
+  the respelling never reaches the screen. Pass the beats.json lines straight in, `tts` included.
 - Then re-render the composition (captions retimed) and mux:
   `ffmpeg -i remotion/out/<Id>.mp4 -i shorts/.../voice/voice.wav -map 0:v -map 1:a -c:v copy
    -c:a aac -b:a 192k -t <durationSec> remotion/out/<Id>-voiced.mp4`
