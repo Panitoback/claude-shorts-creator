@@ -104,6 +104,9 @@ def main():
         if float(e["at_s"]) >= end:
             continue
         clip = lib.get(e["sfx_id"])
+        if clip and clip.get("loop"):
+            missing.add(e["sfx_id"] + " (a bed, not a cue: lay it with mix_music.py --bed, one bed per short)")
+            continue
         if not clip:
             why = (" (legacy: off-brand, pick a brand clip)" if e["sfx_id"] in legacy_ids
                    else f" (superseded: use {superseded[e['sfx_id']]})" if e["sfx_id"] in superseded else "")

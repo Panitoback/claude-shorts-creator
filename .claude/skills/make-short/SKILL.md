@@ -151,7 +151,8 @@ python tools/gen_voice.py --beats shorts/<slug>/beats.json \
 
 ## Stage 5 — SFX (the suggest-sfx machinery, shorts flavor)
 
-Read `brand/brand.md` §7 + `media/library/sfx/catalog.json` (skip `"legacy": true` and `"superseded": true`
+Read `brand/brand.md` §7 + **`media/library/sfx/USAGE.md`** (when to use each clip, combo recipes,
+starting gains) + `media/library/sfx/catalog.json` (skip `"legacy": true` and `"superseded": true`
 entries; see `/suggest-sfx`). Library-first; add generic recipes to
 `palette.json` + `python tools/gen_sfx.py` only for genuine misses. Author
 `shorts/<slug>/sfx-plan.json` (preview = the -voiced.mp4, out = output/<slug>-sfx.mp4).
@@ -166,18 +167,21 @@ PYTHONIOENCODING=utf-8 python tools/mix_sfx.py shorts/<slug>/sfx-plan.json --pri
 PYTHONIOENCODING=utf-8 python tools/mix_sfx.py shorts/<slug>/sfx-plan.json
 ```
 The mix is an AUDITION — the user's ear is the audit gate before anything is called final.
-Update catalog `used_in` afterwards.
+Once approved: update catalog `used_in` and `USAGE.md` (Mix log + measured gains, combos that
+landed, clips that didn't; flip used clips' status), then commit and push.
 
 ## Stage 6 — music (optional, per video)
 
-Library beds in `media/library/music/` (gen_music.py to grow). Audition over the SFX mix:
-`python tools/mix_music.py --all --base shorts/<slug>/output/<slug>-sfx.mp4`
-(or `--bed <id>`). Hard-ducked under voice.
+ONE bed per short (USAGE.md): a music bed from `media/library/music/` (gen_music.py to grow) OR
+a space loop from the SFX library (`space-drone-loop`, `space-air-loop`, `accretion-swirl-loop`).
+Audition over the SFX mix: `python tools/mix_music.py --all --base shorts/<slug>/output/<slug>-sfx.mp4`
+(or `--bed <id>`; SFX loops default to `--under 16`; `--from/--to` for a partial bed). Ducked
+under voice, faded in/out.
 
 ## Done =
 
 script.md + beats.json derived from guion.md (facts verified) · composition QA'd frame-by-frame
 (incl. `--safe` pass) · rendered at scale 1 · voice generated with word-exact captions and muxed ·
 SFX plan authored + audition mixed (~−15.5 LUFS, awaiting the user's ear) · library used_in
-updated · **`PRODUCED.md` row added/updated** · anything learned added to the Learnings section of
+and `media/library/sfx/USAGE.md` updated · **`PRODUCED.md` row added/updated** · anything learned added to the Learnings section of
 `docs/PROJECT_CONTEXT.md` (then tell the user it changed so they re-upload it).

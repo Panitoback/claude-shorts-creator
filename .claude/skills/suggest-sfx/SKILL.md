@@ -26,6 +26,10 @@ Sound taste is a brand contract — read **`brand/brand.md` §7** every time. Th
   the real visual beats are (piece lands, digit pops, badge stamps). Read the shot, convert its
   local frame to global time: `at_s = (local_frame + sequence_from) / fps`. Do not guess — the
   cue must land on the exact frame the thing happens.
+- **`media/library/sfx/USAGE.md`** — WHEN to use each clip: roles and conflicts (one big cosmic
+  hit per short, honest physics sounds), the channel's combo recipes, bed rules, starting gains
+  per clip. Follow it; after each produced short, update it (measured gains, combos that landed,
+  clips that didn't) and the catalog's `used_in`, then commit and push.
 - **`media/library/sfx/catalog.json`** + **`palette.json`** — the library you draw from and grow.
 
 ## The library (`media/library/sfx/`) — the durable asset

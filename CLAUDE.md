@@ -40,7 +40,8 @@ vertical shorts where every pixel is Remotion TSX.
   ElevenLabs account (`eleven_text_to_sound_v3`, ~10 credits/s measured) and 4 physics sounds
   synthesized in code (`tools/synth_sfx.py`: redshift glide, pulsar ticks at a real period,
   gravitational-wave chirp; free, deterministic). Recipes in `palette.json`, source/model/license
-  per clip in `catalog.json`. Anything new must be generated with ours too. The
+  per clip in `catalog.json`; **when to use each clip in `USAGE.md`** (update it after every
+produced short). Anything new must be generated with ours too. The
   original author's clips are never used: off-brand ones in `legacy/` (`"legacy": true`), the
   replaced ones in `superseded/` (`"superseded": true`, `superseded_by`). Audition files
   (`tools/sfx_audition.py`): `media/library/sfx/audition/`.
