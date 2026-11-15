@@ -21,6 +21,16 @@ export type HeroNumberProps = {
   warm?: boolean;
 };
 
+// Warn (once per value) when the auto-fit shrinks a number: it means the script's value + unit is
+// too long for the hero slot (PROJECT_CONTEXT §5: ~10 characters). Collected by scripts/qa-log.mjs.
+const warned = new Set<string>();
+const warnShrink = (text: string, chars: number, factor: number) => {
+  const key = `${text}|${factor.toFixed(2)}`;
+  if (warned.has(key)) return;
+  warned.add(key);
+  console.warn(`[QA] HeroNumber shrunk to fit: "${text}" (${chars} characters) scaled ×${factor.toFixed(2)} — keep value + unit ≤ ~10 characters`);
+};
+
 const decimalsOf = (v: number) => Math.min(2, (String(v).split('.')[1] || '').length);
 
 export const HeroNumber: React.FC<HeroNumberProps> = ({
@@ -35,6 +45,10 @@ export const HeroNumber: React.FC<HeroNumberProps> = ({
   // than the safe rectangle, the whole block shrinks to fit (§9)
   const estW = fmt(value).length * 0.56 * TYPE.number.fontSize + (unit ? 22 + unit.length * 0.5 * TYPE.numberUnit.fontSize : 0);
   const k = Math.min(scale, (SAFE_RECT.w - 20) / estW);
+  if (k < scale - 1e-3) {
+    const text = `${fmt(value)}${unit ? ' ' + unit : ''}`;
+    warnShrink(text, text.length, k / scale);
+  }
   const s = startOf(at, warm);
   const numIn = ramp(f, s, MOTION.rise);
   const n = count ? ramp(f, s + 4, MOTION.countUp, countFrom, value) : value;

@@ -103,7 +103,15 @@ node scripts/frames.mjs <Id> 0,<hero-frames> --scale=0.5 --safe   # safe-zone ov
 READ every PNG (phone scale). Checklist: frame 0 composed & thumbnail-grade · every reveal
 synced to its beat · nothing covering the payoff element · kickers swap with the narration ·
 nothing important outside the safe rectangle in the `--safe` pass · stars cleared behind text ·
-≤2 annotations per scene · loop frame ≈ frame 0. Fix, re-render frames, only then:
+≤2 annotations per scene · loop frame ≈ frame 0.
+
+**QA warnings:** components report fixable problems as `[QA]` browser warnings; frames.mjs and
+render-all.mjs print them and write `remotion/out/qa/<Id>-qa.json`. The QA report you give the
+user MUST include a **"Shrunk hero numbers"** list from that file (value, characters, shrink
+factor), or say "none". A shrunk hero number means the guion's HERO NUMBER is over ~10 characters:
+flag it back to the script (shorter wording, e.g. "1.3 million") rather than shipping it small.
+
+Fix, re-render frames, only then:
 
 ```
 node scripts/render-all.mjs <Id> --scale=1     # -> remotion/out/<Id>.mp4

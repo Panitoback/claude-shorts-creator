@@ -6,6 +6,7 @@ import { selectComposition, renderStill } from '@remotion/renderer';
 import { mkdirSync } from 'fs';
 import { fileURLToPath } from 'url';
 import path from 'path';
+import { qaCollector } from './qa-log.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const args = process.argv.slice(2);
@@ -30,10 +31,12 @@ console.log('bundling...');
 const serveUrl = await bundle({ entryPoint: path.join(root, 'src', 'index.ts'), publicDir: path.join(root, '..', 'media') });
 const composition = await selectComposition({ serveUrl, id, inputProps });
 
+const qa = qaCollector(root, id);
 for (const frame of frames) {
   const f = Math.max(0, Math.min(composition.durationInFrames - 1, frame));
   const out = path.join(outDir, `${id}-f${String(f).padStart(4, '0')}${inputProps.safeOverlay ? '-safe' : ''}.png`);
-  await renderStill({ serveUrl, composition, inputProps, output: out, frame: f, scale: SCALE, overwrite: true, imageFormat: 'png' });
+  await renderStill({ serveUrl, composition, inputProps, output: out, frame: f, scale: SCALE, overwrite: true, imageFormat: 'png', onBrowserLog: qa.onBrowserLog });
   console.log('  ->', path.relative(root, out));
 }
+qa.write();
 console.log('done');

@@ -10,6 +10,7 @@ import { selectComposition, renderMedia, renderStill } from '@remotion/renderer'
 import { readFileSync, mkdirSync } from 'fs';
 import { fileURLToPath } from 'url';
 import path from 'path';
+import { qaCollector } from './qa-log.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const args = process.argv.slice(2);
@@ -33,6 +34,7 @@ let n = 0;
 for (const shot of manifest) {
   if (onlyIds.length && !onlyIds.includes(shot.id)) continue;
   const composition = await selectComposition({ serveUrl, id: shot.id, inputProps });
+  const qa = qaCollector(root, shot.id);
 
   if (stillMode) {
     const out = path.join(outDir, `${shot.id}${inputProps.safeOverlay ? '-safe' : ''}.png`);
@@ -40,6 +42,7 @@ for (const shot of manifest) {
       serveUrl, composition, inputProps, output: out, scale: SCALE, overwrite: true,
       frame: Math.floor(composition.durationInFrames * 0.6),
       imageFormat: shot.transparent ? 'png' : 'jpeg',
+      onBrowserLog: qa.onBrowserLog,
     });
     console.log('  still ->', path.relative(root, out));
   } else {
@@ -52,11 +55,13 @@ for (const shot of manifest) {
       pixelFormat: transparent ? 'yuva444p10le' : 'yuv420p',
       imageFormat: transparent ? 'png' : 'jpeg',
       crf: transparent ? undefined : 14, // upload master: dark skies + tiny stars need headroom before platform re-encode
+      onBrowserLog: qa.onBrowserLog,
       onProgress: ({ progress }) => process.stdout.write(`\r  ${shot.id}: ${Math.round(progress * 100)}%   `),
     });
     process.stdout.write('\n');
     console.log('  ->', path.relative(root, out));
   }
+  qa.write();
   n++;
 }
 console.log(`done: ${n} shot(s) rendered to out/`);
