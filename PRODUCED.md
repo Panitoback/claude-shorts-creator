@@ -13,5 +13,5 @@ The log of every short made for the channel. Topics and scripts come from the pl
 
 ---
 
-*Not listed:* the 11 inherited example shorts in `shorts/` (chess, math, git, Monty Hall…) from
-the original repo. They use the old look and are kept only as technique references.
+*Not listed:* `short-12-orbit`, the one inherited example short from the original repo (old look,
+kept as a technique reference).

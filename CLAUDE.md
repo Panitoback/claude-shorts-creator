@@ -12,8 +12,8 @@ vertical shorts where every pixel is Remotion TSX.
   SFX, music beds); it's paid, so say what will be generated before calling it. Don't add other
   services or install new tools without asking.
 - **Where content comes from:** topics and scripts are written in the user's separate **planning
-  project**, and arrive as `shorts/<slug>/guion.md` (handoff format: `docs/PROJECT_CONTEXT.md`
-  §6). Don't invent topics or rewrite scripts; fact-check and flag problems instead.
+  project**, and arrive as `shorts/<slug>/guion.md`, following **`shorts/script-template.md`** (mirrored in
+  `docs/PROJECT_CONTEXT.md` §6 — keep the two identical; changing it = re-upload). Don't invent topics or rewrite scripts; fact-check and flag problems instead.
 - **Record of what's done:** `PRODUCED.md`, one row per short (title, format, date, status).
   Update it whenever a short changes status.
 - **`docs/PROJECT_CONTEXT.md` is the brief the planning project reads.** Write it for a creative
@@ -26,8 +26,9 @@ vertical shorts where every pixel is Remotion TSX.
   3. ▶ **components + formats** in the brand style · 4. Manim skill
   5. custom skills `script-to-short` and `new-component` (then §6 of PROJECT_CONTEXT becomes final)
 - **Still open:** channel name; channel voice (ElevenLabs voice ID).
-- The 11 shorts in `shorts/` are **inherited examples in the old look**: technique references
-  only, not channel content.
+- `shorts/short-12-orbit` is the one **inherited example, in the old look**: a technique
+  reference only (its `lib/orbit.tsx` has real orbital physics worth reusable components), not
+  channel content.
 
 | The user asks for… | Skill | Pixels come from | Projects live in |
 |---|---|---|---|
@@ -43,7 +44,7 @@ skills win.
 ## Layout
 
 ```
-tools/            Python tools: gen_voice, gen_sfx, gen_music, mix_sfx, mix_music, gen_chords
+tools/            Python tools: gen_voice, gen_sfx, gen_music, mix_sfx, mix_music
 remotion/         the Remotion project — src/lib/ (shared + niche kits), src/shots/short-N/
 media/            Remotion's public root: library/ (reusable: sfx, music, logos)
                   + projects/<proj>/ (media for ONE video, created on demand)

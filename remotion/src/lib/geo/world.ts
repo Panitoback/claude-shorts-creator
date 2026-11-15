@@ -1,6 +1,6 @@
 // AUTO-GENERATED from Natural Earth 110m (public domain) by scratchpad/build_world.py.
-// Real lat/lon outlines. lib/map.tsx projects these itself, so the map's distortion is
-// COMPUTED, never drawn by hand — the lie the video exposes is one our own code tells.
+// Real lat/lon outlines; lib/orbit.tsx projects them onto its globe, so geography is computed,
+// never drawn by hand.
 export type Ring = [number, number][]; // [lon, lat] degrees
 export type Country = { name: string; cont: string; rings: Ring[]; km2: number };
 

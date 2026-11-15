@@ -21,22 +21,9 @@ Free to read, no login. More build guides at
 
 ## The example videos (more coming)
 
-**TSX shorts** (`shorts/`) — 11 complete productions; each folder has the script, beats
-contract, and SFX cue sheet, and the committed composition renders the exact video:
-
-| # | Niche | Title / hook |
-|---|---|---|
-| 1 | Chess | The 4-Move Checkmate — Punished |
-| 2 | Math | The ×11 Trick |
-| 3 | Algorithms | Bubble vs Quick: The Race |
-| 4 | Dev tips | `git reflog` undoes any mistake |
-| 5 | Probability | Monty Hall, Finally Intuitive |
-| 6 | Excel | Excel Reads Your Mind (Flash Fill / Ctrl+E) |
-| 8 | Cybersecurity | The URL That Isn't PayPal |
-| 9 | Music theory | The 4 Chords In Every Hit |
-| 10 | Money math | The 1% Fee That Eats 24% Of Your Retirement |
-| 11 | Geography | The Map Lied To You |
-| 12 | Physics | Astronauts Aren't Weightless. They're Falling. |
+**Inherited example** (`shorts/short-12-orbit/`): *Astronauts Aren't Weightless. They're Falling.* —
+script, beats contract and SFX cue sheet; the committed composition renders the exact video (in
+the original repo's look). The channel's own shorts are logged in `PRODUCED.md`.
 
 Rendered videos aren't committed (they're reproducible from the repo); links to published
 versions will be added here as they go live.
@@ -101,12 +88,12 @@ To just explore the compositions visually: `cd remotion && npm run studio`.
 
 ```
 .claude/skills/   the three repo skills (this is where the "editor" lives) + remotion-* skills
-tools/            Python: gen_voice, gen_sfx, gen_music, mix_sfx, mix_music, gen_chords
+tools/            Python: gen_voice, gen_sfx, gen_music, mix_sfx, mix_music
 remotion/         the Remotion project — shared kits in src/lib/,
                   one folder per video in src/shots/
 media/library/    reusable assets: SFX clips + music beds (catalogued, loudness-normalized)
 media/projects/   media for one specific video (created on demand)
-shorts/           the 11 TSX example productions
+shorts/           the channel's shorts (+ script-template.md and one inherited example)
 brand/brand.md    the style contract — make it yours
 PRODUCED.md       log of the shorts produced (title, format, date, status)
 ```

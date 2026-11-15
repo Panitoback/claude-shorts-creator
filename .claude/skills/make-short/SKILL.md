@@ -8,13 +8,14 @@ description: Build a fully-synthetic vertical short (1080×1920, ~40s) for the u
 Everything is code: no footage, no stock, **no AI-generated images or video**. One short = one
 Remotion composition fed by a beats contract, with voice and SFX layered on after render.
 
-**Input comes from the user's planning project**, not from here: `shorts/<slug>/guion.md`, in
-the handoff format of `docs/PROJECT_CONTEXT.md` §6. Topics and wording are the user's — don't
+**Input comes from the user's planning project**, not from here: `shorts/<slug>/guion.md`,
+following `shorts/script-template.md` (mirrored in `docs/PROJECT_CONTEXT.md` §6). Check it
+against the template's limits and checklist first and report anything over budget. Topics and wording are the user's — don't
 invent topics or silently rewrite the script. Fact-check it; if a fact is wrong, a line is too
 long for its window, or a beat asks for something not buildable, flag it and propose the fix.
 Visual style is fixed by **`brand/brand.md`** (code twin `remotion/src/brand.ts`) — read it first.
-The 11 shorts already in `shorts/` are inherited examples in the OLD look: useful for technique
-(frame math, captions, loops), not for style.
+`shorts/short-12-orbit` is the one inherited example in the OLD look: useful for technique
+(frame math, captions, loops, real orbital physics), not for style.
 
 Run everything from the **repo root**. Tools are stdlib-only Python 3.10+; `ffmpeg`/`node`
 must be on PATH; API keys live in `.env` (see `.env.example`).

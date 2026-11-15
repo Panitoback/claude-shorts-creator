@@ -12,7 +12,7 @@ LIBRARY-FIRST: generated lines are cached by (index, text-hash); unchanged lines
 never re-billed. --force regenerates everything.
 
 Usage:
-  python tools/gen_voice.py --beats shorts/short-1-chess/beats.json
+  python tools/gen_voice.py --beats shorts/<slug>/beats.json
   python tools/gen_voice.py --beats ... --mux remotion/out/Short1Chess.mp4   # + voiced preview
   python tools/gen_voice.py --beats ... --dry-run                            # plan only
 

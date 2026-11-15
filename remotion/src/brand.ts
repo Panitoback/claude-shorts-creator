@@ -106,38 +106,3 @@ export const SAFE_RECT = {
   w: CANVAS.W - SAFE.left - SAFE.right, // 840
   h: CANVAS.H - SAFE.top - SAFE.bottom, // 1210
 } as const;
-
-// =============================================================================
-// LEGACY — tokens of the original light "AI-studio" look. Still used by the UI-clone kits
-// (lib/browser, lib/terminal, lib/kit) of the inherited example shorts. Not the channel brand.
-// =============================================================================
-export const COLORS = {
-  accent: '#6366F1',
-  accent2: '#9b7cc4',
-  signal: '#4db8a8',
-  signalAlt: '#4ecdc4',
-  warn: '#f5d76e',
-  danger: '#e8879f',
-  ink: '#1a1a2e',
-  muted: '#6b6b7b',
-  paper: '#fffef7',
-  cream: '#faf8f5',
-  line: '#e7e3da',
-  d900: '#0d1117',
-  d800: '#161b22',
-  d600: '#30363d',
-  d400: '#8b949e',
-  d300: '#c9d1d9',
-} as const;
-export const GRADIENT = `linear-gradient(120deg, ${COLORS.accent}, ${COLORS.accent2}, ${COLORS.signal})`;
-export const RADIUS = { card: 16, panel: 14, window: 10, pill: 999 } as const;
-export const SHADOW = {
-  soft: '0 8px 32px rgba(26,26,46,0.10)',
-  card: '0 10px 40px rgba(26,26,46,0.08)',
-} as const;
-export const EASINGS = {
-  easeOut: EASE.out,
-  easeIn: EASE.in,
-  easeInOut: EASE.inOut,
-  overshoot: Easing.bezier(0.34, 1.4, 0.64, 1),
-} as const;

@@ -8,11 +8,11 @@
 // cannonball lands or doesn't land because the MATH says so. Fire it at 7.673 km/s and the
 // path closes into a circle to within 9 metres over a full 92-minute orbit; fire it at
 // 7.0 and it hits the ground 46 degrees downrange. We never assert an orbit: we compute one.
-// (Same ethos as prob.tsx's seeded Monty Carlo, map.tsx's real Mercator, gen_chords' real
+// (Same ethos as the original repo's seeded Monte Carlo, real Mercator and real
 // equal temperament.)
 //
-// The globe underneath is equally real: the same Natural Earth 110m outlines lib/map.tsx
-// uses, re-projected orthographically onto the disc.
+// The globe underneath is equally real: the Natural Earth 110m outlines in lib/geo/world.ts,
+// re-projected orthographically onto the disc.
 import React from 'react';
 import { WORLD } from './geo/world';
 import { FONT_BODY, FONT_DISPLAY } from '../fonts';
@@ -151,7 +151,7 @@ export const trajPath = (v: View, tr: Traj, t = 1): string => {
 };
 
 // =============================================================================
-// THE GLOBE — real continents, orthographic. Same Natural Earth outlines as lib/map.tsx.
+// THE GLOBE — real continents, orthographic (Natural Earth outlines from lib/geo/world.ts).
 //
 // A sphere seen from outside: rotate each vertex into view coordinates, keep the near
 // hemisphere (z > 0), and close each visible run of a ring along the limb so it still fills.
