@@ -6,7 +6,7 @@
 > **Reference scene:** the `BrandReference` composition is this document rendered on screen. If
 > it looks right, the brand is right.
 >
-> v1.1 · 2026-11-15 · direction: *Deep Field hybrid* (cinematic and editorial, with a few
+> v1.2 · 2026-11-15 · direction: *Deep Field hybrid* (cinematic and editorial, with a few
 > scientific annotations)
 
 ---
@@ -29,7 +29,8 @@
 
 | Role | Name | Value | Use |
 |---|---|---|---|
-| Background | **space** | `#05060a` | Every scene. Near-black and faintly warm, **never pure `#000`** |
+| Background | **space** | `#05060a` | Every scene. Near-black and faintly warm, **never pure `#000`** (one exception below) |
+| Black-hole shadow | **hole** | `#000000` | **The single exception:** only the shadow of a black hole. It must read as darker than space itself (light can't escape), and it sits right next to the brightest white on the channel (a quasar's disk), so the contrast carries the luminosity without flares. Nothing else, ever, is pure black. |
 | Warm wash | spaceWarm | `rgba(255,170,90,.08)` | One soft radial wash behind the hero object, and nothing more |
 | Text | **ivory** | `#f4f1ea` | Numbers, captions, titles: all primary text |
 | Text, waiting | ivoryFaint | ivory at 30 % | Caption words not yet spoken |

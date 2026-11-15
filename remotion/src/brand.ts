@@ -8,7 +8,10 @@ import { FONT_BODY, FONT_NUMBER, FONT_NUMBER_ITALIC } from './fonts';
 // =============================================================================
 export const PALETTE = {
   // surfaces
-  space: '#05060a', // the background. Near-black, faintly warm — never pure #000
+  space: '#05060a', // the background. Near-black, faintly warm — never pure #000 (except `hole`)
+  // THE single pure-black exception (brand §2): ONLY a black hole's shadow. It must read darker
+  // than space, and sits beside the channel's brightest white (a quasar disk) for contrast.
+  hole: '#000000',
   spaceWarm: 'rgba(255,170,90,0.08)', // the one soft warm wash behind the hero object
   // text
   ivory: '#f4f1ea', // all primary text: numbers, captions, titles
@@ -54,6 +57,17 @@ export const PLANET_PRESETS: Record<PlanetKind, { lit: string; base: string; dar
   uranus: { lit: '#dff6f6', base: '#a3dade', dark: '#2a5257' }, // pale cyan, nearly featureless
   neptune: { lit: '#8aa8f2', base: '#3558cc', dark: '#0e1a4e' }, // deeper blue than Uranus
 };
+
+// Quasar / black hole (§5, docs/design-notes/quasar-components.md §0). Luminosity is shown by
+// CONTRAST: a clipped near-white inner disk beside the pure-black shadow. No flares, rays or haze.
+export const QUASAR = {
+  disk: ['#fffaf0', '#ffe9b8', '#ffd58a', '#ff9a3d', '#d9561a', '#7a2a10'], // inner (hottest) → outer
+  photonRing: '#fff1d6',
+  corona: ['#fffaf0', '#ffd58a'], // core → falloff
+  coronaMax: 2.5, // corona radius at full luminosity, × the disk's outer radius (a star's is 1.5)
+  jet: '#e6eeff', // cool blue-white, never neon
+  galaxy: '#f1e6d2', // warm ivory haze
+} as const;
 
 // True mean radii in km (for honest scale, §5).
 export const RADIUS_KM = {
