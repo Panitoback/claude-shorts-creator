@@ -1,6 +1,6 @@
 ---
 name: make-short
-description: Build a fully-synthetic vertical short (1080×1920, ~40s) end-to-end from a topic — script + beats.json, linked TSX beats over a persistent canvas, phone-scale QA, render, ElevenLabs voice with exact word-synced captions, SFX audition, optional music bed. Use when the user wants to "make a short", "create a shorts video", build a TSX short for a niche (chess, math, algorithms, dev tips, Excel…), add voice/captions to a short, or continue the short-N series in this repo. This is the 100%-TSX track — for video-model pixels use make-ai-short, for the paper-collage documentary look use make-vox. Defers raw TSX crash rules to vidtsx-2d-generator and SFX taste to suggest-sfx + brand §7.
+description: Build a fully-synthetic vertical short (1080×1920, ~40s) end-to-end from a topic — script + beats.json, linked TSX beats over a persistent canvas, phone-scale QA, render, ElevenLabs voice with exact word-synced captions, SFX audition, optional music bed. Use when the user wants to "make a short", "create a shorts video", build a TSX short for a niche (chess, math, algorithms, dev tips, Excel…), add voice/captions to a short, or continue the short-N series in this repo. Defers raw TSX crash rules to vidtsx-2d-generator and SFX taste to suggest-sfx + brand §7.
 ---
 
 # make-short — fully-TSX vertical shorts, end to end
@@ -30,7 +30,7 @@ remotion/src/shots/short-N/
 Shared kit: `remotion/src/lib/shorts.tsx` (Captions, Kicker, BigTitle, Stamp, PauseCard,
 StatChip, ProgressBar, ShortsBackdrop, SAFE areas, prog helper). Niche libs so far: `lib/chess.tsx`,
 `lib/math.tsx`, `lib/algo.tsx`, `lib/sheet.tsx`, `lib/piano.tsx`, `lib/prob.tsx`, `lib/map.tsx`,
-`lib/orbit.tsx`, `lib/chart.tsx`, `lib/story.tsx`… **Add at most ONE new niche lib per short**,
+`lib/orbit.tsx`, `lib/chart.tsx`… **Add at most ONE new niche lib per short**,
 generic enough for a series.
 
 ## Stage 1 — script + beats

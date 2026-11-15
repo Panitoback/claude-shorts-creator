@@ -82,7 +82,7 @@ the show. Choose every cue by its FUNCTION (3+1 foundational sounds do the heavy
 | **Emphasis** | impact / pop | "this moment matters"; lands on the reveal | `impact-soft`, `impact-deep-soft`, `pop-reveal` |
 | **Snap** | click | small, satisfying, alive | `ui-click-soft`, `ui-toggle-on`, `ui-send` |
 
-Plus extras like `page-flip` (storybook) and `chime-reward` (the gift moment).
+Plus extras like `chime-reward` (the gift moment).
 
 - **Under the voice, always.** Quiet, tasteful, never louder than the narration. Silence is part of
   the mix; never wall-to-wall.

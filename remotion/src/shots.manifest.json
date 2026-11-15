@@ -1,13 +1,5 @@
 [
  {
-  "id": "Ai1Door",
-  "durationInSeconds": 36.4,
-  "fps": 30,
-  "width": 1080,
-  "height": 1920,
-  "transparent": false
- },
- {
   "id": "Short10Fees",
   "durationInSeconds": 42,
   "fps": 30,
@@ -80,14 +72,6 @@
   "transparent": false
  },
  {
-  "id": "Short7Kids",
-  "durationInSeconds": 55,
-  "fps": 30,
-  "width": 1080,
-  "height": 1920,
-  "transparent": false
- },
- {
   "id": "Short8Phish",
   "durationInSeconds": 43,
   "fps": 30,
@@ -98,14 +82,6 @@
  {
   "id": "Short9Chords",
   "durationInSeconds": 42,
-  "fps": 30,
-  "width": 1080,
-  "height": 1920,
-  "transparent": false
- },
- {
-  "id": "Vox1Coffee",
-  "durationInSeconds": 40.5,
   "fps": 30,
   "width": 1080,
   "height": 1920,

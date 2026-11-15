@@ -67,7 +67,7 @@ Goal: multiple niches, one per short, proving the FLOW (script → beats → lin
 4. **short-4 · Dev tip** — "Undo Any Git Mistake" (git reflog) ✅ (`Short4Reflog`; persistent `lib/terminal.tsx` canvas — no new niche lib; git-accurate reset→reflog→restore session; voice + SFX audition). Added an additive per-line `hl` highlight to `lib/terminal.tsx`.
 5. **short-5 · Probability** — "Monty Hall, Finally Intuitive" ✅ (`lib/prob.tsx`: `Door`/`Brace`/`ProbChip`/`TallyGrid`/`BigPct` + a REAL seeded `montyTrials`; the persistent 3-door canvas rewinds→annotates→collapses the 2/3 onto one door, then a live 100-game sim converges to SWITCH 66 / STAY 34; voice + SFX audition at −15.5 LUFS). Seeds the probability series: **birthday paradox · gambler's-fallacy coin run · false-positive medical test** all reuse `lib/prob.tsx`.
 6. **short-6 · Excel** — "Excel Reads Your Mind" (Flash Fill / Ctrl+E) ✅ (`lib/sheet.tsx` built themeable; voice + SFX audition). Seeds an Excel series (XLOOKUP · $ absolute refs · pivot-in-10s) — all reuse `lib/sheet.tsx`, none built yet.
-7. **short-7 · Kids story** — "Little Pip" ✅ — a NEW SUB-TYPE, not a TSX niche: 9 AI-generated 9:16 stills ken-burned in Remotion, over an emotion-tagged **ElevenLabs v3** VO (warm → playful → scared → crying → whisper → joyful). Built to stress-test the v3 delivery tags across a full emotional arc. Voice + SFX + final render. (This took the slot the Excel series had penciled in, so Excel's follow-ups slide to a later number.)
+7. **short-7 · Kids story** — removed (it was an AI-image storybook, not a TSX niche; dropped along with the generative tracks).
 8. **short-8 · Cybersecurity** — "The URL That Isn't PayPal" ✅ (`Short8Phish`; reuses `lib/browser.tsx` — no new niche lib). One persistent browser canvas: the reveal is a **camera lift into the browser's own URL bar**, not a cut, with the login page dimmed but still behind it. Annotations live *inside* the URL string as self-positioned children of each segment, so nothing needs measured coordinates and the zoom magnifies them with the text. Voice + SFX audition at −16.1 LUFS.
    - **Fact-check that changed the script:** the planned capital-`I`/lowercase-`l` homoglyph (`paypaI.com`) **does not work in a URL bar** — the WHATWG URL spec's domain parser ASCII-lowercases the host, so it renders as `paypai.com` and the dot on the `i` gives it away. That trick is real only in link text / display names / sender fields. Replaced with the **subdomain trick** (`paypal.com.secure-login.net/login` → the real site is `secure-login.net`), which is the most common structure in actual phishing, is all-ASCII, and survives every browser defense because nothing about it is malformed. Rule taught: ignore everything after the first `/`, read right-to-left, the real site is the last two parts.
    - Added two **additive** props to `lib/browser.tsx` (`url` now accepts a ReactNode, rendered unclipped so annotations can escape the pill; `uiScale` sizes the chrome for vertical) plus a z-index so chrome paints above the page, as a real browser does. Existing 16:9 shots pass strings and default `uiScale: 1` — unchanged.
@@ -115,7 +115,7 @@ is a **diagram, a UI, or a plot** — that's the honest risk, and this slate is 
 **Engines already claimed:** board of discrete pieces (chess) · equation/number-line morph (math) ·
 discrete objects + Monte Carlo (prob) · instrumented array (algo) · UI clone (terminal/vscode/
 browser/sheet) · keyboard (piano) · plotted curve (chart) · projection cartography (map) ·
-sphere + integrated trajectory (orbit) · AI stills + Ken Burns (story) · layered collage (vox).
+sphere + integrated trajectory (orbit).
 
 **Never rendered by this channel:** many independent agents · a lattice coming alive · a settling
 network · a perceptual proof · refracting light · text as the subject · a mechanism in cutaway.
@@ -140,12 +140,7 @@ scripting (the percolation threshold, n = 1.33, the seven-meanings example, ice 
 `[[shorts-verify-the-equality]]`: when the payoff is an equality, check *which two things* are
 equal, not just that they are.
 
-## The other track: `ai-video/` (generative, NOT TSX)
-
-Agreed 2026-07-14. Real AI-generated video (fal.ai via `tools/gen_clip.py`) — the blue-man
-recurring character, motivational, kids story in motion, realistic story, gym-aesthetic workout.
-**Kept in its own workspace so the two pipelines never contaminate each other's skills.** Plan and
-the character-consistency method live in `ai-video/IDEAS.md`.
+## Outros
 
 **Outros — no engagement-CTAs (locked 2026-07-12).** Ending on a comment-bait question
 ("what should I race next?", "comment your pick") is banned — it reads dated. End on
