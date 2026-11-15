@@ -51,7 +51,7 @@ for (const shot of manifest) {
       proResProfile: transparent ? '4444' : undefined,
       pixelFormat: transparent ? 'yuva444p10le' : 'yuv420p',
       imageFormat: transparent ? 'png' : 'jpeg',
-      crf: transparent ? undefined : 18,
+      crf: transparent ? undefined : 14, // upload master: dark skies + tiny stars need headroom before platform re-encode
       onProgress: ({ progress }) => process.stdout.write(`\r  ${shot.id}: ${Math.round(progress * 100)}%   `),
     });
     process.stdout.write('\n');

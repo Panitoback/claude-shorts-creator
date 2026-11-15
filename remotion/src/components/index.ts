@@ -11,3 +11,4 @@ export { DataLabel } from './DataLabel';
 export { Planet } from './Planet';
 export { ScaleComparison } from './ScaleComparison';
 export type { ScaleBody } from './ScaleComparison';
+export { Grain } from './Grain';

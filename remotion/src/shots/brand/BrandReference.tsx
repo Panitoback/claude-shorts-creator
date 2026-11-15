@@ -1,7 +1,7 @@
 import React from 'react';
 import { AbsoluteFill, interpolate, useCurrentFrame } from 'remotion';
 import { ANNOTATION, BODY, CAPTION, EASE, MOTION, PALETTE, TYPE } from '../../brand';
-import { clearZones, makeStars, starTint } from '../../lib/sky';
+import { Grain, Starfield } from '../../components';
 
 // BRAND REFERENCE SCENE — brand/brand.md made visible. Built ONLY from brand tokens, so if this
 // scene looks right, the tokens are right. 5 s: sky + Sun → count-up → two annotations → caption.
@@ -18,12 +18,12 @@ const SUN = { x: 590, y: 930, r: 240 };
 const EARTH = { x: 120, y: 860 };
 const BAR_Y = SUN.y + SUN.r + 40;
 
-const STARS = clearZones(makeStars(320, 7), [
+const CLEAR: [number, number, number, number][] = [
   [150, 210, 780, 450], // number block
   [180, 1290, 720, 120], // caption lane
   [80, 830, 230, 160], // Earth annotation
   [330, BAR_Y - 20, 520, 80], // scale bar + label
-]);
+];
 
 const CL = { extrapolateLeft: 'clamp' as const, extrapolateRight: 'clamp' as const };
 // ease a 0..1 (or from..to) ramp that starts at frame `a` and lasts `len` frames
@@ -40,7 +40,6 @@ const WORDS = [
 const BrandReference: React.FC = () => {
   const f = useCurrentFrame();
 
-  const sky = ramp(f, 0, MOTION.skyFade);
   const disc = ramp(f, 0, MOTION.discIn);
   const glow = ramp(f, 4, MOTION.glowIn);
   const breathe = 1 + MOTION.breathe * Math.sin((f / 150) * Math.PI * 2);
@@ -63,6 +62,8 @@ const BrandReference: React.FC = () => {
       <AbsoluteFill
         style={{ opacity: glow, background: `radial-gradient(900px 760px at 55% 48%, ${PALETTE.spaceWarm}, transparent 70%)` }}
       />
+      {/* sky is already there at frame 0 (survives encoding; brand §5) */}
+      <Starfield clear={CLEAR} avoid={[[SUN.x, SUN.y, SUN.r * 1.2]]} warm />
       <svg width={1080} height={1920} style={{ position: 'absolute' }}>
         <defs>
           <radialGradient id="sun" cx="46%" cy="44%" r="56%">
@@ -77,16 +78,6 @@ const BrandReference: React.FC = () => {
           </radialGradient>
         </defs>
 
-        {STARS.map((s, i) => (
-          <circle
-            key={i}
-            cx={s.x}
-            cy={s.y}
-            r={s.r * 0.8}
-            fill={starTint(s.t)}
-            opacity={sky * s.a * 0.85 * (1 - MOTION.twinkle + MOTION.twinkle * Math.sin(f / 18 + i * 1.7))}
-          />
-        ))}
 
         <circle cx={SUN.x} cy={SUN.y} r={SUN.r * 1.5 * breathe} fill="url(#corona)" opacity={glow} />
         <circle cx={SUN.x} cy={SUN.y} r={SUN.r * interpolate(disc, [0, 1], [0.96, 1])} fill="url(#sun)" opacity={disc} />
@@ -169,6 +160,7 @@ const BrandReference: React.FC = () => {
           );
         })}
       </div>
+      <Grain />
     </AbsoluteFill>
   );
 };

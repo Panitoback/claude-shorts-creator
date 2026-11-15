@@ -23,11 +23,41 @@ Shared constraints for all four pieces:
 
 ---
 
+## 0. Direction (set by the user, applies to everything below)
+
+**The quasar is the most luminous object on the channel, and that is conveyed by contrast, not by
+effects.** Concretely:
+
+- **Inner disk clips to near-white** (`#fffaf0` and up) and grades outward through gold
+  (`PALETTE.gold`, `BODY.sun` tones) to deep orange at the outer edge.
+- **Its corona is stronger than any GlowingBody:** wider (about 2.5× the disk's radius, against
+  1.5× for a star) and brighter at the core. Still a radial gradient, never a blur.
+- **True `#000` shadow at the center**: the deepest black in the channel, right next to the
+  brightest white, for maximum contrast. (This settles open question 2 below: yes.)
+- **When the quasar brightens, everything else dims:** host galaxy and background stars lose
+  brightness, the way a camera exposing for a bright source would show them. That is what sells
+  "brighter than a whole galaxy".
+- **Still forbidden:** lens flares, rays or spikes, streaks, frame-wide haze or bloom. The glow
+  stays local to the object.
+
+**One `luminosity` prop (0 to 1) drives all of it together:**
+
+| luminosity | Inner disk | Corona | Jets | Host galaxy | Starfield |
+|---|---|---|---|---|---|
+| 0 (dormant) | dim orange, no white | none | off | full brightness | full (opacity 1) |
+| 0.5 | gold, core starting to clip | 1.5× disk radius, medium | faint | ~60% | ~0.6 |
+| 1 (quasar) | clipped near-white core → gold → orange | 2.5× disk radius, strongest on the channel | full | ~15% (a ghost) | ~0.25 |
+
+Animating `luminosity` from 0 to 1 is the "switch-on" moment of the short, and it costs nothing
+extra: it only changes gradient stops and opacities. The Starfield already has an `opacity` prop,
+and the galaxy (4A/4B) gets the same treatment. Implementation: a single `Quasar` scene component
+owns `luminosity` and passes the derived values to the disk, corona, jets, galaxy and the sky.
+
 ## 1. Black hole
 
 ### 1A. Shadow + photon ring — *recommended*
-A perfectly black disc (the shadow, the only true `#000` in the channel, so it reads as darker
-than space) with a thin warm photon ring hugging it: a 2–3 px ivory-gold stroke whose light
+A perfectly black disc (the shadow: true `#000`, approved as the one exception to "never pure
+black", so it reads as darker than space) with a thin warm photon ring hugging it: a 2–3 px ivory-gold stroke whose light
 falls off outward through a radial gradient (not blur). Optionally slightly brighter on one side
 (the same side as the disk's approaching half).
 - **Reads as:** "a hole in the light". Minimal, iconic, works at any size.
@@ -122,10 +152,10 @@ bulge, a couple of faint dust-lane strokes; the whole group rotates slowly as on
 3. **Steps:** shadow alone → matter falls in, disk heats (color ramp) → jets switch on → pull
    back out to the galaxy.
 
-**Recommended set:** 1A + 2B + 3A + 4A. Total effort about **1.5–2 days**, all low render
-cost. 1B (lensing) and 4B (spiral) can come later as upgrades without redoing anything.
+**Recommended set:** 1A + 2B + 3A + 4A, plus the `luminosity` control from §0. Total effort
+about **2 days**, all low render cost. 1B (lensing) and 4B (spiral) can come later as upgrades without redoing anything.
 
 **To decide:**
 1. One option per piece (or "recommended set").
-2. Whether the shadow may use true black (`#000`), the one exception to "never pure black".
+2. ~~Whether the shadow may use true black~~: decided, yes (§0).
 3. Zoom style for the short: labeled continuous zoom, or cuts with a scale bar per level.

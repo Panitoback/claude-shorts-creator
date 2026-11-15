@@ -6,7 +6,7 @@
 > **Reference scene:** the `BrandReference` composition is this document rendered on screen. If
 > it looks right, the brand is right.
 >
-> v1.0 · 2026-11-15 · direction: *Deep Field hybrid* (cinematic and editorial, with a few
+> v1.1 · 2026-11-15 · direction: *Deep Field hybrid* (cinematic and editorial, with a few
 > scientific annotations)
 
 ---
@@ -81,14 +81,26 @@ sans. Both are free Google fonts, so nothing has to be installed.
 
 ## 5. Objects and light
 
-- **Stars:** tiny points of light, mostly faint, with only a few bright. Each one is tinted by its
-  real temperature, from red-orange through yellow and white to blue-white. They twinkle very
-  slowly and out of sync. They never sit behind text: the starfield is cleared around text blocks.
+- **Stars:** tiny points of light, mostly faint, with only a few bright ones carrying a tiny soft
+  halo. Each one is tinted by its real temperature, from red-orange through yellow and white to
+  blue-white. They never sit behind text (the starfield is cleared around text blocks) and never
+  crowd a planet (no bright stars right next to one).
+- **Built to survive compression.** Platforms re-encode every upload, and faint 1 px dots and
+  slow fades are the first thing they erase. So every star is at least ~3 px across and clearly
+  brighter than the background; **only the bright stars twinkle** (faint ones stay still: tiny
+  flickers are exactly what an encoder throws away); and the sky is already there on the first
+  frame rather than fading in mid-video. A near-invisible static grain sits over the frame so
+  dark gradients don't break into bands.
 - **Suns and glowing bodies:** a limb-darkened disc (bright core to deeper edge) with a **soft
   radial corona** about 1.5 times the disc's radius. The glow is gentle: no lens flares, no rays,
   no bloom haze over the whole frame.
 - **Planets and moons:** shaded spheres lit from one consistent direction (upper left by default),
-  in true-to-life colors. They are simple and stylized, and never photographic.
+  in true-to-life colors, each with its one or two **signature features** so no two read alike
+  (Earth's continents, the Moon's dark maria, Mars's polar cap, Jupiter's Great Red Spot,
+  Saturn's Cassini division…). They are simple and stylized, and never photographic. Detail
+  follows size: a small body is just color and shading. Planets don't emit light: no glow of
+  their own, only a soft atmosphere where one is real (Earth), fading outward, never an outline.
+- **The warm wash** (§2) sits behind the scene's hero object, whether a sun or a planet.
 - **Honest scale.** **When a scene is about size or distance, the sizes are true to scale.** If a
   true-scale object would be invisible, draw it at the smallest visible size (about 4 px), mark
   it with an annotation ring and say so in the script. Never quietly enlarge it.
@@ -164,8 +176,8 @@ does, by brightening rather than bouncing. Times are at 30 fps.
    and morphs. Ease in only for exits.
 2. **Sequence, don't stack.** Each element starts about 8 frames before the previous one settles,
    so the scene builds in a readable order: sky → object → number → annotations → caption.
-3. **Ambient life never stops:** glows breathe ±1.5 % over about 5 s and stars twinkle ±20 %,
-   slow and out of sync. A still frame still feels alive.
+3. **Ambient life never stops:** glows breathe ±1.5 % over about 5 s and the bright stars twinkle
+   ±20 %, slow and out of sync. A still frame still feels alive.
 4. **No bounce, spin, elastic, shake or hard snap.** The only overshoot allowed is the keyword's
    single soft pop.
 5. **Layout doesn't jump.** Elements are laid out in their final position from the start and only
