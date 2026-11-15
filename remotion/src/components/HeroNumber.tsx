@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useLayoutEffect, useRef, useState } from 'react';
 import { useCurrentFrame } from 'remotion';
 import { MOTION, PALETTE, SAFE_RECT, TYPE } from '../brand';
 import { ramp, riseY, startOf } from './anim';
@@ -41,11 +41,17 @@ export const HeroNumber: React.FC<HeroNumberProps> = ({
   const d = decimals ?? decimalsOf(value);
   const fmt = (n: number) =>
     grouping ? n.toLocaleString('en-US', { minimumFractionDigits: d, maximumFractionDigits: d }) : n.toFixed(d);
-  // number + unit always stay on ONE line; if that line (estimated from glyph widths) would be wider
-  // than the safe rectangle, the whole block shrinks to fit (§9)
-  const estW = fmt(value).length * 0.56 * TYPE.number.fontSize + (unit ? 22 + unit.length * 0.5 * TYPE.numberUnit.fontSize : 0);
-  const k = Math.min(scale, (SAFE_RECT.w - 20) / estW);
-  if (k < scale - 1e-3) {
+  // Number + unit always stay on ONE line. The line's real width is MEASURED after layout (fonts
+  // are loaded before Remotion renders a frame); if, at `scale`, it would leave the safe rectangle
+  // around its center `x`, the whole block shrinks to fit (§9) and a [QA] warning is logged.
+  const lineRef = useRef<HTMLSpanElement>(null);
+  const [lineW, setLineW] = useState(0);
+  useLayoutEffect(() => {
+    if (lineRef.current) setLineW(lineRef.current.offsetWidth); // offsetWidth ignores transforms
+  }, [value, unit, decimals, grouping]);
+  const half = Math.min(x - SAFE_RECT.x, SAFE_RECT.x + SAFE_RECT.w - x) - 8; // room each side of x
+  const k = lineW > 0 ? Math.min(scale, (2 * half) / lineW) : scale;
+  if (lineW > 0 && k < scale - 1e-3) {
     const text = `${fmt(value)}${unit ? ' ' + unit : ''}`;
     warnShrink(text, text.length, k / scale);
   }
@@ -60,7 +66,9 @@ export const HeroNumber: React.FC<HeroNumberProps> = ({
     <div style={{ position: 'absolute', top: y, left: x - 540, width: 1080, textAlign: 'center' }}>
       <div style={{ transform: `scale(${k})`, transformOrigin: '50% 0' }}>
         {label && <div style={{ ...TYPE.label, color: PALETTE.sciText, opacity: numIn }}>{label}</div>}
-        <div style={{ ...TYPE.number, color: PALETTE.ivory, marginTop: label ? 14 : 0, opacity: numIn, transform: riseY(numIn, MOTION.risePx), fontVariantNumeric: 'tabular-nums', whiteSpace: 'nowrap' }}>
+        <div style={{ ...TYPE.number, color: PALETTE.ivory, marginTop: label ? 14 : 0, opacity: numIn, transform: riseY(numIn, MOTION.risePx), fontVariantNumeric: 'tabular-nums', whiteSpace: 'nowrap', display: 'flex', justifyContent: 'center' }}>
+          {/* flex, not text-align: a line wider than its box must overflow EQUALLY both sides, staying centered on x */}
+          <span ref={lineRef} style={{ display: 'inline-block' }}>
           {/* final value reserves the width; the counting value is overlaid on it */}
           <span style={{ position: 'relative', display: 'inline-block' }}>
             <span style={{ visibility: 'hidden' }}>{fmt(value)}</span>
@@ -71,6 +79,7 @@ export const HeroNumber: React.FC<HeroNumberProps> = ({
               {unit}
             </span>
           )}
+          </span>
         </div>
         {subject && (
           <div style={{ ...TYPE.subject, color: PALETTE.ivory, marginTop: 4, opacity: subjIn, transform: riseY(subjIn, MOTION.risePx) }}>{subject}</div>
