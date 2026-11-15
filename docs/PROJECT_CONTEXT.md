@@ -3,7 +3,7 @@
 > **For:** the planning project where topics, aesthetics and scripts are developed.
 > **Pair it with:** `brand.md` (the visual and sound style contract — read it for colors, type,
 > captions, annotations, motion, safe zones and sound taste; this file never repeats it).
-> **Version:** v0.9 · 2026-11-15 · phase: *base components and formats done → first short next*
+> **Version:** v0.9.1 · 2026-11-15 · phase: *base components and formats done → first short next*
 >
 > This file describes **what can be asked for**, not how it is built. If a script asks for
 > something listed here, it can be made. If it asks for something not listed, flag it as a
@@ -101,7 +101,7 @@ All of these can arrive already in place on the first frame, so they work in a h
 |---|---|---|
 | **Starfield** | The background sky: mostly faint stars in real temperature colors, a few bright ones with a tiny halo that twinkle. Kept clear behind text and around planets; tuned to survive platform compression. | density, how many bright stars, twinkle on/off, overall brightness (dims when something very luminous is on screen) |
 | **Glowing body** | A sun or star: limb-darkened disc with a soft halo that blooms in after the disc and breathes gently | size, position, kind by temperature: *sun* (yellow), *red*, *white*, *blue*; glow strength |
-| **Planet / moon** | A sphere lit from one side, night side falling to black, true muted colors, with each body's signature features: Earth's real continents (+ soft clouds), the Moon's maria and bright craters, cratered Mercury, Mars's polar caps and dark regions, Jupiter's belts and Great Red Spot, Saturn's soft bands and ring with the Cassini division, Venus's faint cloud swirls, Neptune's streaks; Uranus nearly featureless (accurate). Small bodies (under ~60 px) are simplified to color and shading. | which body (Mercury, Venus, Earth, Moon, Mars, Jupiter, Saturn, Uranus, Neptune), size, position, light direction, how much is lit (phase), which side faces us, slow rotation (e.g. Earth turning), axial tilt (Uranus ~98° with its faint ring), atmosphere glow (Earth by default), the warm wash behind it when it's the hero |
+| **Planet / moon** | A sphere lit from one side, night side falling to black, true muted colors, with each body's signature features: Earth's real continents (+ soft clouds), the Moon's soft maria and bright craters, cratered Mercury (craters as soft shading, never outlines), Mars's polar caps and dark regions, Jupiter's belts and Great Red Spot, Saturn's soft bands and ring with the Cassini division, Venus's faint cloud swirls, Neptune's streaks; Uranus nearly featureless (accurate). Small bodies (under ~60 px) are simplified to color and shading. | which body (Mercury, Venus, Earth, Moon, Mars, Jupiter, Saturn, Uranus, Neptune), size, position, light direction, how much is lit (phase), which side faces us, slow rotation (e.g. Earth turning), axial tilt (Uranus ~98° with its faint ring), atmosphere glow (Earth by default), the warm wash behind it when it's the hero |
 | **Hero number** | Big serif number that counts up, gold italic unit, subject line under it, small label above | value, unit, subject, label, count up or just appear, starting value, size (hero or secondary). Long values shrink to fit the safe area. |
 | **Caption with keyword** | The narration, a few words at a time; each word brightens as it is spoken; the keyword turns gold italic with a small pop | the keyword(s) per beat, matched regardless of capitals or surrounding punctuation ("Sun" matches "Sun," and "sun."). Captions always show the VO *as written*, even when the voice was given a phonetic spelling (PRONUNCIATION). |
 | **Marker + leader line** | A ring that settles around an object, a thin blue line, a label (+ value) | what it points at, label, value, which side the label sits (below, above, left, right), a dot for objects too small to see |
@@ -149,7 +149,7 @@ shadow beside a near-white disk), never by flares, rays or haze.
 |---|---|---|
 | **Black hole** | A perfectly black shadow (the channel's only pure black) hugged by a thin warm photon ring | size, position, ring strength, which side of the ring is brighter |
 | **Accretion disk** | A tilted glowing disk around the shadow: hottest and near-white inside, grading to gold and deep orange; the side coming toward us brighter; the far side seen bent over and under the shadow | size, tilt (how edge-on), angle, brightness (dormant orange → blazing), slow drift on/off |
-| **Jets** | Two narrow beams of plasma along the spin axis, cool blue-white, with bright knots traveling outward | length, angle, brightness (they switch on as the quasar brightens) |
+| **Jets** | Two thin beams of plasma along the spin axis, cool blue-white, tapering and fading with distance, with bright knots traveling outward | length, angle, brightness (they switch on as the quasar brightens) |
 | **Host galaxy** | A calm, distant elliptical galaxy: soft warm haze and a few hundred stars | size, shape, angle, brightness |
 | **Quasar** | All of the above together, driven by one **luminosity** dial: as it rises, the disk turns white-hot, the glow grows up to 2.5× the disk, the jets switch on, and the host galaxy and background stars dim (as if the camera were exposing for the quasar) | size, position, luminosity (or a "switch-on" from dormant to full), angle and tilt, jets on/off |
 
@@ -427,6 +427,14 @@ BEATS:
 ## 7. Learnings
 
 What worked and what didn't. Newest first.
+
+- **A glow brighter than the object hides the object.** A near-white halo around the quasar
+  swallowed the disk: it shrank to an orange line and the shadow read like an eye. The white
+  now lives only on the disk's inner edge; the halo around it stays gold. Solid white jets
+  read as bars, so they are thin and fade out instead.
+- **Outlines turn planets into stickers.** Crater rings and hard-edged maria broke the sphere.
+  Soft, low-contrast shading keeps the features readable and the day/night line the strongest
+  thing on the planet.
 
 - **Compression eats faint stars, and flicker is what it eats first.** In a low-bitrate
   re-encode test, faint twinkling stars and a sky fading in were erased even by our own master

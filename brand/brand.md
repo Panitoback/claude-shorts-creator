@@ -6,7 +6,7 @@
 > **Reference scene:** the `BrandReference` composition is this document rendered on screen. If
 > it looks right, the brand is right.
 >
-> v1.2 · 2026-11-15 · direction: *Deep Field hybrid* (cinematic and editorial, with a few
+> v1.3 · 2026-11-15 · direction: *Deep Field hybrid* (cinematic and editorial, with a few
 > scientific annotations)
 
 ---
@@ -99,13 +99,17 @@ sans. Both are free Google fonts, so nothing has to be installed.
 - **Planets and moons:** shaded spheres lit from one consistent direction (upper left by default),
   in true-to-life colors, each with its one or two **signature features** so no two read alike
   (Earth's continents, the Moon's dark maria, Mars's polar cap, Jupiter's Great Red Spot,
-  Saturn's Cassini division…). They are simple and stylized, and never photographic. Detail
+  Saturn's Cassini division…). They are simple and stylized, and never photographic.
+  Surface features are soft-edged, low-contrast fills, never strokes or outlines (craters are
+  shading: a darker floor and a faint lit rim), so the terminator stays the strongest read. Detail
   follows size: a small body is just color and shading. Planets don't emit light: no glow of
   their own, only a soft atmosphere where one is real (Earth), fading outward, never an outline.
 - **The warm wash** (§2) sits behind the scene's hero object, whether a sun or a planet.
 - **Quasars are the brightest thing on the channel, by contrast alone:** a pure-black shadow
   (§2's single exception) beside an inner disk that clips to near-white and grades to gold, with
-  a corona stronger than any star's. As a quasar brightens, its galaxy and the background stars
+  a corona stronger than any star's. The near-white stays on the disk's inner edge and its
+  lensed far side; the corona around them is gold, so the disk keeps its shape. Jets are thin,
+  soft-edged and taper and fade with distance, never solid bars. As a quasar brightens, its galaxy and the background stars
   dim. Still no flares, rays or frame-wide haze.
 - **Honest scale.** **When a scene is about size or distance, the sizes are true to scale.** If a
   true-scale object would be invisible, draw it at the smallest visible size (about 4 px), mark
