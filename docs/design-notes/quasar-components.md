@@ -1,7 +1,9 @@
 # Design note — quasar components
 
-> **Status: proposal, nothing built.** Pick a direction per piece (or mix), then they get built
-> as general components (useful beyond the quasar short: any black hole, any galaxy).
+> **Status: recommended set BUILT** (1A + 2B + 3A + 4A + the §0 luminosity control) as general
+> components: `BlackHole`, `AccretionDisk`, `Jets`, `HostGalaxy`, `Quasar` (+ `quasarExposure`).
+> See ComponentGallery pages 11–15. Options 1B (lensed starfield) and 4B (spiral galaxy) remain
+> possible upgrades. Zoom: see `zoom-ruler-levels.md` (awaiting verification).
 > Brand rules applied: `brand/brand.md` §5 (objects and light, honest scale), §6 (annotations),
 > §8 (motion). PROJECT_CONTEXT §5 "hard or slow": no photographic realism, no thousands of
 > moving particles, no heavy blur.

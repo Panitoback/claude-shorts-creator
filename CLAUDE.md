@@ -25,8 +25,9 @@ vertical shorts where every pixel is Remotion TSX.
   1. ✅ cleanup (generative tracks removed) · 2. ✅ visual identity (`brand/brand.md`)
   3. ✅ **components + formats**: base kit in `remotion/src/components/` (review it in the
      `ComponentGallery` composition); formats Scale / Impossible Fact / How It Works in
-     PROJECT_CONTEXT §4. Quasar pieces (black hole, disk, jets, host galaxy): design only, in
-     `docs/design-notes/quasar-components.md`, waiting for the user to pick a direction.
+     PROJECT_CONTEXT §4. Quasar pieces built (`Quasar` + parts, design in
+     `docs/design-notes/quasar-components.md`). Zoom ruler: levels in
+     `docs/design-notes/zoom-ruler-levels.md`, waiting for the user to verify the figures.
   4. ▶ first short: "What is a quasar?"
   5. custom skills `script-to-short` and `new-component` (then §6 of PROJECT_CONTEXT becomes final)
   6. Manim — only for physics/equation scenes, rendered as clips inside Remotion

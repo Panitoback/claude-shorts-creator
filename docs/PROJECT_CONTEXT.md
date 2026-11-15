@@ -3,7 +3,7 @@
 > **For:** the planning project where topics, aesthetics and scripts are developed.
 > **Pair it with:** `brand.md` (the visual and sound style contract — read it for colors, type,
 > captions, annotations, motion, safe zones and sound taste; this file never repeats it).
-> **Version:** v0.8.1 · 2026-11-15 · phase: *base components and formats done → first short next*
+> **Version:** v0.9 · 2026-11-15 · phase: *base components and formats done → first short next*
 >
 > This file describes **what can be asked for**, not how it is built. If a script asks for
 > something listed here, it can be made. If it asks for something not listed, flag it as a
@@ -140,14 +140,31 @@ Real physics is available behind these: orbital speed, escape velocity, orbital 
 gravity at any altitude around Earth are *calculated*, not typed in. They get restyled into the
 brand when a short needs them.
 
-### 3.4 Planned (not built yet)
+### 3.4 Black holes and quasars (built, brand style)
+
+The quasar is **the most luminous object on the channel**, shown by contrast (a pure-black
+shadow beside a near-white disk), never by flares, rays or haze.
+
+| Component | What it shows | Options you can ask for |
+|---|---|---|
+| **Black hole** | A perfectly black shadow (the channel's only pure black) hugged by a thin warm photon ring | size, position, ring strength, which side of the ring is brighter |
+| **Accretion disk** | A tilted glowing disk around the shadow: hottest and near-white inside, grading to gold and deep orange; the side coming toward us brighter; the far side seen bent over and under the shadow | size, tilt (how edge-on), angle, brightness (dormant orange → blazing), slow drift on/off |
+| **Jets** | Two narrow beams of plasma along the spin axis, cool blue-white, with bright knots traveling outward | length, angle, brightness (they switch on as the quasar brightens) |
+| **Host galaxy** | A calm, distant elliptical galaxy: soft warm haze and a few hundred stars | size, shape, angle, brightness |
+| **Quasar** | All of the above together, driven by one **luminosity** dial: as it rises, the disk turns white-hot, the glow grows up to 2.5× the disk, the jets switch on, and the host galaxy and background stars dim (as if the camera were exposing for the quasar) | size, position, luminosity (or a "switch-on" from dormant to full), angle and tilt, jets on/off |
+
+### 3.5 Planned (not built yet)
 
 | Component (planned) | Status |
 |---|---|
-| **Black hole, accretion disk, jets, host galaxy** (for "What is a quasar?") | Look being designed; not available until a direction is approved |
-| Orbit diagram, distance/zoom ruler, light ray, timeline | Ideas, not designed |
+| **Zoom ruler** (continuous zoom galaxy → disk, with a scale bar that re-labels at each level) | Levels and figures sent for verification; built after approval |
+| Orbit diagram, light ray, timeline | Ideas, not designed |
 
 Anything else: list it under NEW COMPONENTS NEEDED in the script.
+
+> **Hero numbers that are too long now get flagged.** If a HERO NUMBER doesn't fit, it is shrunk
+> to stay on screen *and* reported in the production QA, so it comes back to the script for a
+> shorter wording.
 
 ---
 
@@ -459,8 +476,7 @@ name is still open.
 
 **Components and formats: done (base).** The base kit (3.1) is built in the brand style and the
 three formats (Impossible Fact, Scale, How It Works) are defined in section 4. The quasar pieces
-(black hole, accretion disk, jets, host galaxy) are being designed; they get built once a look is
-approved.
+(3.4) are built. The Zoom ruler (3.5) is next, once its figures are verified.
 
 **Next: first short, 'What is a quasar?'** Then the custom skills (`script-to-short`,
 `new-component`); section 6 becomes final when `script-to-short` exists. Then Manim, only for

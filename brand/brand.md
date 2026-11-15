@@ -102,6 +102,10 @@ sans. Both are free Google fonts, so nothing has to be installed.
   follows size: a small body is just color and shading. Planets don't emit light: no glow of
   their own, only a soft atmosphere where one is real (Earth), fading outward, never an outline.
 - **The warm wash** (§2) sits behind the scene's hero object, whether a sun or a planet.
+- **Quasars are the brightest thing on the channel, by contrast alone:** a pure-black shadow
+  (§2's single exception) beside an inner disk that clips to near-white and grades to gold, with
+  a corona stronger than any star's. As a quasar brightens, its galaxy and the background stars
+  dim. Still no flares, rays or frame-wide haze.
 - **Honest scale.** **When a scene is about size or distance, the sizes are true to scale.** If a
   true-scale object would be invisible, draw it at the smallest visible size (about 4 px), mark
   it with an annotation ring and say so in the script. Never quietly enlarge it.
