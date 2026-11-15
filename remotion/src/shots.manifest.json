@@ -8,6 +8,14 @@
   "transparent": false
  },
  {
+  "id": "ComponentGallery",
+  "durationInSeconds": 36,
+  "fps": 30,
+  "width": 1080,
+  "height": 1920,
+  "transparent": false
+ },
+ {
   "id": "Short12Orbit",
   "durationInSeconds": 42,
   "fps": 30,
