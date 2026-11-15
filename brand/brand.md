@@ -46,7 +46,8 @@
 - **Blue means science.** Cool blue is reserved for annotations: leader lines, scale bars, their
   numbers and small labels. It is never used for keywords or decoration.
 - **True-color bodies are an exception to the accents.** Earth may be its own pale blue, Mars its
-  own rust and stars their real temperature colors (§5). These are depictions, not accents.
+  own rust, stars their real temperature colors (§5) and a quasar's jets their cool blue-white.
+  These are depictions, not accents (and not annotations).
 
 ## 3. Typography
 
