@@ -69,9 +69,10 @@ Prefer a clean visual dissolve/reset that lands the last frame exactly on frame 
 loop genuinely isn't possible for a topic, just end on the payoff with no filler. Don't pad the
 tail: trim the composition so it ends shortly after the payoff, not seconds of dead air.
 
-VO rules: total words ≈ length × 2.7 (e.g. 45 s ≈ 120 words); estimate line windows at **~2.7 words/sec with slack to the next
-line's start** (tighter forces audible atempo squeeze — 3.3wps needed a 1.3× squeeze; 2.7wps
-peaked at 1.11×). Facts must be verified before animating. From `guion.md`, write `script.md` + `beats.json`
+VO rules: total words ≈ length × 2.4 (e.g. 45 s ≈ 110 words); estimate line windows at **~2.4 words/sec with slack to the next
+line's start** (tighter forces audible atempo squeeze). Measured 2026-11-15 with the channel voice
+(`shorts/_calibration/`): natural pace 2.45 w/s overall, 2.1–2.8 per line (lines with commas or
+long words are slowest); windows at 2.7 w/s needed up to 1.26× squeeze. Give comma-heavy lines extra room. Facts must be verified before animating. From `guion.md`, write `script.md` + `beats.json`
 (vo lines with estimated start/end; timeline in global SECONDS) — HERO NUMBER / KEYWORD /
 ANNOTATIONS per beat carry straight over.
 
@@ -121,14 +122,14 @@ node scripts/render-all.mjs <Id> --scale=1     # -> remotion/out/<Id>.mp4
 
 ```
 python tools/gen_voice.py --beats shorts/<slug>/beats.json \
-    --voice TX3LPaxmHKxFdv7VOQHJ --emit-ts remotion/src/shots/<slug>/vo.gen.ts
+    --emit-ts remotion/src/shots/<slug>/vo.gen.ts
 ```
 - Per-line TTS with `/with-timestamps` → REAL per-word times (tempo-scaled, global) written
   into beats.json AND `vo.gen.ts`. The shot imports `{ VO } from './vo.gen'` — captions then
   highlight on the exact spoken word. Never estimate when a voice track exists.
 - Clips are cached by text-hash: rewriting one line only re-bills that line.
-- Voice: the examples use ElevenLabs premade "Liam" (`TX3LPaxmHKxFdv7VOQHJ`); the channel voice
-  is not chosen yet — ask before the first paid generation, then use `--voice`.
+- Voice: the channel voice `JYUzXNeyCPmymMkfcicu` is gen_voice.py's default (no `--voice`
+  needed; pass `--voice` only to audition another voice).
 - ElevenLabs is paid: state roughly what will be generated before calling it.
 - **Pronunciation (guion.md `PRONUNCIATION:`):** for a name the voice may misread, add a per-line
   `tts` field in beats.json next to `text` (e.g. `"text": "Quasars outshine galaxies."`,

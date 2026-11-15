@@ -23,8 +23,8 @@ SOURCES:
 ---
 
 BEATS:
-> VO word budgets assume ~2.7 words per second. Total narration ≈ TARGET LENGTH × 2.7 words
->   (e.g. 45 s ≈ 120 words, 90 s ≈ 240 words). Stay within the format's range in §5.
+> VO word budgets assume ~2.4 words per second. Total narration ≈ TARGET LENGTH × 2.4 words
+>   (e.g. 45 s ≈ 110 words, 90 s ≈ 215 words). Stay within the format's range in §5.
 > VO is spoken AND captioned exactly as written (captions come from the
 >   voice's word timestamps). Write it as it should sound and read: no
 >   symbols or abbreviations (× % ~ km/s → 'times', 'percent', 'about',
@@ -39,7 +39,7 @@ BEATS:
 > ANNOTATIONS: at most 2 on screen at once. Each one is a short label plus the fact it states.
 >   Types: marker + leader line · scale bar · data label.
 
-1. HOOK (0–3 s) [VO ≤ 8 words]
+1. HOOK (0–3 s) [VO ≤ 7 words]
    VO: "<first line: the surprising claim>"
    VISUAL: <the hero object / scene; must match HOOK FRAME>
    HERO NUMBER: <optional>
@@ -53,7 +53,7 @@ BEATS:
    KEYWORD: <word(s), one per caption chunk>
    ANNOTATIONS: <optional, max 2>
 
-3. QUIZ (optional, ~2.5 s) [VO ≤ 7 words]
+3. QUIZ (optional, ~2.5 s) [VO ≤ 6 words]
    VO: "<a question the viewer can try to answer>"
    VISUAL: use a title or caption, not the legacy Pause card (see §3 status)
 
@@ -86,7 +86,7 @@ PRONUNCIATION: <word — how to say it, e.g. 'quasar — KWAY-zar'; only
 
 ## Before handing off — checklist
 
-- [ ] Total VO ≈ TARGET LENGTH × 2.7 words, within the format's range in §5; each beat roughly
+- [ ] Total VO ≈ TARGET LENGTH × 2.4 words, within the format's range in §5; each beat roughly
       within its share
 - [ ] Every fact in VO, on screen or in an annotation is listed in SOURCES
 - [ ] Hero numbers ≤ 10 characters; big numbers written in words

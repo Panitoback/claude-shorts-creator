@@ -17,7 +17,7 @@ Usage:
   python tools/gen_voice.py --beats ... --dry-run                            # plan only
 
 Needs ELEVENLABS_API_KEY in .env. ffmpeg/ffprobe on PATH.
-Default voice: ElevenLabs premade "Liam".
+Default voice: the channel voice (JYUzXNeyCPmymMkfcicu). Override with --voice.
 """
 import argparse
 import hashlib
@@ -29,7 +29,7 @@ import urllib.error
 import urllib.request
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DEFAULT_VOICE = "TX3LPaxmHKxFdv7VOQHJ"  # ElevenLabs premade "Liam"
+DEFAULT_VOICE = "JYUzXNeyCPmymMkfcicu"  # the channel voice (CLAUDE.md)
 DEFAULT_MODEL = "eleven_multilingual_v2"
 MAX_ATEMPO = 1.3  # never speed a line up more than 30%
 

@@ -3,7 +3,7 @@
 > **For:** the planning project where topics, aesthetics and scripts are developed.
 > **Pair it with:** `brand.md` (the visual and sound style contract — read it for colors, type,
 > captions, annotations, motion, safe zones and sound taste; this file never repeats it).
-> **Version:** v0.9.2 · 2026-11-15 · phase: *base components and formats done → first short next*
+> **Version:** v0.9.3 · 2026-11-15 · phase: *base components and formats done → first short next*
 >
 > This file describes **what can be asked for**, not how it is built. If a script asks for
 > something listed here, it can be made. If it asks for something not listed, flag it as a
@@ -260,11 +260,11 @@ Ideas for future formats (to be decided): *myth vs fact*, *"what if"*, *one numb
 - **Length depends on the format.** The content decides the length; any scene that doesn't add
   something gets cut.
 
-  | Format | Length | Narration (at ~2.7 words/s) |
+  | Format | Length | Narration (at ~2.4 words/s) |
   |---|---|---|
-  | Impossible Fact | 30–60 s | ~80–160 words |
-  | Scale | 40–75 s | ~110–200 words |
-  | How It Works | 60–120 s | ~160–320 words |
+  | Impossible Fact | 30–60 s | ~70–145 words |
+  | Scale | 40–75 s | ~95–180 words |
+  | How It Works | 60–120 s | ~145–290 words |
 
 - **Hard ceiling: 180 s** (the YouTube Shorts limit, and Instagram's limit for reaching
   non-followers). Only with explicit approval.
@@ -319,8 +319,8 @@ SOURCES:
 ---
 
 BEATS:
-> VO word budgets assume ~2.7 words per second. Total narration ≈ TARGET LENGTH × 2.7 words
->   (e.g. 45 s ≈ 120 words, 90 s ≈ 240 words). Stay within the format's range in §5.
+> VO word budgets assume ~2.4 words per second. Total narration ≈ TARGET LENGTH × 2.4 words
+>   (e.g. 45 s ≈ 110 words, 90 s ≈ 215 words). Stay within the format's range in §5.
 > VO is spoken AND captioned exactly as written (captions come from the
 >   voice's word timestamps). Write it as it should sound and read: no
 >   symbols or abbreviations (× % ~ km/s → 'times', 'percent', 'about',
@@ -335,7 +335,7 @@ BEATS:
 > ANNOTATIONS: at most 2 on screen at once. Each one is a short label plus the fact it states.
 >   Types: marker + leader line · scale bar · data label.
 
-1. HOOK (0–3 s) [VO ≤ 8 words]
+1. HOOK (0–3 s) [VO ≤ 7 words]
    VO: "<first line: the surprising claim>"
    VISUAL: <the hero object / scene; must match HOOK FRAME>
    HERO NUMBER: <optional>
@@ -349,7 +349,7 @@ BEATS:
    KEYWORD: <word(s), one per caption chunk>
    ANNOTATIONS: <optional, max 2>
 
-3. QUIZ (optional, ~2.5 s) [VO ≤ 7 words]
+3. QUIZ (optional, ~2.5 s) [VO ≤ 6 words]
    VO: "<a question the viewer can try to answer>"
    VISUAL: use a title or caption, not the legacy Pause card (see §3 status)
 
@@ -381,7 +381,7 @@ PRONUNCIATION: <word — how to say it, e.g. 'quasar — KWAY-zar'; only
 
 ### Before handing off: checklist
 
-- [ ] Total VO ≈ TARGET LENGTH × 2.7 words, within the format's range in §5; each beat roughly
+- [ ] Total VO ≈ TARGET LENGTH × 2.4 words, within the format's range in §5; each beat roughly
       within its share
 - [ ] Every fact in VO, on screen or in an annotation is listed in SOURCES
 - [ ] Hero numbers ≤ 10 characters; big numbers written in words
@@ -475,8 +475,9 @@ What worked and what didn't. Newest first.
   the drop matched the curve of the *orbit*, not of the ground.)
 - **Scripts break on wrong facts, so fact-check before animating.** A planned phishing example
   turned out to be impossible in real browsers; the script changed, and the video improved.
-- **Write for ~2.7 words per second.** Faster lines had to be sped up noticeably and sounded
-  rushed.
+- **Write for ~2.4 words per second.** Measured with the channel voice: it speaks at ~2.45 words/s
+  on its own (slower on lines with commas or long words). Budgeted at 2.7, the last lines had to be
+  sped up by up to 26%, which sounds rushed. Short, plain sentences keep it natural.
 - **Comment-bait endings feel dated.** End on the payoff and loop.
 - **Sound stays under the voice.** Calm, sparse effects on the 2–3 key moments; never noise
   textures under narration.

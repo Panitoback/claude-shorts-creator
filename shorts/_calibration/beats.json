@@ -1,0 +1,282 @@
+{
+  "_note": "Voice calibration fixture (not a short). Windows are exactly 2.7 words/s, no slack: the tempo squeeze gen_voice.py reports is the pacing error. Re-run with a new voice: python tools/gen_voice.py --beats shorts/_calibration/beats.json",
+  "format": {
+    "durationSec": 18.95
+  },
+  "vo": [
+    {
+      "text": "A quasar is a black hole that refuses to stay quiet.",
+      "start": 0.3,
+      "end": 4.24,
+      "words": [
+        {
+          "w": "A",
+          "start": 0.3,
+          "end": 0.404
+        },
+        {
+          "w": "quasar",
+          "start": 0.486,
+          "end": 0.95
+        },
+        {
+          "w": "is",
+          "start": 1.008,
+          "end": 1.089
+        },
+        {
+          "w": "a",
+          "start": 1.148,
+          "end": 1.182
+        },
+        {
+          "w": "black",
+          "start": 1.264,
+          "end": 1.554
+        },
+        {
+          "w": "hole",
+          "start": 1.612,
+          "end": 1.879
+        },
+        {
+          "w": "that",
+          "start": 1.914,
+          "end": 2.03
+        },
+        {
+          "w": "refuses",
+          "start": 2.088,
+          "end": 2.61
+        },
+        {
+          "w": "to",
+          "start": 2.68,
+          "end": 2.75
+        },
+        {
+          "w": "stay",
+          "start": 2.808,
+          "end": 3.028
+        },
+        {
+          "w": "quiet.",
+          "start": 3.098,
+          "end": 4.247
+        }
+      ]
+    },
+    {
+      "text": "Gas spirals in so fast that it heats up and glows brighter than a trillion suns.",
+      "start": 4.42,
+      "end": 10.35,
+      "words": [
+        {
+          "w": "Gas",
+          "start": 4.42,
+          "end": 4.741
+        },
+        {
+          "w": "spirals",
+          "start": 4.785,
+          "end": 5.25
+        },
+        {
+          "w": "in",
+          "start": 5.316,
+          "end": 5.404
+        },
+        {
+          "w": "so",
+          "start": 5.515,
+          "end": 5.726
+        },
+        {
+          "w": "fast",
+          "start": 5.836,
+          "end": 6.301
+        },
+        {
+          "w": "that",
+          "start": 6.534,
+          "end": 6.699
+        },
+        {
+          "w": "it",
+          "start": 6.743,
+          "end": 6.82
+        },
+        {
+          "w": "heats",
+          "start": 6.887,
+          "end": 7.163
+        },
+        {
+          "w": "up",
+          "start": 7.242,
+          "end": 7.363
+        },
+        {
+          "w": "and",
+          "start": 7.418,
+          "end": 7.496
+        },
+        {
+          "w": "glows",
+          "start": 7.562,
+          "end": 7.861
+        },
+        {
+          "w": "brighter",
+          "start": 7.95,
+          "end": 8.303
+        },
+        {
+          "w": "than",
+          "start": 8.348,
+          "end": 8.469
+        },
+        {
+          "w": "a",
+          "start": 8.502,
+          "end": 8.524
+        },
+        {
+          "w": "trillion",
+          "start": 8.58,
+          "end": 9.011
+        },
+        {
+          "w": "suns.",
+          "start": 9.122,
+          "end": 10.35
+        }
+      ]
+    },
+    {
+      "text": "That light has crossed billions of light-years just to reach us tonight.",
+      "start": 10.4,
+      "end": 14.84,
+      "words": [
+        {
+          "w": "That",
+          "start": 10.4,
+          "end": 10.632
+        },
+        {
+          "w": "light",
+          "start": 10.693,
+          "end": 10.904
+        },
+        {
+          "w": "has",
+          "start": 10.935,
+          "end": 11.015
+        },
+        {
+          "w": "crossed",
+          "start": 11.076,
+          "end": 11.389
+        },
+        {
+          "w": "billions",
+          "start": 11.499,
+          "end": 11.944
+        },
+        {
+          "w": "of",
+          "start": 11.984,
+          "end": 12.035
+        },
+        {
+          "w": "light-years",
+          "start": 12.116,
+          "end": 12.62
+        },
+        {
+          "w": "just",
+          "start": 12.862,
+          "end": 13.125
+        },
+        {
+          "w": "to",
+          "start": 13.155,
+          "end": 13.215
+        },
+        {
+          "w": "reach",
+          "start": 13.316,
+          "end": 13.508
+        },
+        {
+          "w": "us",
+          "start": 13.548,
+          "end": 13.629
+        },
+        {
+          "w": "tonight.",
+          "start": 13.679,
+          "end": 14.84
+        }
+      ]
+    },
+    {
+      "text": "One quasar can outshine every star in its galaxy, combined.",
+      "start": 14.89,
+      "end": 18.6,
+      "words": [
+        {
+          "w": "One",
+          "start": 14.89,
+          "end": 15.129
+        },
+        {
+          "w": "quasar",
+          "start": 15.175,
+          "end": 15.569
+        },
+        {
+          "w": "can",
+          "start": 15.615,
+          "end": 15.717
+        },
+        {
+          "w": "outshine",
+          "start": 15.753,
+          "end": 16.175
+        },
+        {
+          "w": "every",
+          "start": 16.249,
+          "end": 16.534
+        },
+        {
+          "w": "star",
+          "start": 16.598,
+          "end": 16.856
+        },
+        {
+          "w": "in",
+          "start": 16.892,
+          "end": 16.938
+        },
+        {
+          "w": "its",
+          "start": 16.984,
+          "end": 17.085
+        },
+        {
+          "w": "galaxy,",
+          "start": 17.121,
+          "end": 17.663
+        },
+        {
+          "w": "combined.",
+          "start": 17.828,
+          "end": 18.6
+        }
+      ]
+    }
+  ],
+  "voiceStatus": "elevenlabs:JYUzXNeyCPmymMkfcicu"
+}
