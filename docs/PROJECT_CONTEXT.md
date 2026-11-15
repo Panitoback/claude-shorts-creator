@@ -3,7 +3,7 @@
 > **For:** the planning project where topics, aesthetics and scripts are developed.
 > **Pair it with:** `brand.md` (the visual and sound style contract — read it for colors, type,
 > captions, annotations, motion, safe zones and sound taste; this file never repeats it).
-> **Version:** v0.4 · 2026-11-15 · phase: *visual identity done → components and formats next*
+> **Version:** v0.5 · 2026-11-15 · phase: *visual identity done → components and formats next*
 >
 > This file describes **what can be asked for**, not how it is built. If a script asks for
 > something listed here, it can be made. If it asks for something not listed, flag it as a
@@ -13,7 +13,7 @@
 
 ## 1. What this channel is
 
-- **YouTube Shorts about the universe.** Vertical video (phone screen), about 40 seconds each.
+- **YouTube Shorts about the universe.** Vertical video (phone screen), usually 30–120 seconds, depending on the format (see section 5).
   Space, scale, light, gravity, time, planets, stars, the things that make the cosmos feel
   unreal but are true.
 - **Every frame is animated with code.** There is no footage, no stock video, no photos, and
@@ -150,16 +150,18 @@ Entries move into 3.1–3.2 as they get built.
 A *format* is a reusable structure for a short. Formats for this channel are not defined yet;
 they will be designed with the components. Until then, every short follows the base structure:
 
-### Base format: the six-beat short (~38–42 s)
+### Base format: the six-beat short
 
 | Beat | Time | Purpose |
 |---|---|---|
-| **Hook** | 0–3 s | The very first frame is fully composed and already shows the surprising thing. It is also the thumbnail. No fade from black. |
-| **Setup** | 3–12 s | Show the situation fast; build the tension the hook promised. |
+| **Hook** | 0–3 s (always fixed) | The very first frame is fully composed and already shows the surprising thing. It is also the thumbnail. No fade from black. |
+| **Setup** | ~20% | Show the situation fast; build the tension the hook promised. |
 | **Quiz** *(optional)* | ~2.5 s | "Pause. Can you guess?" Drives comments and rewatches. |
-| **Reveal** | 12–30 s | The payoff in 2–4 steps, each step landing on a spoken word. |
-| **Twist** | 30–38 s | A reframe or bonus insight: the "send this to a friend" moment. |
-| **Loop** | 38–42 s | The last frame visually matches the first, so the replay is seamless. |
+| **Reveal** | ~45% | The payoff in 2–4 steps, each step landing on a spoken word. |
+| **Twist** | ~20% | A reframe or bonus insight: the "send this to a friend" moment. |
+| **Loop** | last ~3–4 s | The last frame visually matches the first, so the replay is seamless. |
+
+Longer shorts (How It Works) may repeat Setup/Reveal pairs, one idea per beat.
 
 Ideas for future formats (to be decided): *scale ladder* (zooming from small to huge),
 *myth vs fact*, *"what if"*, *one number explained*.
@@ -187,9 +189,19 @@ Ideas for future formats (to be decided): *scale ladder* (zooming from small to 
   "2.5D" (spheres with shading, layered depth) works well.
 
 ### Timing and length
-- **Total length:** 38–42 seconds.
-- **Narration:** about **100 words** total, written to be read at roughly **2.7 words per
-  second**. Longer lines get squeezed and sound rushed.
+- **Length depends on the format.** The content decides the length; any scene that doesn't add
+  something gets cut.
+
+  | Format | Length | Narration (at ~2.7 words/s) |
+  |---|---|---|
+  | Impossible Fact | 30–60 s | ~80–160 words |
+  | Scale | 40–75 s | ~110–200 words |
+  | How It Works | 60–120 s | ~160–320 words |
+
+- **Hard ceiling: 180 s** (the YouTube Shorts limit, and Instagram's limit for reaching
+  non-followers). Only with explicit approval.
+- These ranges are **provisional**. Revisit them once we have retention data from the first
+  5–10 shorts.
 - **Scene length:** most beats are 3–8 seconds. A single visual held longer than ~8 seconds
   needs something changing on screen.
 - **Hook:** the first spoken line should land within the first 3 seconds.
@@ -223,9 +235,10 @@ lives in the repo as `shorts/script-template.md`, and the two are kept identical
 brackets; going over one gets flagged before production.
 
 ```
+FORMAT: Scale | Impossible Fact | How It Works
+TARGET LENGTH: XX s
 TITLE: <the short's title, as it would appear on YouTube> [≤ 60 characters]
 SLUG: <folder name: lowercase-with-dashes, e.g. sun-volume> [2–4 words]
-FORMAT: six-beat <until the channel's own formats exist, always six-beat>
 TONE: <calm awe | playful | eerie | matter-of-fact>
 HOOK FRAME: <what the very first frame shows. It is also the thumbnail, so the surprising thing must already be visible>
 SCALE: <true | not to scale> <required if any scene is about size or distance; say which scenes>
@@ -253,7 +266,7 @@ BEATS:
    KEYWORD: <word>
    ANNOTATIONS: <optional, max 2>
 
-2. SETUP (3–12 s) [VO ≤ 24 words]
+2. SETUP [VO ≤ 24 words]
    VO: "<build the tension the hook promised>"
    VISUAL: <...>
    HERO NUMBER: <optional>
@@ -264,21 +277,21 @@ BEATS:
    VO: "<a question the viewer can try to answer>"
    VISUAL: <...>
 
-4. REVEAL (12–30 s) [VO ≤ 48 words, in 2–4 steps]
+4. REVEAL [VO ≤ 48 words, in 2–4 steps]
    VO: "<step 1>" / "<step 2>" / "<step 3>"
    VISUAL: <what changes on screen at each step; ideally the same scene evolving, not cuts>
    HERO NUMBER: <optional>
    KEYWORD: <word(s)>
    ANNOTATIONS: <optional, max 2 on screen at once>
 
-5. TWIST (30–38 s) [VO ≤ 21 words]
+5. TWIST [VO ≤ 21 words]
    VO: "<the reframe: the line worth sending to a friend>"
    VISUAL: <...>
    HERO NUMBER: <optional>
    KEYWORD: <word>
    ANNOTATIONS: <optional, max 2>
 
-6. LOOP (38–42 s) [VO ≤ 10 words, or none]
+6. LOOP [VO ≤ 10 words, or none]
    VO: "<optional short closing line. No 'like and subscribe', no questions to the audience>"
    VISUAL: returns to the HOOK FRAME, so the replay is seamless
 
@@ -301,9 +314,10 @@ NOTES: <optional: voice delivery hints, music mood, anything else>
 ### Example (first two beats)
 
 ```
+FORMAT: Scale
+TARGET LENGTH: 45 s
 TITLE: 1.3 Million Earths Fit Inside the Sun
 SLUG: sun-volume
-FORMAT: six-beat
 TONE: calm awe
 HOOK FRAME: the Sun, huge and glowing; a tiny Earth marked beside it; "1.3 million Earths"
 SCALE: true (beats 1–2)
@@ -320,7 +334,7 @@ BEATS:
    KEYWORD: Sun
    ANNOTATIONS: marker on Earth — "EARTH ×1"
 
-2. SETUP (3–12 s)
+2. SETUP
    VO: "Side by side, the Sun is 109 Earths wide. That's not a drawing trick; this is the real scale."
    VISUAL: the scale bar draws under the Sun; the Earth marker stays
    HERO NUMBER: (none)

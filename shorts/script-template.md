@@ -7,9 +7,10 @@
 
 ---
 
+FORMAT: Scale | Impossible Fact | How It Works
+TARGET LENGTH: XX s
 TITLE: <the short's title, as it would appear on YouTube> [≤ 60 characters]
 SLUG: <folder name: lowercase-with-dashes, e.g. sun-volume> [2–4 words]
-FORMAT: six-beat <until the channel's own formats exist, always six-beat>
 TONE: <calm awe | playful | eerie | matter-of-fact>
 HOOK FRAME: <what the very first frame shows. It is also the thumbnail, so the surprising thing must already be visible>
 SCALE: <true | not to scale> <required if any scene is about size or distance; say which scenes>
@@ -37,7 +38,7 @@ BEATS:
    KEYWORD: <word>
    ANNOTATIONS: <optional, max 2>
 
-2. SETUP (3–12 s) [VO ≤ 24 words]
+2. SETUP [VO ≤ 24 words]
    VO: "<build the tension the hook promised>"
    VISUAL: <...>
    HERO NUMBER: <optional>
@@ -48,21 +49,21 @@ BEATS:
    VO: "<a question the viewer can try to answer>"
    VISUAL: <...>
 
-4. REVEAL (12–30 s) [VO ≤ 48 words, in 2–4 steps]
+4. REVEAL [VO ≤ 48 words, in 2–4 steps]
    VO: "<step 1>" / "<step 2>" / "<step 3>"
    VISUAL: <what changes on screen at each step; ideally the same scene evolving, not cuts>
    HERO NUMBER: <optional>
    KEYWORD: <word(s)>
    ANNOTATIONS: <optional, max 2 on screen at once>
 
-5. TWIST (30–38 s) [VO ≤ 21 words]
+5. TWIST [VO ≤ 21 words]
    VO: "<the reframe: the line worth sending to a friend>"
    VISUAL: <...>
    HERO NUMBER: <optional>
    KEYWORD: <word>
    ANNOTATIONS: <optional, max 2>
 
-6. LOOP (38–42 s) [VO ≤ 10 words, or none]
+6. LOOP [VO ≤ 10 words, or none]
    VO: "<optional short closing line. No 'like and subscribe', no questions to the audience>"
    VISUAL: returns to the HOOK FRAME, so the replay is seamless
 
@@ -87,9 +88,10 @@ NOTES: <optional: voice delivery hints, music mood, anything else>
 
 ## Example (two beats)
 
+FORMAT: Scale
+TARGET LENGTH: 45 s
 TITLE: 1.3 Million Earths Fit Inside the Sun
 SLUG: sun-volume
-FORMAT: six-beat
 TONE: calm awe
 HOOK FRAME: the Sun, huge and glowing; a tiny Earth marked beside it; "1.3 million Earths"
 SCALE: true (beats 1–2)
@@ -106,7 +108,7 @@ BEATS:
    KEYWORD: Sun
    ANNOTATIONS: marker on Earth — "EARTH ×1"
 
-2. SETUP (3–12 s)
+2. SETUP
    VO: "Side by side, the Sun is 109 Earths wide. That's not a drawing trick; this is the real scale."
    VISUAL: the scale bar draws under the Sun; the Earth marker stays
    HERO NUMBER: (none)

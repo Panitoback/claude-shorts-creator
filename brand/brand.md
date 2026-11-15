@@ -200,7 +200,8 @@ That leaves a **safe rectangle of 840 × 1210 px** from (60, 210) to (900, 1420)
 
 ## 10. Delivery
 
-- **1080×1920, 30 fps, 38–42 s**, rendered at full scale.
+- **1080×1920, 30 fps**, rendered at full scale. **Length depends on the format** (ranges in
+  `docs/PROJECT_CONTEXT.md` §5); hard ceiling 180 s, only with explicit approval.
 - **Frame 0 is the thumbnail.** It is fully composed, with the payoff visible and no fade from
   black. (The 5-second reference scene animates in from empty; a real short pre-rolls its hook so
   that frame 0 is already complete.)

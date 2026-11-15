@@ -13,7 +13,7 @@ frame-0==last-frame loops, and no dated engagement-CTA outros.
 ## 📖 Read the guide
 
 I wrote up the whole system on my site, including the six-beat grammar that decides whether a
-40-second short is worth finishing:
+short is worth finishing:
 **[Make Faceless YouTube Shorts With Claude Code](https://learnwithhasan.com/guide/how-to-make-faceless-youtube-shorts-with-claude-code/?utm_source=github&utm_medium=readme&utm_campaign=claude-faceless-shorts-creator&utm_content=body)**
 
 Free to read, no login. More build guides at

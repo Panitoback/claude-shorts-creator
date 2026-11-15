@@ -1,6 +1,6 @@
 ---
 name: make-short
-description: Build a fully-synthetic vertical short (1080×1920, ~40s) for the universe channel end-to-end from the user's script (shorts/<slug>/guion.md, written in their planning project) — beats.json, linked TSX beats over a persistent canvas, phone-scale QA, render, ElevenLabs voice with exact word-synced captions, SFX audition, optional music bed. Use when the user wants to "make a short", "produce guion.md", "create a shorts video", add voice/captions to a short, or re-render one. Defers raw TSX crash rules to vidtsx-2d-generator and SFX taste to suggest-sfx + brand/brand.md §7.
+description: Build a fully-synthetic vertical short (1080×1920, 30–120 s depending on format) for the universe channel end-to-end from the user's script (shorts/<slug>/guion.md, written in their planning project) — beats.json, linked TSX beats over a persistent canvas, phone-scale QA, render, ElevenLabs voice with exact word-synced captions, SFX audition, optional music bed. Use when the user wants to "make a short", "produce guion.md", "create a shorts video", add voice/captions to a short, or re-render one. Defers raw TSX crash rules to vidtsx-2d-generator and SFX taste to suggest-sfx + brand/brand.md §7.
 ---
 
 # make-short — fully-TSX vertical shorts, end to end
@@ -48,10 +48,14 @@ reusable component lib per short.**
 
 ## Stage 1 — script + beats
 
-Beat grammar (~38–42s): **HOOK** (0–3.4s, frame 0 FULLY composed — the payoff already visible,
-no fade from black) → **SETUP** → optional **QUIZ** (PauseCard, ~2.5s — drives comments) →
-**REVEAL** in 2–4 steps, each synced to a VO word → **TWIST** → **LOOP** (last frame == frame 0,
-dissolving the payoff back into the intro so it replays seamlessly).
+Length comes from guion.md's FORMAT + TARGET LENGTH (ranges: `docs/PROJECT_CONTEXT.md` §5 —
+Impossible Fact 30–60 s, Scale 40–75 s, How It Works 60–120 s; hard ceiling 180 s, only with
+explicit approval). Beat grammar, as shares of the total: **HOOK** (0–3 s, always fixed; frame 0 FULLY composed — the payoff already visible,
+no fade from black) → **SETUP** ~20% → optional **QUIZ** (~2.5 s — drives comments) →
+**REVEAL** ~45%, in 2–4 steps, each synced to a VO word → **TWIST** ~20% → **LOOP** last ~3–4 s
+(last frame == frame 0,
+dissolving the payoff back into the intro so it replays seamlessly). Longer shorts (How It
+Works) may repeat Setup/Reveal pairs, one idea per beat.
 
 **Outros — no fluff.** NEVER end on an old-school engagement-CTA — no "what should I do next?",
 no "comment below", no "which one should I break down". They read as dated. End on the PAYOFF
@@ -60,7 +64,7 @@ Prefer a clean visual dissolve/reset that lands the last frame exactly on frame 
 loop genuinely isn't possible for a topic, just end on the payoff with no filler. Don't pad the
 tail: trim the composition so it ends shortly after the payoff, not seconds of dead air.
 
-VO rules: ~100 words total, estimate line windows at **~2.7 words/sec with slack to the next
+VO rules: total words ≈ length × 2.7 (e.g. 45 s ≈ 120 words); estimate line windows at **~2.7 words/sec with slack to the next
 line's start** (tighter forces audible atempo squeeze — 3.3wps needed a 1.3× squeeze; 2.7wps
 peaked at 1.11×). Facts must be verified before animating. From `guion.md`, write `script.md` + `beats.json`
 (vo lines with estimated start/end; timeline in global SECONDS) — HERO NUMBER / KEYWORD /
@@ -68,7 +72,8 @@ ANNOTATIONS per beat carry straight over.
 
 ## Stage 2 — the composition
 
-- One `.tsx` under `remotion/src/shots/<slug>/`, `compositionConfig` 1080×1920 @30, ~42s.
+- One `.tsx` under `remotion/src/shots/<slug>/`, `compositionConfig` 1080×1920 @30, `durationInSeconds` = the
+  guion's TARGET LENGTH (adjusted to the real voice length after Stage 4).
   Follow vidtsx-2d-generator's hard rules (frame-based only, monotonic ranges, Easing.bezier).
 - Beats = `<Sequence>` scenes over ONE persistent canvas (the board/equation/array is the
   continuity — rewinds and evolutions happen in a single component's timeline, not cuts).
@@ -113,7 +118,7 @@ python tools/gen_voice.py --beats shorts/<slug>/beats.json \
 - ElevenLabs is paid: state roughly what will be generated before calling it.
 - Then re-render the composition (captions retimed) and mux:
   `ffmpeg -i remotion/out/<Id>.mp4 -i shorts/.../voice/voice.wav -map 0:v -map 1:a -c:v copy
-   -c:a aac -b:a 192k -t 42 remotion/out/<Id>-voiced.mp4`
+   -c:a aac -b:a 192k -t <durationSec> remotion/out/<Id>-voiced.mp4`
 
 ## Stage 5 — SFX (the suggest-sfx machinery, shorts flavor)
 
