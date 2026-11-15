@@ -1,8 +1,8 @@
 import React from 'react';
-import { AbsoluteFill, Sequence } from 'remotion';
+import { AbsoluteFill, interpolate, Sequence, useCurrentFrame } from 'remotion';
 import { PALETTE, TYPE } from '../../brand';
 import {
-  CaptionLine, DataLabel, GlowingBody, Grain, HeroNumber, KeywordCaptions, Marker, Planet, ScaleBar, ScaleComparison, Starfield,
+  AccretionDisk, BlackHole, CaptionLine, DataLabel, GlowingBody, Grain, HostGalaxy, Jets, Quasar, quasarExposure, HeroNumber, KeywordCaptions, Marker, Planet, ScaleBar, ScaleComparison, Starfield,
 } from '../../components';
 import { PlanetKind } from '../../brand';
 
@@ -14,7 +14,7 @@ const PAGE = 120;
 
 export const compositionConfig = {
   id: 'ComponentGallery',
-  durationInSeconds: 40, // 10 pages × PAGE frames
+  durationInSeconds: 60, // 15 pages × PAGE frames
   fps: 30,
   width: 1080,
   height: 1920,
@@ -22,7 +22,7 @@ export const compositionConfig = {
 
 const Header: React.FC<{ n: number; title: string; note: string }> = ({ n, title, note }) => (
   <div style={{ position: 'absolute', top: 70, left: 60, right: 180 }}>
-    <div style={{ ...TYPE.annotation, color: PALETTE.gold, fontSize: 24 }}>{`${n} / 10 · ${title}`}</div>
+    <div style={{ ...TYPE.annotation, color: PALETTE.gold, fontSize: 24 }}>{`${n} / 15 · ${title}`}</div>
     <div style={{ ...TYPE.annotation, color: PALETTE.sciText, fontSize: 20, letterSpacing: 1, textTransform: 'none', marginTop: 8, opacity: 0.8 }}>{note}</div>
   </div>
 );
@@ -49,6 +49,21 @@ const PLANETS: PlanetKind[] = ['mercury', 'venus', 'earth', 'moon', 'mars', 'jup
 const SMALL = PLANETS.map((_, i) => [215 + (i % 3) * 250, 900 + Math.floor(i / 3) * 150] as const);
 // page 9: every body at hero size (≈216 px across → full detail)
 const BIG = PLANETS.map((_, i) => [200 + (i % 3) * 280, 380 + Math.floor(i / 3) * 330] as const);
+
+// page 15: luminosity sweeps 0 → 1; galaxy and sky dim with it (quasarExposure)
+const QuasarSweep: React.FC = () => {
+  const f = useCurrentFrame();
+  const l = interpolate(f, [10, 100], [0, 1], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
+  const exp = quasarExposure(l);
+  return (
+    <>
+      <Starfield count={260} opacity={exp.stars} warm />
+      <HostGalaxy x={480} y={800} rx={400} dim={exp.galaxy} warm />
+      <Quasar x={480} y={800} shadowR={26} luminosity={l} warm />
+      <Small x={480} y={1290}>{`luminosity ${l.toFixed(2)} · galaxy ${exp.galaxy.toFixed(2)} · stars ${exp.stars.toFixed(2)}`}</Small>
+    </>
+  );
+};
 
 export const ComponentGallery: React.FC = () => (
   <AbsoluteFill style={{ background: PALETTE.space }}>
@@ -77,9 +92,12 @@ export const ComponentGallery: React.FC = () => (
 
     {/* 3 HERO NUMBER */}
     <Sequence from={PAGE * 2} durationInFrames={PAGE}>
-      <Starfield count={200} clear={[[60, 210, 840, 520], [60, 900, 840, 420]]} warm />
+      <Starfield count={200} clear={[[60, 210, 840, 680], [60, 900, 840, 420]]} warm />
       <HeroNumber value={1.3} unit="million" subject="Earths" label="By volume" />
       <HeroNumber value={299792} grouping unit="km/s" subject="the speed of light" y={960} scale={0.55} at={30} />
+      {/* too long on purpose: auto-shrinks AND logs a [QA] warning (see out/qa/ComponentGallery-qa.json) */}
+      <HeroNumber value={1300000} grouping unit="Earths" y={640} at={15} />
+      <Small x={480} y={850}>{'too long → auto-shrinks + QA warning'}</Small>
       <Header n={3} title="Hero number" note="count-up 48f · final width reserved · unit gold italic · scale 0.55 + grouping (bottom)" />
     </Sequence>
 
@@ -159,6 +177,55 @@ export const ComponentGallery: React.FC = () => (
         at={30}
       />
       <Header n={10} title="Scale comparison" note="true relative size · <4 px → 4 px + ring · auto-fit to 720 px · labels never collide" />
+    </Sequence>
+
+    {/* 11 BLACK HOLE */}
+    <Sequence from={PAGE * 10} durationInFrames={PAGE}>
+      <Starfield count={220} avoid={[[480, 640, 160], [480, 1120, 70]]} warm />
+      <BlackHole x={480} y={640} r={130} />
+      <Small x={480} y={820}>{'r 130 · photon ring brighter on the left'}</Small>
+      <BlackHole x={480} y={1120} r={48} brightSide={null} at={14} />
+      <Small x={480} y={1185}>{'brightSide={null} · even ring'}</Small>
+      <Header n={11} title="Black hole" note="pure #000 shadow (the one brand exception) + thin photon ring, falloff by gradient, no blur" />
+    </Sequence>
+
+    {/* 12 ACCRETION DISK */}
+    <Sequence from={PAGE * 11} durationInFrames={PAGE}>
+      <Starfield count={220} avoid={[[480, 640, 430], [480, 1110, 220]]} warm />
+      <AccretionDisk x={480} y={640} shadowR={88} layer="back" />
+      <BlackHole x={480} y={640} r={88} />
+      <AccretionDisk x={480} y={640} shadowR={88} layer="front" />
+      <Small x={480} y={880}>{'luminosity 1 · lensed far side · drift'}</Small>
+      <AccretionDisk x={480} y={1110} shadowR={40} luminosity={0.15} tilt={0.32} angle={6} layer="back" />
+      <BlackHole x={480} y={1110} r={40} ring={0.5} />
+      <AccretionDisk x={480} y={1110} shadowR={40} luminosity={0.15} tilt={0.32} angle={6} layer="front" />
+      <Small x={480} y={1200}>{'luminosity 0.15 (dormant) · tilt 0.32'}</Small>
+      <Header n={12} title="Accretion disk" note="hot near-white inside → gold → orange · approaching side brighter · far side bent over and under the shadow" />
+    </Sequence>
+
+    {/* 13 JETS */}
+    <Sequence from={PAGE * 12} durationInFrames={PAGE}>
+      <Starfield count={220} warm />
+      <Jets x={480} y={800} length={540} angle={-8} />
+      <AccretionDisk x={480} y={800} shadowR={34} layer="back" />
+      <BlackHole x={480} y={800} r={34} />
+      <AccretionDisk x={480} y={800} shadowR={34} layer="front" />
+      <Small x={640} y={1180}>{'knots travel outward'}</Small>
+      <Header n={13} title="Jets" note="narrow tapered beams along the spin axis · cool blue-white · traveling knots · switch on with luminosity" />
+    </Sequence>
+
+    {/* 14 HOST GALAXY */}
+    <Sequence from={PAGE * 13} durationInFrames={PAGE}>
+      <Starfield count={220} avoid={[[480, 780, 420]]} warm />
+      <HostGalaxy x={480} y={780} rx={410} />
+      <Small x={480} y={1150}>{'dim 1 · 260 static stars · warm ivory haze'}</Small>
+      <Header n={14} title="Host galaxy" note="stacked soft hazes + stars dense toward the core · `dim` lowers it when the quasar brightens" />
+    </Sequence>
+
+    {/* 15 QUASAR — luminosity drives everything */}
+    <Sequence from={PAGE * 14} durationInFrames={PAGE}>
+      <QuasarSweep />
+      <Header n={15} title="Quasar · luminosity 0 → 1" note="disk clips to near-white · corona up to 2.5× the disk · jets switch on · galaxy and stars dim" />
     </Sequence>
     <Grain />
   </AbsoluteFill>
