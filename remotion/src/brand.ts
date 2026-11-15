@@ -32,6 +32,35 @@ export const BODY = {
 // Real star colors by temperature (cool → hot). Pick by a 0..1 temperature.
 export const STAR_TINTS = ['#ffb38a', '#ffd9a8', '#fff6ea', '#e6eeff', '#b9d0ff'] as const;
 
+// Glowing bodies by temperature (§5): disc core → limb, plus corona color. True-color depictions.
+export type GlowKind = 'sun' | 'red' | 'white' | 'blue';
+export const GLOW_PRESETS: Record<GlowKind, { disc: readonly string[]; corona: string }> = {
+  sun: { disc: BODY.sun, corona: BODY.corona },
+  red: { disc: ['#ffe2cc', '#ffa477', '#e8653a', '#a8341c'], corona: 'rgba(255,122,80,0.24)' },
+  white: { disc: ['#ffffff', '#f3f1ff', '#d9dcff', '#a8b2f0'], corona: 'rgba(205,212,255,0.22)' },
+  blue: { disc: ['#f4f8ff', '#cfe0ff', '#93b8ff', '#4f78e0'], corona: 'rgba(140,180,255,0.26)' },
+};
+
+// Planets and moons (§5): lit color, base color, night-side color. Muted true colors.
+export type PlanetKind = 'mercury' | 'venus' | 'earth' | 'moon' | 'mars' | 'jupiter' | 'saturn' | 'uranus' | 'neptune';
+export const PLANET_PRESETS: Record<PlanetKind, { lit: string; base: string; dark: string; bands?: boolean; ring?: boolean; atmosphere?: string }> = {
+  mercury: { lit: '#cfcac3', base: '#8f8a84', dark: '#2f2c29' },
+  venus: { lit: '#f4e2bd', base: '#d9bb83', dark: '#5a4526' },
+  earth: { lit: '#a9cdf5', base: '#4a7fc1', dark: '#14284a', atmosphere: '#9cc7ff' },
+  moon: { lit: '#dcd8ce', base: '#9a978f', dark: '#2e2c29' },
+  mars: { lit: '#eaa47e', base: '#c1643a', dark: '#4a1d10' },
+  jupiter: { lit: '#f0dcc2', base: '#c9a27c', dark: '#4e3a27', bands: true },
+  saturn: { lit: '#f3e5c4', base: '#d6bd8c', dark: '#5a4b31', bands: true, ring: true },
+  uranus: { lit: '#d6f3f5', base: '#8fd0d8', dark: '#244c52' },
+  neptune: { lit: '#a3bcf6', base: '#4b70dd', dark: '#16245a' },
+};
+
+// True mean radii in km (for honest scale, §5).
+export const RADIUS_KM = {
+  sun: 696340, mercury: 2440, venus: 6052, earth: 6371, moon: 1737, mars: 3390,
+  jupiter: 69911, saturn: 58232, uranus: 25362, neptune: 24622,
+} as const;
+
 // =============================================================================
 // §3 TYPOGRAPHY — roles, not fonts. Sizes are px on the 1080×1920 canvas.
 // =============================================================================
