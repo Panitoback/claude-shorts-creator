@@ -166,7 +166,7 @@ does, by brightening rather than bouncing. Times are at 30 fps.
 
 | Moment | Duration | How |
 |---|---|---|
-| Starfield appears | 20 frames (0.7 s) | fade in |
+| Starfield | present from frame 0 | no fade-in: the sky is already there on the first frame (§5) |
 | A body appears | 30 frames (1 s) | fade in plus scale 0.96 → 1 |
 | Its glow blooms | 46 frames (1.5 s) | fades in **slower than the body**, so light follows the object |
 | A number counts up | 48 frames (1.6 s) | counts to its value, easing out (fast start, gentle landing) |
