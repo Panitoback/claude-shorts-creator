@@ -66,6 +66,7 @@ const QuasarSweep: React.FC = () => {
 };
 
 export const ComponentGallery: React.FC = () => (
+  <Grain>
   <AbsoluteFill style={{ background: PALETTE.space }}>
     {/* 1 STARFIELD */}
     <Sequence durationInFrames={PAGE}>
@@ -227,8 +228,8 @@ export const ComponentGallery: React.FC = () => (
       <QuasarSweep />
       <Header n={15} title="Quasar · luminosity 0 → 1" note="disk clips to near-white · corona up to 2.5× the disk · jets switch on · galaxy and stars dim" />
     </Sequence>
-    <Grain />
   </AbsoluteFill>
+  </Grain>
 );
 
 export default ComponentGallery;

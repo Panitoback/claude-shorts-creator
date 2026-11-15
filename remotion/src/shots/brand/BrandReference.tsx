@@ -58,6 +58,7 @@ const BrandReference: React.FC = () => {
   const rise = (p: number) => `translateY(${(1 - p) * MOTION.risePx}px)`;
 
   return (
+    <Grain>
     <AbsoluteFill style={{ background: PALETTE.space }}>
       <AbsoluteFill
         style={{ opacity: glow, background: `radial-gradient(900px 760px at 55% 48%, ${PALETTE.spaceWarm}, transparent 70%)` }}
@@ -160,8 +161,8 @@ const BrandReference: React.FC = () => {
           );
         })}
       </div>
-      <Grain />
     </AbsoluteFill>
+    </Grain>
   );
 };
 

@@ -92,7 +92,7 @@ sans. Both are free Google fonts, so nothing has to be installed.
   brighter than the background; **only the bright stars twinkle** (faint ones stay still: tiny
   flickers are exactly what an encoder throws away); and the sky is already there on the first
   frame rather than fading in mid-video. A near-invisible static grain sits over the frame so
-  dark gradients don't break into bands.
+  dark gradients don't break into bands; it skips pure black, so a black hole's shadow stays `#000`.
 - **Suns and glowing bodies:** a limb-darkened disc (bright core to deeper edge) with a **soft
   radial corona** about 1.5 times the disc's radius. The glow is gentle: no lens flares, no rays,
   no bloom haze over the whole frame.
