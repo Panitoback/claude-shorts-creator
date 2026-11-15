@@ -83,7 +83,7 @@ Sound taste is a brand contract — read **`brand/brand.md` §7** every time. Th
      −1.5 dBFS peak ceiling BEFORE reaching the −20 LUFS loudness target, so they catalog ~3–5 dB
      quieter than sustained clips. Their plan `gain_db` must be **~3–5 dB higher** than the brand
      table implies. The audibility check above is what surfaces this.
-   - **SHORTS calibration.** Under a short's near-continuous narration (~2.7 w/s, few gaps) a
+   - **SHORTS calibration.** Under a short's near-continuous narration (~2.4 w/s, few gaps) a
      conservative gain table is **4–8 dB too quiet across the board** — the duck + voice masking
      eat everything. Proven landing zone: transitions/whooshes **−3**, story pops/impacts **0..+3**,
      stamps/snaps **0..+7**, layered-hero risers **0..+2**. Start a short's plan there.

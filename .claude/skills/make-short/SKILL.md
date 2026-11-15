@@ -72,8 +72,8 @@ tail: trim the composition so it ends shortly after the payoff, not seconds of d
 VO rules: total words ≈ length × 2.4 (e.g. 45 s ≈ 110 words); estimate line windows at **~2.4 words/sec with slack to the next
 line's start** (tighter forces audible atempo squeeze). Measured 2026-11-15 with the channel voice
 (`shorts/_calibration/`): v4 Turbo with delivery tags 2.55 w/s overall, 2.05–2.8 per line (v2 was
-2.45); lines with commas or an emphatic ending are slowest and needed 1.32× squeeze at 2.7 w/s
-windows (over the 1.3 cap). Give comma-heavy lines extra room. Facts must be verified before animating. From `guion.md`, write `script.md` + `beats.json`
+2.45); lines with commas or an emphatic ending are slowest and needed 1.32× squeeze in the 2.7 w/s test
+windows (over the 1.3 cap), hence the 2.4 budget. Give comma-heavy lines extra room. Facts must be verified before animating. From `guion.md`, write `script.md` + `beats.json`
 (vo lines with estimated start/end; timeline in global SECONDS) — HERO NUMBER / KEYWORD /
 ANNOTATIONS per beat carry straight over.
 
