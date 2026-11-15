@@ -33,7 +33,7 @@ Scripts can ask for any of it by name:
   unit in gold italic, and what it counts underneath. One per scene.
 - **Small label** above the number, for context: "BY VOLUME".
 - **Hero object:** one glowing body (here the Sun) with a soft halo.
-- **Annotations** (cool blue, thin, at most 2 per scene): a *marker* on a tiny object with a
+- **Annotations** (cool blue, thin, at most 2 on screen at once): a *marker* on a tiny object with a
   *leader line* and label ("EARTH ×1"), and a *scale bar* with a label ("109 × EARTH'S WIDTH").
 - **Caption** with one **keyword** in gold italic: "fit inside the *Sun*".
 - **Honest scale:** when a scene is about size, sizes are true. Earth really is that tiny next
@@ -283,7 +283,7 @@ Ideas for future formats (to be decided): *myth vs fact*, *"what if"*, *one numb
 - **Titles** (statements without a number): up to 3 lines, about **12–14 characters per line**
   at full size.
 - **Labels and annotations:** 1–4 words, short ("EARTH ×1", "109 × EARTH'S WIDTH").
-- **Annotations:** at most **2 per scene**, and every one must state a checked fact.
+- **Annotations:** at most **2 on screen at once**, and every one must state a checked fact.
 
 ### Where things can go
 - The apps cover the screen edges: tabs at the top, the title and description across the bottom,
