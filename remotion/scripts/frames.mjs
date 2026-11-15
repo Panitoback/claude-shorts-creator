@@ -35,7 +35,7 @@ const qa = qaCollector(root, id);
 for (const frame of frames) {
   const f = Math.max(0, Math.min(composition.durationInFrames - 1, frame));
   const out = path.join(outDir, `${id}-f${String(f).padStart(4, '0')}${inputProps.safeOverlay ? '-safe' : ''}.png`);
-  await renderStill({ serveUrl, composition, inputProps, output: out, frame: f, scale: SCALE, overwrite: true, imageFormat: 'png', onBrowserLog: qa.onBrowserLog });
+  await renderStill({ serveUrl, composition, inputProps, output: out, frame: f, scale: SCALE, overwrite: true, imageFormat: 'png', chromiumOptions: { gl: 'angle' }, onBrowserLog: qa.onBrowserLog });
   console.log('  ->', path.relative(root, out));
 }
 qa.write();

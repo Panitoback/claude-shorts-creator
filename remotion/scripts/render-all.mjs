@@ -4,7 +4,7 @@
 //   node scripts/render-all.mjs --still         -> render a poster PNG per shot instead of video
 //   add --safe to any of these to draw the safe-zone overlay (QA only)
 // Opaque shots -> out/<id>.mp4 (h264). transparent:true shots -> out/<id>.mov (ProRes 4444 + alpha).
-// Rendered at scale 2 (author 1080p -> 4K output) to composite crisply over the 4K master.
+// Rendered at scale 1 by default: 1080x1920, the channel's final size (--scale=2 for a 4K master).
 import { bundle } from '@remotion/bundler';
 import { selectComposition, renderMedia, renderStill } from '@remotion/renderer';
 import { readFileSync, mkdirSync } from 'fs';
@@ -18,8 +18,11 @@ const stillMode = args.includes('--still');
 const scaleArg = args.find((a) => a.startsWith('--scale='));
 // --safe: draw the safe-zone debug overlay (brand/brand.md §9) — QA only, never for finals.
 const inputProps = args.includes('--safe') ? { safeOverlay: true } : {};
-const SCALE = scaleArg ? Number(scaleArg.split('=')[1]) : 2;
+const SCALE = scaleArg ? Number(scaleArg.split('=')[1]) : 1;
 const onlyIds = args.filter((a) => !a.startsWith('--'));
+// GPU rendering via ANGLE (see remotion.config.ts); --gl=default to compare without it
+const glArg = args.find((a) => a.startsWith('--gl='));
+const chromiumOptions = { gl: glArg ? (glArg.split('=')[1] === 'default' ? null : glArg.split('=')[1]) : 'angle' };
 
 const manifest = JSON.parse(readFileSync(path.join(root, 'src', 'shots.manifest.json'), 'utf8'));
 const outDir = path.join(root, 'out');
@@ -39,7 +42,7 @@ for (const shot of manifest) {
   if (stillMode) {
     const out = path.join(outDir, `${shot.id}${inputProps.safeOverlay ? '-safe' : ''}.png`);
     await renderStill({
-      serveUrl, composition, inputProps, output: out, scale: SCALE, overwrite: true,
+      serveUrl, composition, inputProps, output: out, scale: SCALE, overwrite: true, chromiumOptions,
       frame: Math.floor(composition.durationInFrames * 0.6),
       imageFormat: shot.transparent ? 'png' : 'jpeg',
       onBrowserLog: qa.onBrowserLog,
@@ -49,7 +52,7 @@ for (const shot of manifest) {
     const transparent = !!shot.transparent;
     const out = path.join(outDir, `${shot.id}${inputProps.safeOverlay ? '-safe' : ''}.${transparent ? 'mov' : 'mp4'}`);
     await renderMedia({
-      serveUrl, composition, inputProps, outputLocation: out, scale: SCALE, overwrite: true,
+      serveUrl, composition, inputProps, outputLocation: out, scale: SCALE, overwrite: true, chromiumOptions,
       codec: transparent ? 'prores' : 'h264',
       proResProfile: transparent ? '4444' : undefined,
       pixelFormat: transparent ? 'yuva444p10le' : 'yuv420p',
