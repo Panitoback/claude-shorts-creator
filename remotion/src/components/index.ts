@@ -12,3 +12,8 @@ export { Planet } from './Planet';
 export { ScaleComparison } from './ScaleComparison';
 export type { ScaleBody } from './ScaleComparison';
 export { Grain } from './Grain';
+export { BlackHole } from './BlackHole';
+export { AccretionDisk } from './AccretionDisk';
+export { Jets } from './Jets';
+export { HostGalaxy } from './HostGalaxy';
+export { Quasar, quasarExposure } from './Quasar';
