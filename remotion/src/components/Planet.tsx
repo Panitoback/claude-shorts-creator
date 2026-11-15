@@ -7,7 +7,8 @@ import { ramp, startOf } from './anim';
 // PLANET / MOON (brand §5) — a lit sphere in muted true color with each body's one or two
 // signature features (continents, maria, polar caps, the Great Red Spot, the Cassini division…),
 // stylized and code-drawn. Lit side toward the light, a soft terminator, night side to near-black.
-// No outlines, no glow of its own: planets don't emit light.
+// No outlines and no stroked surface features (soft-edged fills only, so the terminator stays the
+// strongest read). No glow of its own: planets don't emit light.
 //
 // Level of detail follows on-screen size: below ~60 px across it is color + terminator only
 // (so small bodies in a Scale comparison stay clean); mid sizes get the main features; hero
@@ -55,6 +56,8 @@ export const Planet: React.FC<PlanetProps> = ({
   const view = DEFAULT_VIEW[kind];
   const lon = Math.round(((lon0 ?? view.lon0) + (rotate * f) / fps) * 4) / 4;
   const feats = useMemo(() => (level === 0 ? [] : featuresFor(kind, { lon0: lon, lat0: view.lat0 })), [kind, lon, view.lat0, level]);
+
+  const softs = useMemo(() => [...new Set(feats.map((ft) => ft.soft).filter((b): b is number => !!b))], [feats]);
 
   const rad = (light * Math.PI) / 180;
   const lx = Math.cos(rad);
@@ -125,6 +128,13 @@ export const Planet: React.FC<PlanetProps> = ({
           <stop offset="0%" stopColor={PALETTE.spaceWarm} />
           <stop offset="100%" stopColor={PALETTE.spaceWarm} stopOpacity={0} />
         </radialGradient>
+        {/* soft edges for surface features, one filter per blur radius, in feature units (the
+            group's scale makes them track the planet's size). The region spans the whole sphere. */}
+        {softs.map((b) => (
+          <filter key={b} id={`${id}b${b}`} filterUnits="userSpaceOnUse" x={-130} y={-130} width={260} height={260}>
+            <feGaussianBlur stdDeviation={b} />
+          </filter>
+        ))}
         <clipPath id={`${id}c`}>
           <circle cx={x} cy={y} r={R} />
         </clipPath>
@@ -144,7 +154,7 @@ export const Planet: React.FC<PlanetProps> = ({
           <g clipPath={`url(#${id}c)`}>
             <g transform={`translate(${x} ${y}) rotate(${tiltDeg}) scale(${k})`}>
               {feats.filter((ft) => ft.level <= level).map((ft, i) => (
-                <path key={i} d={ft.d} fill={ft.fill ?? 'none'} stroke={ft.stroke} strokeWidth={ft.strokeWidth} strokeLinecap="round" opacity={ft.opacity} />
+                <path key={i} d={ft.d} fill={ft.fill} opacity={ft.opacity} filter={ft.soft ? `url(#${id}b${ft.soft})` : undefined} />
               ))}
             </g>
             <circle cx={x} cy={y} r={R} fill={`url(#${id}h)`} />
