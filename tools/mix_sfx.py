@@ -83,7 +83,9 @@ def main():
     catalog_path = rp(plan.get("catalog", "media/library/sfx/catalog.json"))
     with open(catalog_path, encoding="utf-8") as f:
         catalog = json.load(f)
-    lib = {c["id"]: c for c in catalog.get("clips", [])}
+    # legacy clips (off-brand, kept in media/library/sfx/legacy/ for reference) are never mixed
+    legacy_ids = {c["id"] for c in catalog.get("clips", []) if c.get("legacy")}
+    lib = {c["id"]: c for c in catalog.get("clips", []) if not c.get("legacy")}
 
     preview = proj(preview_override or render.get("preview", "video-1/output/video-1-preview.mp4"))
     out = proj(out_override or render.get("out", "video-1/output/video-1-first60-sfx.mp4"))
@@ -100,7 +102,7 @@ def main():
             continue
         clip = lib.get(e["sfx_id"])
         if not clip:
-            missing.add(e["sfx_id"])
+            missing.add(e["sfx_id"] + (" (legacy: off-brand, pick a brand clip)" if e["sfx_id"] in legacy_ids else ""))
             continue
         f = rp(os.path.join("media", "library", "sfx", clip["file"]))
         if not os.path.exists(f):
@@ -120,6 +122,10 @@ def main():
         print(f"  {e['at_s']:>7.2f}  {e['sfx_id']:<14} {e.get('gain_db', 0):>4}dB  {e.get('cue', '')[:64]}{opt}")
     if missing:
         print("  MISSING from library (run tools/gen_sfx.py):", ", ".join(sorted(missing)))
+    inherited = sorted({e["sfx_id"] for e in events if e["clip"].get("regenerate_before_publish")})
+    if inherited:
+        print("  NOTE inherited clips (made with the original author's account) — regenerate with ours "
+              "before publishing (python tools/gen_sfx.py --regen-inherited):", ", ".join(inherited))
     if flags["print"]:
         return
     if not events:

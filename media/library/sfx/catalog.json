@@ -36,7 +36,9 @@
         "short-11-map",
         "ch-5-three-skills",
         "blue-man-1-door"
-      ]
+      ],
+      "inherited": true,
+      "regenerate_before_publish": true
     },
     {
       "id": "whoosh-wind",
@@ -64,7 +66,9 @@
         "vox-1-coffee",
         "short-12-orbit",
         "blue-man-1-door"
-      ]
+      ],
+      "inherited": true,
+      "regenerate_before_publish": true
     },
     {
       "id": "riser-soft",
@@ -96,7 +100,9 @@
         "short-12-orbit",
         "ch-5-three-skills",
         "blue-man-1-door"
-      ]
+      ],
+      "inherited": true,
+      "regenerate_before_publish": true
     },
     {
       "id": "impact-soft",
@@ -130,7 +136,9 @@
         "vox-1-coffee",
         "short-11-map",
         "short-12-orbit"
-      ]
+      ],
+      "inherited": true,
+      "regenerate_before_publish": true
     },
     {
       "id": "impact-deep-soft",
@@ -160,7 +168,9 @@
         "short-11-map",
         "short-12-orbit",
         "ch-5-three-skills"
-      ]
+      ],
+      "inherited": true,
+      "regenerate_before_publish": true
     },
     {
       "id": "pop-reveal",
@@ -197,7 +207,9 @@
         "short-11-map",
         "short-12-orbit",
         "ch-5-three-skills"
-      ]
+      ],
+      "inherited": true,
+      "regenerate_before_publish": true
     },
     {
       "id": "ui-click-soft",
@@ -231,7 +243,9 @@
         "vox-1-coffee",
         "short-12-orbit",
         "ch-5-three-skills"
-      ]
+      ],
+      "inherited": true,
+      "regenerate_before_publish": true
     },
     {
       "id": "ui-toggle-on",
@@ -256,11 +270,13 @@
       "used_in": [
         "ch-3-honeypot",
         "short-5-prob"
-      ]
+      ],
+      "inherited": true,
+      "regenerate_before_publish": true
     },
     {
       "id": "ui-send",
-      "file": "clips/ui-send.mp3",
+      "file": "legacy/ui-send.mp3",
       "category": "snap",
       "tags": [
         "ui",
@@ -280,11 +296,14 @@
       "used_in": [
         "ch-3-honeypot",
         "ch-5-three-skills"
-      ]
+      ],
+      "legacy": true,
+      "inherited": true,
+      "regenerate_before_publish": true
     },
     {
       "id": "page-flip",
-      "file": "clips/page-flip.mp3",
+      "file": "legacy/page-flip.mp3",
       "category": "foley",
       "tags": [
         "page",
@@ -303,7 +322,10 @@
       "prompt": "A single soft paper page turn. Light natural page flip of a storybook, gentle and clean, close-miked, short, dry, no music.",
       "used_in": [
         "vox-1-coffee"
-      ]
+      ],
+      "legacy": true,
+      "inherited": true,
+      "regenerate_before_publish": true
     },
     {
       "id": "chime-reward",
@@ -333,11 +355,13 @@
         "short-5-prob",
         "short-12-orbit",
         "ch-5-three-skills"
-      ]
+      ],
+      "inherited": true,
+      "regenerate_before_publish": true
     },
     {
       "id": "chess-piece-thock",
-      "file": "clips/chess-piece-thock.mp3",
+      "file": "legacy/chess-piece-thock.mp3",
       "category": "foley",
       "tags": [
         "chess",
@@ -357,11 +381,14 @@
       "prompt": "A single wooden chess piece placed firmly on a wooden chess board. One short dry warm wooden knock, close-mic, clean and satisfying, no room echo, no voices, no music.",
       "used_in": [
         "short-1-chess"
-      ]
+      ],
+      "legacy": true,
+      "inherited": true,
+      "regenerate_before_publish": true
     },
     {
       "id": "chess-piece-capture",
-      "file": "clips/chess-piece-capture.mp3",
+      "file": "legacy/chess-piece-capture.mp3",
       "category": "foley",
       "tags": [
         "chess",
@@ -381,7 +408,10 @@
       "prompt": "A wooden chess piece capturing another: two wooden pieces briefly knock together, then one is set down firmly on a wooden board. A decisive double wooden clack, close-mic, clean, no room echo, no music.",
       "used_in": [
         "short-1-chess"
-      ]
+      ],
+      "legacy": true,
+      "inherited": true,
+      "regenerate_before_publish": true
     },
     {
       "id": "whoosh-reverse",
@@ -411,11 +441,13 @@
         "short-11-map",
         "short-12-orbit",
         "ch-5-three-skills"
-      ]
+      ],
+      "inherited": true,
+      "regenerate_before_publish": true
     },
     {
       "id": "clock-tick-soft",
-      "file": "clips/clock-tick-soft.mp3",
+      "file": "legacy/clock-tick-soft.mp3",
       "category": "texture",
       "tags": [
         "clock",
@@ -442,11 +474,14 @@
         "short-10-fees",
         "short-11-map",
         "short-12-orbit"
-      ]
+      ],
+      "legacy": true,
+      "inherited": true,
+      "regenerate_before_publish": true
     },
     {
       "id": "knock-solid",
-      "file": "clips/knock-solid.mp3",
+      "file": "legacy/knock-solid.mp3",
       "category": "foley",
       "tags": [
         "knock",
@@ -465,11 +500,14 @@
       "prompt": "A single firm knock on a solid wooden door. One short dry muted knock, close-mic, low and rounded, serious not playful, no echo, no voices, no music.",
       "used_in": [
         "ch-3-honeypot"
-      ]
+      ],
+      "legacy": true,
+      "inherited": true,
+      "regenerate_before_publish": true
     },
     {
       "id": "glitch-zap",
-      "file": "clips/glitch-zap.mp3",
+      "file": "legacy/glitch-zap.mp3",
       "category": "texture",
       "tags": [
         "glitch",
@@ -491,11 +529,14 @@
         "ch-3-honeypot",
         "short-4-git",
         "ch-5-three-skills"
-      ]
+      ],
+      "legacy": true,
+      "inherited": true,
+      "regenerate_before_publish": true
     },
     {
       "id": "scan-hum",
-      "file": "clips/scan-hum.mp3",
+      "file": "legacy/scan-hum.mp3",
       "category": "tension",
       "tags": [
         "scan",
@@ -516,11 +557,14 @@
       "used_in": [
         "ch-3-honeypot",
         "ch-5-three-skills"
-      ]
+      ],
+      "legacy": true,
+      "inherited": true,
+      "regenerate_before_publish": true
     },
     {
       "id": "trap-snap",
-      "file": "clips/trap-snap.mp3",
+      "file": "legacy/trap-snap.mp3",
       "category": "snap",
       "tags": [
         "trap",
@@ -541,11 +585,14 @@
       "used_in": [
         "ch-3-honeypot",
         "ch-5-three-skills"
-      ]
+      ],
+      "legacy": true,
+      "inherited": true,
+      "regenerate_before_publish": true
     },
     {
       "id": "stamp-hit",
-      "file": "clips/stamp-hit.mp3",
+      "file": "legacy/stamp-hit.mp3",
       "category": "emphasis",
       "tags": [
         "stamp",
@@ -569,11 +616,14 @@
         "short-11-map",
         "short-12-orbit",
         "ch-5-three-skills"
-      ]
+      ],
+      "legacy": true,
+      "inherited": true,
+      "regenerate_before_publish": true
     },
     {
       "id": "keys-typing-soft",
-      "file": "clips/keys-typing-soft.mp3",
+      "file": "legacy/keys-typing-soft.mp3",
       "category": "texture",
       "tags": [
         "keyboard",
@@ -598,7 +648,10 @@
         "short-4-git",
         "short-8-phish",
         "ch-5-three-skills"
-      ]
+      ],
+      "legacy": true,
+      "inherited": true,
+      "regenerate_before_publish": true
     },
     {
       "id": "sparkle-soft",
@@ -622,7 +675,9 @@
       "used_in": [
         "short-7-kids",
         "ch-5-three-skills"
-      ]
+      ],
+      "inherited": true,
+      "regenerate_before_publish": true
     },
     {
       "id": "chime-magic",
@@ -646,7 +701,9 @@
       "used_in": [
         "short-7-kids",
         "blue-man-1-door"
-      ]
+      ],
+      "inherited": true,
+      "regenerate_before_publish": true
     },
     {
       "id": "wind-soft",
@@ -670,11 +727,13 @@
       "used_in": [
         "short-7-kids",
         "blue-man-1-door"
-      ]
+      ],
+      "inherited": true,
+      "regenerate_before_publish": true
     },
     {
       "id": "owl-hoot",
-      "file": "clips/owl-hoot.mp3",
+      "file": "legacy/owl-hoot.mp3",
       "category": "foley",
       "tags": [
         "owl",
@@ -693,11 +752,14 @@
       "prompt": "A soft distant owl hooting at night in a quiet forest, two gentle far-away hoots, calm and natural and a little lonely, spacious, no music.",
       "used_in": [
         "short-7-kids"
-      ]
+      ],
+      "legacy": true,
+      "inherited": true,
+      "regenerate_before_publish": true
     },
     {
       "id": "stream-soft",
-      "file": "clips/stream-soft.mp3",
+      "file": "legacy/stream-soft.mp3",
       "category": "foley",
       "tags": [
         "stream",
@@ -716,7 +778,10 @@
       "prompt": "A gentle babbling forest brook — soft trickling water flowing over small stones, calm continuous and soothing, close but gentle, natural, no music.",
       "used_in": [
         "short-7-kids"
-      ]
+      ],
+      "legacy": true,
+      "inherited": true,
+      "regenerate_before_publish": true
     },
     {
       "id": "warm-shimmer",
@@ -740,11 +805,13 @@
       "used_in": [
         "short-7-kids",
         "blue-man-1-door"
-      ]
+      ],
+      "inherited": true,
+      "regenerate_before_publish": true
     },
     {
       "id": "pencil-scribble",
-      "file": "clips/pencil-scribble.mp3",
+      "file": "legacy/pencil-scribble.mp3",
       "category": "foley",
       "tags": [
         "pencil",
@@ -764,11 +831,14 @@
       "prompt": "A pencil quickly sketching a dashed line across rough paper, light scratchy graphite strokes in short bursts, close-miked, dry, natural, no music.",
       "used_in": [
         "vox-1-coffee"
-      ]
+      ],
+      "legacy": true,
+      "inherited": true,
+      "regenerate_before_publish": true
     },
     {
       "id": "launch-thump",
-      "file": "clips/launch-thump.mp3",
+      "file": "legacy/launch-thump.mp3",
       "category": "impact",
       "tags": [
         "cannon",
@@ -788,51 +858,66 @@
       "prompt": "A deep muffled launch thump, like a distant mortar or a rocket igniting far away: a soft round low-frequency push with a short body and a gentle tail. Warm and restrained, no sharp crack, no explosion debris, no reverb tail of a war film. Dry, clean, close to a felt mallet on a large drum.",
       "used_in": [
         "short-12-orbit"
-      ]
+      ],
+      "legacy": true,
+      "inherited": true,
+      "regenerate_before_publish": true
     },
     {
       "id": "piano-c-maj",
-      "file": "clips/piano-c-maj.mp3",
+      "file": "legacy/piano-c-maj.mp3",
       "desc": "C major triad (I) — warm electric-piano voicing",
       "function": "content",
       "source": "gen_chords.py (deterministic additive synth, equal temperament A4=440)",
       "duration_s": 2.6,
       "used_in": [
         "short-9-chords"
-      ]
+      ],
+      "legacy": true,
+      "inherited": true,
+      "regenerate_before_publish": true
     },
     {
       "id": "piano-g-maj",
-      "file": "clips/piano-g-maj.mp3",
+      "file": "legacy/piano-g-maj.mp3",
       "desc": "G major triad (V)",
       "function": "content",
       "source": "gen_chords.py (deterministic additive synth, equal temperament A4=440)",
       "duration_s": 2.6,
       "used_in": [
         "short-9-chords"
-      ]
+      ],
+      "legacy": true,
+      "inherited": true,
+      "regenerate_before_publish": true
     },
     {
       "id": "piano-a-min",
-      "file": "clips/piano-a-min.mp3",
+      "file": "legacy/piano-a-min.mp3",
       "desc": "A minor triad (vi)",
       "function": "content",
       "source": "gen_chords.py (deterministic additive synth, equal temperament A4=440)",
       "duration_s": 2.6,
       "used_in": [
         "short-9-chords"
-      ]
+      ],
+      "legacy": true,
+      "inherited": true,
+      "regenerate_before_publish": true
     },
     {
       "id": "piano-f-maj",
-      "file": "clips/piano-f-maj.mp3",
+      "file": "legacy/piano-f-maj.mp3",
       "desc": "F major triad (IV)",
       "function": "content",
       "source": "gen_chords.py (deterministic additive synth, equal temperament A4=440)",
       "duration_s": 2.6,
       "used_in": [
         "short-9-chords"
-      ]
+      ],
+      "legacy": true,
+      "inherited": true,
+      "regenerate_before_publish": true
     }
   ]
 }

@@ -142,7 +142,9 @@ python tools/gen_voice.py --beats shorts/<slug>/beats.json \
 
 ## Stage 5 — SFX (the suggest-sfx machinery, shorts flavor)
 
-Read `brand/brand.md` §7 + `media/library/sfx/catalog.json`. Library-first; add generic recipes to
+Read `brand/brand.md` §7 + `media/library/sfx/catalog.json` (skip `"legacy": true` entries; clips
+flagged `regenerate_before_publish` must be regenerated with our key before `final`, see
+`/suggest-sfx`). Library-first; add generic recipes to
 `palette.json` + `python tools/gen_sfx.py` only for genuine misses. Author
 `shorts/<slug>/sfx-plan.json` (preview = the -voiced.mp4, out = output/<slug>-sfx.mp4).
 

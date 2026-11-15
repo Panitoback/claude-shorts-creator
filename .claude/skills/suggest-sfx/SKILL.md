@@ -35,7 +35,17 @@ Sound taste is a brand contract — read **`brand/brand.md` §7** every time. Th
 - `catalog.json` — the manifest of what EXISTS: `{id, file, category, tags, duration_s, peak_dbfs,
   loudness_lufs, source, model, license, prompt, used_in}` per clip. Written by `gen_sfx.py`.
 - `clips/*.mp3` — loudness-normalized clips (~−20 LUFS, −1.5 dBFS ceiling) so a plan's per-cue
-  `gain_db` is perceptually meaningful.
+  `gain_db` is perceptually meaningful. **Only these are usable.**
+- `legacy/*.mp3` — **off-brand clips, ignore them.** Catalog entries with `"legacy": true` are
+  never proposed, never put in a sfx-plan, never regenerated (`mix_sfx.py` refuses them,
+  `gen_sfx.py` skips them even though their recipes are still in `palette.json`). If a sound is
+  only covered by a legacy clip, treat it as a miss: propose a brand-fit (brand §7) recipe.
+- **Inherited clips must be regenerated before publishing.** Every clip that came with the fork
+  carries `"regenerate_before_publish": true`: it was generated with the original author's
+  ElevenLabs account, not the channel's. Fine for auditions; before a short goes `final`/
+  `published`, regenerate the ones it uses with our key (`python tools/gen_sfx.py
+  --regen-inherited`, or `--force --only id1,id2`; paid, so say what will be generated first)
+  and re-mix. `mix_sfx.py --print` lists any inherited clip a plan uses.
 - **Library-first, always.** Reuse an existing clip before generating. Name/tag clips GENERICALLY
   (`ui-toggle-on`, `whoosh-soft`, `pop-reveal`) so future videos reuse them — the library is the
   durable asset, each video is one draw from it. Only genuinely-missing sounds get added to

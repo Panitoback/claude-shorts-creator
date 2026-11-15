@@ -33,6 +33,11 @@ vertical shorts where every pixel is Remotion TSX.
   6. Manim — only for physics/equation scenes, rendered as clips inside Remotion
 - **Still open:** channel name; channel voice (ElevenLabs voice ID); recalibrate the ~2.7 words/s
   rate after the first generation with the chosen channel voice (it was measured with Liam).
+- **SFX library:** off-brand clips live in `media/library/sfx/legacy/` (`"legacy": true` in the
+  catalog): never used or regenerated. **Every inherited clip, including the 14 kept in `clips/`,
+  was generated with the original author's ElevenLabs account and must be regenerated with ours
+  before anything is published** (`python tools/gen_sfx.py --regen-inherited`; flagged
+  `regenerate_before_publish` in the catalog).
 - `shorts/short-12-orbit` is the one **inherited example, in the old look**: a technique
   reference only (its `lib/orbit.tsx` has real orbital physics worth reusable components), not
   channel content.
