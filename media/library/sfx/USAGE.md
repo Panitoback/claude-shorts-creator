@@ -36,6 +36,17 @@ Starting gains are educated guesses until a produced short measures them (see Ma
 - **Peaks (main reveal, twist): a phone-audible burst**, then settle. Must read "ok" in the PHONE
   CHECK.
 
+### Whips (brand §8, `WhipTransition` / `WhipMontage`; added 2026-11-17, untested in a real mix)
+- **One whoosh per whip.** Never a whip without one, never two on the same whip.
+- **Its PEAK on the swap:** `at_s = (whipTiming(at, dur).swap + sequence_from) / fps` with
+  `"align": "peak"`. The swap is the frame where the two pictures cross at full speed (with the
+  default `dur` 8, that is 4 frames after the whip's `at`).
+- **Phone-audible in the hook:** every hook whip must read "ok" in the PHONE CHECK. Start hook
+  whips at 0 to +2 dB; peak whips 0 dB; the rare body whip at the clip's start gain (−3).
+- **Vary consecutive whips** so they don't sound identical: rotate the clip (recipe below). Pitch
+  variation (±1–2 semitones on the same clip) is the other option, but `mix_sfx.py` has no pitch
+  field yet: until it does, vary by clip.
+
 ### Channel combos (recipes)
 | Moment | Recipe | Timing |
 |---|---|---|
@@ -48,6 +59,7 @@ Starting gains are educated guesses until a produced short measures them (see Ma
 | **Falling into a black hole** | `stellar-collapse` → `event-horizon-fade` | the thud lands at the crossing; the fade carries the fall into silence |
 | **A number counting up** | `tick-soft` repeated during the count → `number-settle` when the hero number lands | ticks every few frames, thinned out (not every digit); settle exactly on the final value |
 | **A fact or label snapping in** | `whoosh-reverse` → `pop-reveal` | the reverse whoosh ends where the pop starts, on the label's first frame |
+| **Whip montage (hook)** | one whoosh per whip, rotating `whoosh-soft` → `swish-light` → `whoosh-soft`…; the LAST whip (the one that lands the surprise) may take `whoosh-deep` instead, which also counts toward its 2-per-short limit. Under the first picture, `hook-hit` on frame 0 (recipe above). Not `whoosh-wind` (too long for ~0.6–1 s pictures) or `whoosh-reverse` (it reads as rewinding) | each whoosh's PEAK on its whip's swap (`align: "peak"`, see Whips); hook gains 0 to +2 dB, then a PHONE CHECK per whoosh. Pictures ~0.6–1 s apart, so `whoosh-soft` tails (1.0 s) overlap the next whip a little: fine, but drop that whoosh 1–2 dB if the overlap smears it |
 | **Silence** | ~0.5 s of near-silence before the main reveal | silence is a cue: put it in the plan as a `note` so the mix respects it |
 
 ### Background layers (beds)
@@ -228,11 +240,11 @@ Gains are starting `gain_db` values. Status for all: approved, untested in a rea
 ### Motion
 | Clip | For | Avoid | Pairs with | Start gain |
 |---|---|---|---|---|
-| `whoosh-soft` | everyday cut between scenes | stacking on every cut; use on key transitions only | `pop-reveal` on the next scene's first element | −3 |
+| `whoosh-soft` | everyday cut between scenes; whips (rotate with `swish-light`, see Whips) | stacking on every cut; use on key transitions only | `pop-reveal` on the next scene's first element | −3 |
 | `whoosh-wind` | slow glide / camera drift past an object | fast cuts (too long, 1.5 s) | `space-air-loop` bed | −3 |
 | `whoosh-deep` | big zoom across a vast distance (zoom ruler steps) | small moves; more than 2 per short | `impact-soft` when the zoom stops | −2 |
 | `whoosh-reverse` | time rewinding, pulling back, something snapping in | forward motion | `pop-reveal` (combo) | −3 |
-| `swish-light` | a small element sliding in (label, marker, chip) | scene cuts (too small) | — | −4 |
+| `swish-light` | a small element sliding in (label, marker, chip); every other whip in a whip montage, at hook gain (0 to +2) | plain scene cuts (too small) | — | −4 |
 | `light-speed-pass` | light (or anything at c) crossing the frame | slow objects; sci-fi "warp" moments without light | `photon-travel` for the follow-up | −2 |
 | `photon-travel` | one photon / light signal traveling a distance (a line drawing from A to B) | things that aren't light | `chime-discovery` on arrival | −1 |
 | `jet-launch` | quasar or pulsar jets switching on / firing | generic transitions | after `glow-swell` (the quasar powers up, then the jets fire) | −1 |
