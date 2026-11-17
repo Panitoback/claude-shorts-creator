@@ -3,9 +3,15 @@ import type React from 'react';
 import Shot0, { compositionConfig as cfg0 } from './shots/brand/BrandReference';
 import Shot1, { compositionConfig as cfg1 } from './shots/gallery/ComponentGallery';
 import Shot2, { compositionConfig as cfg2 } from './shots/short-12/Short12Orbit';
+import Shot3, { compositionConfig as cfg3 } from './shots/what-is-a-quasar/WhatIsAQuasarA';
+import Shot4, { compositionConfig as cfg4 } from './shots/what-is-a-quasar/WhatIsAQuasarB';
+import Shot5, { compositionConfig as cfg5 } from './shots/what-is-a-quasar/WhatIsAQuasarC';
 
 export const shots: { Comp: React.FC; config: any }[] = [
   { Comp: Shot0 as React.FC, config: cfg0 },
   { Comp: Shot1 as React.FC, config: cfg1 },
   { Comp: Shot2 as React.FC, config: cfg2 },
+  { Comp: Shot3 as React.FC, config: cfg3 },
+  { Comp: Shot4 as React.FC, config: cfg4 },
+  { Comp: Shot5 as React.FC, config: cfg5 },
 ];

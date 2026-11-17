@@ -1,0 +1,121 @@
+{
+  "_note": "Shared by the three hook variants (everything after the hook is identical). Bed laid after this mix with mix_music.py.",
+  "master": "shorts/what-is-a-quasar/output/what-is-a-quasar-c.mp4",
+  "master_fps": 30,
+  "catalog": "media/library/sfx/catalog.json",
+  "render": {
+    "preview": "shorts/what-is-a-quasar/output/what-is-a-quasar-c.mp4",
+    "out": "shorts/what-is-a-quasar/output/what-is-a-quasar-c-sfx.mp4",
+    "end_s": 73.8,
+    "duck": true
+  },
+  "silence": [
+    {
+      "from_s": 41.61,
+      "to_s": 42.11,
+      "note": "near-silence before the hit"
+    }
+  ],
+  "events": [
+    {
+      "at_s": 7.44,
+      "sfx_id": "deep-rumble",
+      "gain_db": 2,
+      "cue": "\"black hole\" (7.4 s): the quasar falls to dormant, the black hole first appears",
+      "note": "USAGE: deep-rumble one-shot on the black hole's first appearance"
+    },
+    {
+      "at_s": 27.08,
+      "sfx_id": "glow-swell",
+      "gain_db": 0,
+      "cue": "\"heats\" (REVEAL 1): luminosity dial 0 -> 0.45 over 2.8 s"
+    },
+    {
+      "at_s": 27.9,
+      "sfx_id": "pop-reveal",
+      "gain_db": 2,
+      "cue": "\"tens\": DISK TEMPERATURE label appears"
+    },
+    {
+      "at_s": 31.93,
+      "sfx_id": "pop-reveal",
+      "gain_db": 2,
+      "optional": true,
+      "cue": "\"beats\": label swaps to ~10x FUSION"
+    },
+    {
+      "at_s": 35.61,
+      "sfx_id": "riser-long",
+      "gain_db": 1,
+      "cue": "REVEAL 3 build: luminosity climbs (\"feed\" -> \"galaxy\"); riser ends 0.5 s before \"Combined.\"",
+      "note": "combo: riser-long -> ~0.5 s near-silence -> the one big hit"
+    },
+    {
+      "at_s": 42.11,
+      "sfx_id": "impact-cosmic",
+      "gain_db": 2,
+      "cue": "\"Combined.\" (HERO): luminosity to full, galaxy and stars vanish",
+      "note": "the short's ONE big cosmic hit"
+    },
+    {
+      "at_s": 45.0,
+      "sfx_id": "jet-launch",
+      "gain_db": -1,
+      "cue": "\"jets\" (REVEAL 4): jets switch on",
+      "note": "after glow-swell, per USAGE pairing; rides the impact's tail"
+    },
+    {
+      "at_s": 52.03,
+      "sfx_id": "whoosh-deep",
+      "gain_db": -2,
+      "cue": "\"billions\" (TWIST): pull-back, the quasar shrinks to a point over 2.2 s"
+    },
+    {
+      "at_s": 53.83,
+      "sfx_id": "swish-light",
+      "gain_db": -4,
+      "optional": true,
+      "cue": "QUASAR marker draws on the point"
+    },
+    {
+      "at_s": 63.57,
+      "sfx_id": "tick-soft",
+      "gain_db": 5,
+      "cue": "13 billion counting up (tick 1/4, thinning out)",
+      "note": "combo: tick-soft -> number-settle; under speech, felt-not-heard"
+    },
+    {
+      "at_s": 63.9,
+      "sfx_id": "tick-soft",
+      "gain_db": 5,
+      "cue": "13 billion counting up (tick 2/4, thinning out)",
+      "note": "combo: tick-soft -> number-settle; under speech, felt-not-heard"
+    },
+    {
+      "at_s": 64.27,
+      "sfx_id": "tick-soft",
+      "gain_db": 5,
+      "cue": "13 billion counting up (tick 3/4, thinning out)",
+      "note": "combo: tick-soft -> number-settle; under speech, felt-not-heard"
+    },
+    {
+      "at_s": 64.69,
+      "sfx_id": "tick-soft",
+      "gain_db": 5,
+      "cue": "13 billion counting up (tick 4/4, thinning out)",
+      "note": "combo: tick-soft -> number-settle; under speech, felt-not-heard"
+    },
+    {
+      "at_s": 65.17,
+      "sfx_id": "number-settle",
+      "gain_db": 6,
+      "cue": "13 billion lands on its final value"
+    },
+    {
+      "at_s": 69.53,
+      "sfx_id": "glow-swell",
+      "gain_db": 0,
+      "cue": "\"We still see them blazing\" (LOOP): luminosity back to full, size back to hook size"
+    }
+  ]
+}

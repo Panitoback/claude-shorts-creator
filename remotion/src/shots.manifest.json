@@ -22,5 +22,29 @@
   "width": 1080,
   "height": 1920,
   "transparent": false
+ },
+ {
+  "id": "WhatIsAQuasarA",
+  "durationInSeconds": 73.8,
+  "fps": 30,
+  "width": 1080,
+  "height": 1920,
+  "transparent": false
+ },
+ {
+  "id": "WhatIsAQuasarB",
+  "durationInSeconds": 73.8,
+  "fps": 30,
+  "width": 1080,
+  "height": 1920,
+  "transparent": false
+ },
+ {
+  "id": "WhatIsAQuasarC",
+  "durationInSeconds": 73.8,
+  "fps": 30,
+  "width": 1080,
+  "height": 1920,
+  "transparent": false
  }
 ]

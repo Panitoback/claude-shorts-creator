@@ -13,7 +13,7 @@ import { ramp } from './anim';
 // position, so captions always read as written.
 
 export type CaptionWord = { w: string; start: number; end: number };
-export type CaptionLine = { text: string; tts?: string; start: number; end: number; words?: CaptionWord[] };
+export type CaptionLine = { text: string; tts?: string; start: number; end: number; words?: CaptionWord[]; keywords?: string[] };
 
 export type KeywordCaptionsProps = {
   lines: CaptionLine[];
@@ -49,6 +49,8 @@ const estimate = (words: string[], start: number, end: number): CaptionWord[] =>
 export const mapTextOntoTts = (text: string, timed: CaptionWord[]): CaptionWord[] => {
   const words = splitWords(text);
   if (timed.length === 0 || words.length === 0) return [];
+  // same word count (a respelled name, or only delivery tags differ): exact, word for word
+  if (timed.length === words.length) return words.map((w, i) => ({ w, start: timed[i].start, end: timed[i].end }));
   const tLen = timed.map((w) => Math.max(1, norm(w.w).length));
   const tTot = tLen.reduce((a, b) => a + b, 0);
   // knots: (fraction of spoken characters, time)
@@ -90,9 +92,13 @@ const wordsOf = (line: CaptionLine): CaptionWord[] => {
 type Phrase = { words: (CaptionWord & { key: boolean })[]; start: number; end: number };
 
 const phrasesOf = (lines: CaptionLine[], keywords: string[], maxWords: number, maxChars: number, holdSec: number) => {
-  const keys = keywords.map((k) => splitWords(k).map(keyNorm).filter(Boolean)).filter((k) => k.length > 0);
+  const toKeys = (ks: string[]) => ks.map((k) => splitWords(k).map(keyNorm).filter(Boolean)).filter((k) => k.length > 0);
+  const globalKeys = toKeys(keywords);
   const out: Phrase[] = [];
   lines.forEach((line) => {
+    // a line's own `keywords` replace the global list (keeps a beat's keyword from lighting up
+    // every later repeat of the same word)
+    const keys = line.keywords ? toKeys(line.keywords) : globalKeys;
     const firstOfLine = out.length;
     const ws = wordsOf(line);
     const n = ws.map((w) => keyNorm(w.w));

@@ -18,6 +18,7 @@ export type JetsProps = {
   angle?: number; // axis direction, degrees from vertical (default 0 = straight up/down)
   luminosity?: number; // 0..1 (default 1)
   knots?: number; // traveling knots per jet (default 3)
+  fade?: number; // 0..1 (default 1): switch the jets on/off independently of luminosity
   speed?: number; // knot speed, fraction of the jet length per second (default 0.18)
   start?: number; // where the beams start, px from the center (default 0, hidden by the disk/shadow)
   at?: number;
@@ -27,13 +28,13 @@ export type JetsProps = {
 let uid = 0;
 
 export const Jets: React.FC<JetsProps> = ({
-  x, y, length, width, angle = 0, luminosity = 1, knots = 3, speed = 0.18, start = 0, at = 0, warm = false,
+  x, y, length, width, angle = 0, luminosity = 1, knots = 3, fade = 1, speed = 0.18, start = 0, at = 0, warm = false,
 }) => {
   const f = useCurrentFrame();
   const id = React.useMemo(() => `jt${uid++}`, []);
   const s = startOf(at, warm);
   const inP = ramp(f, s + MOTION.overlap, MOTION.glowIn);
-  const on = clamp01((luminosity - 0.25) / 0.55) * inP;
+  const on = clamp01((luminosity - 0.25) / 0.55) * inP * clamp01(fade);
   if (on <= 0) return null;
   const wT = width ?? length * 0.03;
   // half-width along the jet, t = 0 (base) … 1 (far end): a narrow cone, ~1/10 as wide at the core

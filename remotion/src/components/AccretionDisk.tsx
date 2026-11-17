@@ -36,6 +36,14 @@ export type AccretionDiskProps = {
   approaching?: 'left' | 'right'; // brighter side (default left)
   drift?: number; // drift speed of the soft streaks, px/frame along the disk (default 1.2; 0 = still)
   layer?: 'back' | 'front' | 'both';
+  opacity?: number; // 0..1 (default 1): fade the whole disk out, below "dormant" (a bare black hole)
+  loopFrames?: number; // a seamless-loop composition's length: the drifting streaks then complete a
+  // whole number of turns in it, so the last frame matches frame 0 exactly
+  streaks?: number; // opacity of the drifting streaks (default 0.14: barely-there texture)
+  hotspots?: number; // bright clumps orbiting in the disk (default 0). They brighten on the
+  // approaching side and fade on the receding one (Doppler), so the rotation reads from frame 0
+  hotspotPeriod?: number; // frames per orbit of the innermost clump (default 150; outer ones slower,
+  // Keplerian-ish). With loopFrames each clump makes a whole number of orbits in the loop
   at?: number;
   warm?: boolean;
 };
@@ -53,12 +61,13 @@ let uid = 0;
 
 export const AccretionDisk: React.FC<AccretionDiskProps> = ({
   x, y, shadowR, inner = 1.15, outer = 4.6, tilt = 0.15, angle = -8, luminosity = 1, lensed = true,
-  approaching = 'left', drift = 1.2, layer = 'both', at = 0, warm = false,
+  approaching = 'left', drift = 1.2, layer = 'both', opacity = 1, loopFrames, streaks = 0.14, hotspots = 0,
+  hotspotPeriod = 150, at = 0, warm = false,
 }) => {
   const f = useCurrentFrame();
   const id = React.useMemo(() => `ad${uid++}`, []);
   const s = startOf(at, warm);
-  const inP = ramp(f, s, MOTION.discIn);
+  const inP = ramp(f, s, MOTION.discIn) * clamp01(opacity);
   const L = clamp01(luminosity);
   const rIn = shadowR * inner;
   const rOut = shadowR * outer;
@@ -99,10 +108,34 @@ export const AccretionDisk: React.FC<AccretionDiskProps> = ({
         <g transform={sq} filter={`url(#${id}blur)`}>
           {[0.3, 0.52, 0.74].map((u, i) => {
             const rr = rIn + (rOut - rIn) * u;
+            const period = rr * 1.7; // dash + gap
+            let speed = drift * (1.4 - u);
+            if (loopFrames) speed = (Math.max(1, Math.round((loopFrames * speed) / period)) * period) / loopFrames;
             return (
-              <circle key={i} cx={0} cy={0} r={rr} fill="none" stroke={colorAt(u + 0.22)} strokeOpacity={0.14 * edge(u)}
+              <circle key={i} cx={0} cy={0} r={rr} fill="none" stroke={colorAt(u + 0.22)} strokeOpacity={streaks * edge(u)}
                 strokeWidth={(rOut - rIn) * 0.2} strokeDasharray={`${rr * 0.6} ${rr * 1.1}`}
-                strokeDashoffset={-dir * f * drift * (1.4 - u)} strokeLinecap="round" />
+                strokeDashoffset={-dir * f * speed} strokeLinecap="round" />
+            );
+          })}
+        </g>
+      )}
+      {/* orbiting clumps: soft blobs riding the disk (squashed with it), Doppler-brightened on the
+          approaching side. Slow (seconds per orbit), never a flicker. */}
+      {hotspots > 0 && (
+        <g transform={sq} filter={`url(#${id}hblur)`}>
+          {Array.from({ length: hotspots }, (_, i) => {
+            const u = hotspots > 1 ? 0.34 + (0.4 * i) / (hotspots - 1) : 0.45;
+            const rr = rIn + (rOut - rIn) * u;
+            let per = hotspotPeriod * Math.pow(rr / (rIn + (rOut - rIn) * 0.34), 1.5);
+            if (loopFrames) per = loopFrames / Math.max(1, Math.round(loopFrames / per));
+            // the approaching side moves from the far side to the near side: angle decreases for 'left'
+            const th = (i * 2.4) - dir * (2 * Math.PI * f) / per;
+            const dop = clamp01(0.5 - 0.5 * dir * Math.cos(th)); // 1 on the approaching side
+            const op = (0.5 + 0.5 * dop) * (0.35 + 0.65 * L) * edge(u);
+            return (
+              <ellipse key={i} cx={rr * Math.cos(th)} cy={rr * Math.sin(th)} rx={(rOut - rIn) * 0.2} ry={(rOut - rIn) * 0.32}
+                transform={`rotate(${(th * 180) / Math.PI} ${rr * Math.cos(th)} ${rr * Math.sin(th)})`}
+                fill={mix(colorAt(Math.max(0, u - 0.3)), "#ffffff", 0.6)} opacity={op} />
             );
           })}
         </g>
@@ -159,6 +192,9 @@ export const AccretionDisk: React.FC<AccretionDiskProps> = ({
         <filter id={`${id}blur`} filterUnits="userSpaceOnUse" x={-rOut * 1.3} y={-rOut * 1.3} width={rOut * 2.6} height={rOut * 2.6}>
           {/* blurred in the squashed frame: soft across the disk, never a thin line */}
           <feGaussianBlur stdDeviation={`${((rOut - rIn) * 0.05).toFixed(2)} ${((rOut - rIn) * 0.12).toFixed(2)}`} />
+        </filter>
+        <filter id={`${id}hblur`} filterUnits="userSpaceOnUse" x={-rOut * 1.3} y={-rOut * 1.3} width={rOut * 2.6} height={rOut * 2.6}>
+          <feGaussianBlur stdDeviation={((rOut - rIn) * 0.08).toFixed(2)} />
         </filter>
         {/* lensed bands: elliptical gradients, hot (white at full power) right at the shadow,
             holding their color across the band and fading only at the outer edge, so each reads

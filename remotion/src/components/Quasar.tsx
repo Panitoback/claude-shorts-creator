@@ -22,8 +22,18 @@ export type QuasarProps = {
   angle?: number; // disk in-plane rotation, degrees (default -8); jets are perpendicular
   tilt?: number; // disk tilt (default 0.15: the near side crosses the shadow as a band, black above and below)
   diskOuter?: number; // × shadowR (default 4.6)
-  jets?: boolean; // default true
+  jets?: boolean | number; // default true; a number 0..1 fades them on/off (still gated by luminosity)
+  disk?: number; // 0..1 (default 1): fade the disk (and corona, lensing) fully off, BELOW dormant,
+  // leaving the bare black hole with a faint photon ring
+  loopFrames?: number; // seamless-loop length, passed to the disk (see AccretionDisk)
   jetLength?: number; // px (default shadowR × 14)
+  breathe?: number; // luminosity pulse of corona + disk, ± fraction (default 0 = steady; ~0.07 = a
+  // living quasar: real quasars vary in brightness). Slow and smooth, never a flicker
+  breathePeriod?: number; // frames per pulse (default 75 = 2.5 s); with loopFrames it is rounded to
+  // a whole number of pulses in the loop
+  hotspots?: number; // orbiting clumps in the disk, Doppler-brightened (see AccretionDisk)
+  hotspotPeriod?: number; // frames per orbit of the inner clump (see AccretionDisk)
+  streaks?: number; // drifting-streak opacity (see AccretionDisk)
   at?: number;
   warm?: boolean;
 };
@@ -39,17 +49,24 @@ export const quasarExposure = (l: number) => {
 let uid = 0;
 
 export const Quasar: React.FC<QuasarProps> = ({
-  x, y, shadowR, luminosity = 1, angle = -8, tilt = 0.15, diskOuter = 4.6, jets = true, jetLength, at = 0, warm = false,
+  x, y, shadowR, luminosity = 1, angle = -8, tilt = 0.15, diskOuter = 4.6, jets = true, disk = 1, loopFrames, jetLength,
+  breathe = 0, breathePeriod = 75, hotspots = 0, hotspotPeriod, streaks, at = 0, warm = false,
 }) => {
   const f = useCurrentFrame();
   const id = React.useMemo(() => `qs${uid++}`, []);
   const s = startOf(at, warm);
-  const L = clamp01(luminosity);
+  // breathing: w swings 0..1; at the bottom of a breath corona + disk sit 2·breathe lower
+  const per = loopFrames ? loopFrames / Math.max(1, Math.round(loopFrames / breathePeriod)) : breathePeriod;
+  const w = 0.5 + 0.5 * Math.sin((2 * Math.PI * f) / per);
+  const breath = 1 - 2 * breathe * (1 - w);
+  const L = clamp01(luminosity) * breath;
   const glow = ramp(f, s + 4, MOTION.glowIn);
   const rOut = shadowR * diskOuter;
   const coronaR = rOut * (1 + (QUASAR.coronaMax - 1) * L); // 1× dormant → coronaMax (3×) at full
-  const c = L * glow;
-  const common = { x, y, shadowR, luminosity: L, angle, tilt, outer: diskOuter, at, warm };
+  const D = clamp01(disk);
+  const c = L * glow * D;
+  const common = { x, y, shadowR, luminosity: L, angle, tilt, outer: diskOuter, opacity: D, loopFrames, hotspots, hotspotPeriod, streaks, at, warm };
+  const jetFade = typeof jets === 'number' ? clamp01(jets) : jets ? 1 : 0;
 
   return (
     <>
@@ -72,9 +89,10 @@ export const Quasar: React.FC<QuasarProps> = ({
         </defs>
         {c > 0 && <circle cx={x} cy={y} r={coronaR} fill={`url(#${id}c)`} />}
       </svg>
-      {jets && <Jets x={x} y={y} length={jetLength ?? shadowR * 14} width={shadowR * 0.42} angle={angle} luminosity={L} at={at} warm={warm} />}
+      {jetFade > 0 && <Jets x={x} y={y} length={jetLength ?? shadowR * 14} width={shadowR * 0.42} angle={angle} luminosity={L} fade={jetFade * D} at={at} warm={warm} />}
       <AccretionDisk {...common} layer="back" />
-      <BlackHole x={x} y={y} r={shadowR} ring={0.45 + 0.55 * L} at={at} warm={warm} />
+      {/* bare (disk off): the ring drops to a faint glow */}
+      <BlackHole x={x} y={y} r={shadowR} ring={(0.45 + 0.55 * L) * (0.5 + 0.5 * D)} at={at} warm={warm} />
       <AccretionDisk {...common} layer="front" />
     </>
   );
