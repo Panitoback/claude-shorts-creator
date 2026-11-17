@@ -283,15 +283,16 @@
         "emphasis"
       ],
       "duration_s": 2.48,
-      "peak_dbfs": -2.0,
+      "peak_dbfs": -4.4,
       "loudness_lufs": -20.0,
       "attack_s": 0.11,
       "peak_s": 0.12,
-      "phone_db": -17.7,
+      "phone_db": -7.1,
       "source": "elevenlabs:sound-generation",
       "model": "eleven_text_to_sound_v3",
       "license": "ElevenLabs generated (text-to-sfx); owner: the generating account, commercial use per the account's ElevenLabs plan",
       "prompt": "A soft, deep impact with a gentle long tail, for a meaningful reveal. A warm low thud that blooms and decays smoothly, cinematic and restrained, felt in the chest but never loud. Not a harsh trailer slam, no distortion, no music.",
+      "post": "exciter-parallel",
       "used_in": [
         "short-1-chess",
         "ch-3-honeypot",
@@ -987,10 +988,10 @@
       ],
       "duration_s": 8.05,
       "peak_dbfs": -1.5,
-      "loudness_lufs": -23.4,
-      "attack_s": 0.01,
-      "peak_s": 5.35,
-      "phone_db": -9.9,
+      "loudness_lufs": -25.7,
+      "attack_s": 1.33,
+      "peak_s": 4.01,
+      "phone_db": -4.9,
       "source": "synthesized (code)",
       "model": "tools/synth_sfx.py",
       "license": "original: synthesized in code by the channel, no third-party rights",
@@ -1001,6 +1002,10 @@
         "dur": 8.0,
         "tick_hz": 1800.0,
         "thump_hz": 140.0,
+        "thump_harmonics": 0.6,
+        "tick_level": 1.2,
+        "period_start": 0.0,
+        "ramp": 0.7,
         "space": 0.2
       },
       "used_in": []
@@ -1050,11 +1055,11 @@
         "ringdown"
       ],
       "duration_s": 3.558,
-      "peak_dbfs": -4.2,
-      "loudness_lufs": -20.0,
-      "attack_s": 2.33,
-      "peak_s": 2.6,
-      "phone_db": -10.5,
+      "peak_dbfs": -1.7,
+      "loudness_lufs": -20.9,
+      "attack_s": 2.54,
+      "peak_s": 2.61,
+      "phone_db": -4.5,
       "source": "synthesized (code)",
       "model": "tools/synth_sfx.py",
       "license": "original: synthesized in code by the channel, no third-party rights",
@@ -1066,9 +1071,11 @@
         "dur": 2.6,
         "ring_s": 0.4,
         "ring_ratio": 1.15,
-        "harmonics": 0.35,
+        "harmonics": 1.0,
+        "overtones": 6,
         "space": 0.25
       },
+      "post": "exciter-parallel",
       "used_in": []
     },
     {
@@ -2129,6 +2136,41 @@
       "superseded": true,
       "superseded_by": "impact-soft",
       "usage_note": "regenerated 2026-11-16 for phone audibility; rejected by ear (v1 sounds better)"
+    },
+    {
+      "id": "impact-deep-soft--v1",
+      "file": "superseded/impact-deep-soft-v1.mp3",
+      "category": "emphasis",
+      "tags": [
+        "impact",
+        "deep",
+        "reveal",
+        "payoff",
+        "long-tail",
+        "emphasis"
+      ],
+      "duration_s": 2.48,
+      "peak_dbfs": -2.0,
+      "loudness_lufs": -20.0,
+      "attack_s": 0.11,
+      "peak_s": 0.12,
+      "phone_db": -17.7,
+      "source": "elevenlabs:sound-generation",
+      "model": "eleven_text_to_sound_v3",
+      "license": "ElevenLabs generated (text-to-sfx); owner: the generating account, commercial use per the account's ElevenLabs plan",
+      "prompt": "A soft, deep impact with a gentle long tail, for a meaningful reveal. A warm low thud that blooms and decays smoothly, cinematic and restrained, felt in the chest but never loud. Not a harsh trailer slam, no distortion, no music.",
+      "used_in": [
+        "short-1-chess",
+        "ch-3-honeypot",
+        "short-8-phish",
+        "short-10-fees",
+        "short-11-map",
+        "short-12-orbit",
+        "ch-5-three-skills"
+      ],
+      "superseded": true,
+      "superseded_by": "impact-deep-soft",
+      "usage_note": "pre-exciter take (2026-11-16)"
     }
   ]
 }

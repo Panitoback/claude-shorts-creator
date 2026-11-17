@@ -22,6 +22,9 @@ Usage:
   python tools/gen_sfx.py --measure [--only ids]
                                           # (re)measure attack_s / peak_s / phone_db of every
                                           # active clip into the catalog (no API, no re-encode)
+  python tools/gen_sfx.py --only id --audition 2 [--dry-run]
+                                          # N candidate takes to audition/takes/<id>-takeK.mp3
+                                          # (post + normalized + measured); library untouched
 
 POST-PROCESSING: a palette recipe may carry "post": "<preset>" (see POST_PRESETS); it is applied
 after generation, before normalizing, and recorded in the catalog as "post". To apply a recipe's
@@ -156,11 +159,20 @@ POST_PRESETS = {
 }
 
 
-def apply_post(path, preset):
+def apply_post(path, preset, loop=False):
+    """Apply a POST_PRESETS graph in place. loop=True processes the clip CIRCULARLY (two copies
+    back to back, keep the second) so the filters' state runs across the seam and the loop point
+    stays click-free; a plain pass breaks the seam (measured on space-drone-loop)."""
     graph = POST_PRESETS[preset]
     tmp = path + ".post.mp3"
-    run_capture(["ffmpeg", "-y", "-hide_banner", "-i", path, "-filter_complex", graph,
-                 "-c:a", "libmp3lame", "-q:a", "2", tmp])
+    if loop:
+        d = probe_duration(path)
+        graph = f"[0][1]concat=n=2:v=0:a=1,{graph},atrim={d:.6f}:{2 * d:.6f},asetpts=N/SR/TB"
+        run_capture(["ffmpeg", "-y", "-hide_banner", "-i", path, "-i", path, "-filter_complex", graph,
+                     "-c:a", "libmp3lame", "-q:a", "2", tmp])
+    else:
+        run_capture(["ffmpeg", "-y", "-hide_banner", "-i", path, "-filter_complex", graph,
+                     "-c:a", "libmp3lame", "-q:a", "2", tmp])
     if not (os.path.exists(tmp) and os.path.getsize(tmp) > 0):
         sys.exit(f"post '{preset}' failed on {path}")
     os.replace(tmp, path)
@@ -250,7 +262,7 @@ def main():
 
     def entry(s, rel, path, fresh=False):
         if s.get("post") and fresh:
-            apply_post(path, s["post"])
+            apply_post(path, s["post"], loop=s.get("loop", False))
         lufs, peak = normalize_clip(path, target_lufs, ceiling_db)
         dur = probe_duration(path)
         m = sfx_measure.catalog_fields(path, loop=s.get("loop", False))
@@ -307,6 +319,34 @@ def main():
             n += 1
         print(f"measured {n} clips")
         write_catalog()
+        return
+
+    if "--audition" in args:  # N candidate takes per --only id, to audition/; library untouched
+        k = int(args[args.index("--audition") + 1])
+        picks = [s for s in sounds if only and s["id"] in only]
+        if not picks:
+            sys.exit("--audition needs --only <ids>")
+        secs = sum(s["duration_s"] for s in picks) * k
+        print(f"audition: {k} take(s) of {', '.join(s['id'] for s in picks)}  ~{secs * CREDITS_PER_S:.0f} credits")
+        if dry:
+            return
+        if not api_key:
+            sys.exit("ELEVENLABS_API_KEY not set in .env")
+        out_dir = os.path.join(SFX_DIR, "audition", "takes")
+        os.makedirs(out_dir, exist_ok=True)
+        for s in picks:
+            for j in range(1, k + 1):
+                out = os.path.join(out_dir, f"{s['id']}-take{j}.mp3")
+                audio = generate(api_key, s["prompt"], s["duration_s"], s.get("prompt_influence", pinf),
+                                 model, loop=s.get("loop", False))
+                with open(out, "wb") as f:
+                    f.write(audio)
+                if s.get("post"):
+                    apply_post(out, s["post"], loop=s.get("loop", False))
+                lufs, peak = normalize_clip(out, target_lufs, ceiling_db)
+                m = sfx_measure.catalog_fields(out, loop=True)
+                print(f"   {os.path.relpath(out, ROOT)}: lufs={lufs} {fmt_measure(m)}")
+        print("adopt a take: copy it over clips/<id>.mp3 (archive the old one first), then --measure --only <id>")
         return
 
     if "--post-only" in args:  # apply each recipe's post to the clip on disk, once

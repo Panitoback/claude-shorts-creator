@@ -215,6 +215,9 @@ file start, which is almost never what you want. The cue sheet shows the resolve
 - Recipe post-processing: `"post": "exciter-parallel"` in a palette recipe (applied after
   generation); apply it to the clip on disk with `gen_sfx.py --post-only --only <id>` (never
   stacks). Ear-check exciter takes for harshness: the user rejected one (`supernova`).
+- Audition before replacing: `gen_sfx.py --only <id> --audition 2` writes N candidate takes to
+  `audition/takes/` (library untouched; announce the credits first). Synth recipes also take
+  `"post"`, and `pulsar` has `period_start`/`ramp` (spin-up into a fast real rate).
 - Regenerate one of OUR clips keeping the old take: `python tools/gen_sfx.py --only <id> --force
   --keep-old` (old one → `superseded/<id>-vN.mp3`, catalog id `<id>--vN`).
 - Print the cue sheet (the audit artifact): `python tools/mix_sfx.py <plan> --print [--no-optional]`

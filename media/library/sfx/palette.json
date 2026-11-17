@@ -143,7 +143,8 @@
         "long-tail",
         "emphasis"
       ],
-      "prompt": "A soft, deep impact with a gentle long tail, for a meaningful reveal. A warm low thud that blooms and decays smoothly, cinematic and restrained, felt in the chest but never loud. Not a harsh trailer slam, no distortion, no music."
+      "prompt": "A soft, deep impact with a gentle long tail, for a meaningful reveal. A warm low thud that blooms and decays smoothly, cinematic and restrained, felt in the chest but never loud. Not a harsh trailer slam, no distortion, no music.",
+      "post": "exciter-parallel"
     },
     {
       "id": "pop-reveal",
@@ -542,7 +543,9 @@
       "synth": {
         "kind": "pulsar",
         "period": 1.3373,
-        "dur": 8.0
+        "dur": 8.0,
+        "thump_harmonics": 0.6,
+        "tick_level": 1.2
       },
       "prompt": "(synthesized) soft ticks every 1.3373 s, the rotation period of PSR B1919+21, the first pulsar found (1967)"
     },
@@ -582,9 +585,12 @@
         "f0": 40,
         "f_peak": 320,
         "dur": 2.6,
-        "ring_s": 0.4
+        "ring_s": 0.4,
+        "harmonics": 1.0,
+        "overtones": 6
       },
-      "prompt": "(synthesized) black-hole merger chirp: inspiral 40->320 Hz over 2.6 s (f ~ (tc-t)^-3/8, amplitude ~ f^2/3), then a 0.4 s ringdown"
+      "prompt": "(synthesized) black-hole merger chirp: inspiral 40->320 Hz over 2.6 s (f ~ (tc-t)^-3/8, amplitude ~ f^2/3), then a 0.4 s ringdown",
+      "post": "exciter-parallel"
     }
   ]
 }

@@ -57,7 +57,7 @@ Starting gains are educated guesses until a produced short measures them (see Ma
   points under continuous narration: whooshes −3, pops/impacts 0 to +3, snaps 0 to +7, layered
   hero risers 0 to +2.
 - **Very short clips catalog quieter** (they hit the −1.5 dBFS peak ceiling before reaching −20
-  LUFS): `tick-soft` (−23.3), `number-settle` (−25.0), `pulsar-ticks` (−23.4), `ui-click-soft`
+  LUFS): `tick-soft` (−23.3), `number-settle` (−25.0), `pulsar-ticks` (−25.7), `ui-click-soft`
   (−22.1). Add **+3 to +5 dB** on top of the usual start (already included below).
 - A cue that sits fully under continuous speech may never measure (the duck eats it): accept
   felt-not-heard or move it to a gap.
@@ -89,7 +89,7 @@ point (see combos). Attack = first 10 ms window within 6 dB of the peak.
 | `riser-long` | 6.00 | 3.49 | **4.53** (crests 1.5 s before its end) | −3.9 |
 | `riser-shimmer` | 4.00 | 0.69 | 0.84 (front-loaded) | −0.4 |
 | `impact-soft` | 1.48 | 0.23 | 0.24 | ⚠ −25.8 |
-| `impact-deep-soft` | 2.48 | 0.11 | 0.12 | ⚠ −17.7 |
+| `impact-deep-soft` (+ exciter, 2026-11-16) | 2.48 | 0.11 | 0.12 | ⚠ −7.1 (borderline) |
 | `pop-reveal` | 0.48 | 0.00 | 0.00 | −0.5 |
 | `impact-cosmic` | 4.00 | 0.06 | 0.27 | ⚠ −35.5 (always with a mid layer) |
 | `hook-hit` (new, 2026-11-16) | 1.48 | 0.01 | 0.05 | −6.3 |
@@ -113,9 +113,9 @@ point (see combos). Attack = first 10 ms window within 6 dB of the peak.
 | `radiation-hum` | 4.00 | 0.56 | 2.18 | −5.6 |
 | `solar-flare-surge` | 3.00 | 0.20 | 0.96 | −5.6 |
 | `redshift-slide` | 3.08 | 0.07 | 0.61 | −1.6 |
-| `pulsar-ticks` | 8.05 | 0.01 | each tick | ⚠ −9.9 |
+| `pulsar-ticks` (harmonics, 2026-11-16) | 8.05 | 0.00 (first tick; the meter reads 1.33 because the fade-in softens it) | each tick | −4.9 |
 | `pulsar-ticks-fast` | 3.87 | 0.01 | — | −5.9 |
-| `gw-chirp` | 3.56 | 2.33 | 2.60 (the merger) | ⚠ −10.5 |
+| `gw-chirp` (harmonics + exciter, 2026-11-16) | 3.56 | 2.54 | 2.61 (the merger) | −4.5 |
 | beds: `space-drone-loop` / `space-air-loop` / `accretion-swirl-loop` | 30 | — | — | −6.2 / −2.9 / ⚠ −11.8 |
 
 The phone-invisible clips (⚠) are the weight of the library: the cosmic hits and the soft
@@ -158,6 +158,17 @@ exciter adds harmonics to what is already there; it cannot invent a mid range th
   (palette recipes written 2026-11-16), or, for one short, use the combo below.
 - **Any big moment, whatever the clip:** keep the **low hit + mid layer aligned on the same
   peak** combo. It is the safest option: headphones get the body, phones get the attack.
+
+**Second pass (2026-11-16, user's ear, `audition/batch-5`):** the exciter won on numbers almost
+everywhere but **lost by ear on `stellar-collapse`, `radiation-hum`, `solar-flare-surge` and
+`accretion-swirl-loop`** (originals kept). It was kept on `impact-deep-soft` (−17.7 → −7.1) and,
+on top of extra harmonics, on `gw-chirp`. `pulsar-ticks` kept the code fix (stronger click and
+thump harmonics, same period: −9.9 → −4.9). `space-drone-loop` stays as is: the exciter made its
+seam click even when processed circularly. So the exciter is a **candidate, never a default**:
+audition it against the original every time.
+
+**A loop processed with any filter must be processed circularly** (`gen_sfx.apply_post(...,
+loop=True)` does it: two copies back to back, keep the second), or the loop point clicks.
 
 **What happened when we tried both (2026-11-16, judged by the user's ear, `audition/batch-3`):**
 

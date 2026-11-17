@@ -13,15 +13,24 @@ Kinds and parameters (all optional except where noted; times in seconds, frequen
   redshift  f0=880 f1=220 dur=2.5 attack=0.12 release=0.6 space=0.25
             a soft tone gliding exponentially from f0 down to f1; its overtones fade as it
             slides, so it gets "redder" (darker) as well as lower
-  pulsar    period=1.3373 dur=8 tick_hz=1800 thump_hz=140 space=0.2
-            one soft tick (a bright click over a low thump) every `period` seconds. Real periods:
+  pulsar    period=1.3373 dur=8 tick_hz=1800 thump_hz=140 thump_harmonics=0 tick_level=0.55 space=0.2
+            one soft tick (a bright click over a low thump) every `period` seconds.
+            `thump_harmonics` adds 2nd/3rd overtones to the thump so it reads on phone speakers
+            and `tick_level` sets the bright click (the part a phone hears best). Timbre only: the
+            period, the data, is untouched.
+            `period_start` > 0 = SPIN-UP: the tick rate glides exponentially from 1/period_start
+            to the real 1/period over the first `ramp` fraction of `dur`, then holds the real
+            rate. For very fast pulsars, whose real ticks fuse into a steady tone: the ear hears
+            separate ticks speed up and merge into that tone (the end is still the true rate). Real periods:
             PSR B1919+21, the first pulsar found = 1.3373 s; PSR J1748-2446ad, the fastest known
             = 1/716 s (at that rate the ticks fuse into a 716 Hz tone, as they really would)
-  chirp     f0=40 f_peak=320 dur=2.6 ring_s=0.4 ring_ratio=1.15 harmonics=0.35 space=0.25
+  chirp     f0=40 f_peak=320 dur=2.6 ring_s=0.4 ring_ratio=1.15 harmonics=0.35 overtones=3 space=0.25
             a gravitational-wave chirp: inspiral with f(t) ~ (tc - t)^(-3/8) from f0 up to f_peak
             over `dur`, amplitude ~ f^(2/3) (the leading-order merger shape), then a ringdown at
             f_peak*ring_ratio decaying over ring_s. `harmonics` adds 2nd/3rd overtones so the low
-            start is audible on phone speakers (a real chirp starts below what phones can play)
+            start is audible on phone speakers (a real chirp starts below what phones can play);
+            `overtones` (3..6) is the highest overtone used, so more of the low sweep reads on a
+            phone. Timbre only: the frequency track f(t), the data, is untouched
   space (every kind): 0..1, a light Schroeder reverb for a sense of space (0 = dry); adds a tail
 
 Usage:
@@ -30,6 +39,7 @@ Usage:
   python tools/synth_sfx.py --list                # the kinds and their defaults
   python tools/synth_sfx.py --kind pulsar --set period=0.089 --set dur=4 --out media/projects/vela/vela.mp3
                                                   # one-off variant for one video (not cataloged)
+A recipe may also carry "post": "exciter-parallel" (applied after rendering, as in gen_sfx.py).
 New LIBRARY variant: add a palette.json entry with a "synth" block (copy pulsar-ticks), then run
 `python tools/synth_sfx.py --only <id>`. Free and instant, so re-render whenever you like.
 """
@@ -51,9 +61,11 @@ LICENSE = "original: synthesized in code by the channel, no third-party rights"
 
 DEFAULTS = {
     "redshift": {"f0": 880.0, "f1": 220.0, "dur": 2.5, "attack": 0.12, "release": 0.6, "space": 0.25},
-    "pulsar": {"period": 1.3373, "dur": 8.0, "tick_hz": 1800.0, "thump_hz": 140.0, "space": 0.2},
+    "pulsar": {"period": 1.3373, "dur": 8.0, "tick_hz": 1800.0, "thump_hz": 140.0, "thump_harmonics": 0.0, "tick_level": 0.55,
+               "period_start": 0.0, "ramp": 0.7,
+               "space": 0.2},
     "chirp": {"f0": 40.0, "f_peak": 320.0, "dur": 2.6, "ring_s": 0.4, "ring_ratio": 1.15,
-              "harmonics": 0.35, "space": 0.25},
+              "harmonics": 0.35, "overtones": 3, "space": 0.25},
 }
 
 
@@ -81,7 +93,11 @@ def redshift(f0, f1, dur, attack, release, **_):
     return out
 
 
-def pulsar(period, dur, tick_hz, thump_hz, **_):
+def pulsar(period, dur, tick_hz, thump_hz, thump_harmonics=0.0, tick_level=0.55, period_start=0.0,
+           ramp=0.7, **_):
+    if period_start:
+        return _pulsar_spinup(period, dur, tick_hz, thump_hz, thump_harmonics, tick_level,
+                              period_start, ramp)
     n = int(dur * SR)
     tau_t = min(0.006, period / 5)  # bright click decay
     tau_b = min(0.03, period / 3)   # low thump decay
@@ -90,13 +106,36 @@ def pulsar(period, dur, tick_hz, thump_hz, **_):
     for i in range(n):
         t = i / SR
         tl = t % period  # time since the last tick
-        v = (0.55 * math.exp(-tl / tau_t) * math.sin(2 * math.pi * tick_hz * tl)
-             + 0.7 * math.exp(-tl / tau_b) * math.sin(2 * math.pi * thump_hz * tl))
+        v = (tick_level * math.exp(-tl / tau_t) * math.sin(2 * math.pi * tick_hz * tl)
+             + 0.7 * math.exp(-tl / tau_b) * (math.sin(2 * math.pi * thump_hz * tl)
+                                              + thump_harmonics * math.sin(4 * math.pi * thump_hz * tl)
+                                              + 0.5 * thump_harmonics * math.sin(6 * math.pi * thump_hz * tl)))
         out.append(v * _fade(i, n, edge, edge))
     return out
 
 
-def chirp(f0, f_peak, dur, ring_s, ring_ratio, harmonics, **_):
+def _pulsar_spinup(period, dur, tick_hz, thump_hz, thump_harmonics, tick_level, period_start, ramp):
+    n, n_ramp = int(dur * SR), max(1, int(dur * ramp * SR))
+    edge = int(0.02 * SR)
+    out, ph, last = [], 0.0, 0.0
+    for i in range(n):
+        t = i / SR
+        P = period_start * (period / period_start) ** min(1.0, i / n_ramp)
+        ph += 1.0 / (P * SR)
+        if ph >= 1.0:  # a new tick starts
+            ph -= int(ph)
+            last = t
+        tl = t - last
+        tau_t, tau_b = min(0.006, P / 5), min(0.03, P / 3)
+        w = 2 * math.pi * thump_hz * tl
+        v = (tick_level * math.exp(-tl / tau_t) * math.sin(2 * math.pi * tick_hz * tl)
+             + 0.7 * math.exp(-tl / tau_b) * (math.sin(w) + thump_harmonics * math.sin(2 * w)
+                                              + 0.5 * thump_harmonics * math.sin(3 * w)))
+        out.append(v * _fade(i, n, edge, edge))
+    return out
+
+
+def chirp(f0, f_peak, dur, ring_s, ring_ratio, harmonics, overtones=3, **_):
     # f(t) = f0 * (1 - t/tc)^(-3/8), with tc chosen so that f(dur) = f_peak
     tc = dur / (1 - (f0 / f_peak) ** (8 / 3))
     n_in, n_rd = int(dur * SR), int(ring_s * SR)
@@ -105,8 +144,11 @@ def chirp(f0, f_peak, dur, ring_s, ring_ratio, harmonics, **_):
     out, ph = [], 0.0
     fade_in = int(min(0.3, dur / 4) * SR)
 
+    weights = {2: 1.0, 3: 0.4, 4: 0.25, 5: 0.16, 6: 0.1}  # overtone k at harmonics * weight
+
     def tone(p):
-        return math.sin(p) + harmonics * math.sin(2 * p) + 0.4 * harmonics * math.sin(3 * p)
+        return math.sin(p) + sum(harmonics * w * math.sin(k * p)
+                                 for k, w in weights.items() if k <= int(overtones))
 
     for i in range(n_in):
         t = i / SR
@@ -222,6 +264,8 @@ def main():
         path = os.path.join(gen_sfx.SFX_DIR, rel)
         x, p = render(kind, spec)
         write_mp3(x, path)
+        if s.get("post"):  # same recipe post-processing as gen_sfx (e.g. exciter-parallel)
+            gen_sfx.apply_post(path, s["post"], loop=s.get("loop", False))
         lufs, peak = gen_sfx.normalize_clip(path, target, ceiling)
         dur = gen_sfx.probe_duration(path)
         print(f"   {s['id']}: {kind} dur={dur}s  peak={peak}dBFS  lufs={lufs}")
@@ -231,6 +275,7 @@ def main():
             **gen_sfx.sfx_measure.catalog_fields(path, loop=s.get("loop", False)), "source": SOURCE,
             "model": MODEL, "license": LICENSE, "prompt": s["prompt"],
             "synth": {"kind": kind, **{k: round(v, 6) for k, v in p.items()}},
+            **({"post": s["post"]} if s.get("post") else {}),
             **{k: s[k] for k in gen_sfx.PASS_THROUGH if k in s},
             "used_in": by_id.get(s["id"], {}).get("used_in", []),
         }
