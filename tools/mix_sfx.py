@@ -16,6 +16,15 @@ Usage:
   python tools/mix_sfx.py plan.json --print         # show the resolved cue sheet, no render
   python tools/mix_sfx.py plan.json --no-optional    # drop events marked "optional": true
   python tools/mix_sfx.py plan.json --no-duck --end 60 --out path.mp4
+  python tools/mix_sfx.py plan.json --check          # phone check of the existing mix, no render
+
+ALIGN: an event may carry "align": "attack" | "peak". Then at_s is the PICTURE time of the hit
+and the clip starts at at_s - its attack_s / peak_s (measured per clip in catalog.json by
+gen_sfx.py --measure). Without align, at_s is the file start (old behaviour).
+
+PHONE CHECK (runs after every mix, or alone with --check): for each cue, how much it adds over
+the voice-only preview at its audible point, full band and through a 300 Hz high-pass (a phone
+speaker). A cue that adds < 1 dB through the high-pass DISAPPEARS on a phone.
 
 ffmpeg/ffprobe on PATH. The preview + all referenced clips must exist.
 """
@@ -23,6 +32,9 @@ import json
 import os
 import subprocess
 import sys
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import sfx_measure  # noqa: E402
 
 # Windows consoles default to cp1252 — force UTF-8 so unicode cue text (✓, →) prints
 if hasattr(sys.stdout, "reconfigure"):
@@ -60,7 +72,7 @@ def run(cmd):
 
 def main():
     args = sys.argv[1:]
-    flags = {"print": "--print" in args, "no_optional": "--no-optional" in args}
+    flags = {"print": "--print" in args, "no_optional": "--no-optional" in args, "check": "--check" in args}
     duck_override = None
     if "--no-duck" in args:
         duck_override = False
@@ -86,7 +98,7 @@ def main():
     # legacy clips (off-brand, in media/library/sfx/legacy/) and superseded clips (the original
     # author's, replaced by our own generations, in superseded/) are never mixed
     legacy_ids = {c["id"] for c in catalog.get("clips", []) if c.get("legacy")}
-    superseded = {c["id"].removesuffix("--inherited"): c.get("superseded_by", "")
+    superseded = {c["id"].split("--")[0]: c.get("superseded_by", "")
                   for c in catalog.get("clips", []) if c.get("superseded")}
     lib = {c["id"]: c for c in catalog.get("clips", []) if not c.get("legacy") and not c.get("superseded")}
 
@@ -98,10 +110,9 @@ def main():
     # resolve + filter events
     events = []
     missing = set()
+    bad_align = []
     for e in plan["events"]:
         if flags["no_optional"] and e.get("optional"):
-            continue
-        if float(e["at_s"]) >= end:
             continue
         clip = lib.get(e["sfx_id"])
         if clip and clip.get("loop"):
@@ -116,18 +127,48 @@ def main():
         if not os.path.exists(f):
             missing.add(e["sfx_id"] + " (file)")
             continue
-        events.append({**e, "file": f, "clip": clip})
-    events.sort(key=lambda e: e["at_s"])
+        align = e.get("align")
+        at = float(e["at_s"])
+        if align in ("attack", "peak"):
+            off = clip.get(f"{align}_s")
+            if off is None:
+                bad_align.append(f"{e['sfx_id']} (no {align}_s in the catalog: run gen_sfx.py --measure)")
+                continue
+            start, hit = at - off, at
+        elif align in (None, "start"):
+            start, hit = at, at + clip.get("peak_s", 0.0)   # unaligned: heard at its peak
+        else:
+            bad_align.append(f"{e['sfx_id']} (align must be attack|peak, got {align!r})")
+            continue
+        if start < 0:
+            bad_align.append(f"{e['sfx_id']} at {at:.2f}s (its {align} is {off}s into the file: starts before 0)")
+            continue
+        if start >= end:
+            continue
+        events.append({**e, "file": f, "clip": clip, "start_s": round(start, 3), "hit_s": round(hit, 3)})
+    events.sort(key=lambda e: e["start_s"])
 
     # cue sheet
     print(f"plan: {show(plan_path)}   catalog: {len(lib)} clips")
     print(f"preview: {show(preview)}   end: {end}s   duck: {duck}")
     print(f"events: {len(events)}" + (f"  (dropping {sum(1 for e in plan['events'] if e.get('optional'))} optional)"
                                       if flags["no_optional"] else ""))
-    print(f"  {'at_s':>7}  {'sfx_id':<14} {'gain':>5}  cue")
+    print(f"  {'at_s':>7} {'align':>6} {'start':>7}  {'sfx_id':<18} {'gain':>5} {'phone':>6}  cue")
+    seam = []
     for e in events:
         opt = " (opt)" if e.get("optional") else ""
-        print(f"  {e['at_s']:>7.2f}  {e['sfx_id']:<14} {e.get('gain_db', 0):>4}dB  {e.get('cue', '')[:64]}{opt}")
+        ph = e["clip"].get("phone_db")
+        phs = "  ?" if ph is None else f"{ph:5.1f}" + ("!" if ph < sfx_measure.PHONE_WARN_DB else " ")
+        print(f"  {float(e['at_s']):>7.2f} {e.get('align', '-'):>6} {e['start_s']:>7.2f}  {e['sfx_id']:<18} "
+              f"{e.get('gain_db', 0):>4}dB {phs}  {e.get('cue', '')[:56]}{opt}")
+        if e["start_s"] + float(e["clip"].get("duration_s") or 0) > end + 0.01:
+            seam.append(f"{e['sfx_id']} @ {e['start_s']:.2f}s")
+    print("  (phone = the clip's own level through a 300 Hz high-pass; '!' = phone-invisible clip, "
+          "give it a mid layer — USAGE.md)")
+    if seam:
+        print("  CHECK loop seam — these tails run past the end (the replay would click):", ", ".join(seam))
+    if bad_align:
+        print("  ALIGN problems:", "; ".join(bad_align))
     if missing:
         print("  MISSING from library (run tools/gen_sfx.py):", ", ".join(sorted(missing)))
     pause_only = sorted({e["sfx_id"] for e in events if e["clip"].get("not_under_narration")})
@@ -135,6 +176,13 @@ def main():
         print("  CHECK pause-only clips (crackle; never under narration, brand §7) — make sure each sits "
               "in a gap in the voice:", ", ".join(pause_only))
     if flags["print"]:
+        return
+    if bad_align:
+        sys.exit("fix the align problems first.")
+    if flags["check"]:
+        if not os.path.exists(out):
+            sys.exit(f"--check: no mix at {show(out)} yet; run without --check first.")
+        phone_check(events, preview, out, end)
         return
     if not events:
         sys.exit("no events to mix.")
@@ -152,7 +200,7 @@ def main():
 
     parts, labels = [], []
     for i, e in enumerate(events):
-        ms = int(round(float(e["at_s"]) * 1000))
+        ms = int(round(float(e["start_s"]) * 1000))
         g = float(e.get("gain_db", 0))
         parts.append(f"[{i + 1}:a]aformat=sample_rates=48000:channel_layouts=stereo,"
                      f"adelay={ms}:all=1,volume={g:.2f}dB[e{i}]")
@@ -186,6 +234,51 @@ def main():
     dur = run(["ffprobe", "-v", "error", "-show_entries", "format=duration",
                "-of", "default=nw=1:nk=1", out]).strip()
     print(f"done -> {show(out)}  ({dur}s, {len(events)} cues)")
+    phone_check(events, preview, out, end)
+
+
+def phone_check(events, preview, out, end):
+    """Per cue: dB the cue adds over the voice-only preview at its audible point, full band and
+    through the 300 Hz phone high-pass. Windows: risers = the second before their crest; everything
+    else = 50 ms before to 300 ms after the hit (tight, so a click isn't diluted)."""
+    sr = sfx_measure.SR
+    hp = sfx_measure.PHONE_HP
+    tracks = {(k, f): sfx_measure.decode(src, f, 0, end)
+              for k, src in (("prev", preview), ("mix", out)) for f in (None, hp)}
+    print()
+    print(f"PHONE CHECK  (dB each cue adds over the voice-only preview; phone = through a 300 Hz high-pass)")
+    print(f"  {'hit_s':>7}  {'sfx_id':<18} {'full':>6} {'phone':>6}  verdict")
+    # Floor = the preview's average level (per band) minus 20 dB. In a gap in the voice the
+    # preview is near silence, so a bare ratio would call any whisper "audible"; against this
+    # floor a cue in a gap must reach at least ~20 dB under the program's typical level to count.
+    floors = {f: sfx_measure.energy(tracks[("prev", f)]) / max(1, len(tracks[("prev", f)])) * 0.01
+              for f in (None, hp)}
+    gone = []
+    for e in events:
+        h = e["hit_s"]
+        t0, t1 = (h - 1.0, h) if e["clip"].get("category") == "tension" else (h - 0.05, h + 0.30)
+        i0, i1 = int(t0 * sr), int(t1 * sr)
+        d = {}
+        for f, name in ((None, "full"), (hp, "phone")):
+            ep = sfx_measure.energy(tracks[("prev", f)], i0, i1)
+            em = sfx_measure.energy(tracks[("mix", f)], i0, i1)
+            floor = floors[f] * (i1 - i0)
+            d[name] = sfx_measure.db((em + floor) / (ep + floor))
+        if d["phone"] < 1.0:
+            verdict = "GONE on phone" + (" (inaudible everywhere)" if d["full"] < 1.0 else " (headphones only)")
+            gone.append(f"{e['sfx_id']} @ {h:.2f}s")
+        elif d["phone"] < 3.0:
+            verdict = "weak on phone"
+        else:
+            verdict = "ok"
+        if d["full"] < 4.0 and not e.get("optional") and verdict == "ok":
+            verdict = "ok on phone; < +4 dB full band (fine for texture, low for a story cue)"
+        print(f"  {h:>7.2f}  {e['sfx_id']:<18} {d['full']:>+6.1f} {d['phone']:>+6.1f}  {verdict}")
+    if gone:
+        print("  FLAG — disappears on a phone:", ", ".join(gone))
+        print("  -> add a mid layer on the same peak, use a phone-safe clip, or accept it as felt-not-heard.")
+    else:
+        print("  every cue survives the phone high-pass.")
 
 
 if __name__ == "__main__":

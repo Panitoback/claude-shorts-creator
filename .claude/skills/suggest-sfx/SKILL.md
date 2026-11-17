@@ -87,6 +87,12 @@ Sound taste is a brand contract — read **`brand/brand.md` §7** every time. Th
 7. **Mix the audition preview** once approved: `python tools/mix_sfx.py shorts/short-N-<niche>/sfx-plan.json`
    → the plan's `render.out`. Light sidechain duck under the voice + a safety limiter. Iterate on
    the user's notes (gains, timing, add/cut cues) — re-print, re-mix.
+   - **The PHONE CHECK runs after every mix** (or alone: `mix_sfx.py <plan> --check`): per cue,
+     the dB it adds over the voice-only preview at its audible point, full band and through the
+     300 Hz phone high-pass. **Report it to the user with every mix**, and call out each cue
+     flagged `GONE on phone` (fix: a mid layer on the same peak, a phone-safe clip, or the user
+     accepts it as felt-not-heard). In a gap in the voice a cue must reach ~20 dB under the
+     program's average level to count, so a whisper in silence doesn't pass.
    - **Verify audibility with numbers, not hope.** After mixing, RMS-diff the mixed audio vs the
      voice-only preview at each cue window: a story-critical cue should add **≥ +4 dB**, texture
      +1–3 dB. Inaudible cues hide in cue sheets — don't ship a cue you haven't confirmed lands.
@@ -119,8 +125,10 @@ Where a sound sits in time matters more than which clip it is. `mix_sfx.py` puts
 the file** at `at_s`, but the ear hears a clip at its **audible point** (attack or peak), which
 can be a second or more into the file. Always compute:
 
-**`at_s` = picture time − the clip's audible point inside the file.** The measured attack/peak of
-every library clip is in `USAGE.md` → "Timing and phone check". Never place a clip by its start.
+**Write `at_s` as the PICTURE time of the hit and set `"align": "peak"` or `"attack"`** on the
+event: `mix_sfx.py` then starts the clip at `at_s` − its measured `peak_s` / `attack_s` (stored per
+clip in `catalog.json` by `gen_sfx.py`; `--measure` refreshes them). Without `align`, `at_s` is the
+file start, which is almost never what you want. The cue sheet shows the resolved `start`.
 
 | Sound | Align its… | to |
 |---|---|---|
@@ -180,14 +188,17 @@ every library clip is in `USAGE.md` → "Timing and phone check". Never place a 
     "end_s": 42, "duck": true
   },
   "events": [
-    { "at_s": 4.9, "sfx_id": "chess-piece-thock", "gain_db": -8, "shot": "MainScene",
-      "cue": "e4 pawn lands (local f51)", "note": "diegetic board foley" },
+    { "at_s": 4.9, "sfx_id": "impact-soft", "align": "peak", "gain_db": 0, "shot": "MainScene",
+      "cue": "the planet lands (local f51)", "note": "peak on the settle frame" },
     { "at_s": 13.03, "sfx_id": "ui-click-soft", "gain_db": -18, "optional": true, "cue": "card locks" }
   ]
 }
 ```
 
-- `at_s` — global-timeline seconds (same clock as beats.json).
+- `at_s` — global-timeline seconds (same clock as beats.json). With `align`, the picture time of
+  the hit; without it, the file start.
+- `align` — `"peak"` (hits, whooshes, riser crests) or `"attack"` (snaps, clicks, arrivals).
+  Use it on every new cue.
 - `gain_db` — dB relative to the clip's normalized level (lower = quieter). See the SHORTS
   calibration above for starting values.
 - `optional: true` — deniable texture; `mix_sfx.py --no-optional` drops it. Use it liberally so
@@ -199,7 +210,13 @@ every library clip is in `USAGE.md` → "Timing and phone check". Never place a 
 - Grow the library: `python tools/gen_sfx.py [--dry-run] [--only id1,id2] [--force] [--renorm]`.
   `--renorm` re-balances existing clips to the loudness target (no API/billing). Needs
   `ELEVENLABS_API_KEY` in `.env`.
-- Print the cue sheet (the audit artifact): `python tools/mix_sfx.py <plan> --print [--no-optional]`.
+- Measure clips: `python tools/gen_sfx.py --measure [--only ids]` (catalog attack_s / peak_s /
+  phone_db, no API); any file: `python tools/sfx_measure.py <file>...`.
+- Regenerate one of OUR clips keeping the old take: `python tools/gen_sfx.py --only <id> --force
+  --keep-old` (old one → `superseded/<id>-vN.mp3`, catalog id `<id>--vN`).
+- Print the cue sheet (the audit artifact): `python tools/mix_sfx.py <plan> --print [--no-optional]`
+  (shows align → start, each clip's phone level, loop-seam and align problems).
+- Phone check of an existing mix: `python tools/mix_sfx.py <plan> --check`.
 - Mix: `python tools/mix_sfx.py <plan> [--no-optional] [--no-duck] [--end S] [--out path]`.
 
 ## Principles (the house style — apply them)

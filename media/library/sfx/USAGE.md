@@ -65,9 +65,12 @@ Starting gains are educated guesses until a produced short measures them (see Ma
 
 ### Timing and phone check (measured 2026-11-16)
 
-`mix_sfx.py` puts the clip's FILE START at `at_s`. Place by the audible point instead:
-**`at_s` = picture time − attack** (snaps, clicks, arrivals) or **− peak** (hits, whooshes,
-riser crests). For a whoosh into a cut, the peak goes 0.1–0.25 s *before* the cut.
+Place by the audible point: write `at_s` as the picture time and add `"align": "attack"`
+(snaps, clicks, arrivals) or `"align": "peak"` (hits, whooshes, riser crests); `mix_sfx.py`
+subtracts the clip's measured offset. For a whoosh into a cut, `at_s` = cut − 0.15 with
+`align: "peak"`. These numbers live in `catalog.json` (`attack_s`, `peak_s`, `phone_db`), written
+by `gen_sfx.py`; refresh with `python tools/gen_sfx.py --measure`. Every mix ends with a per-cue
+PHONE CHECK (`mix_sfx.py --check` to rerun it).
 
 `phone dB` = how much of the clip survives a 300 Hz high-pass (what phone speakers play).
 **Below about −6 dB the clip is invisible on a phone** (⚠): it is felt on headphones only. Never

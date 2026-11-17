@@ -16,6 +16,16 @@ Usage:
   python tools/gen_sfx.py --force         # regenerate all (re-bills ElevenLabs)
   python tools/gen_sfx.py --only id1,id2  # just these ids
   python tools/gen_sfx.py --dry-run       # show what WOULD be generated, no API calls
+  python tools/gen_sfx.py --only id --force --keep-old
+                                          # regenerate OUR clip, archiving the current one as
+                                          # superseded/<id>-vN.mp3 (catalog id "<id>--vN")
+  python tools/gen_sfx.py --measure [--only ids]
+                                          # (re)measure attack_s / peak_s / phone_db of every
+                                          # active clip into the catalog (no API, no re-encode)
+
+MEASUREMENTS (tools/sfx_measure.py): every catalog entry carries attack_s and peak_s (where the
+clip is HEARD; mix_sfx.py "align" uses them) and phone_db (energy surviving a 300 Hz high-pass;
+below -6 dB the clip is invisible on a phone speaker). Loops carry phone_db only.
   python tools/gen_sfx.py --regen-inherited [--dry-run]
                                           # regenerate every clip flagged regenerate_before_publish
                                           # (inherited from the original author's account) with OUR key
@@ -33,6 +43,9 @@ import subprocess
 import sys
 import urllib.request
 import urllib.error
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import sfx_measure  # noqa: E402
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SFX_DIR = os.path.join(ROOT, "media", "library", "sfx")
@@ -150,12 +163,19 @@ def generate(api_key, prompt, duration_s, prompt_influence, model, loop=False):
         return resp.read()
 
 
+def fmt_measure(m):
+    if "attack_s" in m:
+        return f"attack={m['attack_s']}s  peak_at={m['peak_s']}s  phone={m['phone_db']}dB"
+    return f"phone={m['phone_db']}dB (loop)"
+
+
 def main():
     args = sys.argv[1:]
     force = "--force" in args
     dry = "--dry-run" in args
     renorm = "--renorm" in args  # re-balance existing clips only, no API calls
     regen_inherited = "--regen-inherited" in args
+    keep_old = "--keep-old" in args
     only = None
     if "--only" in args:
         only = set(args[args.index("--only") + 1].split(","))
@@ -206,13 +226,29 @@ def main():
     def entry(s, rel, path):
         lufs, peak = normalize_clip(path, target_lufs, ceiling_db)
         dur = probe_duration(path)
-        print(f"   {s['id']}: dur={dur}s  peak={peak}dBFS  lufs={lufs}")
+        m = sfx_measure.catalog_fields(path, loop=s.get("loop", False))
+        print(f"   {s['id']}: dur={dur}s  peak={peak}dBFS  lufs={lufs}  " + fmt_measure(m))
         return {
             "id": s["id"], "file": rel, "category": s.get("category", ""),
             "tags": s.get("tags", []), "duration_s": dur, "peak_dbfs": peak,
-            "loudness_lufs": lufs, "source": SOURCE, "model": model, "license": LICENSE,
+            "loudness_lufs": lufs, **m, "source": SOURCE, "model": model, "license": LICENSE,
             "prompt": s["prompt"], **{k: s[k] for k in PASS_THROUGH if k in s}, "used_in": by_id.get(s["id"], {}).get("used_in", []),
         }
+
+    def archive(cid, path):
+        """Move our current clip to superseded/<id>-vN.mp3 and keep its catalog entry as <id>--vN."""
+        n = 1
+        while f"{cid}--v{n}" in by_id:
+            n += 1
+        rel_old = f"superseded/{cid}-v{n}.mp3"
+        os.makedirs(os.path.join(SFX_DIR, "superseded"), exist_ok=True)
+        os.replace(path, os.path.join(SFX_DIR, rel_old))
+        old = dict(by_id.get(cid, {"id": cid}))
+        old.update({"id": f"{cid}--v{n}", "file": rel_old, "superseded": True, "superseded_by": cid,
+                    "used_in": old.get("used_in", [])})
+        by_id[old["id"]] = old
+        legacy_ids.add(old["id"])
+        print(f"   archived previous {cid} -> {rel_old} (catalog id {old['id']})")
 
     def write_catalog():
         order = [s["id"] for s in palette["sounds"]]
@@ -222,6 +258,28 @@ def main():
             json.dump(catalog, f, indent=2, ensure_ascii=False)
             f.write("\n")
         print(f"\ncatalog -> {os.path.relpath(CATALOG, ROOT)}  ({len(catalog['clips'])} clips)")
+
+    if "--measure" in args:  # measurement only: every active clip, incl. synthesized ones
+        n = 0
+        for i, c in by_id.items():
+            if i in legacy_ids or (only and i not in only):
+                continue
+            path = os.path.join(SFX_DIR, c["file"])
+            if not os.path.exists(path):
+                continue
+            m = sfx_measure.catalog_fields(path, loop=c.get("loop", False))
+            for k in ("attack_s", "peak_s", "phone_db"):
+                c.pop(k, None)
+            pos = list(c).index("loudness_lufs") + 1 if "loudness_lufs" in c else len(c)
+            items = list(c.items())
+            c.clear()
+            c.update(items[:pos] + list(m.items()) + items[pos:])
+            flag = "  PHONE-INVISIBLE" if m["phone_db"] < sfx_measure.PHONE_WARN_DB else ""
+            print(f"   {i:<22} {fmt_measure(m)}{flag}")
+            n += 1
+        print(f"measured {n} clips")
+        write_catalog()
+        return
 
     if renorm:  # re-balance existing clips to the current loudness target, no API
         n = 0
@@ -271,6 +329,8 @@ def main():
                              loop=s.get("loop", False))
         except urllib.error.HTTPError as e:
             sys.exit(f"ElevenLabs HTTP {e.code}: {e.read().decode('utf-8', 'ignore')[:400]}")
+        if keep_old and os.path.exists(path):
+            archive(s["id"], path)
         with open(path, "wb") as f:
             f.write(audio)
         by_id[s["id"]] = entry(s, rel, path)

@@ -227,7 +227,8 @@ def main():
         print(f"   {s['id']}: {kind} dur={dur}s  peak={peak}dBFS  lufs={lufs}")
         by_id[s["id"]] = {
             "id": s["id"], "file": rel, "category": s.get("category", ""), "tags": s.get("tags", []),
-            "duration_s": dur, "peak_dbfs": peak, "loudness_lufs": lufs, "source": SOURCE,
+            "duration_s": dur, "peak_dbfs": peak, "loudness_lufs": lufs,
+            **gen_sfx.sfx_measure.catalog_fields(path, loop=s.get("loop", False)), "source": SOURCE,
             "model": MODEL, "license": LICENSE, "prompt": s["prompt"],
             "synth": {"kind": kind, **{k: round(v, 6) for k, v in p.items()}},
             **{k: s[k] for k in gen_sfx.PASS_THROUGH if k in s},
