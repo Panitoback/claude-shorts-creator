@@ -299,4 +299,15 @@ copied; none of them are installed.
 
 *(Newest first. One entry per produced short: slug, clips used, gains that landed, what to change.)*
 
-- none yet
+- **what-is-a-quasar** (2026-11-16, brand v2.0, plans in `shorts/what-is-a-quasar/sfx-plan*.json`)
+  - Hook: hook-hit +1 on frame 0 (+25 dB phone); whoosh-deep +2 at the pull-back's peak (+3.2 on
+    A: just enough; louder on B/C); glow-swell 0 on the flare word (+5).
+  - Hero: riser-long +1 → 0.5 s near-silence → impact-cosmic +2 **plus hook-hit 0 on the same
+    attack**: impact-cosmic alone measured only +2.1 on the phone; with the layer, +14.
+  - Twist: whoosh-deep at 0 dB (was −2) aligned by peak to the pull-back's fastest moment (+5.6).
+  - Loop: whoosh-deep +2 (fly-in) + glow-swell 0 on "blazing"; the hook-hit on frame 0 restarts
+    the loop cleanly after the bed's 0.3 s fade.
+  - Body cues unchanged; the 4th tick-soft of a count-up vanishes on a phone (accepted).
+  - Bed: accretion-swirl-loop, `--under 16 --fade 0.3` (short fades keep the loop seam): felt in
+    the pauses, +0.3 dB under the voice. Final −13.8 LUFS.
+  - Change next time: start whoosh-deep on a hook at +3 rather than +2.

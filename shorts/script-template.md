@@ -60,7 +60,8 @@ BEATS:
 
 4. REVEAL [VO ~45% of total narration, 2–4 steps; longer shorts may use several SETUP/REVEAL pairs]
    VO: "<step 1>" / "<step 2>" / "<step 3>"
-   VISUAL: <what changes on screen at each step; ideally the same scene evolving, not cuts>
+   VISUAL: <per step, the picture that SHOWS its claim (a comparison, diagram, bars/meter,
+     timeline or counter, by its §3 name), and how it hands over from the last scene>
    HERO NUMBER: <optional>
    KEYWORD: <word(s)>
    ANNOTATIONS: <optional, max 2 on screen at once>
@@ -95,6 +96,8 @@ PRONUNCIATION: <word — how to say it, e.g. 'quasar — KWAY-zar'; only
 - [ ] VO has no symbols/abbreviations; every KEYWORD appears verbatim in its VO
 - [ ] SCALE stated for any scene about size or distance
 - [ ] The HOOK FRAME is composed, and the HOOK MOVE shows the surprising thing within ~3 s
+- [ ] Each REVEAL step shows its claim visually (comparison, diagram, bars/meter, timeline or
+      counter), and a new visual idea arrives at least every ~5–10 s
 - [ ] The LOOP returns to the hook, with no call to action
 
 ---

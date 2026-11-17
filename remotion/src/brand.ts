@@ -124,6 +124,11 @@ export const EASE = {
 } as const;
 
 // §8 ENERGY CURVE (brand v2.0): high-energy hook, calm body, bursts on the peaks.
+// Visual variety (brand §5): a new visual idea at least every ~5–10 s; every number is shown.
+export const SCENE = {
+  newIdeaEvery: [150, 300], // frames between new visual ideas (a dial change on the same picture doesn't count)
+} as const;
+
 export const ENERGY = {
   hookFrames: 90, // the high-energy hook: first ~3 s
   punchMove: [12, 24], // frames for the BULK of a hook/peak move or ignition (EASE.punch)

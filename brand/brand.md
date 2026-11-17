@@ -6,8 +6,9 @@
 > **Reference scene:** the `BrandReference` composition is this document rendered on screen. If
 > it looks right, the brand is right.
 >
-> v2.0 · 2026-11-16 · direction: *Deep Field hybrid* (cinematic and editorial, with a few
-> scientific annotations) · **energy curve**: a high-energy hook, a calm body, bursts on the peaks
+> v2.1 · 2026-11-16 · direction: *Deep Field hybrid* (cinematic and editorial, with a few
+> scientific annotations) · **energy curve**: a high-energy hook, a calm body, bursts on the peaks ·
+> **visual variety**: scenes change, and every number is shown
 
 ---
 
@@ -19,7 +20,8 @@
   a phone); the body is calm and cinematic; the main reveal and the twist get a short burst of
   energy, then settle. The identity (palette, type, honest scale, annotations, code-drawn) never
   changes with the energy: only speed, camera and sound do.
-- **Cinematic, editorial and honest.** Lots of dark space and one hero object per scene. Numbers
+- **Cinematic, editorial and honest.** Lots of dark space and one hero object per scene, but
+  never one scene for the whole short: what the voice explains, the screen shows (§5). Numbers
   are set like magazine headlines. A thin line of scientific annotation can prove a point, but
   never decorates.
 - **Minimalist.** If an element doesn't help the viewer understand the one idea of the scene, it
@@ -123,6 +125,21 @@ sans. Both are free Google fonts, so nothing has to be installed.
   true-scale object would be invisible, draw it at the smallest visible size (about 4 px), mark
   it with an annotation ring and say so in the script. Never quietly enlarge it.
 - **One hero object per scene.** Secondary objects are smaller, dimmer or both.
+
+### Visual variety
+
+One hero object per scene, **not one scene per short**.
+
+- **A new visual idea at least every ~5–10 s** (`SCENE.newIdeaEvery`). A new idea is something
+  the viewer hasn't seen yet: a new object or diagram, a comparison, a framing that shows
+  something new. Turning a dial on the same picture (brighter, dimmer, on/off) doesn't count.
+- **Every number or comparison is shown, not just narrated.** Mass, temperature, efficiency,
+  distance, age: each claim gets a picture of its own: a scale comparison, a diagram, bars or a
+  meter, a timeline or a counter. Test: with the sound off, the screen should still make the
+  claim.
+- **Continuity means smooth transitions, not a single scene.** Scenes hand over with a camera
+  move, a morph or an object carried into the next scene, never a hard cut to an unrelated
+  picture. The short still travels through several scenes.
 
 ## 6. Annotations
 

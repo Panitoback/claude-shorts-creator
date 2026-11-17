@@ -3,7 +3,7 @@
 > **For:** the planning project where topics, aesthetics and scripts are developed.
 > **Pair it with:** `brand.md` (the visual and sound style contract — read it for colors, type,
 > captions, annotations, motion, safe zones and sound taste; this file never repeats it).
-> **Version:** v0.10.0 · 2026-11-16 · phase: *base components and formats done → first short next*
+> **Version:** v0.11.0 · 2026-11-16 · phase: *first short done → visual variety kit built*
 >
 > This file describes **what can be asked for**, not how it is built. If a script asks for
 > something listed here, it can be made. If it asks for something not listed, flag it as a
@@ -168,12 +168,29 @@ shadow beside a near-white disk), never by flares, rays or haze.
 | **Infalling gas** *(new)* | Thin streaks of gas spiraling into the disk from outside, faster as they close in, deep orange far out and gold at the disk, so the scene always moves | how many streaks, how fast, how bright |
 | **Quasar** | All of the above together, driven by one **luminosity** dial: as it rises, the disk turns white-hot, the glow grows up to 3× the disk, the jets switch on, and the host galaxy and background stars all but vanish (as if the camera were exposing for the quasar) | size, position, luminosity (or a "switch-on" from dormant to full: it can be a hard, fast ignition for a hook), angle and tilt, jets on/off, an extreme close-up of the disk (the glow is toned down so the frame isn't washed out), seen from far away as a single bright point ("quasi-stellar") |
 
-### 3.5 Planned (not built yet)
+### 3.5 Visual variety kit (built, brand style)
+
+These exist so **every number in the VO gets its own picture** (§5). Ask for them by name in
+VISUAL. Each draws in on a cue, can be already in place on the first frame, and stays readable on
+a phone.
+
+| Component | What it shows | Options you can ask for |
+|---|---|---|
+| **Orbit overlay** | The planets' orbits at **true relative scale**, as thin lines laid over another object to compare sizes (e.g. the whole solar system inside a black hole's horizon). Planets move at their real relative speeds. Orbits too small to see fold into the Sun's dot rather than being enlarged. | the scale (what it's laid over), which planets, which orbit is named (1–2), face-on or tilted, moving or still |
+| **Comparison bars** | 2–4 bars that fill on the beat, each with a label above and its value under it, counting up as it fills (temperatures, efficiencies, masses). Lengths are true to the values; one gold bar is the point. | the bars (label, value, how it reads), which bar is the hero, log scale (labelled as such) for values far apart |
+| **Meter** | A gauge for **one** value against a full scale: a gold arc fills, the value counts up inside (e.g. "~10% of the mass turned into light"), with an optional reference tick (e.g. fusion 0.7%) | value, full scale, label, a reference value with its label |
+| **Timeline** | A time axis that draws in, with markers appearing on cue (e.g. Big Bang → light leaves → Earth forms → today). Positions are true; events close together get a short leader line instead of a fake gap | the events (name, date, cue word), which event is gold, vertical (default, fits a phone) or horizontal (2–3 events), log scale |
+| **Balance** | Two totals weighed on a scale (e.g. every star in a galaxy vs one quasar): a heap of stars in one pan, one bright point in the other; the beam tips slowly toward the heavier side and both totals appear | each side's label and value, what sits in each pan (a heap of stars, one bright point, nothing) |
+| **Flow paths** | Paths that draw in along the direction of travel with a soft glowing head (gas spiraling into a disk, light crossing space). A faint dashed "ghost" can show what does *not* happen first ("straight in?"), then fade | the paths (spiral into a disk, straight line, or a described route), which is the ghost, labels, an arrowhead |
+
+For a single big count-up, use the **Hero number** (3.1).
+
+### 3.6 Planned (not built yet)
 
 | Component (planned) | Status |
 |---|---|
 | **Zoom ruler** (continuous zoom galaxy → disk, with a scale bar that re-labels at each level) | Levels and figures sent for verification; built after approval |
-| Orbit diagram, light ray, timeline | Ideas, not designed |
+| Light ray (light crossing space, redshifting) | Idea, not designed |
 
 Anything else: list it under NEW COMPONENTS NEEDED in the script.
 
@@ -196,8 +213,13 @@ word budgets are in §5.
 | **Hook** | 0–3 s (always fixed) | **High energy.** The first frame is composed (no fade from black) and is the start of a fast move (ignition, pull-back, dive-in) that lands the surprising thing within ~3 s, with the title arriving word by word on the voice and a sound heard even on a phone. A clear visual change every 2–3 s for the first ~10 s. The cover is picked at upload, not frame 0. |
 | **Setup** | ~20% | Show the situation fast; build the tension the hook promised. |
 | **Quiz** *(optional)* | ~2.5 s | "Pause. Can you guess?" Drives comments and rewatches. |
-| **Reveal** | ~45% | The payoff in 2–4 steps, each step landing on a spoken word. |
+| **Reveal** | ~45% | The payoff in 2–4 steps, each step landing on a spoken word **and shown with its own picture** (comparison, diagram, bars, timeline, counter). |
 | **Twist** | ~20% | A reframe or bonus insight: the "send this to a friend" moment. |
+
+> **Visual variety (every format, every beat):** one hero object per scene, but the scenes
+> change: a new visual idea at least every ~5–10 s, and every number or comparison in the VO is
+> shown on screen, not just said. Scenes hand over smoothly (a camera move, a morph, an object
+> carried over). See `brand.md` §5.
 | **Loop** | last ~3–4 s | The last frame visually matches the first, so the replay is seamless. |
 
 ### The three formats at a glance
@@ -240,8 +262,9 @@ word budgets are in §5.
 - **Hook:** reveal the end result fast (the quasar switching on, the eclipse, the tide), not the
   diagram.
 - **Setup:** the question, in one line ("But black holes don't shine. So what does?").
-- **Steps:** 2–4 SETUP → REVEAL pairs, **one idea per step**. Ideally the same scene evolving
-  (one element added per step) rather than cuts to new scenes.
+- **Steps:** 2–4 SETUP → REVEAL pairs, **one idea per step, each with its own picture**: the
+  temperature as bars, the efficiency as a meter, the distance as a timeline. Steps hand over
+  smoothly (the hero object carried into the next scene, a camera move), never as hard cuts.
 - **Twist:** what the mechanism implies (scale, age, a surprising consequence).
 - **Loop:** back to the end result, now understood.
 - **Rules:** at most one new element appears per step; at most 2 annotations on screen at once.
@@ -257,8 +280,12 @@ Ideas for future formats (to be decided): *myth vs fact*, *"what if"*, *one numb
 ### What works well on screen
 - **One main object at a time**, big and centered. A phone screen is small; detail gets lost.
 - **Numbers**, especially when they count up live, change scale, or compare two things.
-- **Continuity over cuts.** The best shorts keep one scene alive (the same planet, the same
-  orbit) and evolve it, rather than jumping between unrelated pictures.
+- **Continuity over cuts, but not one scene.** Scenes flow into each other (a camera move, a
+  morph, the same object carried into the next picture) instead of hard cuts. The short still
+  needs **a new visual idea every ~5–10 s**: one scene for the whole short reads as a still.
+- **Show every number.** A claim with a number or comparison gets its own picture (a scale
+  comparison, a diagram, bars or a meter, a timeline, a counter). If the screen looks the same
+  with the sound off, the claim isn't shown.
 - **Comparisons and scale**: "this many Earths fit in the Sun", true-to-scale distances.
 - **Simulated motion**: orbits, falling, light travel. These are calculated, so they are
   accurate and look natural.
@@ -372,7 +399,8 @@ BEATS:
 
 4. REVEAL [VO ~45% of total narration, 2–4 steps; longer shorts may use several SETUP/REVEAL pairs]
    VO: "<step 1>" / "<step 2>" / "<step 3>"
-   VISUAL: <what changes on screen at each step; ideally the same scene evolving, not cuts>
+   VISUAL: <per step, the picture that SHOWS its claim (a comparison, diagram, bars/meter,
+     timeline or counter, by its §3 name), and how it hands over from the last scene>
    HERO NUMBER: <optional>
    KEYWORD: <word(s)>
    ANNOTATIONS: <optional, max 2 on screen at once>
@@ -406,6 +434,8 @@ PRONUNCIATION: <word — how to say it, e.g. 'quasar — KWAY-zar'; only
 - [ ] VO has no symbols/abbreviations; every KEYWORD appears verbatim in its VO
 - [ ] SCALE stated for any scene about size or distance
 - [ ] The HOOK FRAME is composed, and the HOOK MOVE shows the surprising thing within ~3 s
+- [ ] Each REVEAL step shows its claim visually (comparison, diagram, bars/meter, timeline or
+      counter), and a new visual idea arrives at least every ~5–10 s
 - [ ] The LOOP returns to the hook, with no call to action
 
 ### Example (first two beats)
@@ -444,6 +474,13 @@ BEATS:
 ## 7. Learnings
 
 What worked and what didn't. Newest first.
+
+- **The narration explained five things; the screen showed one.** "What is a quasar?" talked
+  about mass, temperature, efficiency, distance and time, but on screen the quasar only switched
+  on and off. It shipped, but it's the lesson: every number gets its own picture (bars for the
+  temperature, a meter for the efficiency, a timeline for the light's age, an orbit overlay for
+  the size), and a new visual idea arrives every ~5–10 s. The scene can stay continuous; it
+  can't stay the same. New components for this are in §3.5.
 
 - **Deep sounds vanish on a phone.** The big cosmic hits are felt on headphones but nearly
   silent on a phone speaker, which is where Shorts are watched. Big moments now carry a small
@@ -519,6 +556,10 @@ name is still open.
 three formats (Impossible Fact, Scale, How It Works) are defined in section 4. The quasar pieces
 (3.4) are built. The Zoom ruler (3.5) is next, once its figures are verified.
 
-**Next: first short, 'What is a quasar?'** Then the custom skills (`script-to-short`,
+**First short: done.** "What is a quasar?" shipped (opening 2, pull-back). Its lesson (the
+screen showed one thing while the voice explained five) became the visual variety rule and the
+kit in 3.5.
+
+**Next:** the custom skills (`script-to-short`,
 `new-component`); section 6 becomes final when `script-to-short` exists. Then Manim, only for
 physics/equation scenes, rendered as clips inside Remotion.
