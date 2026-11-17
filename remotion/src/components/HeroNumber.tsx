@@ -12,6 +12,8 @@ export type HeroNumberProps = {
   unit?: string; // gold italic, glued to the number: "million", "km/s"
   subject?: string; // what it counts: "Earths"
   label?: string; // small uppercase context above: "BY VOLUME"
+  prefix?: string; // gold italic words BEFORE the number: "1 in" → "1 in 10³⁰"
+  exponent?: number; // power-of-ten form: value is the base (10), the exponent is the superscript and is what counts up
   countFrom?: number; // default 0
   count?: boolean; // false = no count-up, just arrive (default true)
   y?: number; // top of the block (default 230 = just inside the safe top)
@@ -34,7 +36,7 @@ const warnShrink = (text: string, chars: number, factor: number) => {
 const decimalsOf = (v: number) => Math.min(2, (String(v).split('.')[1] || '').length);
 
 export const HeroNumber: React.FC<HeroNumberProps> = ({
-  value, decimals, grouping = false, unit, subject, label, countFrom = 0, count = true,
+  value, decimals, grouping = false, unit, subject, label, prefix, exponent, countFrom = 0, count = true,
   y = 230, x = 540, scale = 1, at = 0, warm = false,
 }) => {
   const f = useCurrentFrame();
@@ -48,16 +50,17 @@ export const HeroNumber: React.FC<HeroNumberProps> = ({
   const [lineW, setLineW] = useState(0);
   useLayoutEffect(() => {
     if (lineRef.current) setLineW(lineRef.current.offsetWidth); // offsetWidth ignores transforms
-  }, [value, unit, decimals, grouping]);
+  }, [value, unit, decimals, grouping, prefix, exponent]);
   const half = Math.min(x - SAFE_RECT.x, SAFE_RECT.x + SAFE_RECT.w - x) - 8; // room each side of x
   const k = lineW > 0 ? Math.min(scale, (2 * half) / lineW) : scale;
   if (lineW > 0 && k < scale - 1e-3) {
-    const text = `${fmt(value)}${unit ? ' ' + unit : ''}`;
+    const text = `${prefix ? prefix + ' ' : ''}${fmt(value)}${exponent !== undefined ? '^' + exponent : ''}${unit ? ' ' + unit : ''}`;
     warnShrink(text, text.length, k / scale);
   }
   const s = startOf(at, warm);
   const numIn = ramp(f, s, MOTION.rise);
-  const n = count ? ramp(f, s + 4, MOTION.countUp, countFrom, value) : value;
+  const n = count && exponent === undefined ? ramp(f, s + 4, MOTION.countUp, countFrom, value) : value;
+  const ex = exponent === undefined ? 0 : count ? Math.round(ramp(f, s + 4, MOTION.countUp, countFrom, exponent)) : exponent;
   const unitAt = s + 4 + (count ? MOTION.countUp - MOTION.overlap : 6);
   const unitIn = ramp(f, unitAt, MOTION.rise);
   const subjIn = ramp(f, unitAt + MOTION.overlap, MOTION.rise);
@@ -69,11 +72,21 @@ export const HeroNumber: React.FC<HeroNumberProps> = ({
         <div style={{ ...TYPE.number, color: PALETTE.ivory, marginTop: label ? 14 : 0, opacity: numIn, transform: riseY(numIn, MOTION.risePx), fontVariantNumeric: 'tabular-nums', whiteSpace: 'nowrap', display: 'flex', justifyContent: 'center' }}>
           {/* flex, not text-align: a line wider than its box must overflow EQUALLY both sides, staying centered on x */}
           <span ref={lineRef} style={{ display: 'inline-block' }}>
+          {prefix && (
+            <span style={{ ...TYPE.numberUnit, color: PALETTE.gold, marginRight: 26, display: 'inline-block' }}>{prefix}</span>
+          )}
           {/* final value reserves the width; the counting value is overlaid on it */}
           <span style={{ position: 'relative', display: 'inline-block' }}>
             <span style={{ visibility: 'hidden' }}>{fmt(value)}</span>
             <span style={{ position: 'absolute', right: 0, top: 0 }}>{fmt(n)}</span>
           </span>
+          {exponent !== undefined && (
+            // superscript exponent: reserves the final width, counts up in place
+            <span style={{ position: 'relative', display: 'inline-block', fontSize: '0.5em', verticalAlign: '0.95em', marginLeft: 6, letterSpacing: -2 }}>
+              <span style={{ visibility: 'hidden' }}>{exponent}</span>
+              <span style={{ position: 'absolute', left: 0, top: 0 }}>{ex}</span>
+            </span>
+          )}
           {unit && (
             <span style={{ ...TYPE.numberUnit, color: PALETTE.gold, marginLeft: 22, display: 'inline-block', opacity: unitIn, transform: riseY(unitIn, MOTION.risePx) }}>
               {unit}

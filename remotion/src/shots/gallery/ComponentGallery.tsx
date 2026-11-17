@@ -6,6 +6,7 @@ import {
   InfallingGas, KineticTitle, ParallaxStars,
   Balance, ComparisonBars, FlowPaths, Meter, OrbitOverlay, Timeline, linePath, spiralPath,
   WhipMontage, whipTiming,
+  Egg, eggCrackPts, CoffeeCup, cupSpiralPts, GoldMorphLine, morphScribble, morphPoint, WordDissolve, ParticleBox, DeckOfCards,
 } from '../../components';
 import { EASE } from '../../brand';
 import { PlanetKind } from '../../brand';
@@ -18,7 +19,7 @@ const PAGE = 120;
 
 export const compositionConfig = {
   id: 'ComponentGallery',
-  durationInSeconds: 100, // 25 pages × PAGE frames
+  durationInSeconds: 132, // 33 pages × PAGE frames
   fps: 30,
   width: 1080,
   height: 1920,
@@ -26,7 +27,7 @@ export const compositionConfig = {
 
 const Header: React.FC<{ n: number; title: string; note: string }> = ({ n, title, note }) => (
   <div style={{ position: 'absolute', top: 70, left: 60, right: 180 }}>
-    <div style={{ ...TYPE.annotation, color: PALETTE.gold, fontSize: 24 }}>{`${n} / 25 · ${title}`}</div>
+    <div style={{ ...TYPE.annotation, color: PALETTE.gold, fontSize: 24 }}>{`${n} / 33 · ${title}`}</div>
     <div style={{ ...TYPE.annotation, color: PALETTE.sciText, fontSize: 20, letterSpacing: 1, textTransform: 'none', marginTop: 8, opacity: 0.8 }}>{note}</div>
   </div>
 );
@@ -324,8 +325,113 @@ export const ComponentGallery: React.FC = () => (
       <WhipDemo />
       <Header n={25} title="Whip transition" note="sweep off / sweep in at peak speed · motion blur by speed · bulk 8f · last whip direction up · whoosh peak = whipTiming().swap" />
     </Sequence>
+
+    {/* 26-33: "Why time only moves forward" kit (positions derived from SAFE_RECT, 16:9-ready) */}
+    <Sequence from={PAGE * 25} durationInFrames={PAGE}><EggDemo />
+      <Header n={26} title="Egg" note="soft shading, no outline · crack 0→1 (gold hairline) · split = cap lifts + shards · split keys 1→0.45→1 = a rewind that stalls" /></Sequence>
+    <Sequence from={PAGE * 26} durationInFrames={PAGE}><CupDemo />
+      <Header n={27} title="Coffee cup" note="seen from above · spiral = milk poured (center out) · mix 0→1 blends to latte · mix keys 1→0.5→1 = an unmix that stalls" /></Sequence>
+    <Sequence from={PAGE * 27} durationInFrames={PAGE}><MorphDemo />
+      <Header n={28} title="Gold morph line" note="ONE line, no cuts: crack → spiral → handwriting → dust → point → crack · point-by-point morph (EASE.inOut) · draw + dust dials" /></Sequence>
+    <Sequence from={PAGE * 28} durationInFrames={PAGE}><WordDemo />
+      <Header n={29} title="Word dissolve" note="write (left → right) · burst into gold dust · re-form that stalls as a faint ghost outline, then scatters" /></Sequence>
+    <Sequence from={PAGE * 29} durationInFrames={PAGE}><BoxDemo />
+      <Header n={30} title="Particle box" note="gas: grow from a point · divider lifts · 100 particles mix (closed-form, deterministic) · collide: forward then the same clip reversed" /></Sequence>
+    <Sequence from={PAGE * 30} durationInFrames={PAGE}><DeckDemo />
+      <Header n={31} title="Deck of cards" note="ordered fan (A→K, suits alternate) · two riffle shuffles (real interleave) · gold edge with a running glint" /></Sequence>
+    <Sequence from={PAGE * 31} durationInFrames={PAGE}><RescaleDemo />
+      <Header n={32} title="Timeline rescale + stars going out" note="linear → LOG SCALE mid-scene: markers glide, t=0 slides off · Starfield offs = bright stars out one by one (~0.5 s each)" /></Sequence>
+    <Sequence from={PAGE * 32} durationInFrames={PAGE}>
+      <Starfield count={160} clear={[[SAFE_RECT.x, SAFE_RECT.y, SAFE_RECT.w, 520]]} warm />
+      <HeroNumber value={10} exponent={30} prefix="1 in" label="ODDS: ALL ONE SIDE" y={SAFE_RECT.y + 120} at={10} />
+      <Small x={SAFE_RECT.x + SAFE_RECT.w / 2} y={SAFE_RECT.y + 620}>{'exponent counts up · prefix in gold italic'}</Small>
+      <Header n={33} title="Hero number · exponent" note="power-of-ten form for numbers too long in words: base + superscript (the exponent counts up)" /></Sequence>
   </AbsoluteFill>
   </Grain>
+);
+
+// ---- pages 26-33 ----------------------------------------------------------------------------
+const CX = SAFE_RECT.x + SAFE_RECT.w / 2;
+const CY = SAFE_RECT.y + SAFE_RECT.h / 2;
+const EggDemo: React.FC = () => {
+  const r = SAFE_RECT.w * 0.2;
+  return (
+    <>
+      <Starfield count={160} avoid={[[CX, CY - r * 1.3, r * 1.6], [CX, CY + r * 1.6, r * 1.3]]} warm />
+      <Egg x={CX - r * 1.1} y={CY - r * 1.3} r={r * 0.9} wash warm crack={[[10, 0], [34, 1, 'punch']]} />
+      <Egg x={CX + r * 1.1} y={CY - r * 1.3} r={r * 0.9} warm crack={1} split={[[10, 0], [26, 1, 'punch']]} seed={8} />
+      <Egg x={CX} y={CY + r * 1.6} r={r} warm crack={1} split={[[0, 1], [30, 1], [62, 0.45], [70, 0.45], [96, 1]]} seed={11} />
+      <Small x={CX} y={CY + r * 2.75}>{'split 1 → 0.45 → 1: rewind stalls'}</Small>
+    </>
+  );
+};
+const CupDemo: React.FC = () => {
+  const r = SAFE_RECT.w * 0.17;
+  return (
+    <>
+      <Starfield count={160} avoid={[[CX - r * 1.3, CY - r * 1.4, r * 1.7], [CX + r * 1.3, CY - r * 1.4, r * 1.7], [CX, CY + r * 1.9, r * 1.7]]} warm />
+      <CoffeeCup x={CX - r * 1.3} y={CY - r * 1.4} r={r * 0.8} warm swirl={0} spiral={[[10, 0], [50, 1]]} />
+      <CoffeeCup x={CX + r * 1.3} y={CY - r * 1.4} r={r * 0.8} warm mix={[[10, 0], [80, 1]]} />
+      <CoffeeCup x={CX} y={CY + r * 1.9} r={r} warm wash mix={[[0, 1], [20, 1], [55, 0.5], [65, 0.5], [95, 1]]} />
+      <Small x={CX} y={CY + r * 3.75}>{'mix 1 → 0.5 → 1: unmix stalls'}</Small>
+    </>
+  );
+};
+const MorphDemo: React.FC = () => {
+  const r = SAFE_RECT.w * 0.24;
+  const keys = [
+    { pts: eggCrackPts(CX, CY, r), at: 0 },
+    { pts: cupSpiralPts(CX, CY, r * 0.8), at: 24, len: 14 },
+    { pts: morphScribble(CX - r * 1.3, CY + r * 0.2, r * 2.6, r * 0.45), at: 48, len: 14 },
+    { pts: morphPoint(CX, CY), at: 90, len: 16 },
+    { pts: eggCrackPts(CX, CY, r), at: 106, len: 12 },
+  ];
+  return (
+    <>
+      <Starfield count={160} warm />
+      <GoldMorphLine keys={keys} draw={[[0, 0.15], [16, 1, 'punch']]} dust={[[66, 0], [78, 1, 'out'], [90, 1], [102, 0]]} />
+      <Small x={CX} y={CY + r * 1.6}>{'crack · spiral · handwriting · dust · point · crack'}</Small>
+    </>
+  );
+};
+const WordDemo: React.FC = () => (
+  <>
+    <Starfield count={160} clear={[[SAFE_RECT.x, CY - 160, SAFE_RECT.w, 260]]} warm />
+    <WordDissolve text="goodbye" x={CX} y={CY - 120} size={170} write={[[4, 0], [30, 1, 'linear']]} state={[[40, 0], [52, 1, 'out'], [70, 1], [88, 0.22], [96, 0.22], [112, 1]]} />
+    <Small x={CX} y={CY + 180}>{'write · burst · re-form stalls (ghost) · scatter'}</Small>
+  </>
+);
+const BoxDemo: React.FC = () => {
+  const w = SAFE_RECT.w * 0.86;
+  return (
+    <>
+      <Starfield count={120} clear={[[SAFE_RECT.x, SAFE_RECT.y + 60, SAFE_RECT.w, 1100]]} warm />
+      <ParticleBox x={CX} y={SAFE_RECT.y + 340} w={w} h={w * 0.62} releaseAt={44} gather={{ from: [CX - w * 0.25, SAFE_RECT.y + 340], at: 4, len: 26 }} />
+      <ParticleBox x={CX} y={SAFE_RECT.y + 930} w={w} h={w * 0.4} mode="collide" box={0}
+        clock={[[0, 0], [52, 1, 'linear'], [62, 1], [114, 0, 'linear']]} />
+      <Small x={CX} y={SAFE_RECT.y + 1110}>{'collide: forward (0-52) · reversed (62-114)'}</Small>
+    </>
+  );
+};
+const DeckDemo: React.FC = () => (
+  <>
+    <Starfield count={160} warm />
+    <DeckOfCards x={CX} y={CY + 380} riffles={[24, 72]} edge={[[0, 1]]} warm />
+    <Small x={CX} y={CY + 470}>{'riffles at f24 and f72'}</Small>
+  </>
+);
+const RescaleDemo: React.FC = () => (
+  <>
+    <Starfield count={220} bright={10} offs={[50, 62, 74, 86, 98]} warm />
+    <Timeline x={SAFE_RECT.x + 140} y={SAFE_RECT.y + 80} length={880} warm range={[0, 13.8e9]}
+      rescale={{ at: 30, len: 40, range: [13.8e9, 1e100], log: true }}
+      events={[
+        { t: 0, label: 'Big Bang', date: 'LOWEST ENTROPY', at: -100, hero: true },
+        { t: 13.8e9, label: 'Today', date: '13.8 BILLION YEARS', at: -100 },
+        { t: 1e14, label: 'Last stars fade', date: '100 TRILLION YEARS', at: 70 },
+        { t: 1e100, label: 'Black holes evaporate', date: 'UP TO A GOOGOL YEARS', at: 90 },
+      ]} labelSize={44} />
+  </>
 );
 
 // page 25: positions derived from the safe rectangle (16:9-ready layout rule)

@@ -3,7 +3,7 @@
 > **For:** the planning project where topics, aesthetics and scripts are developed.
 > **Pair it with:** `brand.md` (the visual and sound style contract — read it for colors, type,
 > captions, annotations, motion, safe zones and sound taste; this file never repeats it).
-> **Version:** v0.12.0 · 2026-11-17 · phase: *first short done → visual variety kit built; whip transitions added*
+> **Version:** v0.13.0 · 2026-11-17 · phase: *second short in production → arrow-of-time kit built*
 >
 > This file describes **what can be asked for**, not how it is built. If a script asks for
 > something listed here, it can be made. If it asks for something not listed, flag it as a
@@ -122,10 +122,10 @@ All of these can arrive already in place on the first frame, so they work in a h
 
 | Component | What it shows | Options you can ask for |
 |---|---|---|
-| **Starfield** | The background sky: mostly faint stars in real temperature colors, a few bright ones with a tiny halo that twinkle. Kept clear behind text and around planets; tuned to survive platform compression. | density, how many bright stars, twinkle on/off, overall brightness (dims when something very luminous is on screen) |
+| **Starfield** | The background sky: mostly faint stars in real temperature colors, a few bright ones with a tiny halo that twinkle. Kept clear behind text and around planets; tuned to survive platform compression. | density, how many bright stars, twinkle on/off, overall brightness (dims when something very luminous is on screen), bright stars switching off one by one (each a clear ~0.5 s fade, never the whole sky dimming) |
 | **Glowing body** | A sun or star: limb-darkened disc with a soft halo that blooms in after the disc and breathes gently | size, position, kind by temperature: *sun* (yellow), *red*, *white*, *blue*; glow strength |
 | **Planet / moon** | A sphere lit from one side, night side falling to black, true muted colors, with each body's signature features: Earth's real continents (+ soft clouds), the Moon's soft maria and bright craters, cratered Mercury (craters as soft shading, never outlines), Mars's polar caps and dark regions, Jupiter's belts and Great Red Spot, Saturn's soft bands and ring with the Cassini division, Venus's faint cloud swirls, Neptune's streaks; Uranus nearly featureless (accurate). Small bodies (under ~60 px) are simplified to color and shading. | which body (Mercury, Venus, Earth, Moon, Mars, Jupiter, Saturn, Uranus, Neptune), size, position, light direction, how much is lit (phase), which side faces us, slow rotation (e.g. Earth turning), axial tilt (Uranus ~98° with its faint ring), atmosphere glow (Earth by default), the warm wash behind it when it's the hero |
-| **Hero number** | Big serif number that counts up, gold italic unit, subject line under it, small label above | value, unit, subject, label, count up or just appear, starting value, size (hero or secondary). Long values shrink to fit the safe area. |
+| **Hero number** | Big serif number that counts up, gold italic unit, subject line under it, small label above | value, unit, subject, label, count up or just appear, starting value, size (hero or secondary). Long values shrink to fit the safe area. Power-of-ten form for numbers too long in words: "1 in 10³⁰" (gold italic words before the number, the exponent counts up). |
 | **Caption with keyword** | The narration, a few words at a time; each word brightens as it is spoken; the keyword turns gold italic with a small pop | the keyword(s) per beat, matched regardless of capitals or surrounding punctuation ("Sun" matches "Sun," and "sun."). Captions always show the VO *as written*, even when the voice was given a phonetic spelling (PRONUNCIATION). |
 | **Marker + leader line** | A ring that settles around an object, a thin blue line, a label (+ value) | what it points at, label, value, which side the label sits (below, above, left, right), a dot for objects too small to see |
 | **Scale bar** | A measured span with end ticks that draws from its center outward, with a label | what it spans, label, second line, label above or below |
@@ -190,7 +190,7 @@ a phone.
 | **Orbit overlay** | The planets' orbits at **true relative scale**, as thin lines laid over another object to compare sizes (e.g. the whole solar system inside a black hole's horizon). Planets move at their real relative speeds. Orbits too small to see fold into the Sun's dot rather than being enlarged. | the scale (what it's laid over), which planets, which orbit is named (1–2), face-on or tilted, moving or still |
 | **Comparison bars** | 2–4 bars that fill on the beat, each with a label above and its value under it, counting up as it fills (temperatures, efficiencies, masses). Lengths are true to the values; one gold bar is the point. | the bars (label, value, how it reads), which bar is the hero, log scale (labelled as such) for values far apart |
 | **Meter** | A gauge for **one** value against a full scale: a gold arc fills, the value counts up inside (e.g. "~10% of the mass turned into light"), with an optional reference tick (e.g. fusion 0.7%) | value, full scale, label, a reference value with its label |
-| **Timeline** | A time axis that draws in, with markers appearing on cue (e.g. Big Bang → light leaves → Earth forms → today). Positions are true; events close together get a short leader line instead of a fake gap | the events (name, date, cue word), which event is gold (more than one is fine), vertical (default, fits a phone) or horizontal (2–3 events), log scale, smaller labels for long names ("FARTHEST QUASAR'S LIGHT" fits on one line) |
+| **Timeline** | A time axis that draws in, with markers appearing on cue (e.g. Big Bang → light leaves → Earth forms → today). Positions are true; events close together get a short leader line instead of a fake gap | the events (name, date, cue word), which event is gold (more than one is fine), vertical (default, fits a phone) or horizontal (2–3 events), log scale, smaller labels for long names ("FARTHEST QUASAR'S LIGHT" fits on one line), a mid-scene change of scale (e.g. linear → log to reach the far future: markers glide to their new positions, events that fall off the axis slide away, LOG SCALE fades in) |
 | **Balance** | Two totals weighed on a scale (e.g. every star in a galaxy vs one quasar): a heap of stars in one pan, one bright point in the other; the beam tips toward the heavier side and both totals appear | each side's label and value, what sits in each pan (a heap of stars, one bright point, nothing), when the pans get named (e.g. on the spoken words, before the tip), a slow calm tip or a fast peak move on a key word |
 | **Flow paths** | Paths that draw in along the direction of travel with a soft glowing head (gas spiraling into a disk, light crossing space). A faint dashed "ghost" can show what does *not* happen first ("straight in?"), then fade | the paths (spiral into a disk, straight line, or a described route), which is the ghost, labels, an arrowhead |
 | **Whip transition** *(new, for hooks and peaks)* | A hand-off between two pictures: the first sweeps off fast with motion blur while the next sweeps in from the other side, swapping at full speed and landing softly (no bounce). Chained, it makes a **whip montage** for the hook: several related pictures, ~0.6–1 s each. One whoosh per whip. | which pictures, in what order, the direction of each whip (left, right, up, down), when each whip happens (on a spoken word), how strong the blur is |
@@ -203,6 +203,21 @@ For a single big count-up, use the **Hero number** (3.1).
 |---|---|
 | **Zoom ruler** (continuous zoom galaxy → disk, with a scale bar that re-labels at each level) | Levels and figures sent for verification; built after approval |
 | Light ray (light crossing space, redshifting) | Idea, not designed |
+
+### 3.7 Everyday objects and the arrow of time (built, brand style)
+
+Built for "Why Time Only Moves Forward". Everyday objects are stylized like the planets: soft
+shading, no outlines. Their states are dials, so any of them can **break, mix or scatter, and try
+to undo it and stall** (a rewind that gets halfway and falls back).
+
+| Component | What it shows | Options you can ask for |
+|---|---|---|
+| **Egg** | An ivory egg lit from one side; a gold hairline crack runs across it, then it breaks open (the cap lifts and tips, a few shards fly) | size, position, light direction, how far the crack has run, broken or whole, a rewind that stalls (pieces rise toward each other, stop halfway, fall back) |
+| **Coffee cup** | A cup on its saucer seen from straight above, a spiral of milk on the coffee that blends into a latte color | size, position, the milk being poured (spiral growing from the center), mixing, an unmix that stalls, slow swirl on/off, handle direction |
+| **Gold morph line** | ONE thin gold line that changes shape with no cut: a crack → a spiral → handwriting → gold dust, and back (dust → a point → a crack). It lands exactly on the object it becomes (the egg's crack, the cup's spiral) | the shapes and their order, when each change happens, the line drawing itself in (a crack racing across), breaking into dust and gathering back |
+| **Word dissolve** | A serif word written left to right, that bursts into gold dust; it can try to re-form and stall as a faint ghost outline, then scatter | the word, italic or upright, size, when it is written, bursts, tries to re-form |
+| **Particle box** | (a) **A hundred particles** packed in one half of a box; a divider lifts and they spread through the whole box and keep moving, exactly simulated (nothing pushes them). (b) **Two particles colliding**, played forward and then reversed: both look equally natural | (a) how many, which half, when the divider lifts, growing out of one point first, faint (behind a title), box visible or not · (b) forward/reversed timing, motion trails |
+| **Deck of cards** | A fan of cards in perfect order (A → K, suits alternating, no brand marks) that a real riffle shuffle breaks: two packets interleave and the fan re-forms out of order | number of cards, fan size, when each shuffle happens (each shuffle gives a new order), a gold line along the fan's edge with a running glint |
 
 Anything else: list it under NEW COMPONENTS NEEDED in the script.
 

@@ -27,12 +27,16 @@ export type StarfieldProps = {
   avoid?: [number, number, number][]; // [x, y, r] bodies: no stars on them, no bright stars near them
   twinkle?: boolean; // bright stars only (see above)
   opacity?: number; // overall sky brightness (a very luminous object can dim it)
+  // bright stars switching off ONE BY ONE: the frame each goes out, brightest first (one clear
+  // ~0.5 s fade each; never dim the whole sky instead: compression smears global fades)
+  offs?: number[];
+  offLen?: number; // frames each star takes to go out (default 15)
   at?: number;
   warm?: boolean;
 };
 
 export const Starfield: React.FC<StarfieldProps> = ({
-  count = 300, bright = 12, seed = 7, clear = [], avoid = [], twinkle = true, opacity = 1, at = 0, warm = false,
+  count = 300, bright = 12, seed = 7, clear = [], avoid = [], twinkle = true, opacity = 1, offs = [], offLen = 15, at = 0, warm = false,
 }) => {
   const f = useCurrentFrame();
   const stars = useMemo(() => {
@@ -42,8 +46,9 @@ export const Starfield: React.FC<StarfieldProps> = ({
   const brightSet = useMemo(() => {
     const ok = (i: number) => !avoid.some(([x, y, r]) => Math.hypot(stars[i].x - x, stars[i].y - y) < r * 1.8 + 40);
     const idx = stars.map((s, i) => [s.r, i] as const).filter(([, i]) => ok(i)).sort((a, b) => b[0] - a[0]).slice(0, bright).map(([, i]) => i);
-    return new Set(idx);
+    return idx;
   }, [stars, bright, avoid]);
+  const brightRank = useMemo(() => new Map(brightSet.map((i, k) => [i, k])), [brightSet]);
   const sky = ramp(f, startOf(at, warm), MOTION.skyFade) * opacity;
 
   return (
@@ -57,12 +62,15 @@ export const Starfield: React.FC<StarfieldProps> = ({
         </radialGradient>
       </defs>
       {stars.map((s, i) => {
-        const isBright = brightSet.has(i);
+        const rank = brightRank.get(i);
+        const isBright = rank !== undefined;
+        const off = rank !== undefined && rank < offs.length ? 1 - ramp(f, offs[rank], offLen) : 1;
+        if (off <= 0) return null;
         const tw = twinkle && isBright ? 1 - MOTION.twinkle + MOTION.twinkle * Math.sin(f / 18 + i * 1.7) : 1;
         const r = isBright ? Math.max(1.8, s.r * 1.1) : Math.max(STAR_MIN_R, s.r * 0.85);
         const a = isBright ? 1 : Math.max(STAR_MIN_A, s.a * 0.9);
         return (
-          <g key={i} opacity={sky * tw}>
+          <g key={i} opacity={sky * tw * off}>
             {isBright && <circle cx={s.x} cy={s.y} r={r * 4} fill="url(#starHalo)" />}
             <circle cx={s.x} cy={s.y} r={r} fill={starTint(s.t)} opacity={a} />
           </g>
