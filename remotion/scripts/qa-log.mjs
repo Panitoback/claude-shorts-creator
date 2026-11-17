@@ -3,15 +3,16 @@
 // (e.g. HeroNumber auto-shrinking a value that doesn't fit). frames.mjs and render-all.mjs pass
 // collector.onBrowserLog to Remotion, print each distinct warning once, and write them to
 // out/qa/<Id>-qa.json so make-short Stage 3 can list them in its QA report.
-import { writeFileSync, mkdirSync, rmSync } from 'fs';
+import { writeFileSync, mkdirSync, rmSync, readdirSync } from 'fs';
 import path from 'path';
 
 // Wipe out/qa/ so it holds exactly the latest QA run (called at the START of a run, by frames.mjs
 // unless --keep-qa is passed: use --keep-qa on the 2nd+ call of the same run, e.g. the --safe pass).
 export const resetQaDir = (root) => {
   const dir = path.join(root, 'out', 'qa');
-  rmSync(dir, { recursive: true, force: true });
   mkdirSync(dir, { recursive: true });
+  // empty it rather than delete it: on Windows a folder open in Explorer/a shell can't be removed
+  for (const name of readdirSync(dir)) rmSync(path.join(dir, name), { recursive: true, force: true });
   console.log('  out/qa/ wiped (new QA run; pass --keep-qa to add to the current run)');
 };
 
