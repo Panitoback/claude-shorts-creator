@@ -17,15 +17,16 @@ export type KineticTitleProps = {
   size?: number; // default TYPE.title.fontSize (110); lower it if a line is wide
   lead?: number; // seconds a word starts arriving before it is spoken (default 0.05)
   outAt?: number; // seconds: the whole title fades out (default: never)
+  outLen?: number; // seconds the fade-out takes (default 0.35; ~0.15 when a next page replaces it)
   rise?: number; // px a word rises as it arrives (default 34)
 };
 
 export const KineticTitle: React.FC<KineticTitleProps> = ({
-  lines, top = 250, x = CANVAS.W / 2, width = 840, size = TYPE.title.fontSize, lead = 0.05, outAt, rise = 34,
+  lines, top = 250, x = CANVAS.W / 2, width = 840, size = TYPE.title.fontSize, lead = 0.05, outAt, outLen = 0.35, rise = 34,
 }) => {
   const f = useCurrentFrame();
   const t = f / CANVAS.FPS;
-  const out = outAt === undefined ? 1 : 1 - interpolate(t, [outAt, outAt + 0.35], [0, 1], { ...CL, easing: EASE.in });
+  const out = outAt === undefined ? 1 : 1 - interpolate(t, [outAt, outAt + outLen], [0, 1], { ...CL, easing: EASE.in });
   if (out <= 0) return null;
   return (
     <div style={{ position: 'absolute', top, left: x - width / 2, width, textAlign: 'center', opacity: out }}>

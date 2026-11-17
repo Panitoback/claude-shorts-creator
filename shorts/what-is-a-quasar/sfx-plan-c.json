@@ -1,5 +1,5 @@
 {
-  "_note": "Shared by the three hook variants (everything after the hook is identical). Bed laid after this mix with mix_music.py.",
+  "_note": "Brand v2.0 energy curve, opening 2 (pull-back). Hook + peaks (hero, twist, loop) must pass the phone check; body cues may stay felt-not-heard. Body events unchanged (same voice timings). Bed laid after with mix_music.py.",
   "master": "shorts/what-is-a-quasar/output/what-is-a-quasar-c.mp4",
   "master_fps": 30,
   "catalog": "media/library/sfx/catalog.json",
@@ -17,6 +17,27 @@
     }
   ],
   "events": [
+    {
+      "at_s": 0.01,
+      "sfx_id": "hook-hit",
+      "gain_db": 1,
+      "align": "attack",
+      "cue": "frame 0: the extreme close-up"
+    },
+    {
+      "at_s": 1.08,
+      "sfx_id": "whoosh-deep",
+      "gain_db": 2,
+      "align": "peak",
+      "cue": "hook pull-back at its fastest"
+    },
+    {
+      "at_s": 1.93,
+      "sfx_id": "glow-swell",
+      "gain_db": 0,
+      "align": "peak",
+      "cue": "\"thousand\": the quasar flares to full power"
+    },
     {
       "at_s": 7.44,
       "sfx_id": "deep-rumble",
@@ -58,6 +79,13 @@
       "note": "the short's ONE big cosmic hit"
     },
     {
+      "at_s": 42.11,
+      "sfx_id": "hook-hit",
+      "gain_db": 0,
+      "align": "attack",
+      "cue": "\"Combined.\" (HERO): the phone layer of the cosmic impact (impact-cosmic alone is weak through the phone high-pass)"
+    },
+    {
       "at_s": 45.0,
       "sfx_id": "jet-launch",
       "gain_db": -1,
@@ -65,10 +93,11 @@
       "note": "after glow-swell, per USAGE pairing; rides the impact's tail"
     },
     {
-      "at_s": 52.03,
+      "at_s": 53.1,
       "sfx_id": "whoosh-deep",
-      "gain_db": -2,
-      "cue": "\"billions\" (TWIST): pull-back, the quasar shrinks to a point over 2.2 s"
+      "gain_db": 0,
+      "align": "peak",
+      "cue": "\"billions\" (TWIST peak): the pull-back to a distant point, at its fastest"
     },
     {
       "at_s": 53.83,
@@ -112,10 +141,18 @@
       "cue": "13 billion lands on its final value"
     },
     {
-      "at_s": 69.53,
+      "at_s": 69.42,
+      "sfx_id": "whoosh-deep",
+      "gain_db": 2,
+      "align": "peak",
+      "cue": "\"We still see them\" (LOOP): the fly-in from the point into the disk, at its fastest"
+    },
+    {
+      "at_s": 70.3,
       "sfx_id": "glow-swell",
       "gain_db": 0,
-      "cue": "\"We still see them blazing\" (LOOP): luminosity back to full, size back to hook size"
+      "align": "peak",
+      "cue": "\"blazing\": we rush into the blazing disk; lands on frame 0 (hook-hit restarts the loop)"
     }
   ]
 }
