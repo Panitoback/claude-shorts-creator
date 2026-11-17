@@ -45,6 +45,12 @@ produced short). Anything new must be generated with ours too. The
   original author's clips and our rejected takes were deleted on 2026-11-16 (they live in git
   history only). Audition files (`tools/sfx_audition.py`, `gen_sfx.py --audition`):
   `media/library/sfx/audition/`, git-ignored and temporary: delete them once decided.
+- **Music library:** `media/library/music/`: reusable steady-intensity beds that loop seamlessly
+  (`bed-*`), generated with **our** ElevenLabs account (Eleven Music, ~12.5 credits/s measured) via
+  `gen_music.py`, looped with `tools/loop_music.py` (seam < 0.5 dB); the untouched API output is in
+  `raw/` (git-ignored). Each short adapts the bed in the MIX (`mix_music.py`: duck, `--lift` on the
+  peaks, fades), never a tailored track. The 6 inherited beds are `legacy` (original author's
+  account): never publish them. Background = one music bed + one ambient loop at most (brand §7).
 - `shorts/short-12-orbit` is the one **inherited example, in the old look**: a technique
   reference only (its `lib/orbit.tsx` has real orbital physics worth reusable components), not
   channel content.
@@ -63,7 +69,7 @@ skills win.
 ## Layout
 
 ```
-tools/            Python tools: gen_voice, gen_sfx, synth_sfx, sfx_audition, gen_music, mix_sfx, mix_music
+tools/            Python tools: gen_voice, gen_sfx, synth_sfx, sfx_audition, gen_music, loop_music, mix_sfx, mix_music
 remotion/         the Remotion project — src/components/ (the channel's base kit, brand style),
                   src/lib/ (shared + inherited kits), src/shots/short-N/, src/shots/gallery/
 media/            Remotion's public root: library/ (reusable: sfx, music, logos)

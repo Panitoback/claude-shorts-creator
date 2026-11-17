@@ -35,8 +35,11 @@ PALETTE = os.path.join(MUSIC_DIR, "palette.json")
 CATALOG = os.path.join(MUSIC_DIR, "catalog.json")
 API_URL = "https://api.elevenlabs.io/v1/music"
 
-LICENSE = ("ElevenLabs generated (text-to-music); owner: the generating account, commercial use per "
-           "the account's ElevenLabs plan")
+LICENSE = ("ElevenLabs generated (Eleven Music) with OUR account ({tier} plan at generation time). "
+           "Music Terms (elevenlabs.io/music-terms, 2026-10-09), paid plans: online and offline commercial "
+           "use permitted except film, TV, radio and studio games; no attribution on paid plans; we own the "
+           "output (ToS 4(c)(ii)); platform AI-disclosure rules apply (Music Terms 4.4). Starter: "
+           "'streaming' column = Prohibited (see USAGE notes)")
 SOURCE = "elevenlabs:music"
 
 
@@ -115,13 +118,42 @@ def normalize_clip(path, target_lufs, ceiling_db):
     return measure_lufs(path), measure_peak_db(path)
 
 
-def generate(api_key, prompt, length_ms, model, force_instrumental, output_format):
-    body = {
-        "prompt": prompt,
-        "music_length_ms": int(length_ms),
-        "model_id": model,
-        "force_instrumental": bool(force_instrumental),
-    }
+def account_tier(api_key):
+    try:
+        req = urllib.request.Request("https://api.elevenlabs.io/v1/user/subscription",
+                                     headers={"xi-api-key": api_key})
+        return json.loads(urllib.request.urlopen(req, timeout=30).read()).get("tier", "unknown")
+    except Exception:
+        return "unknown"
+
+
+def plan_body(s):
+    """A recipe's `plan` (list of sections) -> the music_v2/v2.5 composition_plan. Instrumental:
+    the API's force_instrumental only works with a prompt, so a plan stays instrumental by having
+    no lyric text (just "[Section]" + {directions}) and "vocals" in every negative style list."""
+    chunks = []
+    for sec in s["plan"]:
+        neg = list(dict.fromkeys(s.get("negative_global", []) + sec.get("negative", [])
+                                 + ["vocals", "singing", "choir", "voice", "spoken word"]))
+        chunks.append({
+            "text": f"[{sec['name']}] {{{sec.get('direction', 'instrumental')}}}",
+            "duration_ms": int(sec["duration_ms"]),
+            "positive_styles": s.get("positive_global", []) + sec.get("positive", []),
+            "negative_styles": neg,
+        })
+    return {"chunks": chunks}
+
+
+def generate(api_key, prompt, length_ms, model, force_instrumental, output_format, plan=None):
+    if plan:
+        body = {"composition_plan": plan, "model_id": model}
+    else:
+        body = {
+            "prompt": prompt,
+            "music_length_ms": int(length_ms),
+            "model_id": model,
+            "force_instrumental": bool(force_instrumental),
+        }
     url = f"{API_URL}?output_format={output_format}"
     req = urllib.request.Request(
         url, data=json.dumps(body).encode("utf-8"),
@@ -172,6 +204,8 @@ def main():
     env = load_env()
     api_key = env.get("ELEVENLABS_API_KEY", "").strip()
 
+    tier = {"v": None}
+
     def entry(s, rel, path, length_ms):
         lufs, peak = normalize_clip(path, target_lufs, ceiling_db)
         dur = probe_duration(path)
@@ -179,9 +213,13 @@ def main():
         return {
             "id": s["id"], "file": rel, "category": s.get("category", ""),
             "tags": s.get("tags", []), "duration_s": dur, "requested_ms": length_ms,
-            "peak_dbfs": peak, "loudness_lufs": lufs, "source": SOURCE, "model": model,
-            "force_instrumental": force_instrumental, "license": LICENSE,
-            "prompt": s["prompt"], "used_in": by_id.get(s["id"], {}).get("used_in", []),
+            "peak_dbfs": peak, "loudness_lufs": lufs, "source": SOURCE,
+            "model": s.get("model", model),
+            "force_instrumental": force_instrumental if not s.get("plan") else "plan: no lyrics + vocals negative",
+            "account": "ours", "plan_tier": tier["v"] or "unknown",
+            "license": LICENSE.format(tier=tier["v"] or "unknown"),
+            "prompt": s.get("prompt", ""), **({"composition_plan": s["plan"]} if s.get("plan") else {}),
+            "used_in": by_id.get(s["id"], {}).get("used_in", []),
         }
 
     def write_catalog():
@@ -214,10 +252,15 @@ def main():
             continue
         rel = f"clips/{s['id']}.mp3"
         path = os.path.join(MUSIC_DIR, rel)
+        if s.get("legacy"):
+            continue
         if os.path.exists(path) and not force:
             skip.append(s["id"])
             continue
-        length_ms = length_override_ms or int(round(float(s["duration_s"]) * 1000))
+        if s.get("plan"):
+            length_ms = sum(int(x["duration_ms"]) for x in s["plan"])
+        else:
+            length_ms = length_override_ms or int(round(float(s["duration_s"]) * 1000))
         todo.append((s, rel, path, length_ms))
 
     print(f"palette: {len(palette['beds'])} beds | to generate: {len(todo)} | skip (exist): {len(skip)}")
@@ -225,18 +268,50 @@ def main():
         print("  skipping (library-first):", ", ".join(skip))
     if dry:
         for s, rel, _, length_ms in todo:
-            print(f"  WOULD generate {s['id']} -> {rel}  ({length_ms/1000:.0f}s)  \"{s['prompt'][:60]}...\"")
+            kind = f"plan {len(s['plan'])} sections" if s.get("plan") else "prompt"
+            print(f"  WOULD generate {s['id']} -> {rel}  ({length_ms/1000:.1f}s, {kind}, "
+                  f"model {s.get('model', model)})")
+            if s.get("plan") and "--show-plan" in args:
+                print(json.dumps(plan_body(s), indent=1)[:3000])
+        mins = sum(x[3] for x in todo) / 60000
+        print(f"  TOTAL {mins:.2f} min of music (Starter allows 17 generated min/month; credit cost is "
+              f"not published per minute: measure it from the account balance before/after)")
         return
     if todo and not api_key:
         sys.exit("ELEVENLABS_API_KEY not set in .env — cannot generate. (Add it, or use --dry-run.)")
 
+    tier["v"] = account_tier(api_key)
+    if "--audition" in args:  # short previews to audition/, catalog untouched (pick by ear first)
+        secs = float(args[args.index("--audition") + 1])
+        out_dir = os.path.join(MUSIC_DIR, "audition")
+        os.makedirs(out_dir, exist_ok=True)
+        for s, _, _, _ in todo:
+            path = os.path.join(out_dir, f"{s['id']}-preview.mp3")
+            print(f"\n-> audition {s['id']}  ({secs:.0f}s)")
+            try:
+                audio = generate(api_key, s.get("prompt", ""), secs * 1000, s.get("model", model),
+                                 force_instrumental, output_format)
+            except urllib.error.HTTPError as e:
+                sys.exit(f"ElevenLabs HTTP {e.code}: {e.read().decode('utf-8', 'ignore')[:400]}")
+            with open(path, "wb") as f:
+                f.write(audio)
+            lufs, peak = normalize_clip(path, target_lufs, ceiling_db)
+            print(f"   {os.path.relpath(path, ROOT)}: {probe_duration(path)}s  lufs={lufs}  peak={peak}")
+        return
     for s, rel, path, length_ms in todo:
-        print(f"\n-> {s['id']}  ({length_ms/1000:.0f}s)")
+        print(f"\n-> {s['id']}  ({length_ms/1000:.1f}s)")
         try:
-            audio = generate(api_key, s["prompt"], length_ms, model, force_instrumental, output_format)
+            audio = generate(api_key, s.get("prompt", ""), length_ms, s.get("model", model),
+                             force_instrumental, output_format,
+                             plan_body(s) if s.get("plan") else None)
         except urllib.error.HTTPError as e:
             sys.exit(f"ElevenLabs HTTP {e.code}: {e.read().decode('utf-8', 'ignore')[:400]}")
         with open(path, "wb") as f:
+            f.write(audio)
+        # the untouched API output (no normalization, no edits), for listening / archiving
+        raw_dir = os.path.join(MUSIC_DIR, "raw")
+        os.makedirs(raw_dir, exist_ok=True)
+        with open(os.path.join(raw_dir, f"{s['id']}.mp3"), "wb") as f:
             f.write(audio)
         by_id[s["id"]] = entry(s, rel, path, length_ms)
 

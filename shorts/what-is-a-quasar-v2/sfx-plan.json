@@ -76,7 +76,7 @@
     {
       "at_s": 20.69,
       "sfx_id": "gas-infall-swirl",
-      "gain_db": 3,
+      "gain_db": -5,
       "align": "attack",
       "cue": "\"falling in\": gas streams in and spirals; the disk builds until \"disk\" (25.65); its swirl peaks ~22.2 s",
       "note": "new clip, generated for this moment (user request)"

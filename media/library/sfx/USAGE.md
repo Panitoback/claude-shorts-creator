@@ -21,7 +21,7 @@ Starting gains are educated guesses until a produced short measures them (see Ma
   `redshift-slide` only when the visual shows that exact phenomenon, with real parameters. A
   different pulsar = a variant at its real period (`tools/synth_sfx.py`), never the stock clip.
 - **One sound per event.** Two non-hero cues audible together within ~12 dB of each other are
-  clutter: keep one. When cues compete: voice > the event named in the VO > snap > texture > bed.
+  clutter: keep one. When cues compete: voice > the event named in the VO > snap > texture > music > ambient.
 - **Distance is quiet.** Something far away or shrinking to a point gets less sound, not a hit
   (lower gain, no body layer). Sound follows the same dial as the picture.
 - **Loop seam:** no tail may run past the end of the short (the replay would click). Check
@@ -50,17 +50,29 @@ Starting gains are educated guesses until a produced short measures them (see Ma
 | **A fact or label snapping in** | `whoosh-reverse` → `pop-reveal` | the reverse whoosh ends where the pop starts, on the label's first frame |
 | **Silence** | ~0.5 s of near-silence before the main reveal | silence is a cue: put it in the plan as a `note` so the mix respects it |
 
-### Beds
-- **ONE bed at a time:** a space loop (`space-drone-loop`, `space-air-loop`),
-  `accretion-swirl-loop`, OR a music bed. Never two together.
-- Beds are not cues: lay them with `mix_music.py` after the SFX mix (`mix_sfx.py` refuses a loop
-  in a plan). Start **~16 dB under the voice** (`--under 16`, the default for SFX-library loops),
-  ducked further while the voice speaks; always faded in/out (`--fade`), never hard cuts.
-  A bed for only part of the short: `--from S --to S` (e.g. accretion only while the disk shows).
+### Background layers (beds)
+- **Two layers may play together, one of each:** an **ambient loop** (texture: `space-drone-loop`,
+  `space-air-loop`, `accretion-swirl-loop`) **plus** a **music bed** (emotion: `media/library/music/`,
+  see its catalog). Never two music beds or two ambient loops.
+- **Levels: voice > SFX > music > ambient.** Music ~18–20 dB under the voice (`--music-under 19`),
+  ducked 9 dB more under speech, rising on the peaks; ambient ~24 dB under the voice
+  (`--ambient-under 24`), ducked 6 dB. Both are measured against the voice-only mux (`--voice`) and
+  ducked by the voice only, so the SFX hits never push the music down.
+- **The bed adapts through the mix, not the composition.** Library music beds are steady-intensity,
+  seamless loops that fit any short; each short shapes them in the mix: ducked under the voice,
+  `--lift` swells on the peaks (hook, main reveal, twist: +3 to +4 dB, 0.6 s ramps), and
+  `--from/--to` + `--fade` bring it in or out where the energy curve asks (a short that opens on
+  pure space can start the music after the hook). Never order a music track tailored to one short.
+- Beds are not cues: lay them with `mix_music.py` after the SFX mix (`mix_sfx.py` refuses a loop in
+  a plan). Ambient loops fade 0.3 s at the edges (`--ambient-fade`) so the loop seam stays clean;
+  an ambient for only part of the short is fine (accretion only while the disk shows).
   ```
-  python tools/mix_music.py --bed accretion-swirl-loop --under 16 --from 12 --to 31 \
-      --base shorts/<slug>/output/<slug>-sfx.mp4 --out shorts/<slug>/output/<slug>-bed.mp4
+  python tools/mix_music.py --base shorts/<slug>/output/<slug>-sfx.mp4
+      --voice shorts/<slug>/output/<slug>-voiced.mp4
+      --music <bed-id> --lift "<hook>,<reveal>,<twist>"   # e.g. "0-3:+3,41.6-43.6:+4,51.8-54:+3"
+      --ambient accretion-swirl-loop --out shorts/<slug>/output/<slug>-final.mp4
   ```
+  (one command, the flags on one line)
 
 ### Gain
 - `gain_db` in a plan is relative to the clip's normalized level (~−20 LUFS). Brand §7 starting
@@ -278,9 +290,9 @@ Gains are starting `gain_db` values. Status for all: approved, untested in a rea
 ### Ambient beds (one at a time; `mix_music.py`, ~16 dB under the voice)
 | Clip | For | Avoid | Pairs with | Start level |
 |---|---|---|---|---|
-| `space-drone-loop` | the default bed: deep space, contemplative scale | with music or another bed | — | `--under 16` |
-| `space-air-loop` | a lighter, airier bed: near planets, the solar system | with music or another bed | — | `--under 16` |
-| `accretion-swirl-loop` | the bed ONLY while an accretion disk is on screen (`--from/--to`) | the whole short; with another bed | `deep-rumble` at the black hole's entrance | `--under 16` |
+| `space-drone-loop` | the default bed: deep space, contemplative scale | with another ambient loop (music on top is fine) | — | `--ambient-under 24` |
+| `space-air-loop` | a lighter, airier bed: near planets, the solar system | with another ambient loop (music on top is fine) | — | `--ambient-under 24` |
+| `accretion-swirl-loop` | the bed ONLY while an accretion disk is on screen (`--from/--to`) | the whole short; with another ambient loop | `deep-rumble` at the black hole's entrance | `--ambient-under 24` |
 
 ## Maintenance
 

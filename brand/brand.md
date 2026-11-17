@@ -174,7 +174,7 @@ Choose every cue by its FUNCTION:
 | **Emphasis** | impact / pop / swell | "this moment matters"; lands on the reveal | `impact-soft`, `impact-deep-soft`, `pop-reveal`, `impact-cosmic` (the one hero payoff), `glow-swell` (something lights up), `hook-hit` (an immediate hit on the first frame of a short) |
 | **Snap** | click | small, satisfying, alive | `ui-click-soft`, `tick-soft` (counters, rulers), `number-settle` (a count lands) |
 | **Texture** | sparkle / chime / rumble | color under a moment | `sparkle-soft`, `warm-shimmer`, `chime-discovery`, `deep-rumble` (massive objects) |
-| **Ambient** | seamless 30 s loop | a quiet bed under the whole short | `space-drone-loop`, `space-air-loop`, `accretion-swirl-loop` (black holes) (well under the voice) |
+| **Ambient** | seamless 30 s loop | a quiet texture under the short (or part of it), below the music | `space-drone-loop`, `space-air-loop`, `accretion-swirl-loop` (black holes) (well under the voice) |
 | **Cosmic events** | signature sounds | the object or event itself, named in the script | `supernova`, `stellar-collapse`, `star-ignite`, `gamma-flash`, `jet-launch`, `light-speed-pass`, `photon-travel`, `event-horizon-fade`, `spaghettify-stretch`, `radiation-hum`, `solar-flare-surge` (crackle: **pauses only**, flagged `not_under_narration`) |
 | **Physics (code)** | synthesized from the real numbers | the sound IS the data | `redshift-slide` (falling pitch), `pulsar-ticks` (a real period: 1.34 s), `pulsar-ticks-fast` (716 Hz), `gw-chirp` (black-hole merger); new variants from `tools/synth_sfx.py` |
 
@@ -204,8 +204,14 @@ Choose every cue by its FUNCTION:
   `source`, `model` and `license` is recorded in the catalog.
 - **The library is the durable asset:** `media/library/sfx/` (`catalog.json` + `clips/`). It grows
   with every video, so reuse before generating.
-- **Music bed (optional):** slow, ambient and warm, sitting well under the voice. Avoid epic
-  trailer drums.
+- **Background: up to two layers, one of each.** An ambient loop (texture) and a music bed
+  (emotion) may play together. Levels: **voice > SFX > music > ambient**: the music ~18–20 dB under
+  the voice, ducked under speech and rising on the peaks; the ambient loop ~24 dB under the voice,
+  also ducked. Music is slow, warm, cinematic ambient for a space documentary (soft pads, a gentle
+  pulse, sparse piano or strings); never epic trailer drums, vocals or anything busy. Library beds
+  are steady and loop seamlessly: each short shapes the bed in the mix (ducking, swells on the
+  hook, main reveal and twist, fades), not in the composition. Source: Eleven Music with our
+  account; `source` and `license` per bed in `media/library/music/catalog.json`.
 
 ## 8. Motion
 

@@ -3,7 +3,7 @@
 > **For:** the planning project where topics, aesthetics and scripts are developed.
 > **Pair it with:** `brand.md` (the visual and sound style contract — read it for colors, type,
 > captions, annotations, motion, safe zones and sound taste; this file never repeats it).
-> **Version:** v0.11.2 · 2026-11-17 · phase: *first short done → visual variety kit built*
+> **Version:** v0.11.3 · 2026-11-17 · phase: *first short done → visual variety kit built*
 >
 > This file describes **what can be asked for**, not how it is built. If a script asks for
 > something listed here, it can be made. If it asks for something not listed, flag it as a
@@ -80,7 +80,10 @@ animated, at its natural pace, and the animation is timed to the real voice.
    matters in the beat itself ("an immediate opening hit on the first frame", "a deep rumble as
    the black hole appears"). **Production picks every clip** from the channel's sound library and
    its usage guide: subtle effects on key moments (a soft whoosh on a transition, a gentle impact
-   on the reveal) plus an optional quiet music bed or space ambience. The sound taste is in
+   on the reveal) plus up to two quiet background layers: a music bed (emotion: slow, warm, cinematic) and a space
+   ambience under it (texture). The music comes from the channel's own library of steady beds; a
+   script can describe where it should swell (the hook, the reveal, the twist) or drop out, and the
+   mix shapes it. The sound taste is in
    `brand.md` §7. Sounds are chosen to work on a phone speaker as well as on headphones. Some
    sounds are made from the real numbers: a pulsar ticking at its actual rotation period, light
    "redshifting" as a falling tone, the chirp of two black holes merging. A script can ask for a

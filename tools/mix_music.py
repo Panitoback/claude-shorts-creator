@@ -1,44 +1,55 @@
 #!/usr/bin/env python3
 """
-mix_music.py — audition mixer for the MUSIC pass (step 4 of the AI Video Editor).
+mix_music.py — the background-layer mixer (music pass, after mix_sfx.py).
 
-Lays a continuous instrumental BED (from media/library/music/) under a base video and ducks it
-HARD under the voice, so the music is felt-not-heard: quiet under speech, breathing up in
-the gaps (intro/outro/pauses). Video is copied through untouched. This is the AUDITION mixer
-— pick the bed + level with the user here; final polished mix / loudness normalization is
-/assemble's job later.
+Up to TWO background layers under a base video (voice + SFX), brand §7:
+  * a MUSIC bed (emotion): a track from media/library/music/, ~-18 to -20 dB under the voice,
+    ducked under speech, free to rise on the peaks (--lift);
+  * an AMBIENT loop (texture): a "loop": true clip from the SFX library (space-drone-loop,
+    space-air-loop, accretion-swirl-loop), ~-24 dB under the voice, also ducked.
+Level order: voice > SFX > music > ambient. Never two music beds or two ambient loops.
 
-The bed is looped/trimmed to the base length, gained to sit under the voice, high-passed a
-touch so it never muddies speech, sidechain-ducked keyed by the base audio (voice + any SFX),
-faded in/out, and summed with a safety limiter.
+THE BED ADAPTS THROUGH THE MIX, NOT THE COMPOSITION: library music beds are steady-intensity
+seamless loops that fit any short. Each short shapes the bed here: ducked under the voice,
+--lift swells on the peaks (hook, main reveal, twist), --from/--to + --fade where the energy
+curve asks it to enter or leave, the ambient loop below it.
+
+Both layers are gained relative to the VOICE's loudness (measured on --voice, the voice-only
+mux; falls back to --base), high-passed so they never muddy speech, sidechain-ducked keyed by
+the voice only (so the music is NOT pushed down by the SFX hits it should support), faded at
+the edges, and summed with a safety limiter. Video is copied through untouched.
 
 Usage:
-  # one bed over the SFX'd first-60s -> a new file
-  python tools/mix_music.py --bed ambient-pad --base video-1/output/video-1-first60-sfx.mp4 \
-      --out video-1/output/video-1-first60-ambient-pad.mp4
+  # the standard two-layer mix
+  python tools/mix_music.py --base shorts/<slug>/output/<slug>-sfx.mp4
+      --voice shorts/<slug>/output/<slug>-voiced.mp4
+      --music <music-id> --lift "40.6-43.4:+4,51.6-54:+3"
+      --ambient accretion-swirl-loop --out shorts/<slug>/output/<slug>-final.mp4
 
-  # compare every library bed at once (one out file per bed, <base-stem>-<bed>.mp4)
-  python tools/mix_music.py --all --base video-1/output/video-1-first60-sfx.mp4
+  # audition every (non-legacy) music bed over the same base + ambient: <base-stem>-<id>.mp4
+  python tools/mix_music.py --all --base ... --voice ... --ambient accretion-swirl-loop
 
-  # a space loop from the SFX library as the bed, 16 dB under the voice, only from 12 s to 31 s
-  python tools/mix_music.py --bed accretion-swirl-loop --under 16 --from 12 --to 31 \
-      --base shorts/<slug>/output/<slug>-sfx.mp4 --out shorts/<slug>/output/<slug>-bed.mp4
+  --music <id>          music bed (music catalog id)
+  --music-file <path>   a music file not in the catalog (an audition preview), measured on the fly
+  --music-under 19      dB the music sits under the voice (default 19)
+  --music-duck 9        extra dB it drops while the voice speaks (default 9)
+  --lift "t0-t1:+dB,…"  raise the music on these windows (the peaks), 0.6 s linear ramps
+  --fade 1.5            music fade in/out seconds
+  --from 12 --to 31     play the music only in this window
+  --ambient <id>        ambient loop (SFX-library loop id)
+  --ambient-under 24    dB under the voice (default 24)
+  --ambient-duck 6      extra dB under speech (default 6)
+  --ambient-fade 0.3    ambient fade in/out seconds
+  --bed <id>            legacy single-layer flag: routed to --music or --ambient by catalog
+                        (--under / --duck are accepted as the music aliases)
+  --end 60              trim output to N seconds (default: full base)
+  --print               show the resolved settings, no render
 
-  Beds: any id in media/library/music/catalog.json, or any "loop": true clip in the SFX catalog
-  (space-drone-loop, space-air-loop, accretion-swirl-loop). ONE bed per short (brand §7).
-  --bed-gain -7      base bed level in dB (default -7; more negative = quieter)
-  --under 16         instead of --bed-gain: measure the base's loudness and set the bed this many
-                     dB below it (default for SFX-library loops: 16)
-  --from 12 --to 31  play the bed only in this window (seconds), faded in/out at both edges
-  --duck 9           extra dB the bed drops under the voice (default 9)
-  --fade 1.5         fade in/out seconds (default 1.5)
-  --end 60           trim output to N seconds (default: full base)
-  --print            show the resolved settings, no render
-
-ffmpeg/ffprobe on PATH. Beds come from media/library/music/catalog.json (run tools/gen_music.py first).
+ffmpeg/ffprobe on PATH.
 """
 import json
 import os
+import re
 import subprocess
 import sys
 
@@ -79,48 +90,68 @@ def flag(args, name, default=None, cast=str):
 
 
 def measure_lufs(path):
-    import re
     out = run(["ffmpeg", "-hide_banner", "-i", path, "-vn", "-af", "ebur128", "-f", "null", os.devnull])
     ms = re.findall(r"I:\s*(-?[\d.]+)\s*LUFS", out)
     return float(ms[-1]) if ms else None
 
 
-def mix_one(base, bed_file, out, bed_gain, duck, fade, end, t0=None, t1=None):
-    """Render base video with `bed_file` ducked underneath (optionally only in [t0, t1]).
-    Returns out path."""
+def parse_lift(spec):
+    """'40.6-43.4:+4,51.6-54:+3' -> [(40.6, 43.4, 4.0), (51.6, 54.0, 3.0)]"""
+    out = []
+    for part in (spec or "").split(","):
+        part = part.strip()
+        if part:
+            win, db = part.split(":")
+            t0, t1 = win.split("-")
+            out.append((float(t0), float(t1), float(db)))
+    return out
+
+
+def lift_expr(lifts, ramp=0.6):
+    """ffmpeg volume expression: 1 outside the windows, the window's gain inside, linear ramps."""
+    terms = []
+    for t0, t1, db in lifts:
+        g = 10 ** (db / 20) - 1
+        terms.append(f"{g:.4f}*clip((t-{t0 - ramp:.3f})/{ramp},0,1)*clip(({t1 + ramp:.3f}-t)/{ramp},0,1)")
+    return "1+" + "+".join(terms)
+
+
+def mix_layers(base, voice, out, layers, end):
+    """Render `base` with the background `layers` underneath.
+    layers: [{file, gain, duck, fade, t0?, t1?, lift?}] (music first, then ambient)."""
     os.makedirs(os.path.dirname(out), exist_ok=True)
     dur = end if end is not None else probe_duration(base)
-    t0 = max(0.0, t0 or 0.0)
-    t1 = min(dur, t1 if t1 is not None else dur)
-    span = max(0.1, t1 - t0)
-    fade = min(fade, span / 2)
-
-    # input 0 = base video (voice + any SFX); input 1 = bed (looped to cover the base)
-    cmd = ["ffmpeg", "-y", "-hide_banner",
-           "-i", base,
-           "-stream_loop", "-1", "-i", bed_file]
-
-    parts = []
-    # bed: standard format, gentle high-pass so it never muddies speech, trim to length,
-    # set base level, fade in/out.
-    parts.append(
-        f"[1:a]aformat=sample_rates=48000:channel_layouts=stereo,"
-        f"highpass=f=90,volume={bed_gain:.2f}dB,atrim=0:{span:.3f},asetpts=N/SR/TB,"
-        f"afade=t=in:st=0:d={fade:.2f},afade=t=out:st={max(0.0, span - fade):.3f}:d={fade:.2f},"
-        f"adelay={int(t0 * 1000)}:all=1,apad=whole_dur={dur:.3f}[bed]"
-    )
-    # base voice: split — one copy is the sidechain key, one is the final voice.
-    parts.append("[0:a]aformat=sample_rates=48000:channel_layouts=stereo,asplit=2[key][voice]")
-    # duck the bed under the voice: ratio/makeup tuned so the bed drops ~`duck` dB when the voice
-    # speaks and recovers smoothly in the gaps. Slow release keeps it from pumping.
-    ratio = max(2.0, duck / 3.0)   # ~9 dB target -> ratio 3
-    parts.append(
-        f"[bed][key]sidechaincompress=threshold=0.03:ratio={ratio:.2f}:attack=15:"
-        f"release=450:makeup=1[bedduck]"
-    )
-    parts.append("[voice][bedduck]amix=inputs=2:normalize=0:dropout_transition=0[mixraw]")
+    n = len(layers)
+    # input 0 = base (voice + SFX, what we hear), input 1 = voice only (the duck key)
+    cmd = ["ffmpeg", "-y", "-hide_banner", "-i", base, "-i", voice]
+    parts = ["[0:a]aformat=sample_rates=48000:channel_layouts=stereo[main]",
+             f"[1:a]aformat=sample_rates=48000:channel_layouts=stereo,asplit={n}"
+             + "".join(f"[key{i}]" for i in range(n))]
+    outs = []
+    for i, L in enumerate(layers):
+        cmd += ["-stream_loop", "-1", "-i", L["file"]]
+        t0 = max(0.0, L.get("t0") or 0.0)
+        t1 = min(dur, L["t1"] if L.get("t1") is not None else dur)
+        span = max(0.1, t1 - t0)
+        fade = min(L["fade"], span / 2)
+        # format, gentle high-pass so it never muddies speech, level, trim, fades, place
+        parts.append(
+            f"[{i + 2}:a]aformat=sample_rates=48000:channel_layouts=stereo,"
+            f"highpass=f=90,volume={L['gain']:.2f}dB,atrim=0:{span:.3f},asetpts=N/SR/TB,"
+            f"afade=t=in:st=0:d={fade:.2f},afade=t=out:st={max(0.0, span - fade):.3f}:d={fade:.2f},"
+            f"adelay={int(t0 * 1000)}:all=1,apad=whole_dur={dur:.3f}[l{i}]")
+        # duck under the voice: drops ~`duck` dB while it speaks, slow release so it never pumps
+        ratio = max(2.0, L["duck"] / 3.0)
+        parts.append(f"[l{i}][key{i}]sidechaincompress=threshold=0.03:ratio={ratio:.2f}:attack=15:"
+                     f"release=450:makeup=1[d{i}]")
+        if L.get("lift"):  # after the duck, so the lift on a peak is not compressed away
+            parts.append(f"[d{i}]volume=volume='{lift_expr(L['lift'])}':eval=frame[o{i}]")
+        else:
+            parts.append(f"[d{i}]anull[o{i}]")
+        outs.append(f"[o{i}]")
+    parts.append("[main]" + "".join(outs)
+                 + f"amix=inputs={1 + n}:normalize=0:dropout_transition=0[mixraw]")
     parts.append("[mixraw]alimiter=level_in=1:level_out=1:limit=0.97[mix]")
-
     cmd += ["-filter_complex", ";".join(parts),
             "-map", "0:v:0", "-map", "[mix]",
             "-c:v", "copy", "-c:a", "aac", "-b:a", "192k",
@@ -132,72 +163,97 @@ def mix_one(base, bed_file, out, bed_gain, duck, fade, end, t0=None, t1=None):
 
 def main():
     args = sys.argv[1:]
-    base = rp(flag(args, "--base", "video-1/output/video-1-first60-sfx.mp4"))
-    bed_gain = flag(args, "--bed-gain", -7.0, float)
-    duck = flag(args, "--duck", 9.0, float)
-    fade = flag(args, "--fade", 1.5, float)
+    base = rp(flag(args, "--base", ""))
+    voice = rp(flag(args, "--voice")) if "--voice" in args else base
     end = flag(args, "--end", None, float)
-    do_all = "--all" in args
-    only_bed = flag(args, "--bed", None)
     out_override = flag(args, "--out", None)
 
     with open(CATALOG, encoding="utf-8") as f:
-        catalog = json.load(f)
-    beds = {c["id"]: {**c, "_dir": "music"} for c in catalog.get("clips", [])}
-    sfx_beds = {}
+        music = {c["id"]: c for c in json.load(f).get("clips", [])}
+    loops = {}
     if os.path.exists(SFX_CATALOG):
         with open(SFX_CATALOG, encoding="utf-8") as f:
-            sfx_beds = {c["id"]: {**c, "_dir": "sfx"} for c in json.load(f).get("clips", [])
-                        if c.get("loop") and not c.get("legacy") and not c.get("superseded")}
-    t0 = flag(args, "--from", None, float)
-    t1 = flag(args, "--to", None, float)
-    under = flag(args, "--under", None, float)
+            loops = {c["id"]: c for c in json.load(f).get("clips", [])
+                     if c.get("loop") and not c.get("legacy") and not c.get("superseded")}
 
-    if do_all:
-        targets = list(beds.keys())
-    elif only_bed:
-        targets = [only_bed]
+    music_id, amb_id = flag(args, "--music"), flag(args, "--ambient")
+    mfile = flag(args, "--music-file")
+    if mfile:
+        music_id = os.path.splitext(os.path.basename(mfile))[0]
+        music[music_id] = {"id": music_id, "file": os.path.relpath(rp(mfile), os.path.dirname(CATALOG))}
+    bed = flag(args, "--bed")
+    if bed:  # legacy single-layer flag
+        if bed in loops:
+            amb_id = amb_id or bed
+        else:
+            music_id = music_id or bed
+    if "--all" in args:
+        targets = [m for m, c in music.items() if not c.get("legacy")]
     else:
-        sys.exit("specify --bed <id> or --all (available: " + ", ".join(list(beds) + list(sfx_beds)) + ")")
+        targets = [music_id]
+    if not base or not os.path.exists(base):
+        sys.exit(f"missing --base video: {base}")
+    if targets == [None] and not amb_id:
+        sys.exit("give --music <id> and/or --ambient <id>  (music: " + ", ".join(music)
+                 + " | ambient loops: " + ", ".join(loops) + ")")
 
-    print(f"base: {show(base)}   bed-gain: {bed_gain}dB   duck: {duck}dB   fade: {fade}s"
-          + (f"   end: {end}s" if end else ""))
-    print(f"beds: {', '.join(targets)}")
-    if not os.path.exists(base):
-        sys.exit(f"missing base video: {base}")
+    voice_lufs = measure_lufs(voice)
+    print(f"base: {show(base)}   voice ref: {show(voice)} ({voice_lufs} LUFS)")
+
+    def gain_for(clip, path, under):
+        lufs = clip.get("loudness_lufs") or measure_lufs(path)
+        return voice_lufs - under - lufs
+
+    amb_layer = None
+    if amb_id:
+        if amb_id not in loops:
+            sys.exit(f"--ambient {amb_id}: not an SFX-library loop ({', '.join(loops)})")
+        c = loops[amb_id]
+        path = rp(os.path.join("media", "library", "sfx", c["file"]))
+        u = flag(args, "--ambient-under", 24.0, float)
+        amb_layer = {"file": path, "gain": gain_for(c, path, u),
+                     "duck": flag(args, "--ambient-duck", 6.0, float),
+                     "fade": flag(args, "--ambient-fade", 0.3, float)}
+        print(f"  ambient {amb_id}: {u:g} dB under the voice -> gain {amb_layer['gain']:.1f} dB,"
+              f" duck {amb_layer['duck']:g} dB")
 
     stem = os.path.splitext(os.path.basename(base))[0]
     results = []
-    for bid in targets:
-        clip = beds.get(bid) or sfx_beds.get(bid)
-        if not clip:
-            print(f"  SKIP {bid}: not in the music catalog or an SFX-library loop")
-            continue
-        bed_file = rp(os.path.join("media", "library", clip["_dir"], clip["file"]))
-        gain = bed_gain
-        u = under if under is not None else (16.0 if clip["_dir"] == "sfx" and "--bed-gain" not in args else None)
-        if u is not None:
-            base_lufs, bed_lufs = measure_lufs(base), clip.get("loudness_lufs") or measure_lufs(bed_file)
-            gain = base_lufs - u - bed_lufs
-            print(f"  {bid}: base {base_lufs} LUFS, bed {bed_lufs} LUFS -> bed-gain {gain:.1f} dB ({u:g} dB under)")
-        if not os.path.exists(bed_file):
-            print(f"  SKIP {bid}: file missing {show(bed_file)}")
-            continue
-        if out_override and not do_all:
+    for mid in targets:
+        layers = []
+        if mid:
+            if mid in loops:
+                sys.exit(f"--music {mid} is an ambient loop: pass it as --ambient (one of each, brand §7)")
+            if mid not in music:
+                sys.exit(f"--music {mid}: not in the music catalog")
+            c = music[mid]
+            if c.get("legacy"):
+                print(f"  WARNING {mid} is legacy (not ours to publish): audition only")
+            path = rp(os.path.join("media", "library", "music", c["file"]))
+            u = flag(args, "--music-under", flag(args, "--under", 19.0, float), float)
+            lift = parse_lift(flag(args, "--lift"))
+            layers.append({"file": path, "gain": gain_for(c, path, u),
+                           "duck": flag(args, "--music-duck", flag(args, "--duck", 9.0, float), float),
+                           "fade": flag(args, "--fade", 1.5, float),
+                           "t0": flag(args, "--from", None, float), "t1": flag(args, "--to", None, float),
+                           "lift": lift})
+            print(f"  music {mid}: {u:g} dB under the voice -> gain {layers[0]['gain']:.1f} dB"
+                  + (f", lifts {lift}" if lift else ""))
+        if amb_layer:
+            layers.append(amb_layer)
+        if out_override and len(targets) == 1:
             out = rp(out_override)
         else:
-            # auditions land next to the base video, whatever project it belongs to
-            out = os.path.join(os.path.dirname(base), f"{stem}-{bid}.mp4")
+            out = os.path.join(os.path.dirname(base), f"{stem}-{mid or amb_id}.mp4")
         if "--print" in args:
-            print(f"  {bid} -> {show(out)}")
+            print(f"  -> {show(out)}")
             continue
-        results.append(mix_one(base, bed_file, out, gain, duck, fade, end, t0, t1))
+        results.append(mix_layers(base, voice, out, layers, end))
 
     if results:
         print("\ndone:")
         for r in results:
-            d = probe_duration(r)
-            print(f"  {show(r)}  ({d:.1f}s)")
+            print(f"  {show(r)}  ({probe_duration(r):.1f}s)")
 
 
 if __name__ == "__main__":

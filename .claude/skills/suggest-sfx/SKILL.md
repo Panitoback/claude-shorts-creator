@@ -150,7 +150,7 @@ file start, which is almost never what you want. The cue sheet shows the resolve
 - **One sound per event; no accidental stacking.** Two cues audible at the same time within
   ~12 dB of each other read as clutter: keep one, unless it is one of the 2–3 deliberate hero
   layers. When cues compete, cut by priority: voice > story cue (the event named in the VO) >
-  snap > texture > bed.
+  snap > texture > music > ambient.
 - **A layer has anatomy:** attack (a short mid transient so it reads), body (the weight: the
   rumble, the boom), tail (the decay into silence). Build hero layers from clips that cover
   different slots, not two clips that do the same job.
@@ -165,6 +165,10 @@ file start, which is almost never what you want. The cue sheet shows the resolve
   into frame 0, so a tail cut at the end is an audible click on replay. Move the cue earlier or
   pick a shorter clip; never extend the picture (it would break the seamless loop).
 - **Silence is a cue.** Leave the gaps in the voice open unless a cue earns them.
+- **Background = two layers at most, one of each** (brand §7): an ambient loop (texture) under a
+  music bed (emotion). Propose both with `mix_music.py --music <id> --ambient <id> --lift ...`;
+  the bed adapts through the mix (duck, swells on the peaks, fades), never a tailored track.
+  Rules and levels: USAGE.md "Background layers".
 
 ## Final mix checklist (before showing the user a mix)
 
@@ -173,7 +177,9 @@ file start, which is almost never what you want. The cue sheet shows the resolve
 3. Story-critical cues pass the RMS check (≥ +4 dB) **and** survive the 300 Hz phone proxy.
 4. No two non-hero cues overlap within ~12 dB; the 0.5 s silence before the main reveal is intact.
 5. Narration level is even across the short; nothing peaks above the voice.
-6. No tail crosses the loop seam; the bed (if any) fades rather than cutting.
+6. No tail crosses the loop seam; the beds (music, ambient) fade rather than cut.
+7. Background layers: at most one music bed + one ambient loop; music ~19 dB and ambient ~24 dB
+   under the voice, both ducked; the music lifted on the hook, main reveal and twist (`--lift`).
 
 ## sfx-plan.json (the source of truth)
 
