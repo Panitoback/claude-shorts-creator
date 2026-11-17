@@ -9,6 +9,7 @@ The log of every short made for the channel. Topics and scripts come from the pl
 
 | # | Title | Slug | Format | Date | Status | Notes |
 |---|---|---|---|---|---|---|
+| 2 | What is a quasar? (v2) | what-is-a-quasar-v2 | How It Works | 2026-11-17 | in production | 73.8 s; brand v2.1 visual-variety test, same voice as #1 (reused, 0 credits); variant A only; mix awaiting the user's ear (`what-is-a-quasar-v2-a-final.mp4`, −13.7 LUFS); side-by-side `compare-v1-v2.mp4` |
 | 1 | What is a quasar? | what-is-a-quasar | How It Works | 2026-11-16 | final | 73.8 s; hooks A/B/C (`what-is-a-quasar-{a,b,c}-final.mp4`); opening 2 (pull-back), brand v2.0; bed accretion-swirl-loop −16 dB. Lesson: the screen only showed the quasar on/off → visual variety rule (brand v2.1) |
 
 ---

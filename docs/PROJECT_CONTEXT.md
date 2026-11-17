@@ -3,7 +3,7 @@
 > **For:** the planning project where topics, aesthetics and scripts are developed.
 > **Pair it with:** `brand.md` (the visual and sound style contract — read it for colors, type,
 > captions, annotations, motion, safe zones and sound taste; this file never repeats it).
-> **Version:** v0.11.1 · 2026-11-17 · phase: *first short done → visual variety kit built*
+> **Version:** v0.11.2 · 2026-11-17 · phase: *first short done → visual variety kit built*
 >
 > This file describes **what can be asked for**, not how it is built. If a script asks for
 > something listed here, it can be made. If it asks for something not listed, flag it as a
@@ -186,8 +186,8 @@ a phone.
 | **Orbit overlay** | The planets' orbits at **true relative scale**, as thin lines laid over another object to compare sizes (e.g. the whole solar system inside a black hole's horizon). Planets move at their real relative speeds. Orbits too small to see fold into the Sun's dot rather than being enlarged. | the scale (what it's laid over), which planets, which orbit is named (1–2), face-on or tilted, moving or still |
 | **Comparison bars** | 2–4 bars that fill on the beat, each with a label above and its value under it, counting up as it fills (temperatures, efficiencies, masses). Lengths are true to the values; one gold bar is the point. | the bars (label, value, how it reads), which bar is the hero, log scale (labelled as such) for values far apart |
 | **Meter** | A gauge for **one** value against a full scale: a gold arc fills, the value counts up inside (e.g. "~10% of the mass turned into light"), with an optional reference tick (e.g. fusion 0.7%) | value, full scale, label, a reference value with its label |
-| **Timeline** | A time axis that draws in, with markers appearing on cue (e.g. Big Bang → light leaves → Earth forms → today). Positions are true; events close together get a short leader line instead of a fake gap | the events (name, date, cue word), which event is gold, vertical (default, fits a phone) or horizontal (2–3 events), log scale |
-| **Balance** | Two totals weighed on a scale (e.g. every star in a galaxy vs one quasar): a heap of stars in one pan, one bright point in the other; the beam tips slowly toward the heavier side and both totals appear | each side's label and value, what sits in each pan (a heap of stars, one bright point, nothing) |
+| **Timeline** | A time axis that draws in, with markers appearing on cue (e.g. Big Bang → light leaves → Earth forms → today). Positions are true; events close together get a short leader line instead of a fake gap | the events (name, date, cue word), which event is gold (more than one is fine), vertical (default, fits a phone) or horizontal (2–3 events), log scale, smaller labels for long names ("FARTHEST QUASAR'S LIGHT" fits on one line) |
+| **Balance** | Two totals weighed on a scale (e.g. every star in a galaxy vs one quasar): a heap of stars in one pan, one bright point in the other; the beam tips toward the heavier side and both totals appear | each side's label and value, what sits in each pan (a heap of stars, one bright point, nothing), when the pans get named (e.g. on the spoken words, before the tip), a slow calm tip or a fast peak move on a key word |
 | **Flow paths** | Paths that draw in along the direction of travel with a soft glowing head (gas spiraling into a disk, light crossing space). A faint dashed "ghost" can show what does *not* happen first ("straight in?"), then fade | the paths (spiral into a disk, straight line, or a described route), which is the ghost, labels, an arrowhead |
 
 For a single big count-up, use the **Hero number** (3.1).
@@ -498,6 +498,14 @@ BEATS:
 ## 7. Learnings
 
 What worked and what didn't. Newest first.
+
+- **Same voice, new pictures: the visual variety rule works without re-voicing.** "What is a
+  quasar?" v2 reused v1's recorded voice (0 credits) and rebuilt the screen: 14 visual ideas in
+  74 s (orbit overlay, light paths, bars, meter, balance, timeline), one object carried through
+  every scene. A voice-first timeline makes this cheap: a short can be re-animated any time.
+- **Scripts that describe sound moods work.** Production picked every clip from the library from
+  the script's SOUND MOOD alone. Counting ticks under continuous narration get eaten by the voice
+  duck, though: if a count must be heard, leave a breath in the VO where it lands.
 
 - **The narration explained five things; the screen showed one.** "What is a quasar?" talked
   about mass, temperature, efficiency, distance and time, but on screen the quasar only switched

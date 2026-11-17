@@ -28,12 +28,13 @@ export type TimelineProps = {
   length?: number; // axis length in px (default 900 vertical, 760 horizontal)
   at?: number; // when the axis draws in
   warm?: boolean; // axis already drawn at frame 0 (events still use their own `at`)
+  labelSize?: number; // event label font size (default 52; lower it so a long label stays on one line)
 };
 
 const LABEL_GAP = 120;
 
 export const Timeline: React.FC<TimelineProps> = ({
-  events, range, log = false, orientation = 'vertical', x = 260, y = 300, length, at = 0, warm = false,
+  events, range, log = false, orientation = 'vertical', x = 260, y = 300, length, at = 0, warm = false, labelSize = 52,
 }) => {
   const f = useCurrentFrame();
   const s = startOf(at, warm);
@@ -84,7 +85,7 @@ export const Timeline: React.FC<TimelineProps> = ({
           : { position: 'absolute', left: x + pos(e.t) - 160, top: y + (i % 2 ? -150 : 34), width: 320, textAlign: 'center' };
         return (
           <div key={i} style={{ ...style, opacity: p, transform: riseY(p, 10) }}>
-            <div style={{ ...(e.hero ? TYPE.keyword : TYPE.subject), fontSize: 52, lineHeight: 1.05, color: e.hero ? PALETTE.gold : PALETTE.ivory }}>{e.label}</div>
+            <div style={{ ...(e.hero ? TYPE.keyword : TYPE.subject), fontSize: labelSize, lineHeight: 1.05, color: e.hero ? PALETTE.gold : PALETTE.ivory }}>{e.label}</div>
             {e.date && <div style={{ ...TYPE.annotation, color: PALETTE.sci, marginTop: 8 }}>{e.date}</div>}
           </div>
         );

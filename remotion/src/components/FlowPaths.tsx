@@ -67,8 +67,11 @@ const pointAt = (p: Pt[], u: number): Pt => {
   return p[p.length - 1];
 };
 
+let uid = 0;
+
 export const FlowPaths: React.FC<FlowPathsProps> = ({ paths, warm = false }) => {
   const f = useCurrentFrame();
+  const id = React.useMemo(() => `fp${uid++}`, []); // unique per instance: two FlowPaths never share a mask
   return (
     <>
       <svg width={CANVAS.W} height={CANVAS.H} style={{ position: 'absolute', left: 0, top: 0, overflow: 'visible' }}>
@@ -86,8 +89,9 @@ export const FlowPaths: React.FC<FlowPathsProps> = ({ paths, warm = false }) => 
           if (u <= 0 || out <= 0) return null;
           const kind = p.kind ?? 'gold';
           const C = lengthOf(p.points);
-          const stroke = kind === 'gold' ? PALETTE.gold : kind === 'sci' ? PALETTE.sciLine : 'rgba(244,241,234,0.4)';
-          const sw = kind === 'gold' ? 4 : ANNOTATION.stroke;
+          // the ghost must still read on a phone: 3 px at 0.6 (2 px at 0.4 vanished in QA)
+          const stroke = kind === 'gold' ? PALETTE.gold : kind === 'sci' ? PALETTE.sciLine : 'rgba(244,241,234,0.6)';
+          const sw = kind === 'gold' ? 4 : kind === 'ghost' ? 3 : ANNOTATION.stroke;
           const [hx, hy] = pointAt(p.points, u);
           const end = p.points[p.points.length - 1];
           const prev = pointAt(p.points, Math.max(0, 1 - 12 / C));
@@ -97,10 +101,12 @@ export const FlowPaths: React.FC<FlowPathsProps> = ({ paths, warm = false }) => 
               {kind === 'ghost' ? (
                 // dashed ghost: draws by revealing a dashed line under a growing mask stroke
                 <>
-                  <mask id={`flowMask${i}`}>
+                  {/* userSpaceOnUse: a straight vertical/horizontal path has a zero-width bbox, and an
+                      objectBoundingBox mask then hides it completely */}
+                  <mask id={`${id}m${i}`} maskUnits="userSpaceOnUse" x={0} y={0} width={CANVAS.W} height={CANVAS.H}>
                     <path d={smooth(p.points)} fill="none" stroke="#fff" strokeWidth={12} strokeDasharray={`${C * u} ${C}`} />
                   </mask>
-                  <path d={smooth(p.points)} fill="none" stroke={stroke} strokeWidth={sw} strokeDasharray="10 12" mask={`url(#flowMask${i})`} />
+                  <path d={smooth(p.points)} fill="none" stroke={stroke} strokeWidth={sw} strokeDasharray="10 12" mask={`url(#${id}m${i})`} />
                 </>
               ) : (
                 <path d={smooth(p.points)} fill="none" stroke={stroke} strokeWidth={sw} strokeLinecap="round" strokeDasharray={`${C * u} ${C}`} />

@@ -1,0 +1,211 @@
+{
+  "_note": "v2 (brand v2.1). All clips chosen from media/library/sfx/USAGE.md against guion.md SOUND MOOD. Hook + peaks (Combined., twist, loop) must pass the phone check; body cues may stay felt-not-heard. Bed laid after with mix_music.py.",
+  "master": "shorts/what-is-a-quasar-v2/output/what-is-a-quasar-v2-a-voiced.mp4",
+  "master_fps": 30,
+  "catalog": "media/library/sfx/catalog.json",
+  "render": {
+    "preview": "shorts/what-is-a-quasar-v2/output/what-is-a-quasar-v2-a-voiced.mp4",
+    "out": "shorts/what-is-a-quasar-v2/output/what-is-a-quasar-v2-a-sfx.mp4",
+    "end_s": 73.8,
+    "duck": true
+  },
+  "silence": [
+    {
+      "from_s": 15.2,
+      "to_s": 16.9,
+      "note": "near-silence on \"Nothing escapes\""
+    },
+    {
+      "from_s": 41.61,
+      "to_s": 42.11,
+      "note": "near-silence before the hit"
+    }
+  ],
+  "events": [
+    {
+      "at_s": 0.01,
+      "sfx_id": "hook-hit",
+      "gain_db": 1,
+      "align": "attack",
+      "cue": "frame 0: the extreme close-up, the pull-back already starting (SOUND MOOD: opening hit heard on a phone)"
+    },
+    {
+      "at_s": 0.0,
+      "sfx_id": "whoosh-deep",
+      "gain_db": 3,
+      "cue": "HOOK MOVE: the pull-back (EASE.punch, bulk in frames 12–24); file start at 0, its peak (0.52 s) inside the bulk of the move",
+      "note": "USAGE mix log: start whoosh-deep on a hook at +3"
+    },
+    {
+      "at_s": 3.0,
+      "sfx_id": "glow-swell",
+      "gain_db": 0,
+      "align": "peak",
+      "cue": "\"brightest\": the single brightness surge of disk + corona (peak at +0.3 s)"
+    },
+    {
+      "at_s": 7.44,
+      "sfx_id": "deep-rumble",
+      "gain_db": 2,
+      "cue": "\"black hole\": the quasar falls dormant and the camera closes on the shadow (low, heavy presence)"
+    },
+    {
+      "at_s": 10.08,
+      "sfx_id": "pop-reveal",
+      "gain_db": 2,
+      "align": "attack",
+      "optional": true,
+      "cue": "EVENT HORIZON / 1 BILLION SUNS label, with the orbits drawing in"
+    },
+    {
+      "at_s": 13.7,
+      "sfx_id": "photon-travel",
+      "gain_db": -5,
+      "align": "attack",
+      "optional": true,
+      "cue": "(c) light paths from nearby stars draw into the shadow edge (light traveling; kept low so \"Nothing escapes\" stays near-silent)"
+    },
+    {
+      "at_s": 27.18,
+      "sfx_id": "glow-swell",
+      "gain_db": 0,
+      "cue": "\"heats\": the disk brightens toward white as the bars fill (gentle rising warmth)"
+    },
+    {
+      "at_s": 32.95,
+      "sfx_id": "tick-soft",
+      "gain_db": 5,
+      "align": "attack",
+      "cue": "meter counting (tick 1/4)",
+      "note": "combo: tick-soft -> number-settle; jittered, thinning"
+    },
+    {
+      "at_s": 33.32,
+      "sfx_id": "tick-soft",
+      "gain_db": 4,
+      "align": "attack",
+      "cue": "meter counting (tick 2/4)"
+    },
+    {
+      "at_s": 33.72,
+      "sfx_id": "tick-soft",
+      "gain_db": 5,
+      "align": "attack",
+      "cue": "meter counting (tick 3/4)"
+    },
+    {
+      "at_s": 34.12,
+      "sfx_id": "tick-soft",
+      "gain_db": 3,
+      "align": "attack",
+      "cue": "meter counting (tick 4/4)"
+    },
+    {
+      "at_s": 34.47,
+      "sfx_id": "number-settle",
+      "gain_db": 6,
+      "align": "attack",
+      "cue": "the meter lands on ~10% (just before \"ten\")"
+    },
+    {
+      "at_s": 41.61,
+      "sfx_id": "riser-long",
+      "gain_db": 1,
+      "align": "peak",
+      "cue": "REVEAL 3 build (\"Feed the black hole enough…\"); crest 0.5 s before \"Combined.\"",
+      "note": "combo: riser-long -> 0.5 s near-silence -> the one big hit"
+    },
+    {
+      "at_s": 42.11,
+      "sfx_id": "impact-cosmic",
+      "gain_db": 2,
+      "align": "peak",
+      "cue": "\"Combined.\" (MAIN REVEAL): the beam tips toward the quasar, the point swells",
+      "note": "the short's ONE big cosmic hit"
+    },
+    {
+      "at_s": 42.11,
+      "sfx_id": "hook-hit",
+      "gain_db": 0,
+      "align": "attack",
+      "cue": "\"Combined.\": the phone layer of the cosmic hit, same moment"
+    },
+    {
+      "at_s": 45.1,
+      "sfx_id": "jet-launch",
+      "gain_db": -1,
+      "align": "attack",
+      "cue": "\"jets\": the jets ignite (after the quasar regrew to full power)"
+    },
+    {
+      "at_s": 52.3,
+      "sfx_id": "whoosh-deep",
+      "gain_db": 1,
+      "align": "peak",
+      "cue": "TWIST \"billions\": the pull-back to a point, at its fastest (deep rush)"
+    },
+    {
+      "at_s": 52.3,
+      "sfx_id": "impact-deep-soft",
+      "gain_db": 0,
+      "align": "peak",
+      "cue": "TWIST: the reframe burst under the rush (twist recipe)"
+    },
+    {
+      "at_s": 52.3,
+      "sfx_id": "pop-reveal",
+      "gain_db": -6,
+      "align": "peak",
+      "cue": "TWIST: the phone layer of the burst (twist recipe: pop-reveal −6 on the same peak)"
+    },
+    {
+      "at_s": 55.0,
+      "sfx_id": "tick-soft",
+      "gain_db": 3,
+      "align": "attack",
+      "cue": "timeline: BIG BANG marker lands"
+    },
+    {
+      "at_s": 55.8,
+      "sfx_id": "tick-soft",
+      "gain_db": 2,
+      "align": "attack",
+      "cue": "timeline: TODAY marker lands"
+    },
+    {
+      "at_s": 56.4,
+      "sfx_id": "tick-soft",
+      "gain_db": 5,
+      "align": "attack",
+      "cue": "timeline: QUASAR PEAK (gold) lands on \"young\""
+    },
+    {
+      "at_s": 63.52,
+      "sfx_id": "tick-soft",
+      "gain_db": 5,
+      "align": "attack",
+      "cue": "timeline: FARTHEST QUASAR'S LIGHT (gold) lands on \"thirteen\""
+    },
+    {
+      "at_s": 67.18,
+      "sfx_id": "tick-soft",
+      "gain_db": 4,
+      "align": "attack",
+      "cue": "timeline: EARTH FORMS lands on \"Earth\""
+    },
+    {
+      "at_s": 69.45,
+      "sfx_id": "whoosh-deep",
+      "gain_db": 3,
+      "align": "peak",
+      "cue": "LOOP: the fly-in from the point, at its fastest (rushing)"
+    },
+    {
+      "at_s": 70.3,
+      "sfx_id": "glow-swell",
+      "gain_db": 0,
+      "align": "peak",
+      "cue": "\"blazing\": we rush into the blazing disk; lands on frame 0, where hook-hit restarts the loop"
+    }
+  ]
+}

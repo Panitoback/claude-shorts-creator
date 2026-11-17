@@ -299,6 +299,21 @@ copied; none of them are installed.
 
 *(Newest first. One entry per produced short: slug, clips used, gains that landed, what to change.)*
 
+- **what-is-a-quasar-v2** (2026-11-17, brand v2.1, `shorts/what-is-a-quasar-v2/sfx-plan.json`; awaiting the user's ear)
+  - First plan chosen entirely by production from the script's `SOUND MOOD` (no clips named in the script).
+  - Hook: hook-hit +1 (+25.2 phone), whoosh-deep **+3** from file start 0 (the pull-back starts on
+    frame 0, so it can't be peak-aligned before 0; its peak lands at 0.52 s: +6.5), glow-swell 0 on
+    "brightest" (+6.3).
+  - Main reveal: riser-long +1 → 0.5 s silence → impact-cosmic +2 + hook-hit 0 on the balance tip (+14.8 phone).
+  - Twist: whoosh-deep +1 + impact-deep-soft 0 + pop-reveal −6 on one peak: +6.2 phone but only
+    +2.6 full band (the twist sits under speech). Next time: whoosh-deep +3 or the pop at −3.
+  - Loop: whoosh-deep +3 (+7.5) + glow-swell 0 (+8.9).
+  - Counting under continuous speech: meter ticks + number-settle measured gone / weak (duck eats
+    them); timeline ticks weak except the gold markers. Accepted as felt-not-heard; to make them
+    heard, +3 dB or place the settle in a voice gap.
+  - Bed: accretion-swirl-loop `--under 16 --fade 0.3` for the whole short (the quasar is on screen
+    as disk, hole or point throughout). Final −13.7 LUFS.
+
 - **what-is-a-quasar** (2026-11-16, brand v2.0, plans in `shorts/what-is-a-quasar/sfx-plan*.json`)
   - Hook: hook-hit +1 on frame 0 (+25 dB phone); whoosh-deep +2 at the pull-back's peak (+3.2 on
     A: just enough; louder on B/C); glow-swell 0 on the flare word (+5).

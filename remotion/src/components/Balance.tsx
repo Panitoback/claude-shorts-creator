@@ -25,6 +25,12 @@ export type BalanceProps = {
   span?: number; // beam half-length (default 300)
   maxTilt?: number; // degrees (default 16)
   tipAt?: number; // frame the beam starts tipping (default `at` + 30)
+  tipFrames?: number; // how long the tip takes (default 50: slow and calm)
+  tipEase?: 'inOut' | 'punch'; // 'punch' = a fast peak move with a long soft landing (energy curve
+  // peaks); still no overshoot or bounce (default 'inOut')
+  labelsAt?: number; // frame both sides' totals + labels appear (default tipAt + 20), e.g. on the
+  // spoken words, so the pans are named before the beam tips
+  valueSize?: number; // the totals' font size (default 72; lower it for long values)
   at?: number;
   warm?: boolean;
 };
@@ -34,12 +40,16 @@ const rand = (seed: number) => {
   return () => ((s = (s * 1664525 + 1013904223) >>> 0) / 4294967296);
 };
 
-export const Balance: React.FC<BalanceProps> = ({ left, right, x = 480, y = 720, span = 300, maxTilt = 16, tipAt, at = 0, warm = false }) => {
+export const Balance: React.FC<BalanceProps> = ({
+  left, right, x = 480, y = 720, span = 300, maxTilt = 16, tipAt, tipFrames = 50, tipEase = 'inOut', labelsAt, valueSize = 72,
+  at = 0, warm = false,
+}) => {
   const f = useCurrentFrame();
   const s = startOf(at, warm);
   const appear = ramp(f, s, MOTION.discIn);
   const t0 = warm ? -100000 : tipAt ?? s + 30;
-  const tip = interpolate(f, [t0, t0 + 50], [0, 1], { ...CL, easing: EASE.inOut });
+  const tip = interpolate(f, [t0, t0 + Math.max(1, tipFrames)], [0, 1], { ...CL, easing: tipEase === 'punch' ? EASE.punch : EASE.inOut });
+  const l0 = warm ? -100000 : labelsAt ?? t0 + 20;
   const ratio = right.value / left.value;
   const ang = Math.max(-maxTilt, Math.min(maxTilt, Math.log10(ratio) * (maxTilt / 3))) * tip; // + = right side down
   const a = (ang * Math.PI) / 180;
@@ -90,11 +100,11 @@ export const Balance: React.FC<BalanceProps> = ({ left, right, x = 480, y = 720,
       </svg>
       {ends.map((e, k) => {
         const side = k === 0 ? left : right;
-        const p = ramp(f, t0 + 20 + k * 6, MOTION.rise);
+        const p = ramp(f, l0 + k * 6, MOTION.rise);
         const hero = k === heavier;
         return (
           <div key={k} style={{ position: 'absolute', left: e.X - 200, width: 400, top: e.Y + hang + 60, textAlign: 'center', opacity: p, transform: riseY(p, MOTION.risePx) }}>
-            <div style={{ ...(hero ? TYPE.keyword : TYPE.subject), fontSize: 72, color: hero ? PALETTE.gold : PALETTE.ivory }}>{side.display}</div>
+            <div style={{ ...(hero ? TYPE.keyword : TYPE.subject), fontSize: valueSize, color: hero ? PALETTE.gold : PALETTE.ivory }}>{side.display}</div>
             <div style={{ ...TYPE.annotation, color: PALETTE.sciText, marginTop: 6, lineHeight: 1.3 }}>{side.label}</div>
           </div>
         );
