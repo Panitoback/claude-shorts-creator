@@ -228,7 +228,7 @@ word budgets are in §5.
 |---|---|---|---|---|
 | **Impossible Fact** | "That can't be true." One counter-intuitive fact, proven fast | 30–60 s | The object on frame 0; the fact (hero number or title) lands fast with the voice | Hero number, Caption with keyword, Data label, Marker, Glowing body / Planet |
 | **Scale** | "I finally *feel* how big that is." A size, distance or time next to something familiar | 40–75 s | A fast zoom or pull-back that puts the big thing and the familiar thing side by side, or lands the hero number over the big thing | Scale comparison, Hero number, Scale bar, Marker, Glowing body / Planet |
-| **How It Works** | "Oh, *that's* how it works." A mechanism explained step by step | 60–120 s | The end result switching on or revealed fast (what the short will explain) | Any of the base kit, often plus one new component for the mechanism |
+| **How It Works** | "Oh, *that's* how it works." A mechanism explained step by step | 60–120 s | The end result switching on or revealed fast (what the short will explain) | Any of the base kit and the visual variety kit (3.5), plus whatever new components the steps need (listed under NEW COMPONENTS NEEDED; all of them get built) |
 
 ### Impossible Fact
 

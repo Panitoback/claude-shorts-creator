@@ -48,16 +48,23 @@ Fact, Scale, How It Works) and which components carry each are in PROJECT_CONTEX
 
 Inherited kit (old look): `lib/shorts.tsx` — ProgressBar, BigTitle, Kicker, prog helper are still
 usable; do NOT use its Captions/Stamp/StatChip/PauseCard/ShortsBackdrop (replaced or retired).
-`lib/orbit.tsx` (real orbital physics + Globe/Trajectory) — restyle to the brand before reuse. **Add at most ONE new
-reusable component lib per short.**
+`lib/orbit.tsx` (real orbital physics + Globe/Trajectory) — restyle to the brand before reuse.
+
+**New components: build every one listed in guion.md's NEW COMPONENTS NEEDED** (the visual
+variety rule, brand §5, often needs two or three per short). Each one generic and reusable, never
+shot-specific: a component in `src/components/` with options instead of hard-coded content,
+`at`/`warm` props, brand tokens only (energy curve rules for its motion), phone-readable, and a
+`ComponentGallery` page; then list it in PROJECT_CONTEXT §3 (so scripts can ask for it by name)
+and tell the user PROJECT_CONTEXT changed. **If the list is more than three, show it to the user
+before building** (what each is and why the script needs it) and wait.
 
 ## Stage 1 — script + beats
 
 Length comes from guion.md's FORMAT + TARGET LENGTH (ranges: `docs/PROJECT_CONTEXT.md` §5 —
 Impossible Fact 30–60 s, Scale 40–75 s, How It Works 60–120 s; hard ceiling 180 s, only with
-explicit approval). Beat grammar, as shares of the total: **HOOK** (0–3 s, always fixed; frame 0 FULLY composed — the payoff already visible,
-no fade from black) → **SETUP** ~20% → optional **QUIZ** (~2.5 s — drives comments) →
-**REVEAL** ~45%, in 2–4 steps, each synced to a VO word → **TWIST** ~20% → **LOOP** last ~3–4 s
+explicit approval). Beat grammar, as shares of the total: **HOOK** (0–3 s, always fixed; brand v2.0 energy curve: frame 0 composed, no fade from
+black, but it's the START of a fast hook move that lands the surprise by ~3 s; the cover is picked at upload) → **SETUP** ~20% → optional **QUIZ** (~2.5 s — drives comments) →
+**REVEAL** ~45%, in 2–4 steps, each synced to a VO word and SHOWN with its own picture (brand §5 visual variety: a new visual idea every ~5–10 s) → **TWIST** ~20% → **LOOP** last ~3–4 s
 (last frame == frame 0,
 dissolving the payoff back into the intro so it replays seamlessly). Longer shorts (How It
 Works) may repeat Setup/Reveal pairs, one idea per beat.
