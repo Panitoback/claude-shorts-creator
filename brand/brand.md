@@ -6,15 +6,19 @@
 > **Reference scene:** the `BrandReference` composition is this document rendered on screen. If
 > it looks right, the brand is right.
 >
-> v1.7 · 2026-11-16 · direction: *Deep Field hybrid* (cinematic and editorial, with a few
-> scientific annotations)
+> v2.0 · 2026-11-16 · direction: *Deep Field hybrid* (cinematic and editorial, with a few
+> scientific annotations) · **energy curve**: a high-energy hook, a calm body, bursts on the peaks
 
 ---
 
 ## 1. Identity and voice
 
 - **What it feels like:** looking up at a clear night sky with a very good guide beside you.
-  Calm, warm and precise. The universe is the spectacle, so the design stays out of the way.
+  Warm and precise. The universe is the spectacle, so the design stays out of the way.
+- **An energy curve, not one energy level.** The first ~3 s grab (fast, bright, loud enough for
+  a phone); the body is calm and cinematic; the main reveal and the twist get a short burst of
+  energy, then settle. The identity (palette, type, honest scale, annotations, code-drawn) never
+  changes with the energy: only speed, camera and sound do.
 - **Cinematic, editorial and honest.** Lots of dark space and one hero object per scene. Numbers
   are set like magazine headlines. A thin line of scientific annotation can prove a point, but
   never decorates.
@@ -136,8 +140,15 @@ bar** with end ticks, a **marker ring** around a tiny object, or a **small data 
 
 ## 7. Sound design: SFX
 
-Same energy as the motion: **calm and cinematic, felt rather than heard.** Sound effects season
-the edit and never become the show. Choose every cue by its FUNCTION:
+Sound follows the **energy curve** (§1, §8):
+
+| Part | Sound energy | What it means |
+|---|---|---|
+| **Hook** (first ~3 s) | **high, heard on a phone** | a prominent, phone-audible hit in the first second: `hook-hit` on frame 0, or a short riser → hit landing on the hook's visual change; a motion cue (whoosh) on the camera move. The hook VO line may get a more intense delivery tag |
+| **Body** | **calm, felt rather than heard** | sound seasons the edit and never becomes the show |
+| **Peaks** (the main reveal, the twist) | **a burst, heard on a phone** | the reveal combo (riser → silence → hit + `hook-hit` phone layer); the twist gets a phone-audible hit or swell; then the sound settles back |
+
+Choose every cue by its FUNCTION:
 
 | Function | Sound | Its job | Calm sub-types |
 |---|---|---|---|
@@ -150,11 +161,11 @@ the edit and never become the show. Choose every cue by its FUNCTION:
 | **Cosmic events** | signature sounds | the object or event itself, named in the script | `supernova`, `stellar-collapse`, `star-ignite`, `gamma-flash`, `jet-launch`, `light-speed-pass`, `photon-travel`, `event-horizon-fade`, `spaghettify-stretch`, `radiation-hum`, `solar-flare-surge` (crackle: **pauses only**, flagged `not_under_narration`) |
 | **Physics (code)** | synthesized from the real numbers | the sound IS the data | `redshift-slide` (falling pitch), `pulsar-ticks` (a real period: 1.34 s), `pulsar-ticks-fast` (716 Hz), `gw-chirp` (black-hole merger); new variants from `tools/synth_sfx.py` |
 
-- **Always under the voice.** Quiet and tasteful, never louder than the narration. Silence is part
-  of the mix; never fill wall to wall. Space is quiet, and the mix can be too.
-- **Layer only the big moments (build and drop):** riser into impact on a scripted reveal, whoosh
-  into pop on a cut. A layer is two events at the same or adjacent `at_s`. Keep layers for the 2–3
-  hero beats.
+- **Always under the voice.** Never louder than the narration, even in the hook and on the peaks
+  (they are louder than the body, not louder than the voice). Silence is part of the mix; never
+  fill wall to wall. Space is quiet, and the body of the mix can be too.
+- **Layer only the high-energy moments (build and drop):** the hook, the main reveal, the twist.
+  A layer is two events at the same or adjacent `at_s`, aligned by their audible peak.
 - **Density:** score key transitions and reveals, not every sub-moment. Mark everything you could
   live without as `"optional": true`.
 - **Sync to the visual beat, and often to the exact word.** Being off by 100 ms reads as sloppy, so
@@ -163,10 +174,12 @@ the edit and never become the show. Choose every cue by its FUNCTION:
   continuous narration, start transitions and whooshes at **−3**, pops and impacts at **0 to +3**,
   snaps at **0 to +7**, and layered hero risers at **0 to +2**.
 - **Heard on a phone too.** Shorts are watched on phone speakers, which play almost nothing below
-  ~300 Hz. A deep hit (the cosmic hits, `impact-soft`) is felt on headphones but silent on a
-  phone, so the main reveal gets `hook-hit` as a mid-range layer on the same peak (smaller
-  moments: `pop-reveal`). Choose clips
-  by ear first; the layer fixes the phone.
+  ~300 Hz. **The hook and the peaks must pass the phone check** (every mix reports it); body cues
+  may stay felt-not-heard. A deep hit (the cosmic hits, `impact-soft`) is silent on a phone, so
+  the main reveal gets `hook-hit` as a mid-range layer on the same peak (smaller moments:
+  `pop-reveal`). Choose clips by ear first; the layer fixes the phone.
+- **Still never:** trailer slams, cymbal-urgency risers, glitch, static, cartoon or meme sounds,
+  at any energy.
 - **No static or glitch textures under narration.** They read as noise at any gain. Clips with any
   crackle carry `"not_under_narration": true` and only go in a gap in the voice.
 - **Source:** the ElevenLabs Sound Effects API (the channel's only outside service, our account),
@@ -179,8 +192,26 @@ the edit and never become the show. Choose every cue by its FUNCTION:
 
 ## 8. Motion
 
-Measured from the 5-second hybrid test. **Calm, smooth and physical.** Things arrive the way light
-does, by brightening rather than bouncing. Times are at 30 fps.
+**Smooth and physical at every energy.** Things arrive the way light does, by brightening rather
+than bouncing. What changes along the energy curve (§1) is speed and camera. Times are at 30 fps.
+
+### The energy curve
+
+| Part | Motion | Rules |
+|---|---|---|
+| **Hook** (first ~3 s) | **high energy** | fast camera moves with a **strong ease-out** (`EASE.punch`: the bulk of the move in its first 12–24 frames, then a soft landing, ~1.5 s at most in all; big zooms are eased in log scale so the zoom looks even); ignition / zoom reveals; a **kinetic title synced to the voice** (word by word, each word arriving on its spoken time with a fast rise); **parallax depth** (2–3 star layers moving at different speeds during camera moves); **a clear visual change every 2–3 s** for the first ~10 s |
+| **Body** | **calm, cinematic** | the table below: slow arrivals, ease in-out camera moves, ambient life |
+| **Peaks** (main reveal, twist) | **a burst, then settle** | one fast move or ignition (`EASE.punch`, its bulk in 12–24 frames) on the beat, synced to its sound; then back to body pacing within ~1 s |
+
+- **Constant motion:** something always moves (a slow drift, infalling gas, the camera), so no
+  frame is a still, especially in the hook.
+- **Banned at every energy:** shake, bounce, elastic, spin, lens flares, glitch, neon, fast
+  flicker (anything strobing faster than ~3 Hz), hard snaps. Fast means a fast ease-out, not
+  jerky.
+
+### Body timings
+
+Measured from the 5-second hybrid test.
 
 | Moment | Duration | How |
 |---|---|---|
@@ -195,14 +226,15 @@ does, by brightening rather than bouncing. Times are at 30 fps.
 | Keyword | ~10 frames | turns gold with a single soft pop (up to 1.06×) |
 
 **Principles**
-1. **One easing for arrivals:** ease out (fast start, gentle landing). Ease in-out for camera moves
-   and morphs. Ease in only for exits.
+1. **One easing for arrivals:** ease out (fast start, gentle landing). Ease in-out for body camera
+   moves and morphs; `EASE.punch` (strong ease-out) for hook and peak camera moves. Ease in only
+   for exits.
 2. **Sequence, don't stack.** Each element starts about 8 frames before the previous one settles,
    so the scene builds in a readable order: sky → object → number → annotations → caption.
 3. **Ambient life never stops:** glows breathe ±1.5 % over about 5 s and the bright stars twinkle
    ±20 %, slow and out of sync. A still frame still feels alive.
-4. **No bounce, spin, elastic, shake or hard snap.** The only overshoot allowed is the keyword's
-   single soft pop.
+4. **No bounce, spin, elastic, shake or hard snap, at any energy.** The only overshoot allowed is
+   the keyword's single soft pop.
 5. **Layout doesn't jump.** Elements are laid out in their final position from the start and only
    fade or rise in place. A counting number already holds its final width.
 6. **Exits are faster than entrances:** fade, plus a small fall if needed.
@@ -237,8 +269,11 @@ That leaves a **safe rectangle of 840 × 1210 px** from (60, 210) to (900, 1420)
 
 - **1080×1920, 30 fps**, rendered at full scale. **Length depends on the format** (ranges in
   `docs/PROJECT_CONTEXT.md` §5); hard ceiling 180 s, only with explicit approval.
-- **Frame 0 is the thumbnail.** It is fully composed, with the payoff visible and no fade from
-  black. (The 5-second reference scene animates in from empty; a real short pre-rolls its hook so
-  that frame 0 is already complete.)
-- **The last frame rhymes with frame 0**, so the loop is seamless. There are no subscribe or
-  comment-bait outros.
+- **Frame 0 is composed, but it is not the cover.** It is a complete, readable image with no fade
+  from black (the subject is already there), and it is the *start* of the hook's motion, not its
+  payoff: a dormant black hole about to ignite, an extreme close-up about to pull back. **The
+  cover (thumbnail) is chosen at upload** from any frame (usually the hook's payoff or the main
+  reveal). (The 5-second reference scene animates in from empty; a real short pre-rolls so frame
+  0 is already complete.)
+- **The last frame leads back into frame 0**, so the loop is seamless: the ending returns to the
+  hook's starting state, not to its payoff. There are no subscribe or comment-bait outros.

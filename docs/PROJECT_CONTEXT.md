@@ -3,7 +3,7 @@
 > **For:** the planning project where topics, aesthetics and scripts are developed.
 > **Pair it with:** `brand.md` (the visual and sound style contract — read it for colors, type,
 > captions, annotations, motion, safe zones and sound taste; this file never repeats it).
-> **Version:** v0.9.7 · 2026-11-16 · phase: *base components and formats done → first short next*
+> **Version:** v0.10.0 · 2026-11-16 · phase: *base components and formats done → first short next*
 >
 > This file describes **what can be asked for**, not how it is built. If a script asks for
 > something listed here, it can be made. If it asks for something not listed, flag it as a
@@ -20,7 +20,10 @@
   **no AI-generated images or video**. What you see is drawn and moved precisely: real orbits,
   real proportions, numbers that actually count up. Because of that, every short can be
   re-edited, restyled or re-voiced later without starting over.
-- **Minimalist and cinematic.** One idea per short, one hero object on screen at a time, lots of
+- **Minimalist and cinematic, with an energy curve.** The first ~3 seconds hit hard (a fast
+  camera move or an ignition, the title arriving word by word with the voice, a sound you hear
+  even on a phone); the body is calm and cinematic; the main reveal and the twist get a short
+  burst, then settle. One idea per short, one hero object on screen at a time, lots of
   dark space. Warm starlight on near-black, big editorial serif numbers, gold for the word that
   matters, and an occasional thin blue scientific annotation. The full look is in `brand.md`.
 
@@ -61,7 +64,7 @@ idea  →  script  →  animation  →  check  →  voice  →  sound  →  fina
 3. **Animation.** The scenes are built from the visual components in section 3. If a scene
    needs something that doesn't exist yet, a new component is built first.
 4. **Visual check.** Still frames are rendered at phone size and inspected: is the text
-   readable, is anything cut off, does the first frame work as a thumbnail?
+   readable, is anything cut off, is the first frame composed, and does the hook move fast?
 5. **Voice.** ElevenLabs reads each line (the channel voice on Eleven v4 Turbo). Each line gets
    one light delivery direction (intrigued, awed, emphatic…) added at this step, matched to the
    beat; it shapes the reading and never appears on screen. The real timing of every spoken word
@@ -86,8 +89,8 @@ shorts are recorded in the repo's `PRODUCED.md` (title, format, date, status).
 - The **script in the handoff format** (section 6): title, hook, narration lines, and a short
   description of the visual for each beat.
 - **Sources** for every number or claim (a link or a named reference is enough).
-- Optional: tone notes (calm, awe, playful), a preferred voice, and the one image the
-  thumbnail should be.
+- Optional: tone notes (calm, awe, playful), a preferred voice, and the image the cover should
+  be (the cover is picked at upload, from any frame).
 
 ---
 
@@ -116,6 +119,8 @@ All of these can arrive already in place on the first frame, so they work in a h
 | **Marker + leader line** | A ring that settles around an object, a thin blue line, a label (+ value) | what it points at, label, value, which side the label sits (below, above, left, right), a dot for objects too small to see |
 | **Scale bar** | A measured span with end ticks that draws from its center outward, with a label | what it spans, label, second line, label above or below |
 | **Data label** | A free-standing fact next to an object: small label + serif value, no line | label, value, alignment, value in gold italic when it is *the* number of the scene |
+| **Kinetic title** *(new, for hooks)* | A big title that arrives word by word, each word landing exactly as the voice says it, with a fast rise (no bounce) | the words (from the hook line), which word is gold, size, when it leaves |
+| **Depth stars** *(new, for hooks)* | A sky with real depth for fast camera moves: diving in, near stars stream past while far ones barely move; pulling back, the sky gathers in around the object. Stars stay small points | dive-in or pull-back, how far the camera travels, how many stars stream past |
 | **Scale comparison** | Two or more bodies side by side at **true relative size**, names underneath. Anything that would be smaller than a few pixels is drawn as a dot with a ring, so it stays findable without lying about its size. | which bodies (any planet/moon above, the Sun, or a star with its real radius), the names, an optional value under each, bottoms aligned or centers aligned |
 
 Annotations (marker, scale bar, data label) count toward the **max 2 on screen at once**.
@@ -160,7 +165,8 @@ shadow beside a near-white disk), never by flares, rays or haze.
 | **Accretion disk** | A tilted glowing disk around the shadow, one smooth gradient (holds up in a zoom): hottest and near-white inside, grading to gold and deep orange; the side coming toward us brighter; its near side crossing in front of the shadow as a band; the far side seen as bright bands bent over the top and under the bottom of the shadow | size, tilt (how edge-on), angle, brightness (dormant orange → blazing), slow drift on/off |
 | **Jets** | Two thin beams of plasma along the spin axis, cool blue-white, like real jets: very narrow at the core and slowly widening (a narrow cone), fading toward the ends, with bright knots traveling outward | length, angle, brightness (they switch on as the quasar brightens) |
 | **Host galaxy** | A calm, distant elliptical galaxy: soft warm haze and a few hundred stars | size, shape, angle, brightness |
-| **Quasar** | All of the above together, driven by one **luminosity** dial: as it rises, the disk turns white-hot, the glow grows up to 3× the disk, the jets switch on, and the host galaxy and background stars all but vanish (as if the camera were exposing for the quasar) | size, position, luminosity (or a "switch-on" from dormant to full), angle and tilt, jets on/off |
+| **Infalling gas** *(new)* | Thin streaks of gas spiraling into the disk from outside, faster as they close in, deep orange far out and gold at the disk, so the scene always moves | how many streaks, how fast, how bright |
+| **Quasar** | All of the above together, driven by one **luminosity** dial: as it rises, the disk turns white-hot, the glow grows up to 3× the disk, the jets switch on, and the host galaxy and background stars all but vanish (as if the camera were exposing for the quasar) | size, position, luminosity (or a "switch-on" from dormant to full: it can be a hard, fast ignition for a hook), angle and tilt, jets on/off, an extreme close-up of the disk (the glow is toned down so the frame isn't washed out), seen from far away as a single bright point ("quasi-stellar") |
 
 ### 3.5 Planned (not built yet)
 
@@ -187,7 +193,7 @@ word budgets are in §5.
 
 | Beat | Time | Purpose |
 |---|---|---|
-| **Hook** | 0–3 s (always fixed) | The very first frame is fully composed and already shows the surprising thing. It is also the thumbnail. No fade from black. |
+| **Hook** | 0–3 s (always fixed) | **High energy.** The first frame is composed (no fade from black) and is the start of a fast move (ignition, pull-back, dive-in) that lands the surprising thing within ~3 s, with the title arriving word by word on the voice and a sound heard even on a phone. A clear visual change every 2–3 s for the first ~10 s. The cover is picked at upload, not frame 0. |
 | **Setup** | ~20% | Show the situation fast; build the tension the hook promised. |
 | **Quiz** *(optional)* | ~2.5 s | "Pause. Can you guess?" Drives comments and rewatches. |
 | **Reveal** | ~45% | The payoff in 2–4 steps, each step landing on a spoken word. |
@@ -196,11 +202,11 @@ word budgets are in §5.
 
 ### The three formats at a glance
 
-| Format | Promise to the viewer | Length | Hook frame | Carried by |
+| Format | Promise to the viewer | Length | Hook (frame 0 → ~3 s) | Carried by |
 |---|---|---|---|---|
-| **Impossible Fact** | "That can't be true." One counter-intuitive fact, proven fast | 30–60 s | The fact itself, already on screen: hero number or title + the object | Hero number, Caption with keyword, Data label, Marker, Glowing body / Planet |
-| **Scale** | "I finally *feel* how big that is." A size, distance or time next to something familiar | 40–75 s | The big thing and the familiar thing already side by side, or the hero number over the big thing | Scale comparison, Hero number, Scale bar, Marker, Glowing body / Planet |
-| **How It Works** | "Oh, *that's* how it works." A mechanism explained step by step | 60–120 s | The end result, visible and striking (what the short will explain) | Any of the base kit, often plus one new component for the mechanism |
+| **Impossible Fact** | "That can't be true." One counter-intuitive fact, proven fast | 30–60 s | The object on frame 0; the fact (hero number or title) lands fast with the voice | Hero number, Caption with keyword, Data label, Marker, Glowing body / Planet |
+| **Scale** | "I finally *feel* how big that is." A size, distance or time next to something familiar | 40–75 s | A fast zoom or pull-back that puts the big thing and the familiar thing side by side, or lands the hero number over the big thing | Scale comparison, Hero number, Scale bar, Marker, Glowing body / Planet |
+| **How It Works** | "Oh, *that's* how it works." A mechanism explained step by step | 60–120 s | The end result switching on or revealed fast (what the short will explain) | Any of the base kit, often plus one new component for the mechanism |
 
 ### Impossible Fact
 
@@ -216,7 +222,7 @@ word budgets are in §5.
 
 ### Scale
 
-- **Hook:** the comparison is already visible, or the hero number sits over the big object
+- **Hook:** a fast move reveals the comparison, or lands the hero number over the big object
   ("1.3 million Earths").
 - **Setup:** introduce the familiar reference (Earth, a city, a human, a second of time) and
   mark it.
@@ -231,7 +237,8 @@ word budgets are in §5.
 
 ### How It Works
 
-- **Hook:** show the end result (the glowing quasar, the eclipse, the tide), not the diagram.
+- **Hook:** reveal the end result fast (the quasar switching on, the eclipse, the tide), not the
+  diagram.
 - **Setup:** the question, in one line ("But black holes don't shine. So what does?").
 - **Steps:** 2–4 SETUP → REVEAL pairs, **one idea per step**. Ideally the same scene evolving
   (one element added per step) rather than cuts to new scenes.
@@ -317,7 +324,8 @@ TARGET LENGTH: XX s
 TITLE: <the short's title, as it would appear on YouTube> [≤ 60 characters]
 SLUG: <folder name: lowercase-with-dashes, e.g. sun-volume> [2–4 words]
 TONE: <calm awe | playful | eerie | matter-of-fact>
-HOOK FRAME: <what the very first frame shows. It is also the thumbnail, so the surprising thing must already be visible>
+HOOK FRAME: <what the very first frame shows: composed, subject already there, no fade from black. It is the START of the hook's motion, not the cover (the cover is picked at upload)>
+HOOK MOVE: <the fast change in the first ~3 s that delivers the surprise: ignition, pull-back, dive-in, zoom…>
 SCALE: <true | not to scale> <required if any scene is about size or distance; say which scenes>
 
 SOURCES:
@@ -346,7 +354,7 @@ BEATS:
 
 1. HOOK (0–3 s) [VO ≤ 7 words]
    VO: "<first line: the surprising claim>"
-   VISUAL: <the hero object / scene; must match HOOK FRAME>
+   VISUAL: <starts on the HOOK FRAME; the HOOK MOVE lands the surprising thing by ~3 s>
    HERO NUMBER: <optional>
    KEYWORD: <word>
    ANNOTATIONS: <optional, max 2>
@@ -397,7 +405,7 @@ PRONUNCIATION: <word — how to say it, e.g. 'quasar — KWAY-zar'; only
 - [ ] At most 2 annotations on screen at once; ≤ 1 keyword per ~4 spoken words
 - [ ] VO has no symbols/abbreviations; every KEYWORD appears verbatim in its VO
 - [ ] SCALE stated for any scene about size or distance
-- [ ] The HOOK FRAME already shows the surprising thing
+- [ ] The HOOK FRAME is composed, and the HOOK MOVE shows the surprising thing within ~3 s
 - [ ] The LOOP returns to the hook, with no call to action
 
 ### Example (first two beats)
@@ -495,8 +503,9 @@ What worked and what didn't. Newest first.
 - **Eleven v4 sounds much better than v2.** Chosen by ear, with one delivery direction per line;
   v4 Turbo costs half and sounds the same to us, so it's the default.
 - **Comment-bait endings feel dated.** End on the payoff and loop.
-- **Sound stays under the voice.** Calm, sparse effects on the 2–3 key moments; never noise
-  textures under narration.
+- **Sound stays under the voice.** Sparse effects on the key moments; never noise textures under
+  narration. (Since brand v2.0 the hook and the peaks are louder than the body, still under the
+  voice.)
 
 ---
 

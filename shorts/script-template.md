@@ -12,7 +12,8 @@ TARGET LENGTH: XX s
 TITLE: <the short's title, as it would appear on YouTube> [≤ 60 characters]
 SLUG: <folder name: lowercase-with-dashes, e.g. sun-volume> [2–4 words]
 TONE: <calm awe | playful | eerie | matter-of-fact>
-HOOK FRAME: <what the very first frame shows. It is also the thumbnail, so the surprising thing must already be visible>
+HOOK FRAME: <what the very first frame shows: composed, subject already there, no fade from black. It is the START of the hook's motion, not the cover (the cover is picked at upload)>
+HOOK MOVE: <the fast change in the first ~3 s that delivers the surprise: ignition, pull-back, dive-in, zoom…>
 SCALE: <true | not to scale> <required if any scene is about size or distance; say which scenes>
 
 SOURCES:
@@ -41,7 +42,7 @@ BEATS:
 
 1. HOOK (0–3 s) [VO ≤ 7 words]
    VO: "<first line: the surprising claim>"
-   VISUAL: <the hero object / scene; must match HOOK FRAME>
+   VISUAL: <starts on the HOOK FRAME; the HOOK MOVE lands the surprising thing by ~3 s>
    HERO NUMBER: <optional>
    KEYWORD: <word>
    ANNOTATIONS: <optional, max 2>
@@ -93,7 +94,7 @@ PRONUNCIATION: <word — how to say it, e.g. 'quasar — KWAY-zar'; only
 - [ ] At most 2 annotations on screen at once; ≤ 1 keyword per ~4 spoken words
 - [ ] VO has no symbols/abbreviations; every KEYWORD appears verbatim in its VO
 - [ ] SCALE stated for any scene about size or distance
-- [ ] The HOOK FRAME already shows the surprising thing
+- [ ] The HOOK FRAME is composed, and the HOOK MOVE shows the surprising thing within ~3 s
 - [ ] The LOOP returns to the hook, with no call to action
 
 ---

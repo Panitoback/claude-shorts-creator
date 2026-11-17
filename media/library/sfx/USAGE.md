@@ -29,9 +29,19 @@ Starting gains are educated guesses until a produced short measures them (see Ma
 - **Crackle = pauses only.** `solar-flare-surge` (flagged `not_under_narration`) and anything
   with crackle go in a gap in the voice, never over speech. `mix_sfx.py --print` flags them.
 
+### The energy curve (brand v2.0)
+- **Hook (first ~3 s): high, phone-audible.** One of the two hook recipes below, plus a whoosh on
+  the hook's camera move. Must read "ok" in the PHONE CHECK.
+- **Body: calm, felt-not-heard** (everything in the clip tables at their start gains).
+- **Peaks (main reveal, twist): a phone-audible burst**, then settle. Must read "ok" in the PHONE
+  CHECK.
+
 ### Channel combos (recipes)
 | Moment | Recipe | Timing |
 |---|---|---|
+| **Hook, hit on frame 0** | `hook-hit` at 0 to +2 dB (`align: "attack"`) + optionally `whoosh-deep` under the camera move | the hit's attack on frame 0 (`at_s` = 0 − attack, clamp at 0); the whoosh's PEAK where the camera move is fastest (its first third with `EASE.punch`) |
+| **Hook, riser → hit** | `riser-soft` (cut short, or its last ~1–1.5 s) → `hook-hit` (`align: "peak"`) | the hit's PEAK on the hook's visual change (the ignition, the end of the pull-back) or the key word; keep it within the first ~1.5 s |
+| **The twist** | `glow-swell` or `impact-deep-soft` + `pop-reveal` at −6 dB on the same peak | a burst on the reframe word, then back to the body level |
 | **The main reveal** | `riser-long` → ~0.5 s near-silence → `supernova` (or `impact-cosmic`) **+ `hook-hit` at −6 dB as the phone layer** on the same peak (`align: "peak"` on both; not `gamma-flash`, it counts as a second cosmic hit) | the riser's build ends just before the half second of silence (its peak is at 4.53 s, its tail fades to the file end at 6 s); the hit's PEAK lands on the reveal frame / key word; drop the bed and other cues in the silence |
 | **A sub-bass hit that must read on phones** | the hit (body, ⚠ in the table) + a mid transient (attack) aligned peak-to-peak | the mid layer ~6–10 dB under the hit: on headphones you feel the body, on a phone you hear the attack |
 | **A whoosh into a cut** | `whoosh-soft` / `whoosh-deep` | its PEAK 0.1–0.25 s before the cut (`at_s` = cut − 0.15 − peak) |

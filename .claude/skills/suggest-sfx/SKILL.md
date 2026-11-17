@@ -13,8 +13,11 @@ The shape: a **declarative plan** (`sfx-plan.json`) is the source of truth → a
 (`tools/mix_sfx.py`) → a **library** grows (`media/library/sfx/`) → a **hard USER-AUDIT gate**
 before anything is mixed.
 
-Sound taste is a brand contract — read **`brand/brand.md` §7** every time. The house style is calm/premium
-(Linear / Anthropic / Vercel), felt-not-heard, always under the voice. NOT MrBeast-loud.
+Sound taste is a brand contract — read **`brand/brand.md` §7** every time. Since brand v2.0 the sound
+follows an **energy curve**: the **hook** (first ~3 s) is high-energy and phone-audible (`hook-hit` on
+frame 0, or a short riser → hit on the hook's visual change, plus a whoosh on the camera move); the
+**body** is calm/premium (Linear / Anthropic / Vercel), felt-not-heard; the **peaks** (main reveal,
+twist) get a phone-audible burst, then settle. Always under the voice. NOT MrBeast-loud, at any energy.
 
 ## Inputs (read these first, every session)
 
@@ -235,10 +238,12 @@ file start, which is almost never what you want. The cue sheet shows the resolve
 - **Function over vibe.** Pick the sound by its job — motion/tension/emphasis/snap (brand §7) —
   not by browsing the catalog for something that "feels right." The same few foundational sounds
   do the heavy lifting; more is not better. Keep signature motifs consistent.
-- **Layer the big moments, keep the rest single.** Build-and-drop (riser→impact, whoosh→pop) is
-  where SFX earn their keep — but only on the 2–3 hero beats.
-- **Take structure, not drama.** Calm/premium: no cymbal-urgency risers, no trailer slams, no
-  whoosh on every move.
+- **Layer the high-energy moments, keep the rest single.** Build-and-drop (riser→impact, whoosh→pop)
+  is where SFX earn their keep — on the hook, the main reveal and the twist only.
+- **The phone check gates the hook and the peaks.** Their cues must read "ok" in the mix's PHONE
+  CHECK; a body cue may be "weak"/"GONE" (felt-not-heard) if the user accepts it.
+- **Take structure, not drama.** Even the hook: no cymbal-urgency risers, no trailer slams, no
+  glitch, no whoosh on every move; the body stays calm.
 - **Audit before mixing.** The user reads and approves `sfx-plan.json` first. Non-negotiable.
 
 Done = the library has the needed clips (catalogued with source+license), `sfx-plan.json` is

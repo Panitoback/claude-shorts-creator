@@ -118,6 +118,20 @@ export const EASE = {
   out: Easing.bezier(0.33, 1, 0.68, 1), // the default for everything that arrives
   inOut: Easing.bezier(0.37, 0, 0.63, 1), // camera moves, morphs
   in: Easing.bezier(0.32, 0, 0.67, 0), // exits only
+  // brand v2.0 energy curve: hook and peak camera moves. Most of the move in the first third,
+  // then a long soft landing. Fast, never jerky (no overshoot: it is not elastic).
+  punch: Easing.bezier(0.16, 1, 0.3, 1),
+} as const;
+
+// §8 ENERGY CURVE (brand v2.0): high-energy hook, calm body, bursts on the peaks.
+export const ENERGY = {
+  hookFrames: 90, // the high-energy hook: first ~3 s
+  punchMove: [12, 24], // frames for the BULK of a hook/peak move or ignition (EASE.punch)
+  punchMaxS: 1.5, // ...including its soft landing, at most this long
+  changeEvery: [60, 90], // a clear visual change every 2–3 s during the first ~10 s
+  changeWindow: 300, // ...for the first ~10 s
+  settle: 30, // after a peak burst, back to body pacing within ~1 s
+  maxFlickerHz: 3, // nothing strobes faster than this, at any energy
 } as const;
 
 export const MOTION = {
