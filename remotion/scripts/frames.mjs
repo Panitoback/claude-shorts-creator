@@ -1,12 +1,13 @@
 // QA frame dumper: bundles once, renders specific frames of ONE composition.
-//   node scripts/frames.mjs Short1Chess 0,140,290,540,700 --scale=0.5 [--safe]
+//   node scripts/frames.mjs Short1Chess 0,140,290,540,700 --scale=0.5 [--safe] [--keep-qa]
 // Writes out/qa/<id>-f<frame>.png — phone-scale legibility checks for shorts.
+// Each call starts a NEW QA run and wipes out/qa/ first; --keep-qa adds to the current run instead.
 import { bundle } from '@remotion/bundler';
 import { selectComposition, renderStill } from '@remotion/renderer';
 import { mkdirSync } from 'fs';
 import { fileURLToPath } from 'url';
 import path from 'path';
-import { qaCollector } from './qa-log.mjs';
+import { qaCollector, resetQaDir } from './qa-log.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const args = process.argv.slice(2);
@@ -23,6 +24,7 @@ if (!id) {
 }
 
 const outDir = path.join(root, 'out', 'qa');
+if (!args.includes('--keep-qa')) resetQaDir(root);
 mkdirSync(outDir, { recursive: true });
 
 console.log('bundling...');

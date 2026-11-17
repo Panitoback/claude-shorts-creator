@@ -100,8 +100,10 @@ ANNOTATIONS per beat carry straight over.
 ```
 cd remotion && npm run gen        # frames.mjs does NOT run gen-registry itself
 node scripts/frames.mjs <Id> 0,<beat-boundaries+hero-frames>,<last> --scale=0.5
-node scripts/frames.mjs <Id> 0,<hero-frames> --scale=0.5 --safe   # safe-zone overlay pass
+node scripts/frames.mjs <Id> 0,<hero-frames> --scale=0.5 --safe --keep-qa   # safe-zone overlay pass
 ```
+Each frames.mjs call wipes `remotion/out/qa/` first, so it always holds exactly the latest run;
+every further call in the same run (the `--safe` pass, a second composition) needs `--keep-qa`.
 READ every PNG (phone scale). Checklist: frame 0 composed & thumbnail-grade · every reveal
 synced to its beat · nothing covering the payoff element · kickers swap with the narration ·
 nothing important outside the safe rectangle in the `--safe` pass · stars cleared behind text ·
