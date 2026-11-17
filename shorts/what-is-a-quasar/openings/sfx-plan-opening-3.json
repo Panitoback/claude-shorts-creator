@@ -1,0 +1,35 @@
+{
+  "_note": "Opening prototype 3 (brand v2.0), rough SFX pass for judging; not the final plan.",
+  "master": "shorts/what-is-a-quasar/output/opening-3-voiced.mp4",
+  "master_fps": 30,
+  "catalog": "media/library/sfx/catalog.json",
+  "render": {
+    "preview": "shorts/what-is-a-quasar/output/opening-3-voiced.mp4",
+    "out": "shorts/what-is-a-quasar/output/opening-3-sfx.mp4",
+    "end_s": 6.5,
+    "duck": true
+  },
+  "events": [
+    {
+      "at_s": 0.01,
+      "sfx_id": "hook-hit",
+      "gain_db": 1,
+      "align": "attack",
+      "cue": "frame 0: the hook hit (brand v2.0: phone-audible in the first second)"
+    },
+    {
+      "at_s": 0.62,
+      "sfx_id": "whoosh-deep",
+      "gain_db": -1,
+      "align": "peak",
+      "cue": "the dive-in at its fastest (starts 0.45 s), stars streaming past"
+    },
+    {
+      "at_s": 2.85,
+      "sfx_id": "glow-swell",
+      "gain_db": 0,
+      "align": "peak",
+      "cue": "\"brightest\": the flare to full power"
+    }
+  ]
+}

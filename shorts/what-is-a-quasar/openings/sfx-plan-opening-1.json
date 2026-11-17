@@ -1,0 +1,36 @@
+{
+  "_note": "Opening prototype 1 (brand v2.0), rough SFX pass for judging; not the final plan.",
+  "master": "shorts/what-is-a-quasar/output/opening-1-voiced.mp4",
+  "master_fps": 30,
+  "catalog": "media/library/sfx/catalog.json",
+  "render": {
+    "preview": "shorts/what-is-a-quasar/output/opening-1-voiced.mp4",
+    "out": "shorts/what-is-a-quasar/output/opening-1-sfx.mp4",
+    "end_s": 6.5,
+    "duck": true
+  },
+  "events": [
+    {
+      "at_s": 0.01,
+      "sfx_id": "hook-hit",
+      "gain_db": 1,
+      "align": "attack",
+      "cue": "frame 0: the hook hit (brand v2.0: phone-audible in the first second)"
+    },
+    {
+      "at_s": 2.72,
+      "sfx_id": "star-ignite",
+      "gain_db": 1,
+      "align": "peak",
+      "cue": "\"brightest\": the quasar switches on hard (L 0 -> 1 over 14 frames)"
+    },
+    {
+      "at_s": 2.85,
+      "sfx_id": "glow-swell",
+      "gain_db": -3,
+      "align": "peak",
+      "optional": true,
+      "cue": "the corona expanding, galaxy and stars fading out"
+    }
+  ]
+}

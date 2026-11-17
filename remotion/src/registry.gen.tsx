@@ -6,6 +6,9 @@ import Shot2, { compositionConfig as cfg2 } from './shots/short-12/Short12Orbit'
 import Shot3, { compositionConfig as cfg3 } from './shots/what-is-a-quasar/WhatIsAQuasarA';
 import Shot4, { compositionConfig as cfg4 } from './shots/what-is-a-quasar/WhatIsAQuasarB';
 import Shot5, { compositionConfig as cfg5 } from './shots/what-is-a-quasar/WhatIsAQuasarC';
+import Shot6, { compositionConfig as cfg6 } from './shots/what-is-a-quasar/WhatIsAQuasarOpening1';
+import Shot7, { compositionConfig as cfg7 } from './shots/what-is-a-quasar/WhatIsAQuasarOpening2';
+import Shot8, { compositionConfig as cfg8 } from './shots/what-is-a-quasar/WhatIsAQuasarOpening3';
 
 export const shots: { Comp: React.FC; config: any }[] = [
   { Comp: Shot0 as React.FC, config: cfg0 },
@@ -14,4 +17,7 @@ export const shots: { Comp: React.FC; config: any }[] = [
   { Comp: Shot3 as React.FC, config: cfg3 },
   { Comp: Shot4 as React.FC, config: cfg4 },
   { Comp: Shot5 as React.FC, config: cfg5 },
+  { Comp: Shot6 as React.FC, config: cfg6 },
+  { Comp: Shot7 as React.FC, config: cfg7 },
+  { Comp: Shot8 as React.FC, config: cfg8 },
 ];

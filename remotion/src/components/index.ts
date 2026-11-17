@@ -17,3 +17,7 @@ export { AccretionDisk } from './AccretionDisk';
 export { Jets } from './Jets';
 export { HostGalaxy } from './HostGalaxy';
 export { Quasar, quasarExposure } from './Quasar';
+export { InfallingGas } from './InfallingGas';
+export { ParallaxStars } from './ParallaxStars';
+export { KineticTitle } from './KineticTitle';
+export type { KineticWord } from './KineticTitle';

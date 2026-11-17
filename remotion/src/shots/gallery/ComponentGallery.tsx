@@ -3,7 +3,9 @@ import { AbsoluteFill, interpolate, Sequence, useCurrentFrame } from 'remotion';
 import { PALETTE, TYPE } from '../../brand';
 import {
   AccretionDisk, BlackHole, CaptionLine, DataLabel, GlowingBody, Grain, HostGalaxy, Jets, Quasar, quasarExposure, HeroNumber, KeywordCaptions, Marker, Planet, ScaleBar, ScaleComparison, Starfield,
+  InfallingGas, KineticTitle, ParallaxStars,
 } from '../../components';
+import { EASE } from '../../brand';
 import { PlanetKind } from '../../brand';
 
 // COMPONENT GALLERY — every base-kit component with its main options, one page each (4 s).
@@ -14,7 +16,7 @@ const PAGE = 120;
 
 export const compositionConfig = {
   id: 'ComponentGallery',
-  durationInSeconds: 60, // 15 pages × PAGE frames
+  durationInSeconds: 72, // 18 pages × PAGE frames
   fps: 30,
   width: 1080,
   height: 1920,
@@ -22,7 +24,7 @@ export const compositionConfig = {
 
 const Header: React.FC<{ n: number; title: string; note: string }> = ({ n, title, note }) => (
   <div style={{ position: 'absolute', top: 70, left: 60, right: 180 }}>
-    <div style={{ ...TYPE.annotation, color: PALETTE.gold, fontSize: 24 }}>{`${n} / 15 · ${title}`}</div>
+    <div style={{ ...TYPE.annotation, color: PALETTE.gold, fontSize: 24 }}>{`${n} / 18 · ${title}`}</div>
     <div style={{ ...TYPE.annotation, color: PALETTE.sciText, fontSize: 20, letterSpacing: 1, textTransform: 'none', marginTop: 8, opacity: 0.8 }}>{note}</div>
   </div>
 );
@@ -228,8 +230,46 @@ export const ComponentGallery: React.FC = () => (
       <QuasarSweep />
       <Header n={15} title="Quasar · luminosity 0 → 1" note="disk clips to near-white · corona up to 3× the disk · jets switch on · galaxy and stars nearly vanish" />
     </Sequence>
+
+    {/* 16 INFALLING GAS (brand v2.0: constant motion) */}
+    <Sequence from={PAGE * 15} durationInFrames={PAGE}>
+      <Starfield count={220} warm />
+      <InfallingGas x={480} y={820} shadowR={60} luminosity={0.6} layer="back" />
+      <Quasar x={480} y={820} shadowR={60} luminosity={0.6} jets={0} warm />
+      <InfallingGas x={480} y={820} shadowR={60} luminosity={0.6} layer="front" />
+      <Small x={480} y={1180}>{'streaks wind in faster as they close in · behind the shadow on the far side'}</Small>
+      <Header n={16} title="Infalling gas" note="thin streaks spiraling into the disk from outside · deep orange far out, gold at the disk · loop-safe" />
+    </Sequence>
+
+    {/* 17 PARALLAX STARS (brand v2.0: depth on hook camera moves) */}
+    <Sequence from={PAGE * 16} durationInFrames={PAGE}>
+      <ParallaxDemo />
+      <Header n={17} title="Parallax stars" note="a star VOLUME for dive-ins and pull-backs · near stars stream past, far ones barely move · stars stay points" />
+    </Sequence>
+
+    {/* 18 KINETIC TITLE (brand v2.0: the hook) */}
+    <Sequence from={PAGE * 17} durationInFrames={PAGE}>
+      <Starfield count={220} clear={[[60, 210, 840, 420]]} warm />
+      <KineticTitle x={480} size={92} lines={[[{ w: 'Black', start: 0.3 }, { w: 'holes', start: 0.7 }, { w: 'power', start: 1.27 }], [{ w: 'the', start: 1.67 }, { w: "universe's", start: 1.83 }], [{ w: 'brightest', start: 2.75, gold: true }, { w: 'lights.', start: 3.19 }]]} />
+      <Small x={480} y={1150}>{'each word lands on its spoken time · fast rise (EASE.punch) · no bounce'}</Small>
+      <Header n={18} title="Kinetic title" note="the hook title arriving word by word with the voice · gold word = keyword style" />
+    </Sequence>
   </AbsoluteFill>
   </Grain>
 );
+
+const ParallaxDemo: React.FC = () => {
+  const f = useCurrentFrame();
+  // dive in from far away, then pull back out
+  const k = Math.exp(interpolate(f, [10, 55, 70, 115], [Math.log(0.06), 0, 0, Math.log(0.06)], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: EASE.punch }));
+  const d = 1 / k;
+  return (
+    <>
+      <ParallaxStars dist={d} cx={480} cy={820} z={[40, 150]} />
+      <ParallaxStars dist={d} cx={480} cy={820} z={[-16, -0.3]} fillAt={1 / 0.06} count={150} bright={14} seed={33} />
+      <Small x={480} y={1180}>{`camera distance ${d.toFixed(1)} (1 = rest framing)`}</Small>
+    </>
+  );
+};
 
 export default ComponentGallery;

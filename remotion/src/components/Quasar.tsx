@@ -34,6 +34,9 @@ export type QuasarProps = {
   hotspots?: number; // orbiting clumps in the disk, Doppler-brightened (see AccretionDisk)
   hotspotPeriod?: number; // frames per orbit of the inner clump (see AccretionDisk)
   streaks?: number; // drifting-streak opacity (see AccretionDisk)
+  drift?: number; // streak drift speed, px/frame (see AccretionDisk; scale it up with a close-up)
+  corona?: number; // corona strength multiplier (default 1). Lower it in an extreme close-up, where the
+  // full corona would wash the whole frame (the camera is inside the glow)
   at?: number;
   warm?: boolean;
 };
@@ -50,7 +53,7 @@ let uid = 0;
 
 export const Quasar: React.FC<QuasarProps> = ({
   x, y, shadowR, luminosity = 1, angle = -8, tilt = 0.15, diskOuter = 4.6, jets = true, disk = 1, loopFrames, jetLength,
-  breathe = 0, breathePeriod = 75, hotspots = 0, hotspotPeriod, streaks, at = 0, warm = false,
+  breathe = 0, breathePeriod = 75, hotspots = 0, hotspotPeriod, streaks, drift, corona = 1, at = 0, warm = false,
 }) => {
   const f = useCurrentFrame();
   const id = React.useMemo(() => `qs${uid++}`, []);
@@ -64,8 +67,8 @@ export const Quasar: React.FC<QuasarProps> = ({
   const rOut = shadowR * diskOuter;
   const coronaR = rOut * (1 + (QUASAR.coronaMax - 1) * L); // 1× dormant → coronaMax (3×) at full
   const D = clamp01(disk);
-  const c = L * glow * D;
-  const common = { x, y, shadowR, luminosity: L, angle, tilt, outer: diskOuter, opacity: D, loopFrames, hotspots, hotspotPeriod, streaks, at, warm };
+  const c = L * glow * D * corona;
+  const common = { x, y, shadowR, luminosity: L, angle, tilt, outer: diskOuter, opacity: D, loopFrames, hotspots, hotspotPeriod, streaks, ...(drift !== undefined ? { drift } : {}), at, warm };
   const jetFade = typeof jets === 'number' ? clamp01(jets) : jets ? 1 : 0;
 
   return (

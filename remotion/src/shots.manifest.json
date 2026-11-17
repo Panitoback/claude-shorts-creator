@@ -9,7 +9,7 @@
  },
  {
   "id": "ComponentGallery",
-  "durationInSeconds": 60,
+  "durationInSeconds": 72,
   "fps": 30,
   "width": 1080,
   "height": 1920,
@@ -42,6 +42,30 @@
  {
   "id": "WhatIsAQuasarC",
   "durationInSeconds": 73.8,
+  "fps": 30,
+  "width": 1080,
+  "height": 1920,
+  "transparent": false
+ },
+ {
+  "id": "WhatIsAQuasarOpening1",
+  "durationInSeconds": 6.5,
+  "fps": 30,
+  "width": 1080,
+  "height": 1920,
+  "transparent": false
+ },
+ {
+  "id": "WhatIsAQuasarOpening2",
+  "durationInSeconds": 6.5,
+  "fps": 30,
+  "width": 1080,
+  "height": 1920,
+  "transparent": false
+ },
+ {
+  "id": "WhatIsAQuasarOpening3",
+  "durationInSeconds": 6.5,
   "fps": 30,
   "width": 1080,
   "height": 1920,
