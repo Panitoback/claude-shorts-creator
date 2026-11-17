@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python tools/gen_sfx.py *)",
+      "Bash(python tools/gen_voice.py *)"
+    ]
+  }
+}
