@@ -1,0 +1,279 @@
+{
+  "_note": "why-time-moves-forward variant A (brand v2.2). Clips from media/library/sfx/USAGE.md against guion.md SOUND MOOD; times from the real word times (the same cues as WhyTime.tsx). Bed via mix_music.py: bed-mysterious-vast + space-air-loop, lift 0-3.6:+3,32.4-35:+4,61.5-75:-4.",
+  "master": "shorts/why-time-moves-forward/output/why-time-moves-forward-a-voiced.mp4",
+  "master_fps": 30,
+  "catalog": "media/library/sfx/catalog.json",
+  "render": {
+    "preview": "shorts/why-time-moves-forward/output/why-time-moves-forward-a-voiced.mp4",
+    "out": "shorts/why-time-moves-forward/output/why-time-moves-forward-a-sfx.mp4",
+    "end_s": 80.1,
+    "duck": true
+  },
+  "silence": [
+    {
+      "from_s": 32.8,
+      "to_s": 33.76,
+      "note": "brief silence before the reveal hit"
+    },
+    {
+      "from_s": 73.01,
+      "to_s": 76.14,
+      "note": "near silence after heat death"
+    }
+  ],
+  "events": [
+    {
+      "at_s": 0.01,
+      "sfx_id": "hook-hit",
+      "gain_db": -4,
+      "cue": "frame 0: the gold crack races across the egg",
+      "align": "attack"
+    },
+    {
+      "at_s": 0.42,
+      "sfx_id": "shell-crack",
+      "gain_db": 6,
+      "cue": "the crack completes and the egg breaks open: phone-audible (SOUND MOOD)",
+      "align": "attack"
+    },
+    {
+      "at_s": 0.72,
+      "sfx_id": "swish-light",
+      "gain_db": 2,
+      "cue": "morph: crack → coffee spiral",
+      "align": "peak"
+    },
+    {
+      "at_s": 1.38,
+      "sfx_id": "whoosh-soft",
+      "gain_db": 1,
+      "cue": "morph: spiral → handwriting \"goodbye\"",
+      "align": "peak"
+    },
+    {
+      "at_s": 2.18,
+      "sfx_id": "sparkle-soft",
+      "gain_db": 0,
+      "cue": "\"goodbye\" bursts into dust",
+      "align": "attack"
+    },
+    {
+      "at_s": 2.36,
+      "sfx_id": "whoosh-deep",
+      "gain_db": 3,
+      "cue": "HOOK MOVE: pull-back into the stars"
+    },
+    {
+      "at_s": 3.19,
+      "sfx_id": "glow-swell",
+      "gain_db": 0,
+      "cue": "rising swell landing on \"Big Bang\"",
+      "align": "peak"
+    },
+    {
+      "at_s": 4.65,
+      "sfx_id": "whoosh-reverse",
+      "gain_db": -4,
+      "cue": "the egg tries to rewind… and stalls",
+      "align": "attack"
+    },
+    {
+      "at_s": 6.26,
+      "sfx_id": "whoosh-reverse",
+      "gain_db": -5,
+      "cue": "the milk tries to unmix… and stalls",
+      "align": "attack"
+    },
+    {
+      "at_s": 8.784,
+      "sfx_id": "swish-light",
+      "gain_db": -3,
+      "cue": "it scatters again",
+      "align": "attack",
+      "optional": true
+    },
+    {
+      "at_s": 9.664,
+      "sfx_id": "whoosh-soft",
+      "gain_db": -3,
+      "cue": "the dust streams into time's arrow",
+      "align": "peak"
+    },
+    {
+      "at_s": 11.394,
+      "sfx_id": "pop-reveal",
+      "gain_db": -4,
+      "cue": "arrowhead lands on \"way\"",
+      "align": "attack",
+      "optional": true
+    },
+    {
+      "at_s": 13.594,
+      "sfx_id": "tick-soft",
+      "gain_db": 3,
+      "cue": "collision, forward (clock 0.5)",
+      "align": "attack"
+    },
+    {
+      "at_s": 15.424,
+      "sfx_id": "tick-soft",
+      "gain_db": 2,
+      "cue": "the same collision, reversed",
+      "align": "attack"
+    },
+    {
+      "at_s": 17.334,
+      "sfx_id": "pop-reveal",
+      "gain_db": -2,
+      "cue": "\"Why?\" title, in the pause after the word",
+      "align": "attack"
+    },
+    {
+      "at_s": 23.294,
+      "sfx_id": "swish-light",
+      "gain_db": -1,
+      "cue": "the divider lifts",
+      "align": "attack"
+    },
+    {
+      "at_s": 24.554,
+      "sfx_id": "tick-soft",
+      "gain_db": 1,
+      "cue": "particles spread (soft tick 1)",
+      "align": "attack",
+      "optional": true
+    },
+    {
+      "at_s": 24.954,
+      "sfx_id": "tick-soft",
+      "gain_db": 0,
+      "cue": "tick 2",
+      "align": "attack",
+      "optional": true
+    },
+    {
+      "at_s": 25.404,
+      "sfx_id": "tick-soft",
+      "gain_db": -1,
+      "cue": "tick 3",
+      "align": "attack",
+      "optional": true
+    },
+    {
+      "at_s": 29.194,
+      "sfx_id": "impact-soft",
+      "gain_db": 0,
+      "cue": "the balance tips to MIXED",
+      "align": "attack"
+    },
+    {
+      "at_s": 29.194,
+      "sfx_id": "pop-reveal",
+      "gain_db": 0,
+      "cue": "mid layer for phones on the tip",
+      "align": "attack"
+    },
+    {
+      "at_s": 32.754,
+      "sfx_id": "riser-long",
+      "gain_db": 1,
+      "cue": "build to the main reveal; peaks at the end of \"one side?\"",
+      "align": "peak"
+    },
+    {
+      "at_s": 33.794,
+      "sfx_id": "impact-cosmic",
+      "gain_db": 2,
+      "cue": "MAIN REVEAL: 1 in 10^30 + burst ring",
+      "align": "attack"
+    },
+    {
+      "at_s": 33.794,
+      "sfx_id": "hook-hit",
+      "gain_db": 0,
+      "cue": "mid-range layer for phones on the reveal",
+      "align": "attack"
+    },
+    {
+      "at_s": 38.174,
+      "sfx_id": "warm-shimmer",
+      "gain_db": -3,
+      "cue": "\"entropy\" title",
+      "align": "attack",
+      "optional": true
+    },
+    {
+      "at_s": 47.591,
+      "sfx_id": "pop-reveal",
+      "gain_db": -2,
+      "cue": "BIG BANG marker (lowest entropy)",
+      "align": "attack"
+    },
+    {
+      "at_s": 48.711,
+      "sfx_id": "tick-soft",
+      "gain_db": 2,
+      "cue": "TODAY marker",
+      "align": "attack",
+      "optional": true
+    },
+    {
+      "at_s": 52.411,
+      "sfx_id": "whoosh-wind",
+      "gain_db": -4,
+      "cue": "camera glides down to TODAY",
+      "align": "peak",
+      "optional": true
+    },
+    {
+      "at_s": 60.381,
+      "sfx_id": "whoosh-deep",
+      "gain_db": 0,
+      "cue": "TWIST: the timeline rescales to log, the far future opens",
+      "align": "peak"
+    },
+    {
+      "at_s": 62.911,
+      "sfx_id": "event-horizon-fade",
+      "gain_db": -4,
+      "cue": "LAST STARS FADE: bright stars go out",
+      "align": "attack"
+    },
+    {
+      "at_s": 67.311,
+      "sfx_id": "deep-rumble",
+      "gain_db": -4,
+      "cue": "black holes; the small one starts to shrink",
+      "align": "attack",
+      "optional": true
+    },
+    {
+      "at_s": 71.851,
+      "sfx_id": "impact-deep-soft",
+      "gain_db": 2,
+      "cue": "one soft hit on \"heat death\"",
+      "align": "attack"
+    },
+    {
+      "at_s": 71.851,
+      "sfx_id": "pop-reveal",
+      "gain_db": -3,
+      "cue": "mid layer for phones on heat death (mix log: pop at -3)",
+      "align": "attack"
+    },
+    {
+      "at_s": 77.091,
+      "sfx_id": "shell-crack",
+      "gain_db": -6,
+      "cue": "LOOP: a faint crack as the point becomes the egg's crack (bridges into the replay)",
+      "align": "attack"
+    },
+    {
+      "at_s": 77.241,
+      "sfx_id": "glow-swell",
+      "gain_db": -3,
+      "cue": "the egg forms again",
+      "align": "peak"
+    }
+  ]
+}

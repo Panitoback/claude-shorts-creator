@@ -627,6 +627,33 @@
       ],
       "usage_note": "a brief flicker of light (something shining for an instant); short, under narration is fine",
       "prompt": "A brief soft flicker of light: two or three quick, delicate glassy shimmers that glint and fade, warm and airy, like light catching for an instant. Gentle, clear on small speakers, no harshness, not cartoonish, no beeps, no music."
+    },
+    {
+      "id": "shell-crack",
+      "category": "objects",
+      "duration_s": 1.0,
+      "tags": [
+        "crack",
+        "egg",
+        "shell",
+        "break",
+        "snap",
+        "hook"
+      ],
+      "prompt": "A single crisp eggshell crack, close and intimate: a dry brittle snap of thin shell with a tiny crunchy tail. Clean, present in the mid-highs so it is heard on a phone speaker. Quiet room, no reverb, no music, no voice."
+    },
+    {
+      "id": "card-riffle",
+      "category": "objects",
+      "duration_s": 1.5,
+      "tags": [
+        "cards",
+        "shuffle",
+        "riffle",
+        "deck",
+        "flutter"
+      ],
+      "prompt": "A playing card riffle shuffle, close up: two halves of a deck flicking together in a fast papery flutter, then a soft tap as the cards square up. Crisp, clean, intimate, no reverb, no music, no voice."
     }
   ]
 }

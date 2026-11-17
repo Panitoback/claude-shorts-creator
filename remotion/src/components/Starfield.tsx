@@ -31,12 +31,13 @@ export type StarfieldProps = {
   // ~0.5 s fade each; never dim the whole sky instead: compression smears global fades)
   offs?: number[];
   offLen?: number; // frames each star takes to go out (default 15)
+  ons?: number[]; // frames each switched-off star comes back (same order), e.g. so a loop's last frame matches frame 0
   at?: number;
   warm?: boolean;
 };
 
 export const Starfield: React.FC<StarfieldProps> = ({
-  count = 300, bright = 12, seed = 7, clear = [], avoid = [], twinkle = true, opacity = 1, offs = [], offLen = 15, at = 0, warm = false,
+  count = 300, bright = 12, seed = 7, clear = [], avoid = [], twinkle = true, opacity = 1, offs = [], offLen = 15, ons = [], at = 0, warm = false,
 }) => {
   const f = useCurrentFrame();
   const stars = useMemo(() => {
@@ -64,7 +65,8 @@ export const Starfield: React.FC<StarfieldProps> = ({
       {stars.map((s, i) => {
         const rank = brightRank.get(i);
         const isBright = rank !== undefined;
-        const off = rank !== undefined && rank < offs.length ? 1 - ramp(f, offs[rank], offLen) : 1;
+        const off = rank !== undefined && rank < offs.length
+          ? Math.min(1, 1 - ramp(f, offs[rank], offLen) + (rank < ons.length ? ramp(f, ons[rank], offLen) : 0)) : 1;
         if (off <= 0) return null;
         const tw = twinkle && isBright ? 1 - MOTION.twinkle + MOTION.twinkle * Math.sin(f / 18 + i * 1.7) : 1;
         const r = isBright ? Math.max(1.8, s.r * 1.1) : Math.max(STAR_MIN_R, s.r * 0.85);

@@ -255,7 +255,9 @@
       "plan_tier": "starter",
       "license": "ElevenLabs generated (Eleven Music) with OUR account (starter plan at generation time). Music Terms (elevenlabs.io/music-terms, 2026-10-09), paid plans: online and offline commercial use permitted except film, TV, radio and studio games; no attribution on paid plans; we own the output (ToS 4(c)(ii)); platform AI-disclosure rules apply (Music Terms 4.4). Starter: 'streaming' column = Prohibited (see USAGE notes)",
       "prompt": "Slow, warm, cinematic ambient music for a space documentary. Instrumental only. Steady, even intensity from start to finish with no big build-ups, no drops and no structural changes, so it can sit under any narration and loop seamlessly. No drums, no epic trailer percussion, no vocals, nothing busy. Mood: minimal and pulsing. A soft, muted, gentle synth pulse in steady eighth notes under warm analog pads in F major, around 70 BPM, clean and spacious, calm forward motion.",
-      "used_in": [],
+      "used_in": [
+        "why-time-moves-forward"
+      ],
       "loop": true,
       "raw_file": "raw/bed-minimal-pulse.mp3 (local, git-ignored)",
       "loop_from_raw_s": [

@@ -37,7 +37,8 @@
         "vox-1-coffee",
         "short-11-map",
         "ch-5-three-skills",
-        "blue-man-1-door"
+        "blue-man-1-door",
+        "why-time-moves-forward"
       ]
     },
     {
@@ -67,7 +68,8 @@
         "short-8-phish",
         "vox-1-coffee",
         "short-12-orbit",
-        "blue-man-1-door"
+        "blue-man-1-door",
+        "why-time-moves-forward"
       ]
     },
     {
@@ -94,7 +96,8 @@
       "prompt": "A slow, wide whoosh for a big zoom across a vast distance, made for a phone speaker: a bright, breathy, airy rush of mid and high frequency wind that sweeps past smoothly, with only a light low undertone. Cinematic and calm, never loud. No metallic ring, no laser, no music.",
       "post": "exciter-parallel",
       "used_in": [
-        "what-is-a-quasar-v2"
+        "what-is-a-quasar-v2",
+        "why-time-moves-forward"
       ]
     },
     {
@@ -127,7 +130,8 @@
         "short-10-fees",
         "short-11-map",
         "short-12-orbit",
-        "ch-5-three-skills"
+        "ch-5-three-skills",
+        "why-time-moves-forward"
       ]
     },
     {
@@ -151,7 +155,9 @@
       "model": "eleven_text_to_sound_v3",
       "license": "ElevenLabs generated (text-to-sfx); owner: the generating account, commercial use per the account's ElevenLabs plan",
       "prompt": "A very short, light, airy swish for a small element sliding into place. Delicate and soft, quick, clean, dry, no metallic ring, no music.",
-      "used_in": []
+      "used_in": [
+        "why-time-moves-forward"
+      ]
     },
     {
       "id": "riser-soft",
@@ -210,7 +216,8 @@
       "license": "ElevenLabs generated (text-to-sfx); owner: the generating account, commercial use per the account's ElevenLabs plan",
       "prompt": "A slow, long cinematic riser for a held moment before a big reveal. Soft warm tonal pad and airy texture rising steadily in pitch and intensity over six seconds, spacious and awe-filled, ending softly without a hit. No cymbal swell, no drums, no urgency, no melody.",
       "used_in": [
-        "what-is-a-quasar-v2"
+        "what-is-a-quasar-v2",
+        "why-time-moves-forward"
       ]
     },
     {
@@ -271,7 +278,8 @@
         "short-10-fees",
         "vox-1-coffee",
         "short-11-map",
-        "short-12-orbit"
+        "short-12-orbit",
+        "why-time-moves-forward"
       ]
     },
     {
@@ -305,7 +313,8 @@
         "short-11-map",
         "short-12-orbit",
         "ch-5-three-skills",
-        "what-is-a-quasar-v2"
+        "what-is-a-quasar-v2",
+        "why-time-moves-forward"
       ]
     },
     {
@@ -346,7 +355,8 @@
         "short-11-map",
         "short-12-orbit",
         "ch-5-three-skills",
-        "what-is-a-quasar-v2"
+        "what-is-a-quasar-v2",
+        "why-time-moves-forward"
       ]
     },
     {
@@ -373,7 +383,8 @@
       "license": "ElevenLabs generated (text-to-sfx); owner: the generating account, commercial use per the account's ElevenLabs plan",
       "prompt": "A vast, slow cosmic impact for the biggest reveal: a deep soft sub-bass bloom with a warm swelling tonal halo that spreads out and fades over four seconds, like light from a distant explosion reaching you. Majestic, calm and spacious, never harsh or loud. No trailer slam, no distortion, no drums, no music.",
       "used_in": [
-        "what-is-a-quasar-v2"
+        "what-is-a-quasar-v2",
+        "why-time-moves-forward"
       ]
     },
     {
@@ -401,7 +412,8 @@
       "prompt": "A cinematic opening hit that starts instantly at time zero: a tight, punchy transient with clear mid and high presence that cuts through a phone speaker, a warm low thump under it, and a short clean tail gone within 1.5 seconds. Confident, polished, premium, like a documentary title hit. No glitch, no static, no distortion, no cartoon, no riser, no metallic clang, no music.",
       "usage_note": "the first second of a short (hook); not the main reveal",
       "used_in": [
-        "what-is-a-quasar-v2"
+        "what-is-a-quasar-v2",
+        "why-time-moves-forward"
       ]
     },
     {
@@ -427,7 +439,8 @@
       "license": "ElevenLabs generated (text-to-sfx); owner: the generating account, commercial use per the account's ElevenLabs plan",
       "prompt": "A warm glowing swell for something lighting up: a soft tonal pad that brightens and blooms over three seconds, then settles, like a star igniting. Warm, calm and luminous, no hit, no drums, no melody.",
       "used_in": [
-        "what-is-a-quasar-v2"
+        "what-is-a-quasar-v2",
+        "why-time-moves-forward"
       ]
     },
     {
@@ -487,7 +500,8 @@
       "license": "ElevenLabs generated (text-to-sfx); owner: the generating account, commercial use per the account's ElevenLabs plan",
       "prompt": "A single tiny, soft tick, like one step of a precise counter or a fine instrument dial. Very short, delicate, clean and dry, quiet, no echo, no music.",
       "used_in": [
-        "what-is-a-quasar-v2"
+        "what-is-a-quasar-v2",
+        "why-time-moves-forward"
       ]
     },
     {
@@ -540,7 +554,8 @@
       "prompt": "A light, delicate sparkle: a soft glistening of tiny glassy bell-like particles, like distant stars twinkling. Gentle, airy and calm, quick, no harshness, not whimsical or cartoonish, no music.",
       "used_in": [
         "short-7-kids",
-        "ch-5-three-skills"
+        "ch-5-three-skills",
+        "why-time-moves-forward"
       ]
     },
     {
@@ -567,7 +582,8 @@
       "prompt": "A warm, tender shimmer swell: a soft glowing rise of gentle bell and harp-like sparkle blooming warmly and fading, wondrous and calm, full of quiet awe. No drums, no melody, no music.",
       "used_in": [
         "short-7-kids",
-        "blue-man-1-door"
+        "blue-man-1-door",
+        "why-time-moves-forward"
       ]
     },
     {
@@ -594,7 +610,8 @@
       "prompt": "The presence of something immense, like a black hole, audible on a phone: a dark breathy airy rush and a low cello-like tonal growl in the mid range, over a soft deep drone, swelling slowly and fading. Calm and ominous, never loud. No crackle, no static, no distortion, no debris, no music.",
       "post": "exciter-parallel",
       "used_in": [
-        "what-is-a-quasar-v2"
+        "what-is-a-quasar-v2",
+        "why-time-moves-forward"
       ]
     },
     {
@@ -666,7 +683,9 @@
       "license": "ElevenLabs generated (text-to-sfx); owner: the generating account, commercial use per the account's ElevenLabs plan",
       "prompt": "A seamless, very quiet airy ambience of empty space: a soft, smooth, gently moving hiss of air with a faint distant shimmer, calm and spacious. Steady level from start to end, no tones, no wind gusts, no rhythm, no melody, no beeps.",
       "loop": true,
-      "used_in": []
+      "used_in": [
+        "why-time-moves-forward"
+      ]
     },
     {
       "id": "supernova",
@@ -836,7 +855,9 @@
       "model": "eleven_text_to_sound_v3",
       "license": "ElevenLabs generated (text-to-sfx); owner: the generating account, commercial use per the account's ElevenLabs plan",
       "prompt": "A soft airy cosmic tone that gradually becomes muffled and darker, as if being low-pass filtered, slowing and sinking until it fades into complete silence. Calm, eerie and smooth, like falling past the edge of a black hole, no hits, No sci-fi laser, no beeps, no music.",
-      "used_in": []
+      "used_in": [
+        "why-time-moves-forward"
+      ]
     },
     {
       "id": "spaghettify-stretch",
@@ -1160,6 +1181,57 @@
       "usage_note": "a brief flicker of light (something shining for an instant); short, under narration is fine",
       "used_in": [
         "what-is-a-quasar-v2"
+      ]
+    },
+    {
+      "id": "shell-crack",
+      "file": "clips/shell-crack.mp3",
+      "category": "objects",
+      "tags": [
+        "crack",
+        "egg",
+        "shell",
+        "break",
+        "snap",
+        "hook"
+      ],
+      "duration_s": 1.0,
+      "peak_dbfs": -1.6,
+      "loudness_lufs": -21.7,
+      "attack_s": 0.33,
+      "peak_s": 0.36,
+      "phone_db": -0.0,
+      "source": "elevenlabs:sound-generation",
+      "model": "eleven_text_to_sound_v3",
+      "license": "ElevenLabs generated (text-to-sfx); owner: the generating account, commercial use per the account's ElevenLabs plan",
+      "prompt": "A single crisp eggshell crack, close and intimate: a dry brittle snap of thin shell with a tiny crunchy tail. Clean, present in the mid-highs so it is heard on a phone speaker. Quiet room, no reverb, no music, no voice.",
+      "used_in": [
+        "why-time-moves-forward"
+      ]
+    },
+    {
+      "id": "card-riffle",
+      "file": "clips/card-riffle.mp3",
+      "category": "objects",
+      "tags": [
+        "cards",
+        "shuffle",
+        "riffle",
+        "deck",
+        "flutter"
+      ],
+      "duration_s": 1.48,
+      "peak_dbfs": -1.5,
+      "loudness_lufs": -21.9,
+      "attack_s": 0.07,
+      "peak_s": 0.68,
+      "phone_db": -0.8,
+      "source": "elevenlabs:sound-generation",
+      "model": "eleven_text_to_sound_v3",
+      "license": "ElevenLabs generated (text-to-sfx); owner: the generating account, commercial use per the account's ElevenLabs plan",
+      "prompt": "A playing card riffle shuffle, close up: two halves of a deck flicking together in a fast papery flutter, then a soft tap as the cards square up. Crisp, clean, intimate, no reverb, no music, no voice.",
+      "used_in": [
+        "why-time-moves-forward"
       ]
     }
   ]

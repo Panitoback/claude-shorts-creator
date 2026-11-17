@@ -291,6 +291,12 @@ Gains are starting `gain_db` values. Status for all: approved, untested in a rea
 | `radiation-hum` | invisible radiation / energy pouring out; safe under narration | as a bed for the whole short | `glow-swell`, `jet-launch` | −2 |
 | `solar-flare-surge` | a solar flare erupting, **in a pause only** | anywhere under speech (crackle) | — | 0 |
 
+### Objects (everyday things, added 2026-11-17)
+| Clip | For | Avoid | Pairs with | Start gain |
+|---|---|---|---|---|
+| `shell-crack` | an egg / shell / thin brittle thing cracking or breaking open (the `Egg` split); a faint replay of it bridges a loop back to a crack on frame 0 | glass or ice (too dry and small); stacking two within 0.5 s. **Its attack is 0.33 s into the file**: align by attack, never put the attack before 0.33 s | `hook-hit` on frame 0 (lower the hit to −4 so the crack isn't masked) | +6 on a hook, −6 as a faint loop bridge |
+| `card-riffle` | a riffle shuffle of a deck (`DeckOfCards` riffles); align by attack on the riffle's start, the flutter peaks 0.6 s later | generic paper sounds; under the word it illustrates at low gain (a flutter, not a transient: the duck eats it) | `hook-hit` −3 on frame 0 | +9 on a hook under speech, +4 for a second riffle |
+
 ### Physics (code, `tools/synth_sfx.py`)
 | Clip | For | Avoid | Pairs with | Start gain |
 |---|---|---|---|---|
@@ -326,6 +332,28 @@ copied; none of them are installed.
 ## Mix log
 
 *(Newest first. One entry per produced short: slug, clips used, gains that landed, what to change.)*
+
+- **why-time-moves-forward** (2026-11-17, brand v2.2, `shorts/why-time-moves-forward/sfx-plan.json` + `b/sfx-plan.json`; approved by the user)
+  - Two variants, one body: the plans are generated from the real word times (body cues shifted by the
+    constant offset of line 4), so re-voicing a hook re-times every cue for free.
+  - New clips: `shell-crack`, `card-riffle` (~25 credits). Hook A: hook-hit **−4** + shell-crack +6 on the
+    egg splitting (0.42 s); hook B: hook-hit −3 + card-riffle +9 / +4 on the two riffles. Morph swishes
+    +2 / whoosh-soft +1; pull-back whoosh-deep +3 (+10 phone); glow-swell 0 on "Big Bang".
+  - **The phone check misreads transients and flutters.** It measures RMS at the attack: the crack (a
+    ~30 ms snap) read "GONE" though its phone-band peak rose −4.2 → −0.1 dB; the riffle read "GONE" at
+    its attack but adds ~+6 dB RMS at its flutter peak (0.6 s later). Check such clips by hand
+    (`ffmpeg -ss <peak> -t 0.6 … -af highpass=300,astats`) before raising them further.
+  - A burst illustrating a spoken word ("regret") vanished under the word even at +3: moved the picture
+    AND the sound into the pause after it (second confirmation of the quasar-v2 lesson).
+  - Main reveal: riser-long +1 peaking at the end of "one side?" → 0.5 s gap → impact-cosmic +2 +
+    hook-hit 0 (+8 phone). Balance tip: impact-soft 0 + pop-reveal 0 (still only +2.8 phone, accepted).
+    Heat death: impact-deep-soft +2 + pop-reveal −3 (+15 phone).
+  - Background: the user asked for music they could actually hear. **`bed-minimal-pulse` 14 dB under
+    the voice** (was 19 with mysterious-vast), duck 9, `--lift "0-3.6:+3,32.4-35:+4,61.5-75:-4"` (a
+    negative lift thins the bed while the stars go out), ambient `space-air-loop` 22 dB under. In a voice
+    gap the background went −39 → −20 dB. Compared on B: warm-hopeful vs minimal-pulse → minimal-pulse.
+  - Final loudness: the mix peaked at +0.7 dBTP; two-pass `loudnorm` (I −14, TP −1.5, linear) → −14.2
+    LUFS, peak ≤ −0.6 dBFS. Do this on every final.
 
 - **what-is-a-quasar-v2** (2026-11-17, brand v2.1, `shorts/what-is-a-quasar-v2/sfx-plan.json`; approved by the user)
   - First plan chosen entirely by production from the script's `SOUND MOOD` (no clips named in the script).

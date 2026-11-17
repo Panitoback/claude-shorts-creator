@@ -1,0 +1,1101 @@
+{
+  "_note": "why-time-moves-forward, variant B (guion.md). Voice-first: start/end/words filled by gen_voice.py. Lines 4-26 (the body) are identical in A and B, so B reuses A's cached clips.",
+  "slug": "why-time-moves-forward",
+  "variant": "b",
+  "format": {
+    "name": "How It Works",
+    "fps": 30,
+    "width": 1080,
+    "height": 1920,
+    "targetSec": 72,
+    "leadIn": 0.15,
+    "gap": 0.25,
+    "tail": 0.8,
+    "durationSec": 79.633
+  },
+  "vo": [
+    {
+      "text": "Shuffle a deck. It never un-shuffles.",
+      "tts": "[emphatic] Shuffle a deck. It never un-shuffles.",
+      "start": 0.39,
+      "end": 3.59,
+      "words": [
+        {
+          "w": "Shuffle",
+          "start": 0.39,
+          "end": 0.71
+        },
+        {
+          "w": "a",
+          "start": 0.75,
+          "end": 0.79
+        },
+        {
+          "w": "deck.",
+          "start": 0.95,
+          "end": 1.43
+        },
+        {
+          "w": "It",
+          "start": 1.59,
+          "end": 1.75
+        },
+        {
+          "w": "never",
+          "start": 1.99,
+          "end": 2.31
+        },
+        {
+          "w": "un-shuffles.",
+          "start": 2.55,
+          "end": 3.59
+        }
+      ]
+    },
+    {
+      "text": "Neither does a broken egg.",
+      "tts": "[calm] Neither does a broken egg.",
+      "start": 4.04,
+      "end": 5.72,
+      "words": [
+        {
+          "w": "Neither",
+          "start": 4.04,
+          "end": 4.36
+        },
+        {
+          "w": "does",
+          "start": 4.44,
+          "end": 4.6
+        },
+        {
+          "w": "a",
+          "start": 4.653,
+          "end": 4.707
+        },
+        {
+          "w": "broken",
+          "start": 4.76,
+          "end": 5.08
+        },
+        {
+          "w": "egg.",
+          "start": 5.24,
+          "end": 5.72
+        }
+      ],
+      "gap_before": 0.45
+    },
+    {
+      "text": "Or milk in your coffee.",
+      "tts": "[calm] Or milk in your coffee.",
+      "start": 5.97,
+      "end": 7.57,
+      "words": [
+        {
+          "w": "Or",
+          "start": 5.97,
+          "end": 6.13
+        },
+        {
+          "w": "milk",
+          "start": 6.37,
+          "end": 6.61
+        },
+        {
+          "w": "in",
+          "start": 6.69,
+          "end": 6.77
+        },
+        {
+          "w": "your",
+          "start": 6.81,
+          "end": 6.85
+        },
+        {
+          "w": "coffee.",
+          "start": 6.93,
+          "end": 7.57
+        }
+      ]
+    },
+    {
+      "text": "Or words you regret.",
+      "tts": "[calm] Or words you regret.",
+      "start": 7.82,
+      "end": 9.58,
+      "words": [
+        {
+          "w": "Or",
+          "start": 7.82,
+          "end": 8.06
+        },
+        {
+          "w": "words",
+          "start": 8.38,
+          "end": 8.7
+        },
+        {
+          "w": "you",
+          "start": 8.78,
+          "end": 8.86
+        },
+        {
+          "w": "regret.",
+          "start": 8.94,
+          "end": 9.58
+        }
+      ]
+    },
+    {
+      "text": "Time only runs one way.",
+      "tts": "[emphatic] Time only runs one way.",
+      "start": 9.83,
+      "end": 11.91,
+      "words": [
+        {
+          "w": "Time",
+          "start": 9.83,
+          "end": 10.15
+        },
+        {
+          "w": "only",
+          "start": 10.31,
+          "end": 10.55
+        },
+        {
+          "w": "runs",
+          "start": 10.63,
+          "end": 10.95
+        },
+        {
+          "w": "one",
+          "start": 11.19,
+          "end": 11.35
+        },
+        {
+          "w": "way.",
+          "start": 11.43,
+          "end": 11.91
+        }
+      ]
+    },
+    {
+      "text": "But the laws of physics?",
+      "tts": "[curious] But the laws of physics?",
+      "start": 12.16,
+      "end": 13.68,
+      "words": [
+        {
+          "w": "But",
+          "start": 12.16,
+          "end": 12.32
+        },
+        {
+          "w": "the",
+          "start": 12.36,
+          "end": 12.4
+        },
+        {
+          "w": "laws",
+          "start": 12.48,
+          "end": 12.72
+        },
+        {
+          "w": "of",
+          "start": 12.8,
+          "end": 12.88
+        },
+        {
+          "w": "physics?",
+          "start": 12.96,
+          "end": 13.68
+        }
+      ]
+    },
+    {
+      "text": "They work just fine in reverse.",
+      "tts": "[intrigued] They work just fine in reverse.",
+      "start": 13.93,
+      "end": 16.25,
+      "words": [
+        {
+          "w": "They",
+          "start": 13.93,
+          "end": 14.09
+        },
+        {
+          "w": "work",
+          "start": 14.17,
+          "end": 14.41
+        },
+        {
+          "w": "just",
+          "start": 14.49,
+          "end": 14.73
+        },
+        {
+          "w": "fine",
+          "start": 14.81,
+          "end": 15.05
+        },
+        {
+          "w": "in",
+          "start": 15.13,
+          "end": 15.21
+        },
+        {
+          "w": "reverse.",
+          "start": 15.29,
+          "end": 16.25
+        }
+      ]
+    },
+    {
+      "text": "Why?",
+      "tts": "[curious] Why?",
+      "start": 16.5,
+      "end": 17.3,
+      "words": [
+        {
+          "w": "Why?",
+          "start": 16.5,
+          "end": 17.3
+        }
+      ]
+    },
+    {
+      "text": "It's about counting.",
+      "tts": "[intrigued] It's about counting.",
+      "start": 17.8,
+      "end": 19.16,
+      "words": [
+        {
+          "w": "It's",
+          "start": 17.8,
+          "end": 17.96
+        },
+        {
+          "w": "about",
+          "start": 18.12,
+          "end": 18.28
+        },
+        {
+          "w": "counting.",
+          "start": 18.36,
+          "end": 19.16
+        }
+      ],
+      "gap_before": 0.5
+    },
+    {
+      "text": "Put a hundred particles in one half of a box.",
+      "tts": "[calm] Put a hundred particles in one half of a box.",
+      "start": 19.41,
+      "end": 22.77,
+      "words": [
+        {
+          "w": "Put",
+          "start": 19.41,
+          "end": 19.57
+        },
+        {
+          "w": "a",
+          "start": 19.65,
+          "end": 19.73
+        },
+        {
+          "w": "hundred",
+          "start": 19.81,
+          "end": 20.13
+        },
+        {
+          "w": "particles",
+          "start": 20.21,
+          "end": 20.85
+        },
+        {
+          "w": "in",
+          "start": 20.93,
+          "end": 21.17
+        },
+        {
+          "w": "one",
+          "start": 21.25,
+          "end": 21.41
+        },
+        {
+          "w": "half",
+          "start": 21.49,
+          "end": 21.73
+        },
+        {
+          "w": "of",
+          "start": 21.81,
+          "end": 21.89
+        },
+        {
+          "w": "a",
+          "start": 21.93,
+          "end": 21.97
+        },
+        {
+          "w": "box.",
+          "start": 22.05,
+          "end": 22.77
+        }
+      ]
+    },
+    {
+      "text": "Let go.",
+      "tts": "[calm] Let go.",
+      "start": 23.02,
+      "end": 23.82,
+      "words": [
+        {
+          "w": "Let",
+          "start": 23.02,
+          "end": 23.18
+        },
+        {
+          "w": "go.",
+          "start": 23.26,
+          "end": 23.82
+        }
+      ]
+    },
+    {
+      "text": "They spread out.",
+      "tts": "[calm] They spread out.",
+      "start": 24.07,
+      "end": 25.27,
+      "words": [
+        {
+          "w": "They",
+          "start": 24.07,
+          "end": 24.31
+        },
+        {
+          "w": "spread",
+          "start": 24.47,
+          "end": 24.63
+        },
+        {
+          "w": "out.",
+          "start": 24.71,
+          "end": 25.27
+        }
+      ]
+    },
+    {
+      "text": "Nothing pushes them.",
+      "tts": "[calm] Nothing pushes them.",
+      "start": 25.52,
+      "end": 26.8,
+      "words": [
+        {
+          "w": "Nothing",
+          "start": 25.52,
+          "end": 25.84
+        },
+        {
+          "w": "pushes",
+          "start": 26.0,
+          "end": 26.32
+        },
+        {
+          "w": "them.",
+          "start": 26.4,
+          "end": 26.8
+        }
+      ]
+    },
+    {
+      "text": "There are vastly more ways to be mixed than sorted.",
+      "tts": "[building excitement] There are vastly more ways to be mixed than sorted.",
+      "start": 27.05,
+      "end": 30.25,
+      "words": [
+        {
+          "w": "There",
+          "start": 27.05,
+          "end": 27.21
+        },
+        {
+          "w": "are",
+          "start": 27.33,
+          "end": 27.45
+        },
+        {
+          "w": "vastly",
+          "start": 27.53,
+          "end": 28.01
+        },
+        {
+          "w": "more",
+          "start": 28.09,
+          "end": 28.25
+        },
+        {
+          "w": "ways",
+          "start": 28.33,
+          "end": 28.57
+        },
+        {
+          "w": "to",
+          "start": 28.61,
+          "end": 28.65
+        },
+        {
+          "w": "be",
+          "start": 28.73,
+          "end": 28.97
+        },
+        {
+          "w": "mixed",
+          "start": 29.21,
+          "end": 29.45
+        },
+        {
+          "w": "than",
+          "start": 29.57,
+          "end": 29.69
+        },
+        {
+          "w": "sorted.",
+          "start": 29.93,
+          "end": 30.25
+        }
+      ]
+    },
+    {
+      "text": "Odds they all drift back to one side?",
+      "tts": "[curious] Odds they all drift back to one side?",
+      "start": 30.5,
+      "end": 32.82,
+      "words": [
+        {
+          "w": "Odds",
+          "start": 30.5,
+          "end": 30.82
+        },
+        {
+          "w": "they",
+          "start": 30.9,
+          "end": 30.98
+        },
+        {
+          "w": "all",
+          "start": 31.1,
+          "end": 31.22
+        },
+        {
+          "w": "drift",
+          "start": 31.26,
+          "end": 31.54
+        },
+        {
+          "w": "back",
+          "start": 31.66,
+          "end": 31.78
+        },
+        {
+          "w": "to",
+          "start": 31.86,
+          "end": 31.94
+        },
+        {
+          "w": "one",
+          "start": 32.06,
+          "end": 32.18
+        },
+        {
+          "w": "side?",
+          "start": 32.38,
+          "end": 32.82
+        }
+      ]
+    },
+    {
+      "text": "About one in a million trillion trillion.",
+      "tts": "[awed] About one in a million trillion trillion.",
+      "start": 33.37,
+      "end": 37.05,
+      "words": [
+        {
+          "w": "About",
+          "start": 33.37,
+          "end": 33.69
+        },
+        {
+          "w": "one",
+          "start": 33.93,
+          "end": 34.09
+        },
+        {
+          "w": "in",
+          "start": 34.13,
+          "end": 34.17
+        },
+        {
+          "w": "a",
+          "start": 34.25,
+          "end": 34.49
+        },
+        {
+          "w": "million",
+          "start": 34.57,
+          "end": 35.05
+        },
+        {
+          "w": "trillion",
+          "start": 35.21,
+          "end": 35.77
+        },
+        {
+          "w": "trillion.",
+          "start": 35.85,
+          "end": 37.05
+        }
+      ],
+      "gap_before": 0.55
+    },
+    {
+      "text": "That's entropy.",
+      "tts": "[emphatic] That's entropy.",
+      "start": 37.5,
+      "end": 38.94,
+      "words": [
+        {
+          "w": "That's",
+          "start": 37.5,
+          "end": 38.06
+        },
+        {
+          "w": "entropy.",
+          "start": 38.14,
+          "end": 38.94
+        }
+      ],
+      "gap_before": 0.45
+    },
+    {
+      "text": "Not mess: the number of possible arrangements.",
+      "tts": "[calm] Not mess: the number of possible arrangements.",
+      "start": 39.19,
+      "end": 42.47,
+      "words": [
+        {
+          "w": "Not",
+          "start": 39.19,
+          "end": 39.35
+        },
+        {
+          "w": "mess:",
+          "start": 39.43,
+          "end": 40.15
+        },
+        {
+          "w": "the",
+          "start": 40.23,
+          "end": 40.31
+        },
+        {
+          "w": "number",
+          "start": 40.39,
+          "end": 40.71
+        },
+        {
+          "w": "of",
+          "start": 40.79,
+          "end": 40.95
+        },
+        {
+          "w": "possible",
+          "start": 41.03,
+          "end": 41.51
+        },
+        {
+          "w": "arrangements.",
+          "start": 41.63,
+          "end": 42.47
+        }
+      ]
+    },
+    {
+      "text": "And it almost always grows.",
+      "tts": "[calm] And it almost always grows.",
+      "start": 42.72,
+      "end": 44.667,
+      "words": [
+        {
+          "w": "And",
+          "start": 42.72,
+          "end": 42.747
+        },
+        {
+          "w": "it",
+          "start": 42.827,
+          "end": 42.907
+        },
+        {
+          "w": "almost",
+          "start": 42.987,
+          "end": 43.467
+        },
+        {
+          "w": "always",
+          "start": 43.547,
+          "end": 43.947
+        },
+        {
+          "w": "grows.",
+          "start": 44.027,
+          "end": 44.667
+        }
+      ]
+    },
+    {
+      "text": "So time has a direction because the universe started with very low entropy.",
+      "tts": "[intrigued] So time has a direction because the universe started with very low entropy.",
+      "start": 44.917,
+      "end": 49.957,
+      "words": [
+        {
+          "w": "So",
+          "start": 44.917,
+          "end": 45.077
+        },
+        {
+          "w": "time",
+          "start": 45.157,
+          "end": 45.477
+        },
+        {
+          "w": "has",
+          "start": 45.557,
+          "end": 45.637
+        },
+        {
+          "w": "a",
+          "start": 45.677,
+          "end": 45.717
+        },
+        {
+          "w": "direction",
+          "start": 46.077,
+          "end": 46.437
+        },
+        {
+          "w": "because",
+          "start": 46.517,
+          "end": 46.757
+        },
+        {
+          "w": "the",
+          "start": 46.837,
+          "end": 46.997
+        },
+        {
+          "w": "universe",
+          "start": 47.077,
+          "end": 47.477
+        },
+        {
+          "w": "started",
+          "start": 47.557,
+          "end": 47.877
+        },
+        {
+          "w": "with",
+          "start": 47.957,
+          "end": 48.197
+        },
+        {
+          "w": "very",
+          "start": 48.277,
+          "end": 48.597
+        },
+        {
+          "w": "low",
+          "start": 48.677,
+          "end": 48.917
+        },
+        {
+          "w": "entropy.",
+          "start": 48.997,
+          "end": 49.957
+        }
+      ]
+    },
+    {
+      "text": "Nobody knows why.",
+      "tts": "[hushed] Nobody knows why.",
+      "start": 50.357,
+      "end": 51.877,
+      "words": [
+        {
+          "w": "Nobody",
+          "start": 50.357,
+          "end": 50.757
+        },
+        {
+          "w": "knows",
+          "start": 50.837,
+          "end": 51.157
+        },
+        {
+          "w": "why.",
+          "start": 51.237,
+          "end": 51.877
+        }
+      ],
+      "gap_before": 0.4
+    },
+    {
+      "text": "Ever since, it's been spending that order.",
+      "tts": "[calm] Ever since, it's been spending that order.",
+      "start": 52.477,
+      "end": 55.197,
+      "words": [
+        {
+          "w": "Ever",
+          "start": 52.477,
+          "end": 52.717
+        },
+        {
+          "w": "since,",
+          "start": 52.877,
+          "end": 53.517
+        },
+        {
+          "w": "it's",
+          "start": 53.597,
+          "end": 53.717
+        },
+        {
+          "w": "been",
+          "start": 53.757,
+          "end": 53.837
+        },
+        {
+          "w": "spending",
+          "start": 53.997,
+          "end": 54.397
+        },
+        {
+          "w": "that",
+          "start": 54.477,
+          "end": 54.637
+        },
+        {
+          "w": "order.",
+          "start": 54.717,
+          "end": 55.197
+        }
+      ],
+      "gap_before": 0.6
+    },
+    {
+      "text": "Star birth is already down about ninety percent from its peak.",
+      "tts": "[calm] Star birth is already down about ninety percent from its peak.",
+      "start": 55.447,
+      "end": 59.447,
+      "words": [
+        {
+          "w": "Star",
+          "start": 55.447,
+          "end": 55.687
+        },
+        {
+          "w": "birth",
+          "start": 55.847,
+          "end": 56.007
+        },
+        {
+          "w": "is",
+          "start": 56.127,
+          "end": 56.247
+        },
+        {
+          "w": "already",
+          "start": 56.327,
+          "end": 56.727
+        },
+        {
+          "w": "down",
+          "start": 56.847,
+          "end": 56.967
+        },
+        {
+          "w": "about",
+          "start": 57.047,
+          "end": 57.367
+        },
+        {
+          "w": "ninety",
+          "start": 57.447,
+          "end": 57.767
+        },
+        {
+          "w": "percent",
+          "start": 58.007,
+          "end": 58.247
+        },
+        {
+          "w": "from",
+          "start": 58.327,
+          "end": 58.407
+        },
+        {
+          "w": "its",
+          "start": 58.487,
+          "end": 58.567
+        },
+        {
+          "w": "peak.",
+          "start": 58.647,
+          "end": 59.447
+        }
+      ]
+    },
+    {
+      "text": "In about a hundred trillion years, the last stars fade.",
+      "tts": "[awed] In about a hundred trillion years, the last stars fade.",
+      "start": 59.697,
+      "end": 64.577,
+      "words": [
+        {
+          "w": "In",
+          "start": 59.697,
+          "end": 59.777
+        },
+        {
+          "w": "about",
+          "start": 59.937,
+          "end": 60.097
+        },
+        {
+          "w": "a",
+          "start": 60.217,
+          "end": 60.337
+        },
+        {
+          "w": "hundred",
+          "start": 60.417,
+          "end": 60.817
+        },
+        {
+          "w": "trillion",
+          "start": 60.977,
+          "end": 61.537
+        },
+        {
+          "w": "years,",
+          "start": 61.617,
+          "end": 62.337
+        },
+        {
+          "w": "the",
+          "start": 62.417,
+          "end": 62.577
+        },
+        {
+          "w": "last",
+          "start": 62.777,
+          "end": 62.977
+        },
+        {
+          "w": "stars",
+          "start": 63.057,
+          "end": 63.537
+        },
+        {
+          "w": "fade.",
+          "start": 63.697,
+          "end": 64.577
+        }
+      ]
+    },
+    {
+      "text": "In up to a googol years, even black holes evaporate.",
+      "tts": "[awed] In up to a goo-gol years, even black holes evaporate.",
+      "start": 64.827,
+      "end": 69.307,
+      "words": [
+        {
+          "w": "In",
+          "start": 64.827,
+          "end": 64.907
+        },
+        {
+          "w": "up",
+          "start": 64.987,
+          "end": 65.067
+        },
+        {
+          "w": "to",
+          "start": 65.147,
+          "end": 65.227
+        },
+        {
+          "w": "a",
+          "start": 65.307,
+          "end": 65.547
+        },
+        {
+          "w": "goo-gol",
+          "start": 65.667,
+          "end": 66.027
+        },
+        {
+          "w": "years,",
+          "start": 66.107,
+          "end": 66.827
+        },
+        {
+          "w": "even",
+          "start": 66.907,
+          "end": 67.147
+        },
+        {
+          "w": "black",
+          "start": 67.227,
+          "end": 67.547
+        },
+        {
+          "w": "holes",
+          "start": 67.627,
+          "end": 68.027
+        },
+        {
+          "w": "evaporate.",
+          "start": 68.147,
+          "end": 69.307
+        }
+      ]
+    },
+    {
+      "text": "Then, most likely: heat death.",
+      "tts": "[somber] Then, most likely: heat death.",
+      "start": 69.707,
+      "end": 72.827,
+      "words": [
+        {
+          "w": "Then,",
+          "start": 69.707,
+          "end": 70.427
+        },
+        {
+          "w": "most",
+          "start": 70.587,
+          "end": 70.747
+        },
+        {
+          "w": "likely:",
+          "start": 70.827,
+          "end": 71.787
+        },
+        {
+          "w": "heat",
+          "start": 71.867,
+          "end": 72.107
+        },
+        {
+          "w": "death.",
+          "start": 72.187,
+          "end": 72.827
+        }
+      ],
+      "gap_before": 0.4
+    },
+    {
+      "text": "No order left to spend.",
+      "tts": "[slowly] No order left to spend.",
+      "start": 73.077,
+      "end": 75.157,
+      "words": [
+        {
+          "w": "No",
+          "start": 73.077,
+          "end": 73.317
+        },
+        {
+          "w": "order",
+          "start": 73.477,
+          "end": 73.797
+        },
+        {
+          "w": "left",
+          "start": 73.957,
+          "end": 74.277
+        },
+        {
+          "w": "to",
+          "start": 74.317,
+          "end": 74.357
+        },
+        {
+          "w": "spend.",
+          "start": 74.517,
+          "end": 75.157
+        }
+      ]
+    },
+    {
+      "text": "And every shuffle is a step along the way.",
+      "tts": "[whispers] And every shuffle is a step along the way.",
+      "start": 75.857,
+      "end": 78.817,
+      "words": [
+        {
+          "w": "And",
+          "start": 75.857,
+          "end": 76.097
+        },
+        {
+          "w": "every",
+          "start": 76.177,
+          "end": 76.497
+        },
+        {
+          "w": "shuffle",
+          "start": 76.577,
+          "end": 77.057
+        },
+        {
+          "w": "is",
+          "start": 77.137,
+          "end": 77.217
+        },
+        {
+          "w": "a",
+          "start": 77.297,
+          "end": 77.377
+        },
+        {
+          "w": "step",
+          "start": 77.457,
+          "end": 77.697
+        },
+        {
+          "w": "along",
+          "start": 77.777,
+          "end": 78.017
+        },
+        {
+          "w": "the",
+          "start": 78.097,
+          "end": 78.177
+        },
+        {
+          "w": "way.",
+          "start": 78.257,
+          "end": 78.817
+        }
+      ],
+      "gap_before": 0.7
+    }
+  ],
+  "voiceStatus": "elevenlabs:JYUzXNeyCPmymMkfcicu:eleven_v4_turbo:natural"
+}

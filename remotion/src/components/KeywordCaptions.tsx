@@ -134,6 +134,8 @@ const phrasesOf = (lines: CaptionLine[], keywords: string[], maxWords: number, m
         out.pop();
       }
     }
+    // inside one line, a phrase stays up until the next one starts (no blink between phrases)
+    for (let i = firstOfLine; i < out.length - 1; i++) out[i].end = Math.max(out[i].end, out[i + 1].start);
     // the last phrase of a line lingers a moment (never past the next line's start)
     if (out.length) out[out.length - 1].end += holdSec;
   });

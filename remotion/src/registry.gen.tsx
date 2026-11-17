@@ -10,6 +10,8 @@ import Shot6, { compositionConfig as cfg6 } from './shots/what-is-a-quasar/WhatI
 import Shot7, { compositionConfig as cfg7 } from './shots/what-is-a-quasar/WhatIsAQuasarOpening1';
 import Shot8, { compositionConfig as cfg8 } from './shots/what-is-a-quasar/WhatIsAQuasarOpening2';
 import Shot9, { compositionConfig as cfg9 } from './shots/what-is-a-quasar/WhatIsAQuasarOpening3';
+import Shot10, { compositionConfig as cfg10 } from './shots/why-time-moves-forward/WhyTimeA';
+import Shot11, { compositionConfig as cfg11 } from './shots/why-time-moves-forward/WhyTimeB';
 
 export const shots: { Comp: React.FC; config: any }[] = [
   { Comp: Shot0 as React.FC, config: cfg0 },
@@ -22,4 +24,6 @@ export const shots: { Comp: React.FC; config: any }[] = [
   { Comp: Shot7 as React.FC, config: cfg7 },
   { Comp: Shot8 as React.FC, config: cfg8 },
   { Comp: Shot9 as React.FC, config: cfg9 },
+  { Comp: Shot10 as React.FC, config: cfg10 },
+  { Comp: Shot11 as React.FC, config: cfg11 },
 ];

@@ -78,5 +78,21 @@
   "width": 1080,
   "height": 1920,
   "transparent": false
+ },
+ {
+  "id": "WhyTimeA",
+  "durationInSeconds": 80.1,
+  "fps": 30,
+  "width": 1080,
+  "height": 1920,
+  "transparent": false
+ },
+ {
+  "id": "WhyTimeB",
+  "durationInSeconds": 79.633,
+  "fps": 30,
+  "width": 1080,
+  "height": 1920,
+  "transparent": false
  }
 ]

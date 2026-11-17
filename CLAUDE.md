@@ -29,14 +29,15 @@ vertical shorts where every pixel is Remotion TSX.
      PROJECT_CONTEXT §4. Quasar pieces built (`Quasar` + parts, design in
      `docs/design-notes/quasar-components.md`). Zoom ruler: levels in
      `docs/design-notes/zoom-ruler-levels.md`, waiting for the user to verify the figures.
-  4. ▶ first short: "What is a quasar?"
+  4. ✅ first short: "What is a quasar?" (+ v2, visual variety) · ✅ second short: "Why Time Only
+     Moves Forward" (`shorts/why-time-moves-forward/`, arrow-of-time kit; variant B chosen)
   5. custom skills `script-to-short` and `new-component` (then §6 of PROJECT_CONTEXT becomes final)
   6. Manim — only for physics/equation scenes, rendered as clips inside Remotion
 - **Channel voice:** ElevenLabs `JYUzXNeyCPmymMkfcicu` ("Jon") on **Eleven v4 Turbo**, both
   gen_voice.py defaults. We write one delivery tag per line in `tts` (the API has no "auto tags";
   see make-short Stage 4). Narration pace ~2.4 words/s (measured with it; re-measure with
   `shorts/_calibration/` if the voice or model changes).
-- **SFX library:** every clip in `media/library/sfx/clips/` is ours: 34 generated with **our**
+- **SFX library:** every clip in `media/library/sfx/clips/` is ours: 36 generated with **our**
   ElevenLabs account (`eleven_text_to_sound_v3`, ~10 credits/s measured) and 4 physics sounds
   synthesized in code (`tools/synth_sfx.py`: redshift glide, pulsar ticks at a real period,
   gravitational-wave chirp; free, deterministic). Recipes in `palette.json`, source/model/license

@@ -3,7 +3,7 @@
 > **For:** the planning project where topics, aesthetics and scripts are developed.
 > **Pair it with:** `brand.md` (the visual and sound style contract — read it for colors, type,
 > captions, annotations, motion, safe zones and sound taste; this file never repeats it).
-> **Version:** v0.13.0 · 2026-11-17 · phase: *second short in production → arrow-of-time kit built*
+> **Version:** v0.14.0 · 2026-11-17 · phase: *second short done ("Why Time Only Moves Forward")*
 >
 > This file describes **what can be asked for**, not how it is built. If a script asks for
 > something listed here, it can be made. If it asks for something not listed, flag it as a
@@ -125,7 +125,7 @@ All of these can arrive already in place on the first frame, so they work in a h
 | **Starfield** | The background sky: mostly faint stars in real temperature colors, a few bright ones with a tiny halo that twinkle. Kept clear behind text and around planets; tuned to survive platform compression. | density, how many bright stars, twinkle on/off, overall brightness (dims when something very luminous is on screen), bright stars switching off one by one (each a clear ~0.5 s fade, never the whole sky dimming) |
 | **Glowing body** | A sun or star: limb-darkened disc with a soft halo that blooms in after the disc and breathes gently | size, position, kind by temperature: *sun* (yellow), *red*, *white*, *blue*; glow strength |
 | **Planet / moon** | A sphere lit from one side, night side falling to black, true muted colors, with each body's signature features: Earth's real continents (+ soft clouds), the Moon's soft maria and bright craters, cratered Mercury (craters as soft shading, never outlines), Mars's polar caps and dark regions, Jupiter's belts and Great Red Spot, Saturn's soft bands and ring with the Cassini division, Venus's faint cloud swirls, Neptune's streaks; Uranus nearly featureless (accurate). Small bodies (under ~60 px) are simplified to color and shading. | which body (Mercury, Venus, Earth, Moon, Mars, Jupiter, Saturn, Uranus, Neptune), size, position, light direction, how much is lit (phase), which side faces us, slow rotation (e.g. Earth turning), axial tilt (Uranus ~98° with its faint ring), atmosphere glow (Earth by default), the warm wash behind it when it's the hero |
-| **Hero number** | Big serif number that counts up, gold italic unit, subject line under it, small label above | value, unit, subject, label, count up or just appear, starting value, size (hero or secondary). Long values shrink to fit the safe area. Power-of-ten form for numbers too long in words: "1 in 10³⁰" (gold italic words before the number, the exponent counts up). |
+| **Hero number** | Big serif number that counts up, gold italic unit, subject line under it, small label above | value, unit, subject, label, count up or just appear, starting value, size (hero or secondary). Long values shrink to fit the safe area. Power-of-ten form for numbers too long in words: "1 in 10³⁰" (gold italic words before the number, the exponent counts up). ⚠ When the narrator says the number in words ("a million trillion trillion"), show those words instead: "1 in 10³⁰" didn't read on #3. |
 | **Caption with keyword** | The narration, a few words at a time; each word brightens as it is spoken; the keyword turns gold italic with a small pop | the keyword(s) per beat, matched regardless of capitals or surrounding punctuation ("Sun" matches "Sun," and "sun."). Captions always show the VO *as written*, even when the voice was given a phonetic spelling (PRONUNCIATION). |
 | **Marker + leader line** | A ring that settles around an object, a thin blue line, a label (+ value) | what it points at, label, value, which side the label sits (below, above, left, right), a dot for objects too small to see |
 | **Scale bar** | A measured span with end ticks that draws from its center outward, with a label | what it spans, label, second line, label above or below |
@@ -524,6 +524,20 @@ BEATS:
 
 What worked and what didn't. Newest first.
 
+- **Show the number the way the voice says it.** "Why Time Only Moves Forward" first showed "1 in
+  10³⁰" while the narrator said "one in a million trillion trillion": it didn't read. Replaced by
+  the spoken words landing one by one ("1 in a million / trillion / trillion") plus a small line
+  "that's a 1 followed by 30 zeros". Write big numbers in the script the way they should appear.
+- **One delivery tag can stick out.** Hook B's `[intense]` sounded off against a calm, curious
+  body; `[emphatic]` fit. A hook can be louder than the body, but in the same voice.
+- **A fast morph hook reads.** Egg → coffee → "goodbye" → dust → stars, ~0.65–0.75 s per image,
+  read at phone scale with no two images overlapping. Around 0.6 s per image is the floor.
+- **The music should be heard.** At 19 dB under the voice the bed went unnoticed; the user wanted
+  it present: 14 dB under. Between two library beds, `bed-minimal-pulse` beat `bed-warm-hopeful`
+  for an explainer about time.
+- **The deck variant (B) was the user's pick** over the egg hook (A). Concrete everyday actions
+  (a shuffle) make a strong first second.
+
 - **Same voice, new pictures: the visual variety rule works without re-voicing.** "What is a
   quasar?" v2 reused v1's recorded voice (0 credits) and rebuilt the screen: 14 visual ideas in
   74 s (orbit overlay, light paths, bars, meter, balance, timeline), one object carried through
@@ -616,6 +630,9 @@ three formats (Impossible Fact, Scale, How It Works) are defined in section 4. T
 **First short: done.** "What is a quasar?" shipped (opening 2, pull-back). Its lesson (the
 screen showed one thing while the voice explained five) became the visual variety rule and the
 kit in 3.5.
+
+**Second short: done.** "Why Time Only Moves Forward" (variants A egg / B deck; B chosen),
+built with the arrow-of-time kit (3.7).
 
 **Next:** the custom skills (`script-to-short`,
 `new-component`); section 6 becomes final when `script-to-short` exists. Then Manim, only for
