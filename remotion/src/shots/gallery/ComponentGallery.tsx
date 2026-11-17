@@ -4,6 +4,7 @@ import { PALETTE, TYPE } from '../../brand';
 import {
   AccretionDisk, BlackHole, CaptionLine, DataLabel, GlowingBody, Grain, HostGalaxy, Jets, Quasar, quasarExposure, HeroNumber, KeywordCaptions, Marker, Planet, ScaleBar, ScaleComparison, Starfield,
   InfallingGas, KineticTitle, ParallaxStars,
+  Balance, ComparisonBars, FlowPaths, Meter, OrbitOverlay, Timeline, linePath, spiralPath,
 } from '../../components';
 import { EASE } from '../../brand';
 import { PlanetKind } from '../../brand';
@@ -16,7 +17,7 @@ const PAGE = 120;
 
 export const compositionConfig = {
   id: 'ComponentGallery',
-  durationInSeconds: 72, // 18 pages × PAGE frames
+  durationInSeconds: 96, // 24 pages × PAGE frames
   fps: 30,
   width: 1080,
   height: 1920,
@@ -24,7 +25,7 @@ export const compositionConfig = {
 
 const Header: React.FC<{ n: number; title: string; note: string }> = ({ n, title, note }) => (
   <div style={{ position: 'absolute', top: 70, left: 60, right: 180 }}>
-    <div style={{ ...TYPE.annotation, color: PALETTE.gold, fontSize: 24 }}>{`${n} / 18 · ${title}`}</div>
+    <div style={{ ...TYPE.annotation, color: PALETTE.gold, fontSize: 24 }}>{`${n} / 24 · ${title}`}</div>
     <div style={{ ...TYPE.annotation, color: PALETTE.sciText, fontSize: 20, letterSpacing: 1, textTransform: 'none', marginTop: 8, opacity: 0.8 }}>{note}</div>
   </div>
 );
@@ -253,6 +254,68 @@ export const ComponentGallery: React.FC = () => (
       <KineticTitle x={480} size={92} lines={[[{ w: 'Black', start: 0.3 }, { w: 'holes', start: 0.7 }, { w: 'power', start: 1.27 }], [{ w: 'the', start: 1.67 }, { w: "universe's", start: 1.83 }], [{ w: 'brightest', start: 2.75, gold: true }, { w: 'lights.', start: 3.19 }]]} />
       <Small x={480} y={1150}>{'each word lands on its spoken time · fast rise (EASE.punch) · no bounce'}</Small>
       <Header n={18} title="Kinetic title" note="the hook title arriving word by word with the voice · gold word = keyword style" />
+    </Sequence>
+    {/* 19 ORBIT OVERLAY (brand §5 visual variety): the solar system at true scale over a black hole */}
+    <Sequence from={PAGE * 18} durationInFrames={PAGE}>
+      <Starfield count={160} clear={[[60, 1150, 840, 140]]} avoid={[[480, 860, 380]]} warm />
+      <BlackHole x={480} y={860} r={330} warm />
+      <OrbitOverlay x={480} y={860} pxPerAU={330 / 128} labels={['neptune']} at={10} />
+      <Small x={480} y={1220}>{'M87*: horizon ≈ 128 AU · Neptune 30 AU · true scale'}</Small>
+      <Header n={19} title="Orbit overlay" note="planet orbits at TRUE relative scale (pxPerAU) laid over another object · orbits draw in, planets at real relative periods" />
+    </Sequence>
+
+    {/* 20 COMPARISON BARS */}
+    <Sequence from={PAGE * 19} durationInFrames={PAGE}>
+      <Starfield count={160} clear={[[60, 260, 860, 520]]} warm />
+      <ComparisonBars y={320} at={10} bars={[
+        { label: "SUN'S SURFACE", value: 5800, unit: ' K', display: '~5,800 K' },
+        { label: 'QUASAR DISK, INNER EDGE', value: 100000, unit: ' K', display: '~100,000 K', hero: true },
+      ]} />
+      <Small x={480} y={1180}>{'lengths true to the values · one gold hero bar'}</Small>
+      <Header n={20} title="Comparison bars" note="2–4 bars fill on the beat, values count up with them · labels in sciText, hero value gold italic" />
+    </Sequence>
+
+    {/* 21 METER */}
+    <Sequence from={PAGE * 20} durationInFrames={PAGE}>
+      <Starfield count={160} clear={[[60, 400, 840, 760]]} warm />
+      <Meter value={10} display="~10%" label="MASS TURNED INTO LIGHT" compare={{ value: 0.7, label: 'FUSION 0.7%' }} y={800} at={10} />
+      <Small x={480} y={1220}>{'one value vs a full scale · blue tick = reference'}</Small>
+      <Header n={21} title="Meter" note="a gauge for ONE value: the gold arc fills on the beat, the value counts up inside" />
+    </Sequence>
+
+    {/* 22 TIMELINE */}
+    <Sequence from={PAGE * 21} durationInFrames={PAGE}>
+      <Starfield count={160} clear={[[60, 240, 860, 1040]]} warm />
+      <Timeline range={[0, 13.8]} x={200} y={290} length={880} at={0} events={[
+        { t: 0, label: 'Big Bang', date: '13.8 BILLION YEARS AGO', at: 18 },
+        { t: 0.67, label: "Farthest quasar's light leaves", date: '~13 BILLION YEARS AGO', at: 38, hero: true },
+        { t: 9.2, label: 'Sun and Earth form', date: '4.6 BILLION YEARS AGO', at: 58 },
+        { t: 13.8, label: 'Today', at: 78 },
+      ]} />
+      <Small x={480} y={1220}>{'true positions · close events get a leader line'}</Small>
+      <Header n={22} title="Timeline" note="the axis draws in, markers appear on cue (vertical for phones; horizontal for 2–3 short events)" />
+    </Sequence>
+
+    {/* 23 BALANCE */}
+    <Sequence from={PAGE * 22} durationInFrames={PAGE}>
+      <Starfield count={160} clear={[[60, 400, 840, 820]]} warm />
+      <Balance y={620} at={6} tipAt={36}
+        left={{ label: 'EVERY STAR IN A GALAXY', value: 1, display: '×1', glyph: 'stars' }}
+        right={{ label: 'ONE QUASAR', value: 1000, display: 'up to ×1,000', glyph: 'point' }} />
+      <Small x={480} y={1240}>{'tips to the heavier total · slow, no overshoot'}</Small>
+      <Header n={23} title="Balance" note="two totals weighed against each other · a heap of stars vs one bright point" />
+    </Sequence>
+
+    {/* 24 FLOW PATHS */}
+    <Sequence from={PAGE * 23} durationInFrames={PAGE}>
+      <Starfield count={160} clear={[[60, 300, 860, 160]]} avoid={[[480, 860, 120]]} warm />
+      <BlackHole x={480} y={860} r={46} warm />
+      <FlowPaths paths={[
+        { points: linePath(480, 400, 480, 790), kind: 'ghost', at: 6, len: 26, fadeAt: 46, label: 'STRAIGHT IN?' },
+        { points: spiralPath(480, 860, 400, 70, 1.6, 120, -8, 0.35), kind: 'gold', at: 50, len: 60, arrow: true },
+      ]} />
+      <Small x={480} y={1180}>{'ghost = what does NOT happen · gold = the real path'}</Small>
+      <Header n={24} title="Flow paths" note="paths draw in along their direction of travel · spiral and line helpers (spiral matches the disk plane)" />
     </Sequence>
   </AbsoluteFill>
   </Grain>
