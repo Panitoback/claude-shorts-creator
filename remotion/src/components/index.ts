@@ -31,3 +31,5 @@ export { Balance } from './Balance';
 export type { BalanceSide } from './Balance';
 export { FlowPaths, spiralPath, linePath } from './FlowPaths';
 export type { FlowPath, Pt } from './FlowPaths';
+export { WhipTransition, WhipMontage, whipTiming } from './WhipTransition';
+export type { WhipDirection } from './WhipTransition';

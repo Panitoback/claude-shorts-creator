@@ -3,7 +3,7 @@
 > **For:** the planning project where topics, aesthetics and scripts are developed.
 > **Pair it with:** `brand.md` (the visual and sound style contract — read it for colors, type,
 > captions, annotations, motion, safe zones and sound taste; this file never repeats it).
-> **Version:** v0.11.4 · 2026-11-17 · phase: *first short done → visual variety kit built*
+> **Version:** v0.12.0 · 2026-11-17 · phase: *first short done → visual variety kit built; whip transitions added*
 >
 > This file describes **what can be asked for**, not how it is built. If a script asks for
 > something listed here, it can be made. If it asks for something not listed, flag it as a
@@ -193,6 +193,7 @@ a phone.
 | **Timeline** | A time axis that draws in, with markers appearing on cue (e.g. Big Bang → light leaves → Earth forms → today). Positions are true; events close together get a short leader line instead of a fake gap | the events (name, date, cue word), which event is gold (more than one is fine), vertical (default, fits a phone) or horizontal (2–3 events), log scale, smaller labels for long names ("FARTHEST QUASAR'S LIGHT" fits on one line) |
 | **Balance** | Two totals weighed on a scale (e.g. every star in a galaxy vs one quasar): a heap of stars in one pan, one bright point in the other; the beam tips toward the heavier side and both totals appear | each side's label and value, what sits in each pan (a heap of stars, one bright point, nothing), when the pans get named (e.g. on the spoken words, before the tip), a slow calm tip or a fast peak move on a key word |
 | **Flow paths** | Paths that draw in along the direction of travel with a soft glowing head (gas spiraling into a disk, light crossing space). A faint dashed "ghost" can show what does *not* happen first ("straight in?"), then fade | the paths (spiral into a disk, straight line, or a described route), which is the ghost, labels, an arrowhead |
+| **Whip transition** *(new, for hooks and peaks)* | A hand-off between two pictures: the first sweeps off fast with motion blur while the next sweeps in from the other side, swapping at full speed and landing softly (no bounce). Chained, it makes a **whip montage** for the hook: several related pictures, ~0.6–1 s each. One whoosh per whip. | which pictures, in what order, the direction of each whip (left, right, up, down), when each whip happens (on a spoken word), how strong the blur is |
 
 For a single big count-up, use the **Hero number** (3.1).
 
@@ -231,7 +232,8 @@ word budgets are in §5.
 > **Visual variety (every format, every beat):** one hero object per scene, but the scenes
 > change: a new visual idea at least every ~5–10 s, and every number or comparison in the VO is
 > shown on screen, not just said. Scenes hand over smoothly (a camera move, a morph, an object
-> carried over). See `brand.md` §5.
+> carried over, or a whip transition: mainly in the hook and on the peaks; sparingly in the calm
+> body). See `brand.md` §5 and §8.
 
 ### The three formats at a glance
 
@@ -275,7 +277,8 @@ word budgets are in §5.
 - **Setup:** the question, in one line ("But black holes don't shine. So what does?").
 - **Steps:** 2–4 SETUP → REVEAL pairs, **one idea per step, each with its own picture**: the
   temperature as bars, the efficiency as a meter, the distance as a timeline. Steps hand over
-  smoothly (the hero object carried into the next scene, a camera move), never as hard cuts.
+  smoothly (the hero object carried into the next scene, a camera move, a morph), never as hard
+  cuts. Whips are for the hook and the peaks, not for the calm steps.
 - **Twist:** what the mechanism implies (scale, age, a surprising consequence).
 - **Loop:** back to the end result, now understood.
 - **Rules:** at most one new element appears per step; at most 2 annotations on screen at once.
@@ -292,8 +295,11 @@ Ideas for future formats (to be decided): *myth vs fact*, *"what if"*, *one numb
 - **One main object at a time**, big and centered. A phone screen is small; detail gets lost.
 - **Numbers**, especially when they count up live, change scale, or compare two things.
 - **Continuity over cuts, but not one scene.** Scenes flow into each other (a camera move, a
-  morph, the same object carried into the next picture) instead of hard cuts. The short still
-  needs **a new visual idea every ~5–10 s**: one scene for the whole short reads as a still.
+  morph, the same object carried into the next picture, or a **whip transition**: a fast sweep
+  with motion blur, one whoosh each) instead of hard cuts. Whips belong mainly in the hook (a
+  rapid montage of related pictures, ~0.6–1 s each) and on the peaks; the calm body uses them
+  sparingly. Still never: a hard cut to an unrelated picture with no motion, shake, or flicker.
+  The short still needs **a new visual idea every ~5–10 s**: one scene for the whole short reads as a still.
 - **Show every number.** A claim with a number or comparison gets its own picture (a scale
   comparison, a diagram, bars or a meter, a timeline, a counter). If the screen looks the same
   with the sound off, the claim isn't shown.
@@ -363,7 +369,7 @@ TITLE: <the short's title, as it would appear on YouTube> [≤ 60 characters]
 SLUG: <folder name: lowercase-with-dashes, e.g. sun-volume> [2–4 words]
 TONE: <calm awe | playful | eerie | matter-of-fact>
 HOOK FRAME: <what the very first frame shows: composed, subject already there, no fade from black. It is the START of the hook's motion, not the cover (the cover is picked at upload)>
-HOOK MOVE: <the fast change in the first ~3 s that delivers the surprise: ignition, pull-back, dive-in, zoom…>
+HOOK MOVE: <the fast change in the first ~3 s that delivers the surprise: ignition, pull-back, dive-in, zoom, or a whip montage (rapid related pictures, ~0.6–1 s each, joined by whip transitions)…>
 SCALE: <true | not to scale> <required if any scene is about size or distance; say which scenes>
 
 SOURCES:

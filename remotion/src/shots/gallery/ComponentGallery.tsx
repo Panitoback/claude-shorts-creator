@@ -1,10 +1,11 @@
 import React from 'react';
 import { AbsoluteFill, interpolate, Sequence, useCurrentFrame } from 'remotion';
-import { PALETTE, TYPE } from '../../brand';
+import { PALETTE, SAFE_RECT, TYPE } from '../../brand';
 import {
   AccretionDisk, BlackHole, CaptionLine, DataLabel, GlowingBody, Grain, HostGalaxy, Jets, Quasar, quasarExposure, HeroNumber, KeywordCaptions, Marker, Planet, ScaleBar, ScaleComparison, Starfield,
   InfallingGas, KineticTitle, ParallaxStars,
   Balance, ComparisonBars, FlowPaths, Meter, OrbitOverlay, Timeline, linePath, spiralPath,
+  WhipMontage, whipTiming,
 } from '../../components';
 import { EASE } from '../../brand';
 import { PlanetKind } from '../../brand';
@@ -17,7 +18,7 @@ const PAGE = 120;
 
 export const compositionConfig = {
   id: 'ComponentGallery',
-  durationInSeconds: 96, // 24 pages × PAGE frames
+  durationInSeconds: 100, // 25 pages × PAGE frames
   fps: 30,
   width: 1080,
   height: 1920,
@@ -25,7 +26,7 @@ export const compositionConfig = {
 
 const Header: React.FC<{ n: number; title: string; note: string }> = ({ n, title, note }) => (
   <div style={{ position: 'absolute', top: 70, left: 60, right: 180 }}>
-    <div style={{ ...TYPE.annotation, color: PALETTE.gold, fontSize: 24 }}>{`${n} / 24 · ${title}`}</div>
+    <div style={{ ...TYPE.annotation, color: PALETTE.gold, fontSize: 24 }}>{`${n} / 25 · ${title}`}</div>
     <div style={{ ...TYPE.annotation, color: PALETTE.sciText, fontSize: 20, letterSpacing: 1, textTransform: 'none', marginTop: 8, opacity: 0.8 }}>{note}</div>
   </div>
 );
@@ -317,9 +318,36 @@ export const ComponentGallery: React.FC = () => (
       <Small x={480} y={1180}>{'ghost = what does NOT happen · gold = the real path'}</Small>
       <Header n={24} title="Flow paths" note="paths draw in along their direction of travel · spiral and line helpers (spiral matches the disk plane)" />
     </Sequence>
+
+    {/* 25 WHIP TRANSITION (brand §8 hand-off): a hook-style montage, ~1 s per picture */}
+    <Sequence from={PAGE * 24} durationInFrames={PAGE}>
+      <WhipDemo />
+      <Header n={25} title="Whip transition" note="sweep off / sweep in at peak speed · motion blur by speed · bulk 8f · last whip direction up · whoosh peak = whipTiming().swap" />
+    </Sequence>
   </AbsoluteFill>
   </Grain>
 );
+
+// page 25: positions derived from the safe rectangle (16:9-ready layout rule)
+const WHIP_AT = [26, 56, 86];
+const WhipDemo: React.FC = () => {
+  const cx = SAFE_RECT.x + SAFE_RECT.w / 2;
+  const cy = SAFE_RECT.y + SAFE_RECT.h / 2;
+  const r = SAFE_RECT.w * 0.24;
+  const label = (text: string) => <Small x={cx} y={cy + r * 1.5}>{text}</Small>;
+  const items = [
+    <><Starfield count={200} seed={11} avoid={[[cx, cy, r * 1.4]]} warm /><GlowingBody x={cx} y={cy} r={r} kind="sun" warm />{label('the Sun')}</>,
+    <><Starfield count={200} seed={22} avoid={[[cx, cy, r * 1.2]]} warm /><Planet x={cx} y={cy} r={r * 0.8} kind="earth" wash warm />{label('Earth')}</>,
+    <><Starfield count={200} seed={33} avoid={[[cx, cy, r * 1.6]]} warm /><Planet x={cx} y={cy} r={r * 0.55} kind="saturn" warm />{label('Saturn')}</>,
+    <><Starfield count={200} seed={44} avoid={[[cx, cy, r * 1.2]]} warm /><BlackHole x={cx} y={cy} r={r * 0.6} warm />{label('a black hole')}</>,
+  ];
+  return (
+    <>
+      <WhipMontage items={items} at={WHIP_AT} direction={['left', 'left', 'up']} />
+      <Small x={cx} y={SAFE_RECT.y + SAFE_RECT.h - 40}>{`swaps (whoosh peaks) at f ${WHIP_AT.map((a) => whipTiming(a).swap).join(', ')}`}</Small>
+    </>
+  );
+};
 
 const ParallaxDemo: React.FC = () => {
   const f = useCurrentFrame();

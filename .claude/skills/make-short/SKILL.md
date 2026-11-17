@@ -191,7 +191,9 @@ entries; see `/suggest-sfx`). Library-first; add generic recipes to
 
 Shorts taste adaptations: **diegetic action sounds are the content** (piece thocks, digit
 pops) and may exceed long-form density; decorative cues stay `optional: true`; layer the 2–3
-hero moments (capture+stamp, carry flight+landing+chime). Cue times from EXACT landing frames:
+hero moments (capture+stamp, carry flight+landing+chime). Whips (`WhipTransition`/`WhipMontage`,
+brand §8): one whoosh each, its PEAK on `whipTiming(at, dur).swap`, clip or pitch varied across
+consecutive whips. Cue times from EXACT landing frames:
 `at_s = (move.at + move.dur + sequence_from) / fps`.
 
 ```

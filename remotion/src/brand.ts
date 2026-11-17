@@ -133,6 +133,7 @@ export const ENERGY = {
   hookFrames: 90, // the high-energy hook: first ~3 s
   punchMove: [12, 24], // frames for the BULK of a hook/peak move or ignition (EASE.punch)
   punchMaxS: 1.5, // ...including its soft landing, at most this long
+  whipMove: [6, 10], // frames for the BULK of a whip transition (swap at peak speed, no bounce)
   changeEvery: [60, 90], // a clear visual change every 2–3 s during the first ~10 s
   changeWindow: 300, // ...for the first ~10 s
   settle: 30, // after a peak burst, back to body pacing within ~1 s

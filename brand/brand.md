@@ -6,9 +6,10 @@
 > **Reference scene:** the `BrandReference` composition is this document rendered on screen. If
 > it looks right, the brand is right.
 >
-> v2.1 · 2026-11-16 · direction: *Deep Field hybrid* (cinematic and editorial, with a few
+> v2.2 · 2026-11-17 · direction: *Deep Field hybrid* (cinematic and editorial, with a few
 > scientific annotations) · **energy curve**: a high-energy hook, a calm body, bursts on the peaks ·
-> **visual variety**: scenes change, and every number is shown
+> **visual variety**: scenes change, and every number is shown · **whip transitions** approved as a
+> hand-off (§8)
 
 ---
 
@@ -139,8 +140,9 @@ One hero object per scene, **not one scene per short**.
   meter, a timeline or a counter. Test: with the sound off, the screen should still make the
   claim.
 - **Continuity means smooth transitions, not a single scene.** Scenes hand over with a camera
-  move, a morph or an object carried into the next scene, never a hard cut to an unrelated
-  picture. The short still travels through several scenes.
+  move, a morph, an object carried into the next scene, or a **whip transition** (§8: mainly the
+  hook and the peaks), never a hard cut to an unrelated picture with no motion. The short still
+  travels through several scenes.
 
 ## 6. Annotations
 
@@ -162,7 +164,7 @@ Sound follows the **energy curve** (§1, §8):
 
 | Part | Sound energy | What it means |
 |---|---|---|
-| **Hook** (first ~3 s) | **high, heard on a phone** | a prominent, phone-audible hit in the first second: `hook-hit` on frame 0, or a short riser → hit landing on the hook's visual change; a motion cue (whoosh) on the camera move. The hook VO line may get a more intense delivery tag |
+| **Hook** (first ~3 s) | **high, heard on a phone** | a prominent, phone-audible hit in the first second: `hook-hit` on frame 0, or a short riser → hit landing on the hook's visual change; a motion cue (whoosh) on the camera move, one whoosh per whip in a whip montage (§8). The hook VO line may get a more intense delivery tag |
 | **Body** | **calm, felt rather than heard** | sound seasons the edit and never becomes the show |
 | **Peaks** (the main reveal, the twist) | **a burst, heard on a phone** | the reveal combo (riser → silence → hit + `hook-hit` phone layer); the twist gets a phone-audible hit or swell; then the sound settles back |
 
@@ -226,6 +228,23 @@ than bouncing. What changes along the energy curve (§1) is speed and camera. Ti
 | **Hook** (first ~3 s) | **high energy** | fast camera moves with a **strong ease-out** (`EASE.punch`: the bulk of the move in its first 12–24 frames, then a soft landing, ~1.5 s at most in all; big zooms are eased in log scale so the zoom looks even); ignition / zoom reveals; a **kinetic title synced to the voice** (word by word, each word arriving on its spoken time with a fast rise); **parallax depth** (2–3 star layers moving at different speeds during camera moves); **a clear visual change every 2–3 s** for the first ~10 s |
 | **Body** | **calm, cinematic** | the table below: slow arrivals, ease in-out camera moves, ambient life |
 | **Peaks** (main reveal, twist) | **a burst, then settle** | one fast move or ignition (`EASE.punch`, its bulk in 12–24 frames) on the beat, synced to its sound; then back to body pacing within ~1 s |
+
+### Hand-offs between scenes
+
+Approved hand-offs: a **camera move**, a **morph**, an **object carried** into the next scene, and
+the **whip transition**.
+
+- **Whip transition:** the outgoing picture sweeps off fast in one direction, with directional
+  motion blur, while the next one sweeps in from the opposite side. The swap happens at **peak
+  speed**: the bulk of the move takes ~6–10 frames (`ENERGY.whipMove`), with `EASE.punch`-style
+  speed (fast, then a soft landing, no bounce). Component: `WhipTransition` / `WhipMontage`.
+- **Where:** mainly the **hook** (a rapid montage of related pictures, ~0.6–1 s each) and the
+  **peaks**. In the calm body, prefer morphs, camera moves and carried objects; use whips there
+  sparingly.
+- **Sound:** **one whoosh per whip**, aligned so its **peak lands on the swap**; phone-audible in
+  the hook. Vary the clip or the pitch across consecutive whips so they don't sound identical.
+- **Still banned:** a hard cut to an unrelated picture with no motion, shake, and flicker faster
+  than ~3 Hz.
 
 - **Constant motion:** something always moves (a slow drift, infalling gas, the camera), so no
   frame is a still, especially in the hook.
