@@ -3,7 +3,7 @@
 > **For:** the planning project where topics, aesthetics and scripts are developed.
 > **Pair it with:** `brand.md` (the visual and sound style contract — read it for colors, type,
 > captions, annotations, motion, safe zones and sound taste; this file never repeats it).
-> **Version:** v0.9.6 · 2026-11-15 · phase: *base components and formats done → first short next*
+> **Version:** v0.9.7 · 2026-11-16 · phase: *base components and formats done → first short next*
 >
 > This file describes **what can be asked for**, not how it is built. If a script asks for
 > something listed here, it can be made. If it asks for something not listed, flag it as a
@@ -70,8 +70,9 @@ idea  →  script  →  animation  →  check  →  voice  →  sound  →  fina
    gentle impact on the reveal), plus an optional quiet music bed or space ambience. The sound
    palette (whooshes, risers, soft impacts, ticks, chimes, a deep rumble for massive objects,
    ambient beds, signature sounds for cosmic events such as a supernova or a star igniting) is
-   listed in `brand.md` §7; a script can name a sound moment in plain words. Some sounds are made
-   from the real numbers: a pulsar ticking at its actual rotation period, light "redshifting" as a
+   listed in `brand.md` §7; a script can name a sound moment in plain words, including an
+   immediate opening hit on the first frame of the hook. Sounds are chosen to work on a phone
+   speaker as well as on headphones. Some sounds are made from the real numbers: a pulsar ticking at its actual rotation period, light "redshifting" as a
    falling tone, the chirp of two black holes merging. A script can ask for a specific pulsar or
    merger and it will be built to match.
 7. **Final video.** Rendered at 1080×1920, 30 frames per second.
@@ -435,6 +436,11 @@ BEATS:
 ## 7. Learnings
 
 What worked and what didn't. Newest first.
+
+- **Deep sounds vanish on a phone.** The big cosmic hits are felt on headphones but nearly
+  silent on a phone speaker, which is where Shorts are watched. Big moments now carry a small
+  mid-range layer on the same beat. Sounds are still picked by ear first: twice the best-sounding
+  take was the deep one, and the layer fixes the phone.
 
 - **Anything the camera will zoom into has to be smooth.** Stepped color rings in the disk read
   as vinyl or Saturn's rings up close; the disk is now one continuous gradient.

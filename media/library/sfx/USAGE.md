@@ -4,7 +4,8 @@ How to use each clip when scoring a short. Read it with `brand/brand.md` §7 (th
 and `/suggest-sfx` (the workflow) before writing any `sfx-plan.json`. The catalog says what a
 clip IS; this file says WHEN to use it.
 
-**Status of every clip: approved by the user's ear (2026-11-15), untested in a real mix.**
+**Status of every clip: approved by the user's ear (2026-11-15; `supernova`, `deep-rumble`,
+`whoosh-deep` re-approved and `hook-hit` added 2026-11-16), untested in a real mix.**
 Starting gains are educated guesses until a produced short measures them (see Maintenance).
 
 ## Rules
@@ -81,7 +82,7 @@ point (see combos). Attack = first 10 ms window within 6 dB of the peak.
 |---|---|---|---|---|
 | `whoosh-soft` | 1.00 | 0.21 | 0.27 | −4.2 |
 | `whoosh-wind` | 1.48 | 0.70 | 0.89 | −0.1 |
-| `whoosh-deep` | 2.00 | 0.58 | 0.73 | ⚠ −18.3 |
+| `whoosh-deep` (v2 + exciter, 2026-11-16) | 2.00 | 0.38 | 0.52 | −0.5 |
 | `whoosh-reverse` | 1.48 | 1.15 | 1.26 | −3.5 |
 | `swish-light` | 0.48 | 0.11 | 0.14 | −0.2 |
 | `riser-soft` | 3.00 | 2.72 | 2.94 | −0.1 |
@@ -90,16 +91,17 @@ point (see combos). Attack = first 10 ms window within 6 dB of the peak.
 | `impact-soft` | 1.48 | 0.23 | 0.24 | ⚠ −25.8 |
 | `impact-deep-soft` | 2.48 | 0.11 | 0.12 | ⚠ −17.7 |
 | `pop-reveal` | 0.48 | 0.00 | 0.00 | −0.5 |
-| `impact-cosmic` | 4.00 | 0.06 | 0.27 | ⚠ −35.5 |
+| `impact-cosmic` | 4.00 | 0.06 | 0.27 | ⚠ −35.5 (always with a mid layer) |
+| `hook-hit` (new, 2026-11-16) | 1.48 | 0.01 | 0.05 | −6.3 |
 | `glow-swell` | 3.00 | 0.74 | 1.44 | −2.0 |
 | `ui-click-soft` | 0.48 | 0.00 | 0.00 | 0.0 |
 | `tick-soft` | 0.48 | 0.11 | 0.20 | 0.0 |
 | `number-settle` | 0.80 | 0.03 | 0.03 | 0.0 |
 | `sparkle-soft` | 1.48 | 0.09 | 0.27 | −1.6 |
 | `warm-shimmer` | 2.48 | 0.14 | 0.22 | −1.3 |
-| `deep-rumble` | 4.00 | 0.85 | 1.81 | ⚠ −25.4 |
+| `deep-rumble` (v2 + exciter, 2026-11-16) | 4.00 | 0.52 | 1.19 | −3.4 |
 | `chime-discovery` | 2.00 | 0.06 | 0.24 | 0.0 |
-| `supernova` | 5.00 | 0.13 | 0.34 | ⚠ −46.1 |
+| `supernova` (v2, 2026-11-16) | 5.00 | 0.66 | 0.67 (not immediate: align by peak) | ⚠ −21.0 |
 | `stellar-collapse` | 3.00 | 1.30 | 1.33 | ⚠ −7.2 |
 | `star-ignite` | 3.00 | 0.65 | 1.02 | −1.6 |
 | `light-speed-pass` | 1.48 | 0.22 | 0.25 | −0.1 |
@@ -116,9 +118,13 @@ point (see combos). Attack = first 10 ms window within 6 dB of the peak.
 | `gw-chirp` | 3.56 | 2.33 | 2.60 (the merger) | ⚠ −10.5 |
 | beds: `space-drone-loop` / `space-air-loop` / `accretion-swirl-loop` | 30 | — | — | −6.2 / −2.9 / ⚠ −11.8 |
 
-The phone-invisible clips (⚠) are exactly the weight of the library: the cosmic hits, the
-rumbles, the deep whoosh. On headphones they are the best clips we have; on a phone the hero
-moment goes silent. Re-measure a clip after regenerating it.
+The phone-invisible clips (⚠) are the weight of the library: the cosmic hits and the soft
+impact. On headphones they are the best clips we have; on a phone they go silent, so they always
+get the mid-layer combo. Re-measure a clip after regenerating it.
+
+**Phone dB is a whole-clip ratio, so it cannot judge a combo:** a hit + mid layer still reads ⚠
+because the low body dominates the total, even though the layer is clearly heard on a phone.
+Judge combos with the mix's PHONE CHECK (dB added over the voice) or an absolute measurement.
 
 ### Fixing a phone-invisible clip: which approach when
 
@@ -153,6 +159,30 @@ exciter adds harmonics to what is already there; it cannot invent a mid range th
 - **Any big moment, whatever the clip:** keep the **low hit + mid layer aligned on the same
   peak** combo. It is the safest option: headphones get the body, phones get the attack.
 
+**What happened when we tried both (2026-11-16, judged by the user's ear, `audition/batch-3`):**
+
+| Clip | v1 | v2 regenerated | v2 + exciter | Kept |
+|---|---|---|---|---|
+| `supernova` | −46.1 | −21.0 | −0.7 | **v2** (the exciter version sounded worse) |
+| `impact-cosmic` | −35.5 | −4.7 | — | **v1** (sounds best; phone fixed by the combo) |
+| `impact-soft` | −25.8 | −9.6 | −2.1 | **v1** (sounds best) |
+| `deep-rumble` | −25.4 | −14.4 | −3.4 | **v2 + exciter** |
+| `whoosh-deep` | −18.3 | −8.1 | −0.5 | **v2 + exciter** (the user liked v2 and v2 + exciter equally) |
+| `hook-hit` (new) | — | −6.3 | −0.0 | **v2** |
+
+Lessons: asking the model for a mid-range attack helps but is not enough (it drifts to the low
+end; a prompt that describes the low body at length comes back as pure sub-bass). Regenerating
+and then exciting worked on numbers for every clip, **but the ear decides**: twice the better-
+sounding take was the phone-invisible v1. So the order is: **ear first, then the combo for the
+phone.** Rejected takes stay in `superseded/` (`<id>--v1`, `<id>--v2`). The exciter is applied
+reproducibly as `"post": "exciter-parallel"` in the clip's palette recipe (`gen_sfx.py`).
+
+**The combo, measured** (`audition/batch-4-hero-combo`): `impact-cosmic` alone peaks at −31.5 dB
+through the phone filter; with `pop-reveal` at −6 dB on the same peak, −7.9 dB; with `hook-hit`
+at −6 dB, −12.5 dB. +19 to +24 dB on a phone, nothing lost on headphones. **Raising the hit's own
+gain is not the fix:** its energy above 300 Hz is 35 dB below its total, so a phone would need
+~+30 dB, which would blast headphones and clip.
+
 ## Clips
 
 Gains are starting `gain_db` values. Status for all: approved, untested in a real mix.
@@ -179,11 +209,12 @@ Gains are starting `gain_db` values. Status for all: approved, untested in a rea
 ### Emphasis
 | Clip | For | Avoid | Pairs with | Start gain |
 |---|---|---|---|---|
-| `impact-soft` | underline a secondary fact or a scene landing | the main reveal | `riser-soft`, `whoosh-deep` | 0 |
+| `hook-hit` | the first second of a short: an immediate, prominent hit on frame 0 (attack 0.01 s) | the main reveal; more than once per short | the title appearing | 0 (untested in a mix) |
+| `impact-soft` | underline a secondary fact or a scene landing (⚠ phone: add `pop-reveal` if it must be heard) | the main reveal | `riser-soft`, `whoosh-deep` | 0 |
 | `impact-deep-soft` | a meaningful reveal that isn't THE main one | more than 2 per short | `riser-soft` | +1 |
 | `pop-reveal` | a label, number or element appearing | big moments (too small) | `whoosh-reverse` (combo), `whoosh-soft` | +2 |
-| `impact-cosmic` | THE main reveal, when it isn't an explosion (a scale payoff, "this is how big") | anything else; never with `supernova`/`gamma-flash` | `riser-long` (combo) | +2 |
-| `supernova` | THE main reveal when a star explodes / dies violently | non-explosive reveals; never with `impact-cosmic`/`gamma-flash` | `riser-long` (combo) | +2 |
+| `impact-cosmic` | THE main reveal, when it isn't an explosion (a scale payoff, "this is how big") | anything else; never with `supernova`/`gamma-flash`; never without its mid layer | `riser-long` (combo); **always** `pop-reveal` at −6 dB on its peak (phone) | +2 |
+| `supernova` | THE main reveal when a star explodes / dies violently | non-explosive reveals; never with `impact-cosmic`/`gamma-flash`; never without its mid layer | `riser-long` (combo); **always** `pop-reveal` on its peak (phone) | +2 |
 | `gamma-flash` | THE main reveal when it's a burst of light (gamma-ray burst, a flash) | anything else; never with the other big hits | ~0.5 s silence before it | +1 |
 | `glow-swell` | anything gaining luminosity: the quasar switching on, a disk brightening | a star being born (use `star-ignite`) | `jet-launch` after it | 0 |
 | `star-ignite` | an actual star igniting / being born | the quasar or other brightening (use `glow-swell`) | `warm-shimmer` | 0 |

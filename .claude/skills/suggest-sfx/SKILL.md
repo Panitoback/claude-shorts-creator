@@ -212,6 +212,9 @@ file start, which is almost never what you want. The cue sheet shows the resolve
   `ELEVENLABS_API_KEY` in `.env`.
 - Measure clips: `python tools/gen_sfx.py --measure [--only ids]` (catalog attack_s / peak_s /
   phone_db, no API); any file: `python tools/sfx_measure.py <file>...`.
+- Recipe post-processing: `"post": "exciter-parallel"` in a palette recipe (applied after
+  generation); apply it to the clip on disk with `gen_sfx.py --post-only --only <id>` (never
+  stacks). Ear-check exciter takes for harshness: the user rejected one (`supernova`).
 - Regenerate one of OUR clips keeping the old take: `python tools/gen_sfx.py --only <id> --force
   --keep-old` (old one → `superseded/<id>-vN.mp3`, catalog id `<id>--vN`).
 - Print the cue sheet (the audit artifact): `python tools/mix_sfx.py <plan> --print [--no-optional]`

@@ -6,7 +6,7 @@
 > **Reference scene:** the `BrandReference` composition is this document rendered on screen. If
 > it looks right, the brand is right.
 >
-> v1.6 · 2026-11-15 · direction: *Deep Field hybrid* (cinematic and editorial, with a few
+> v1.7 · 2026-11-16 · direction: *Deep Field hybrid* (cinematic and editorial, with a few
 > scientific annotations)
 
 ---
@@ -143,7 +143,7 @@ the edit and never become the show. Choose every cue by its FUNCTION:
 |---|---|---|---|
 | **Motion** | whoosh | direction and speed; carry one beat into the next | `whoosh-soft`, `whoosh-wind`, `whoosh-deep` (big zoom), `whoosh-reverse` (time), `swish-light` (small element) |
 | **Tension** | riser | "something is coming"; hold before a reveal | `riser-soft`, `riser-long` (6 s), `riser-shimmer` (NO cymbal urgency) |
-| **Emphasis** | impact / pop / swell | "this moment matters"; lands on the reveal | `impact-soft`, `impact-deep-soft`, `pop-reveal`, `impact-cosmic` (the one hero payoff), `glow-swell` (something lights up) |
+| **Emphasis** | impact / pop / swell | "this moment matters"; lands on the reveal | `impact-soft`, `impact-deep-soft`, `pop-reveal`, `impact-cosmic` (the one hero payoff), `glow-swell` (something lights up), `hook-hit` (an immediate hit on the first frame of a short) |
 | **Snap** | click | small, satisfying, alive | `ui-click-soft`, `tick-soft` (counters, rulers), `number-settle` (a count lands) |
 | **Texture** | sparkle / chime / rumble | color under a moment | `sparkle-soft`, `warm-shimmer`, `chime-discovery`, `deep-rumble` (massive objects) |
 | **Ambient** | seamless 30 s loop | a quiet bed under the whole short | `space-drone-loop`, `space-air-loop`, `accretion-swirl-loop` (black holes) (well under the voice) |
@@ -162,6 +162,10 @@ the edit and never become the show. Choose every cue by its FUNCTION:
 - **Levels.** Library clips are normalized to about −20 LUFS with a −1.5 dBFS peak ceiling. Under
   continuous narration, start transitions and whooshes at **−3**, pops and impacts at **0 to +3**,
   snaps at **0 to +7**, and layered hero risers at **0 to +2**.
+- **Heard on a phone too.** Shorts are watched on phone speakers, which play almost nothing below
+  ~300 Hz. A deep hit (the cosmic hits, `impact-soft`) is felt on headphones but silent on a
+  phone, so every big moment gets a mid-range layer (`pop-reveal`) on the same peak. Choose clips
+  by ear first; the layer fixes the phone.
 - **No static or glitch textures under narration.** They read as noise at any gain. Clips with any
   crackle carry `"not_under_narration": true` and only go in a gap in the voice.
 - **Source:** the ElevenLabs Sound Effects API (the channel's only outside service, our account),

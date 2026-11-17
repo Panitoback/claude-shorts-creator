@@ -23,6 +23,11 @@ Usage:
                                           # (re)measure attack_s / peak_s / phone_db of every
                                           # active clip into the catalog (no API, no re-encode)
 
+POST-PROCESSING: a palette recipe may carry "post": "<preset>" (see POST_PRESETS); it is applied
+after generation, before normalizing, and recorded in the catalog as "post". To apply a recipe's
+post to the clip already on disk (no API): --post-only --only <ids> (skips clips whose catalog
+entry already records that post, so it never stacks).
+
 MEASUREMENTS (tools/sfx_measure.py): every catalog entry carries attack_s and peak_s (where the
 clip is HEARD; mix_sfx.py "align" uses them) and phone_db (energy surviving a 300 Hz high-pass;
 below -6 dB the clip is invisible on a phone speaker). Loops carry phone_db only.
@@ -142,6 +147,25 @@ def normalize_clip(path, target_lufs, ceiling_db):
 # usage flags copied from a palette recipe into its catalog entry
 PASS_THROUGH = ("loop", "not_under_narration", "usage_note")
 
+# ffmpeg filter graphs, named so a recipe stays readable. exciter-parallel: an aexciter on a
+# parallel bus adds mid/high harmonics so a low clip reads on a phone speaker (USAGE.md: rescues
+# clips at -6..-12 dB phone level; ear-check for harshness).
+POST_PRESETS = {
+    "exciter-parallel": ("asplit[a][b];[b]aexciter=amount=8:drive=10:freq=2000:blend=0:listen=1,"
+                         "volume=6dB[x];[a][x]amix=inputs=2:normalize=0"),
+}
+
+
+def apply_post(path, preset):
+    graph = POST_PRESETS[preset]
+    tmp = path + ".post.mp3"
+    run_capture(["ffmpeg", "-y", "-hide_banner", "-i", path, "-filter_complex", graph,
+                 "-c:a", "libmp3lame", "-q:a", "2", tmp])
+    if not (os.path.exists(tmp) and os.path.getsize(tmp) > 0):
+        sys.exit(f"post '{preset}' failed on {path}")
+    os.replace(tmp, path)
+
+
 MAX_PROMPT_CHARS = 450  # API limit (HTTP 400 text_too_long above it)
 CREDITS_PER_S = 10  # explicit duration, eleven_text_to_sound_v3: measured 2026-11-15 (docs list 40/s, the v2 price)
 
@@ -224,7 +248,9 @@ def main():
     env = load_env()
     api_key = env.get("ELEVENLABS_API_KEY", "").strip()
 
-    def entry(s, rel, path):
+    def entry(s, rel, path, fresh=False):
+        if s.get("post") and fresh:
+            apply_post(path, s["post"])
         lufs, peak = normalize_clip(path, target_lufs, ceiling_db)
         dur = probe_duration(path)
         m = sfx_measure.catalog_fields(path, loop=s.get("loop", False))
@@ -233,7 +259,8 @@ def main():
             "id": s["id"], "file": rel, "category": s.get("category", ""),
             "tags": s.get("tags", []), "duration_s": dur, "peak_dbfs": peak,
             "loudness_lufs": lufs, **m, "source": SOURCE, "model": model, "license": LICENSE,
-            "prompt": s["prompt"], **{k: s[k] for k in PASS_THROUGH if k in s}, "used_in": by_id.get(s["id"], {}).get("used_in", []),
+            "prompt": s["prompt"], **({"post": s["post"]} if s.get("post") else {}),
+            **{k: s[k] for k in PASS_THROUGH if k in s}, "used_in": by_id.get(s["id"], {}).get("used_in", []),
         }
 
     def archive(cid, path):
@@ -279,6 +306,25 @@ def main():
             print(f"   {i:<22} {fmt_measure(m)}{flag}")
             n += 1
         print(f"measured {n} clips")
+        write_catalog()
+        return
+
+    if "--post-only" in args:  # apply each recipe's post to the clip on disk, once
+        n = 0
+        for s in sounds:
+            if (only and s["id"] not in only) or not s.get("post"):
+                continue
+            path = os.path.join(SFX_DIR, f"clips/{s['id']}.mp3")
+            if by_id.get(s["id"], {}).get("post") == s["post"]:
+                print(f"   {s['id']}: post '{s['post']}' already applied, skipped")
+                continue
+            if not os.path.exists(path):
+                continue
+            used = by_id.get(s["id"], {}).get("used_in", [])
+            by_id[s["id"]] = entry(s, f"clips/{s['id']}.mp3", path, fresh=True)
+            by_id[s["id"]]["used_in"] = used
+            n += 1
+        print(f"applied post to {n} clips")
         write_catalog()
         return
 
@@ -338,7 +384,7 @@ def main():
             archive(s["id"], path)
         with open(path, "wb") as f:
             f.write(audio)
-        by_id[s["id"]] = entry(s, rel, path)
+        by_id[s["id"]] = entry(s, rel, path, fresh=True)
 
     write_catalog()
 
