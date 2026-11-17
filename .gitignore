@@ -14,5 +14,9 @@ venv/
 shorts/*/voice/
 shorts/*/output/
 
+# SFX audition files and candidate takes: temporary, listened to once, then deleted
+# (decisions are recorded in media/library/sfx/USAGE.md)
+media/library/sfx/audition/
+
 # local editor config
 .vscode/

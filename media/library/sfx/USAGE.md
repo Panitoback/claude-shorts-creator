@@ -163,7 +163,7 @@ exciter adds harmonics to what is already there; it cannot invent a mid range th
 everywhere but **lost by ear on `stellar-collapse`, `radiation-hum`, `solar-flare-surge` and
 `accretion-swirl-loop`** (originals kept; `accretion-swirl-loop` was then **regenerated** with a
 prompt asking for an airy hiss and a mid-range swirl over the low tone: take 2 of 2 chosen,
-−11.8 → −0.9, old take in `superseded/` as `--v1`). It was kept on `impact-deep-soft` (−17.7 → −7.1) and,
+−11.8 → −0.9). It was kept on `impact-deep-soft` (−17.7 → −7.1) and,
 on top of extra harmonics, on `gw-chirp`. `pulsar-ticks` kept the code fix (stronger click and
 thump harmonics, same period: −9.9 → −4.9). `space-drone-loop` stays as is: the exciter made its
 seam click even when processed circularly. So the exciter is a **candidate, never a default**:
@@ -187,7 +187,7 @@ Lessons: asking the model for a mid-range attack helps but is not enough (it dri
 end; a prompt that describes the low body at length comes back as pure sub-bass). Regenerating
 and then exciting worked on numbers for every clip, **but the ear decides**: twice the better-
 sounding take was the phone-invisible v1. So the order is: **ear first, then the combo for the
-phone.** Rejected takes stay in `superseded/` (`<id>--v1`, `<id>--v2`). The exciter is applied
+phone.** Rejected takes were deleted (git history only). The exciter is applied
 reproducibly as `"post": "exciter-parallel"` in the clip's palette recipe (`gen_sfx.py`).
 
 **The combo, measured** (`audition/batch-4-hero-combo`): `impact-cosmic` alone peaks at −31.5 dB

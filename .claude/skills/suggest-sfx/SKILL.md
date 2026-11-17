@@ -40,13 +40,9 @@ Sound taste is a brand contract — read **`brand/brand.md` §7** every time. Th
   loudness_lufs, source, model, license, prompt, used_in}` per clip. Written by `gen_sfx.py`.
 - `clips/*.mp3` — loudness-normalized clips (~−20 LUFS, −1.5 dBFS ceiling) so a plan's per-cue
   `gain_db` is perceptually meaningful. **Only these are usable.**
-- `legacy/*.mp3` — **off-brand clips, ignore them.** Catalog entries with `"legacy": true` are
-  never proposed, never put in a sfx-plan, never regenerated (`mix_sfx.py` refuses them,
-  `gen_sfx.py` skips them even though their recipes are still in `palette.json`). If a sound is
-  only covered by a legacy clip, treat it as a miss: propose a brand-fit (brand §7) recipe.
-- `superseded/*.mp3` — **the original author's clips, ignore them.** Entries with
-  `"superseded": true` (ids ending `--inherited`) were replaced on 2026-11-15 by clips generated
-  with the channel's own account; `superseded_by` names the replacement. Never proposed or mixed.
+- Old clips (the original author's off-brand and replaced clips, our rejected takes) were
+  deleted on 2026-11-16; they live only in git history. If a needed sound has no clip, treat it
+  as a miss and propose a brand-fit (brand §7) recipe.
   Every clip in `clips/` is ours (source/model/license recorded per clip); new ones must be too.
 - **`"not_under_narration": true`** (e.g. `solar-flare-surge`, it has crackle): place it only in a
   gap in the voice, never over speech; `mix_sfx.py --print` flags these for a check.
@@ -216,10 +212,10 @@ file start, which is almost never what you want. The cue sheet shows the resolve
   generation); apply it to the clip on disk with `gen_sfx.py --post-only --only <id>` (never
   stacks). Ear-check exciter takes for harshness: the user rejected one (`supernova`).
 - Audition before replacing: `gen_sfx.py --only <id> --audition 2` writes N candidate takes to
-  `audition/takes/` (library untouched; announce the credits first). Synth recipes also take
+  `audition/takes/` (library untouched, git-ignored; announce the credits first; delete after deciding). Synth recipes also take
   `"post"`, and `pulsar` has `period_start`/`ramp` (spin-up into a fast real rate).
 - Regenerate one of OUR clips keeping the old take: `python tools/gen_sfx.py --only <id> --force
-  --keep-old` (old one → `superseded/<id>-vN.mp3`, catalog id `<id>--vN`).
+  --keep-old` (old one → `superseded/<id>-vN.mp3`, catalog id `<id>--vN`; delete it once the new take is approved).
 - Print the cue sheet (the audit artifact): `python tools/mix_sfx.py <plan> --print [--no-optional]`
   (shows align → start, each clip's phone level, loop-seam and align problems).
 - Phone check of an existing mix: `python tools/mix_sfx.py <plan> --check`.

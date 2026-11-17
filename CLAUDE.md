@@ -42,9 +42,9 @@ vertical shorts where every pixel is Remotion TSX.
   gravitational-wave chirp; free, deterministic). Recipes in `palette.json`, source/model/license
   per clip in `catalog.json`; **when to use each clip in `USAGE.md`** (update it after every
 produced short). Anything new must be generated with ours too. The
-  original author's clips are never used: off-brand ones in `legacy/` (`"legacy": true`), the
-  replaced ones in `superseded/` (`"superseded": true`, `superseded_by`). Audition files
-  (`tools/sfx_audition.py`): `media/library/sfx/audition/`.
+  original author's clips and our rejected takes were deleted on 2026-11-16 (they live in git
+  history only). Audition files (`tools/sfx_audition.py`, `gen_sfx.py --audition`):
+  `media/library/sfx/audition/`, git-ignored and temporary: delete them once decided.
 - `shorts/short-12-orbit` is the one **inherited example, in the old look**: a technique
   reference only (its `lib/orbit.tsx` has real orbital physics worth reusable components), not
   channel content.
