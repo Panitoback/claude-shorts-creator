@@ -475,7 +475,7 @@
         "loop",
         "bed"
       ],
-      "prompt": "A seamless ambient loop of hot gas swirling slowly around a black hole: a deep, smooth, rotating whoosh of airy texture and a low warm tone, gently moving through the stereo field. Slow, steady and hypnotic, no rhythm, no pulses, no melody, no hits, no beeps."
+      "prompt": "A seamless ambient loop of hot gas swirling around a black hole: a soft airy hiss and a breathy, shimmering mid-range swirl that slowly sweeps around, clearly audible on small speakers, over a gentle warm low tone. Slow, steady and hypnotic, no rhythm, no pulses, no melody, no hits, no beeps, no static."
     },
     {
       "id": "radiation-hum",
@@ -552,7 +552,7 @@
     {
       "id": "pulsar-ticks-fast",
       "category": "texture",
-      "duration_s": 3.0,
+      "duration_s": 6.0,
       "tags": [
         "pulsar",
         "fastest",
@@ -564,9 +564,12 @@
       "synth": {
         "kind": "pulsar",
         "period": 0.0013966480446927375,
-        "dur": 3.0
+        "dur": 6.0,
+        "period_start": 0.5,
+        "ramp": 0.8,
+        "tick_level": 1.2
       },
-      "prompt": "(synthesized) ticks at 716 Hz, the spin of PSR J1748-2446ad, the fastest known pulsar: so fast they fuse into a tone"
+      "prompt": "(synthesized) PSR J1748-2446ad, the fastest known pulsar: ticks spin up from 2 per second to its real 716 per second over 4.8 s, fusing into a 716 Hz tone, then hold the real rate"
     },
     {
       "id": "gw-chirp",

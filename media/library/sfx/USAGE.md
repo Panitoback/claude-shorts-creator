@@ -114,9 +114,9 @@ point (see combos). Attack = first 10 ms window within 6 dB of the peak.
 | `solar-flare-surge` | 3.00 | 0.20 | 0.96 | −5.6 |
 | `redshift-slide` | 3.08 | 0.07 | 0.61 | −1.6 |
 | `pulsar-ticks` (harmonics, 2026-11-16) | 8.05 | 0.00 (first tick; the meter reads 1.33 because the fade-in softens it) | each tick | −4.9 |
-| `pulsar-ticks-fast` | 3.87 | 0.01 | — | −5.9 |
+| `pulsar-ticks-fast` (spin-up, 2026-11-16) | 6.77 | 0.39 | — (ticks fuse into the tone at ~4.8 s) | −3.1 |
 | `gw-chirp` (harmonics + exciter, 2026-11-16) | 3.56 | 2.54 | 2.61 (the merger) | −4.5 |
-| beds: `space-drone-loop` / `space-air-loop` / `accretion-swirl-loop` | 30 | — | — | −6.2 / −2.9 / ⚠ −11.8 |
+| beds: `space-drone-loop` / `space-air-loop` / `accretion-swirl-loop` (v2, 2026-11-16) | 30 | — | — | −6.2 / −2.9 / −0.9 |
 
 The phone-invisible clips (⚠) are the weight of the library: the cosmic hits and the soft
 impact. On headphones they are the best clips we have; on a phone they go silent, so they always
@@ -161,7 +161,9 @@ exciter adds harmonics to what is already there; it cannot invent a mid range th
 
 **Second pass (2026-11-16, user's ear, `audition/batch-5`):** the exciter won on numbers almost
 everywhere but **lost by ear on `stellar-collapse`, `radiation-hum`, `solar-flare-surge` and
-`accretion-swirl-loop`** (originals kept). It was kept on `impact-deep-soft` (−17.7 → −7.1) and,
+`accretion-swirl-loop`** (originals kept; `accretion-swirl-loop` was then **regenerated** with a
+prompt asking for an airy hiss and a mid-range swirl over the low tone: take 2 of 2 chosen,
+−11.8 → −0.9, old take in `superseded/` as `--v1`). It was kept on `impact-deep-soft` (−17.7 → −7.1) and,
 on top of extra harmonics, on `gw-chirp`. `pulsar-ticks` kept the code fix (stronger click and
 thump harmonics, same period: −9.9 → −4.9). `space-drone-loop` stays as is: the exciter made its
 seam click even when processed circularly. So the exciter is a **candidate, never a default**:
@@ -256,7 +258,7 @@ Gains are starting `gain_db` values. Status for all: approved, untested in a rea
 |---|---|---|---|---|
 | `redshift-slide` | light visibly redshifting (a color shifting red as it stretches) | generic "falling" moments | `photon-travel` | 0 |
 | `pulsar-ticks` | PSR B1919+21 (the first pulsar, 1.3373 s) on screen; any other pulsar = a variant at its real period | as a generic clock | — | +4 (compensation included) |
-| `pulsar-ticks-fast` | the fastest pulsar (716 Hz) on screen, ideally after the slow one for contrast | long stretches (a continuous tone tires fast) | after `pulsar-ticks` | −3 |
+| `pulsar-ticks-fast` | the fastest pulsar on screen: separate ticks **spin up** from 2/s to its real 716/s and fuse into a tone (~4.8 s), then hold; ideally after the slow one for contrast | long stretches; trimming off the spin-up (a bare 716 Hz tone reads as a beep, the user rejected it) | after `pulsar-ticks` | −3 |
 | `gw-chirp` | two black holes merging / gravitational waves shown on screen | other collisions | ~0.5 s silence after the ringdown | +1 |
 
 ### Ambient beds (one at a time; `mix_music.py`, ~16 dB under the voice)
