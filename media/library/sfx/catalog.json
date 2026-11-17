@@ -1105,6 +1105,62 @@
       },
       "post": "exciter-parallel",
       "used_in": []
+    },
+    {
+      "id": "gas-infall-swirl",
+      "file": "clips/gas-infall-swirl.mp3",
+      "category": "texture",
+      "tags": [
+        "gas",
+        "infall",
+        "swirl",
+        "accretion",
+        "disk",
+        "forming",
+        "spiral",
+        "black-hole"
+      ],
+      "duration_s": 6.0,
+      "peak_dbfs": -8.9,
+      "loudness_lufs": -20.0,
+      "attack_s": 0.96,
+      "peak_s": 2.44,
+      "phone_db": -1.1,
+      "source": "elevenlabs:sound-generation",
+      "model": "eleven_text_to_sound_v3",
+      "license": "ElevenLabs generated (text-to-sfx); owner: the generating account, commercial use per the account's ElevenLabs plan",
+      "prompt": "Hot gas streaming inward and spiraling around a black hole: a soft breathy airy rush that starts distant and thin, then gathers and accelerates into a smooth swirling whoosh that circles faster and settles into a warm steady swirl. Clear mid-range hiss audible on small speakers, over a gentle warm low tone. Calm and cinematic, no rhythm, no hits, no beeps, no static, no music.",
+      "usage_note": "gas falling in and spiraling into a forming accretion disk (the disk being born on screen); not a bed, one per short",
+      "used_in": [
+        "what-is-a-quasar-v2"
+      ]
+    },
+    {
+      "id": "light-glint-flicker",
+      "file": "clips/light-glint-flicker.mp3",
+      "category": "texture",
+      "tags": [
+        "light",
+        "glint",
+        "flicker",
+        "shine",
+        "shimmer",
+        "sparkle"
+      ],
+      "duration_s": 1.48,
+      "peak_dbfs": -2.6,
+      "loudness_lufs": -20.1,
+      "attack_s": 0.11,
+      "peak_s": 0.15,
+      "phone_db": -0.5,
+      "source": "elevenlabs:sound-generation",
+      "model": "eleven_text_to_sound_v3",
+      "license": "ElevenLabs generated (text-to-sfx); owner: the generating account, commercial use per the account's ElevenLabs plan",
+      "prompt": "A brief soft flicker of light: two or three quick, delicate glassy shimmers that glint and fade, warm and airy, like light catching for an instant. Gentle, clear on small speakers, no harshness, not cartoonish, no beeps, no music.",
+      "usage_note": "a brief flicker of light (something shining for an instant); short, under narration is fine",
+      "used_in": [
+        "what-is-a-quasar-v2"
+      ]
     }
   ]
 }

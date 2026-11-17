@@ -49,7 +49,9 @@ const C = {
   but: at(4, 'but'),
   give: at(4, 'give'),
   so: at(6, 'so'),
+  shining: at(6, 'shining'),
   light: at(7, 'the'),
+  falling: at(7, 'falling'),
   gas: at(8, 'gas'),
   down: at(8, 'down'),
   disk: at(9, 'disk'),
@@ -247,12 +249,18 @@ export const WhatIsAQuasarV2: React.FC = () => {
   const hookEnd = 0.8 + 0.2 * 0.4;
   const L = t < C.quasar ? hookL : track(t, [
     [C.quasar, hookEnd], [C.blackHole, hookEnd], [C.blackHole + 1.5, 0], // dormant
-    [C.heats - 0.1, 0], [C.heats + 2.6, 0.5], // friction heats it
+    [C.falling, 0], [C.disk + 0.6, 0.18], // the forming disk: a faint orange glow
+    [C.heats - 0.1, 0.18], [C.heats + 2.6, 0.5], // friction heats it
     [C.feed + 0.1, 0.5], [C.galaxy + 0.1, 0.85], [C.combined - 0.05, 0.85], [C.combined + 0.5, 1, EASE.punch],
     [C.fuel - 0.3, 1], [C.fuel + 1.4, 0.15], // ran out of fuel
     [LOOP.t0, 0.15], [LOOP.t0 + 1.6, 0.8], // = frame 0
   ]);
-  const D = track(t, [[0, 1], [C.blackHole + 1.55, 1], [C.blackHole + 2.4, 0], [C.disk - 0.15, 0], [C.disk + 0.95, 1]]);
+  // REVEAL 1a: the disk BUILDS as the gas arrives: a thin, faint ring from "falling in", growing in
+  // size and density while the gas spirals in, complete on "disk"
+  const D = track(t, [[0, 1], [C.blackHole + 1.55, 1], [C.blackHole + 2.4, 0], [C.falling, 0], [C.down + 0.2, 0.4], [C.disk + 0.7, 1]]);
+  const diskOuter = track(t, [[0, 4.6], [C.falling, 2.0], [C.down + 0.2, 3.0], [C.disk + 0.7, 4.6]]);
+  // a second, denser layer of infalling gas just for this scene, streaming in from beyond the frame
+  const gasIn = track(t, [[0, 0], [C.light - 0.3, 0], [C.falling, 1], [C.disk + 0.4, 1], [C.heats + 0.6, 0]]);
   const J = track(t, [[0, 0], [C.jets - 0.1, 0], [C.jets + 0.8, 1], [C.almost + 0.8, 1], [C.billions, 0]]);
   const G = track(t, [
     [0, 1], [C.blackHole, 1], [C.blackHole + 1.2, 0], [C.light + 0.2, 0], [C.light + 1.3, 1],
@@ -290,7 +298,7 @@ export const WhatIsAQuasarV2: React.FC = () => {
   const qy = small ? base.y : c.y;
   const qr = small ? R : R * k;
   const qProps = {
-    luminosity: L, disk: D, jets: J, jetLength: R * 4.5 * (small ? 1 : k), loopFrames: TOTAL_FRAMES,
+    luminosity: L, disk: D, diskOuter, jets: J, jetLength: R * 4.5 * (small ? 1 : k), loopFrames: TOTAL_FRAMES,
     breathe: 0.07, breathePeriod: 75, hotspots: 3, hotspotPeriod: 135, streaks: 0.3,
     drift: 1.2 * Math.max(1, k), corona: coronaK / Math.max(1, Math.sqrt(k)), warm: true,
   };
@@ -299,8 +307,12 @@ export const WhatIsAQuasarV2: React.FC = () => {
     <>
       <HostGalaxy x={qx} y={qy} rx={520 * (small ? 1 : k)} dim={exp.galaxy * galaxyOp} warm />
       <InfallingGas x={qx} y={qy} shadowR={qr} {...gas} layer="back" />
+      {gasIn > 0 && <InfallingGas x={qx} y={qy} shadowR={qr} count={20} seed={41} period={120} turns={1.15} width={0.06}
+        to={diskOuter - 0.2} luminosity={1} opacity={gasIn} loopFrames={TOTAL_FRAMES} layer="back" />}
       <Quasar x={qx} y={qy} shadowR={qr} {...qProps} />
       <InfallingGas x={qx} y={qy} shadowR={qr} {...gas} layer="front" />
+      {gasIn > 0 && <InfallingGas x={qx} y={qy} shadowR={qr} count={20} seed={41} period={120} turns={1.15} width={0.06}
+        to={diskOuter - 0.2} luminosity={1} opacity={gasIn} loopFrames={TOTAL_FRAMES} layer="front" />}
     </>
   );
 
@@ -323,6 +335,12 @@ export const WhatIsAQuasarV2: React.FC = () => {
     { points: spiralPath(QX, QY, 560, 2.2 * R_1A, 1.25, 20, -8, 0.22), kind: 'gold', at: F(C.down + 0.35), len: 60, fadeAt: F(C.disk + 0.7) },
   ];
   const starsAt = win(t, C.give - 0.3, C.so - 0.5, 0.4, 0.5);
+  // SETUP (d) "shining": a brief flicker of light around the bare shadow (three soft pulses, then dark)
+  const pulse = (t0: number, amp: number) => amp * curve(t, [t0, t0 + 0.08], [0, 1], EASE.out) * (1 - curve(t, [t0 + 0.08, t0 + 0.32], [0, 1], EASE.in));
+  // in the pause right after the question (the voice would bury its sound otherwise)
+  const FL = VO[6].end + 0.02;
+  const flicker = pulse(FL, 1) + pulse(FL + 0.22, 0.55) + pulse(FL + 0.44, 0.8);
+  const flR = R * k; // the shadow's on-screen radius right now
 
   // the point (twist / pan / timeline): ivory core, gold glow; out of fuel it turns orange
   const pr = 26 * (1 + 1.3 * swell);
@@ -389,6 +407,33 @@ export const WhatIsAQuasarV2: React.FC = () => {
           </svg>
         </Fade>
         <FlowPaths paths={lightPaths} />
+
+        {/* SETUP (d): "So what's shining?" — light flickers around the dark shadow */}
+        {flicker > 0.005 && (
+          <svg width={CANVAS.W} height={CANVAS.H} style={{ position: 'absolute', left: 0, top: 0 }}>
+            <defs>
+              <radialGradient id="flick" gradientUnits="userSpaceOnUse" cx={base.x} cy={base.y} r={flR * 2.2}>
+                <stop offset={`${(100 / 2.2).toFixed(1)}%`} stopColor={QUASAR.photonRing} stopOpacity={0.95} />
+                <stop offset={`${(100 * 1.12 / 2.2).toFixed(1)}%`} stopColor={PALETTE.gold} stopOpacity={0.45} />
+                <stop offset="100%" stopColor={PALETTE.gold} stopOpacity={0} />
+              </radialGradient>
+            </defs>
+            <circle cx={base.x} cy={base.y} r={flR * 2.2} fill="url(#flick)" opacity={Math.min(1, flicker)} />
+            <circle cx={base.x} cy={base.y} r={flR} fill={PALETTE.hole} />
+            {[200, 25, 300, 130].map((deg, i) => {
+              const gx = base.x + flR * 1.12 * Math.cos((deg * Math.PI) / 180);
+              const gy = base.y + flR * 1.12 * Math.sin((deg * Math.PI) / 180);
+              const g = Math.min(1, flicker * (i % 2 ? 0.8 : 1));
+              return (
+                <g key={i} opacity={g}>
+                  <circle cx={gx} cy={gy} r={14} fill={PALETTE.gold} opacity={0.3} />
+                  <line x1={gx - 16} y1={gy} x2={gx + 16} y2={gy} stroke={PALETTE.ivory} strokeWidth={2} strokeLinecap="round" />
+                  <line x1={gx} y1={gy - 16} x2={gx} y2={gy + 16} stroke={PALETTE.ivory} strokeWidth={2} strokeLinecap="round" />
+                </g>
+              );
+            })}
+          </svg>
+        )}
 
         {/* REVEAL 1a: not straight in — it swirls into a disk */}
         <FlowPaths paths={diskPaths} />

@@ -121,6 +121,8 @@ point (see combos). Attack = first 10 ms window within 6 dB of the peak.
 | `spaghettify-stretch` | 3.00 | 0.21 | 0.72 | −2.5 |
 | `jet-launch` | 2.48 | 0.54 | 0.76 | −1.1 |
 | `radiation-hum` | 4.00 | 0.56 | 2.18 | −5.6 |
+| `gas-infall-swirl` (new, 2026-11-17) | 6.00 | 0.96 | 2.44 | −1.1 |
+| `light-glint-flicker` (new, 2026-11-17) | 1.48 | 0.11 | 0.15 | −0.5 |
 | `solar-flare-surge` | 3.00 | 0.20 | 0.96 | −5.6 |
 | `redshift-slide` | 3.08 | 0.07 | 0.61 | −1.6 |
 | `pulsar-ticks` (harmonics, 2026-11-16) | 8.05 | 0.00 (first tick; the meter reads 1.33 because the fade-in softens it) | each tick | −4.9 |
@@ -260,6 +262,8 @@ Gains are starting `gain_db` values. Status for all: approved, untested in a rea
 | `deep-rumble` | a massive object's presence; the black hole's FIRST appearance (one-shot) | as a bed; repeating it | then `accretion-swirl-loop` as the bed | +2 |
 | `event-horizon-fade` | falling past an event horizon; sound dying into silence | ordinary scene ends | after `stellar-collapse` (combo) | 0 |
 | `spaghettify-stretch` | tidal stretching near a black hole (spaghettification shown on screen) | generic pitch drops (use `redshift-slide` for light) | `deep-rumble` before it | 0 |
+| `gas-infall-swirl` | gas streaming in and spiraling into a forming accretion disk (6 s: thin rush → swirl) | as a bed; a disk that is already there (use the `accretion-swirl-loop` bed) | `glow-swell` when the new disk heats up | +3 |
+| `light-glint-flicker` | a brief flicker of light (something shining for an instant) | under the spoken word it illustrates (the duck buries it): put it in the pause right after | — | +3 |
 | `radiation-hum` | invisible radiation / energy pouring out; safe under narration | as a bed for the whole short | `glow-swell`, `jet-launch` | −2 |
 | `solar-flare-surge` | a solar flare erupting, **in a pause only** | anywhere under speech (crackle) | — | 0 |
 
@@ -301,6 +305,10 @@ copied; none of them are installed.
 
 - **what-is-a-quasar-v2** (2026-11-17, brand v2.1, `shorts/what-is-a-quasar-v2/sfx-plan.json`; awaiting the user's ear)
   - First plan chosen entirely by production from the script's `SOUND MOOD` (no clips named in the script).
+  - User-requested additions (2026-11-17, generated for this short, ~75 credits): `gas-infall-swirl` +3
+    on "falling in" while the disk builds (+10.1 phone); `light-glint-flicker` with the flicker after
+    "So what's shining?". Under the word itself it measured GONE even at +7 (the duck); moved into the
+    0.7 s voice pause at +3: +9.4 phone. **Lesson: a sound for a spoken word goes in the pause after it.**
   - Hook: hook-hit +1 (+25.2 phone), whoosh-deep **+3** from file start 0 (the pull-back starts on
     frame 0, so it can't be peak-aligned before 0; its peak lands at 0.52 s: +6.5), glow-swell 0 on
     "brightest" (+6.3).
@@ -312,7 +320,7 @@ copied; none of them are installed.
     them); timeline ticks weak except the gold markers. Accepted as felt-not-heard; to make them
     heard, +3 dB or place the settle in a voice gap.
   - Bed: accretion-swirl-loop `--under 16 --fade 0.3` for the whole short (the quasar is on screen
-    as disk, hole or point throughout). Final −13.7 LUFS.
+    as disk, hole or point throughout). Final −13.3 LUFS.
 
 - **what-is-a-quasar** (2026-11-16, brand v2.0, plans in `shorts/what-is-a-quasar/sfx-plan*.json`)
   - Hook: hook-hit +1 on frame 0 (+25 dB phone); whoosh-deep +2 at the pull-back's peak (+3.2 on

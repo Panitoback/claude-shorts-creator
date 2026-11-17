@@ -23,18 +23,18 @@
   ],
   "events": [
     {
-      "at_s": 0.01,
-      "sfx_id": "hook-hit",
-      "gain_db": 1,
-      "align": "attack",
-      "cue": "frame 0: the extreme close-up, the pull-back already starting (SOUND MOOD: opening hit heard on a phone)"
-    },
-    {
       "at_s": 0.0,
       "sfx_id": "whoosh-deep",
       "gain_db": 3,
       "cue": "HOOK MOVE: the pull-back (EASE.punch, bulk in frames 12–24); file start at 0, its peak (0.52 s) inside the bulk of the move",
       "note": "USAGE mix log: start whoosh-deep on a hook at +3"
+    },
+    {
+      "at_s": 0.01,
+      "sfx_id": "hook-hit",
+      "gain_db": 1,
+      "align": "attack",
+      "cue": "frame 0: the extreme close-up, the pull-back already starting (SOUND MOOD: opening hit heard on a phone)"
     },
     {
       "at_s": 3.0,
@@ -64,6 +64,22 @@
       "align": "attack",
       "optional": true,
       "cue": "(c) light paths from nearby stars draw into the shadow edge (light traveling; kept low so \"Nothing escapes\" stays near-silent)"
+    },
+    {
+      "at_s": 18.61,
+      "sfx_id": "light-glint-flicker",
+      "gain_db": 3,
+      "align": "attack",
+      "cue": "right after \"So what's shining?\" (in the voice pause): light flickers around the dark shadow (3 soft pulses)",
+      "note": "new clip, generated for this moment (user request)"
+    },
+    {
+      "at_s": 20.69,
+      "sfx_id": "gas-infall-swirl",
+      "gain_db": 3,
+      "align": "attack",
+      "cue": "\"falling in\": gas streams in and spirals; the disk builds until \"disk\" (25.65); its swirl peaks ~22.2 s",
+      "note": "new clip, generated for this moment (user request)"
     },
     {
       "at_s": 27.18,

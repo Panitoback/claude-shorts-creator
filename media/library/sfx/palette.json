@@ -594,6 +594,39 @@
       },
       "prompt": "(synthesized) black-hole merger chirp: inspiral 40->320 Hz over 2.6 s (f ~ (tc-t)^-3/8, amplitude ~ f^2/3), then a 0.4 s ringdown",
       "post": "exciter-parallel"
+    },
+    {
+      "id": "gas-infall-swirl",
+      "category": "texture",
+      "duration_s": 6.0,
+      "prompt_influence": 0.55,
+      "tags": [
+        "gas",
+        "infall",
+        "swirl",
+        "accretion",
+        "disk",
+        "forming",
+        "spiral",
+        "black-hole"
+      ],
+      "usage_note": "gas falling in and spiraling into a forming accretion disk (the disk being born on screen); not a bed, one per short",
+      "prompt": "Hot gas streaming inward and spiraling around a black hole: a soft breathy airy rush that starts distant and thin, then gathers and accelerates into a smooth swirling whoosh that circles faster and settles into a warm steady swirl. Clear mid-range hiss audible on small speakers, over a gentle warm low tone. Calm and cinematic, no rhythm, no hits, no beeps, no static, no music."
+    },
+    {
+      "id": "light-glint-flicker",
+      "category": "texture",
+      "duration_s": 1.5,
+      "tags": [
+        "light",
+        "glint",
+        "flicker",
+        "shine",
+        "shimmer",
+        "sparkle"
+      ],
+      "usage_note": "a brief flicker of light (something shining for an instant); short, under narration is fine",
+      "prompt": "A brief soft flicker of light: two or three quick, delicate glassy shimmers that glint and fade, warm and airy, like light catching for an instant. Gentle, clear on small speakers, no harshness, not cartoonish, no beeps, no music."
     }
   ]
 }
