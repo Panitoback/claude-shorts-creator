@@ -120,6 +120,39 @@ The phone-invisible clips (⚠) are exactly the weight of the library: the cosmi
 rumbles, the deep whoosh. On headphones they are the best clips we have; on a phone the hero
 moment goes silent. Re-measure a clip after regenerating it.
 
+### Fixing a phone-invisible clip: which approach when
+
+Tested 2026-11-16 on the library's ⚠ clips (phone dB after processing, re-normalized to −20 LUFS).
+"exciter, parallel" = `asplit[a][b];[b]aexciter=amount=8:drive=10:freq=2000:blend=0:listen=1,volume=6dB[x];[a][x]amix=inputs=2:normalize=0`;
+"saturate lows" = the band under 250 Hz soft-clipped (tanh) and only its harmonics above 300 Hz mixed back.
+
+| Clip | Original | `aexciter` default | exciter, parallel | saturate lows |
+|---|---|---|---|---|
+| `supernova` | −46.1 | −46.1 | −29.0 | −32.9 |
+| `impact-cosmic` | −35.5 | −35.5 | −27.8 | −31.0 |
+| `impact-soft` | −25.8 | −25.8 | −22.8 | −20.3 |
+| `deep-rumble` | −25.4 | −25.4 | −23.2 | −19.6 |
+| `whoosh-deep` | −18.3 | −18.3 | −10.0 | −15.2 |
+| `stellar-collapse` | −7.2 | −7.0 | **−0.1** | −7.2 |
+| `space-drone-loop` | −6.2 | −6.2 | **−3.3** | **−3.2** |
+| `pulsar-ticks` | −9.9 | −9.9 | **−0.7** | −8.4 |
+| `gw-chirp` | −10.5 | −10.5 | −10.6 | −7.2 |
+| `accretion-swirl-loop` | −11.8 | −11.6 | **−0.4** | −8.6 |
+
+**`aexciter` at its defaults does nothing** here (it only excites content above 7.5 kHz). An
+exciter adds harmonics to what is already there; it cannot invent a mid range that isn't.
+
+- **Phone dB between about −6 and −12** (some mid content exists): the parallel exciter rescues
+  it, free and instantly (`stellar-collapse`, `accretion-swirl-loop`, `pulsar-ticks` → ~0 dB).
+  Ear-check it for harshness before using it (brand §7: calm, no static). Physics clips
+  (`pulsar-ticks`, `gw-chirp`) are better fixed in `tools/synth_sfx.py` by adding harmonics to the
+  tone, so the sound stays exactly the data.
+- **Below about −15** (pure sub-bass: the cosmic hits, the rumbles): no processing gets near
+  −6. **Regenerate** with a prompt that asks for a clear mid-range transient over the low body
+  (palette recipes written 2026-11-16), or, for one short, use the combo below.
+- **Any big moment, whatever the clip:** keep the **low hit + mid layer aligned on the same
+  peak** combo. It is the safest option: headphones get the body, phones get the attack.
+
 ## Clips
 
 Gains are starting `gain_db` values. Status for all: approved, untested in a real mix.
