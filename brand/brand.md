@@ -164,7 +164,8 @@ the edit and never become the show. Choose every cue by its FUNCTION:
   snaps at **0 to +7**, and layered hero risers at **0 to +2**.
 - **Heard on a phone too.** Shorts are watched on phone speakers, which play almost nothing below
   ~300 Hz. A deep hit (the cosmic hits, `impact-soft`) is felt on headphones but silent on a
-  phone, so every big moment gets a mid-range layer (`pop-reveal`) on the same peak. Choose clips
+  phone, so the main reveal gets `hook-hit` as a mid-range layer on the same peak (smaller
+  moments: `pop-reveal`). Choose clips
   by ear first; the layer fixes the phone.
 - **No static or glitch textures under narration.** They read as noise at any gain. Clips with any
   crackle carry `"not_under_narration": true` and only go in a gap in the voice.

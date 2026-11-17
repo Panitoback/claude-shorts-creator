@@ -32,7 +32,7 @@ Starting gains are educated guesses until a produced short measures them (see Ma
 ### Channel combos (recipes)
 | Moment | Recipe | Timing |
 |---|---|---|
-| **The main reveal** | `riser-long` → ~0.5 s near-silence → `supernova` (or `impact-cosmic`) **+ a phone-safe mid layer** (`pop-reveal`; not `gamma-flash`, it counts as a second cosmic hit) on the same peak | the riser's build ends just before the half second of silence (its peak is at 4.53 s, its tail fades to the file end at 6 s); the hit's PEAK lands on the reveal frame / key word; drop the bed and other cues in the silence |
+| **The main reveal** | `riser-long` → ~0.5 s near-silence → `supernova` (or `impact-cosmic`) **+ `hook-hit` at −6 dB as the phone layer** on the same peak (`align: "peak"` on both; not `gamma-flash`, it counts as a second cosmic hit) | the riser's build ends just before the half second of silence (its peak is at 4.53 s, its tail fades to the file end at 6 s); the hit's PEAK lands on the reveal frame / key word; drop the bed and other cues in the silence |
 | **A sub-bass hit that must read on phones** | the hit (body, ⚠ in the table) + a mid transient (attack) aligned peak-to-peak | the mid layer ~6–10 dB under the hit: on headphones you feel the body, on a phone you hear the attack |
 | **A whoosh into a cut** | `whoosh-soft` / `whoosh-deep` | its PEAK 0.1–0.25 s before the cut (`at_s` = cut − 0.15 − peak) |
 | **Falling into a black hole** | `stellar-collapse` → `event-horizon-fade` | the thud lands at the crossing; the fade carries the fall into silence |
@@ -179,7 +179,8 @@ reproducibly as `"post": "exciter-parallel"` in the clip's palette recipe (`gen_
 
 **The combo, measured** (`audition/batch-4-hero-combo`): `impact-cosmic` alone peaks at −31.5 dB
 through the phone filter; with `pop-reveal` at −6 dB on the same peak, −7.9 dB; with `hook-hit`
-at −6 dB, −12.5 dB. +19 to +24 dB on a phone, nothing lost on headphones. **Raising the hit's own
+at −6 dB, −12.5 dB. +19 to +24 dB on a phone, nothing lost on headphones. **The user chose
+`hook-hit`** (by ear, 2026-11-16): it is the channel's phone layer for the main reveal. **Raising the hit's own
 gain is not the fix:** its energy above 300 Hz is 35 dB below its total, so a phone would need
 ~+30 dB, which would blast headphones and clip.
 
@@ -209,12 +210,12 @@ Gains are starting `gain_db` values. Status for all: approved, untested in a rea
 ### Emphasis
 | Clip | For | Avoid | Pairs with | Start gain |
 |---|---|---|---|---|
-| `hook-hit` | the first second of a short: an immediate, prominent hit on frame 0 (attack 0.01 s) | the main reveal; more than once per short | the title appearing | 0 (untested in a mix) |
+| `hook-hit` | (1) the first second of a short: an immediate, prominent hit on frame 0 (attack 0.01 s); (2) **the phone layer of the main reveal**, −6 dB under `impact-cosmic` / `supernova` on the same peak | secondary moments (use `pop-reveal`); more than those two uses per short | the title appearing; the cosmic hit (layer) | 0 alone, −6 as a layer (untested in a mix) |
 | `impact-soft` | underline a secondary fact or a scene landing (⚠ phone: add `pop-reveal` if it must be heard) | the main reveal | `riser-soft`, `whoosh-deep` | 0 |
 | `impact-deep-soft` | a meaningful reveal that isn't THE main one | more than 2 per short | `riser-soft` | +1 |
 | `pop-reveal` | a label, number or element appearing | big moments (too small) | `whoosh-reverse` (combo), `whoosh-soft` | +2 |
-| `impact-cosmic` | THE main reveal, when it isn't an explosion (a scale payoff, "this is how big") | anything else; never with `supernova`/`gamma-flash`; never without its mid layer | `riser-long` (combo); **always** `pop-reveal` at −6 dB on its peak (phone) | +2 |
-| `supernova` | THE main reveal when a star explodes / dies violently | non-explosive reveals; never with `impact-cosmic`/`gamma-flash`; never without its mid layer | `riser-long` (combo); **always** `pop-reveal` on its peak (phone) | +2 |
+| `impact-cosmic` | THE main reveal, when it isn't an explosion (a scale payoff, "this is how big") | anything else; never with `supernova`/`gamma-flash`; never without its mid layer | `riser-long` (combo); **always** `hook-hit` at −6 dB on its peak (phone) | +2 |
+| `supernova` | THE main reveal when a star explodes / dies violently | non-explosive reveals; never with `impact-cosmic`/`gamma-flash`; never without its mid layer | `riser-long` (combo); **always** `hook-hit` at −6 dB on its peak (phone) | +2 |
 | `gamma-flash` | THE main reveal when it's a burst of light (gamma-ray burst, a flash) | anything else; never with the other big hits | ~0.5 s silence before it | +1 |
 | `glow-swell` | anything gaining luminosity: the quasar switching on, a disk brightening | a star being born (use `star-ignite`) | `jet-launch` after it | 0 |
 | `star-ignite` | an actual star igniting / being born | the quasar or other brightening (use `glow-swell`) | `warm-shimmer` | 0 |
