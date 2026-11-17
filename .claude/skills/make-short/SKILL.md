@@ -1,12 +1,17 @@
 ---
 name: make-short
-description: Build a fully-synthetic vertical short (1080×1920, 30–120 s depending on format) for the universe channel end-to-end from the user's script (shorts/<slug>/guion.md, written in their planning project) — beats.json, linked TSX beats over a persistent canvas, phone-scale QA, render, ElevenLabs voice with exact word-synced captions, SFX audition, optional music bed. Use when the user wants to "make a short", "produce guion.md", "create a shorts video", add voice/captions to a short, or re-render one. Defers raw TSX crash rules to vidtsx-2d-generator and SFX taste to suggest-sfx + brand/brand.md §7.
+description: Build a fully-synthetic vertical short (1080×1920, 30–120 s depending on format) for the universe channel end-to-end from the user's script (shorts/<slug>/guion.md, written in their planning project) — voice-first: beats.json, ElevenLabs voice at natural pace (the timeline comes from its real word timings), linked TSX beats animated on that timeline, phone-scale QA, render, SFX audition, optional music bed. Use when the user wants to "make a short", "produce guion.md", "create a shorts video", add voice/captions to a short, or re-render one. Defers raw TSX crash rules to vidtsx-2d-generator and SFX taste to suggest-sfx + brand/brand.md §7.
 ---
 
 # make-short — fully-TSX vertical shorts, end to end
 
 Everything is code: no footage, no stock, **no AI-generated images or video**. One short = one
-Remotion composition fed by a beats contract, with voice and SFX layered on after render.
+Remotion composition fed by a beats contract.
+
+**Voice-first is the default order** (it worked on the quasar short):
+`script → voice → animation → check → sound → final video`. The voice is generated at its
+natural pace (no tempo squeeze) and the timeline is built from its REAL word timings; the
+composition is then animated on those times, so every cue lands on a spoken word.
 
 **Input comes from the user's planning project**, not from here: `shorts/<slug>/guion.md`,
 following `shorts/script-template.md` (mirrored in `docs/PROJECT_CONTEXT.md` §6). Check it
@@ -76,23 +81,62 @@ Prefer a clean visual dissolve/reset that lands the last frame exactly on frame 
 loop genuinely isn't possible for a topic, just end on the payoff with no filler. Don't pad the
 tail: trim the composition so it ends shortly after the payoff, not seconds of dead air.
 
-VO rules: total words ≈ length × 2.4 (e.g. 45 s ≈ 110 words); estimate line windows at **~2.4 words/sec with slack to the next
-line's start** (tighter forces audible atempo squeeze). Measured 2026-11-15 with the channel voice
-(`shorts/_calibration/`): v4 Turbo with delivery tags 2.55 w/s overall, 2.05–2.8 per line (v2 was
-2.45); lines with commas or an emphatic ending are slowest and needed 1.32× squeeze in the 2.7 w/s test
-windows (over the 1.3 cap), hence the 2.4 budget. Give comma-heavy lines extra room. Facts must be verified before animating. From `guion.md`, write `script.md` + `beats.json`
-(vo lines with estimated start/end; timeline in global SECONDS) — HERO NUMBER / KEYWORD /
-ANNOTATIONS per beat carry straight over.
+VO rules: total words ≈ length × 2.4 (e.g. 45 s ≈ 110 words) — a budget for the script, not a
+window to squeeze into. Measured 2026-11-15 with the channel voice (`shorts/_calibration/`): v4
+Turbo with delivery tags 2.55 w/s overall, 2.05–2.8 per line; lines with commas or an emphatic
+ending are slowest. Facts must be verified before the voice is generated. From `guion.md`, write
+`script.md` + `beats.json`: `vo[]` lines with `text` (+ `tts` with the delivery tag / phonetic
+spelling) and optional `gap_before` (pause before the line, default `format.gap` 0.35 s; give the
+reveal and twist a longer breath); no start/end needed — Stage 2 fills them. Timeline cues in
+`beats.json` are anchored to VO words (e.g. "line 4, word 'white'"), not to guessed seconds.
+HERO NUMBER / KEYWORD / ANNOTATIONS per beat carry straight over.
 
-## Stage 2 — the composition
+## Stage 2 — voice (ElevenLabs, natural pace, word-exact timeline)
 
-- One `.tsx` under `remotion/src/shots/<slug>/`, `compositionConfig` 1080×1920 @30, `durationInSeconds` = the
-  guion's TARGET LENGTH (adjusted to the real voice length after Stage 4).
+```
+python tools/gen_voice.py --beats shorts/<slug>/beats.json --dry-run     # credits estimate
+python tools/gen_voice.py --beats shorts/<slug>/beats.json \
+    --emit-ts remotion/src/shots/<slug>/vo.gen.ts
+```
+- Voice-first is gen_voice.py's default: each line at its **natural pace, no tempo squeeze**;
+  each line's first word lands `gap_before` after the previous line's last word, and
+  `format.durationSec` = last word + `format.tail` (0.8 s). Optional `hook_variants` share one
+  hook slot (one `voice-<k>.wav` each).
+- Per-line TTS with `/with-timestamps` → REAL per-word times (global) written into beats.json
+  AND `vo.gen.ts` (`VO`, `DURATION_S`). The shot imports them and is animated on them: captions
+  highlight on the exact spoken word, and every reveal cue is taken from a word time.
+- Listen to `voice/voice.wav` before animating; re-roll a line (edit its `tts`) if the read is off.
+- `--fit-windows` is the LEGACY animation-first mode (lines squeezed into estimated windows,
+  atempo ≤ 1.3×): only for re-voicing a short animated before voice-first.
+- Clips are cached by text-hash: rewriting one line only re-bills that line.
+- Voice: the channel voice `JYUzXNeyCPmymMkfcicu` on **Eleven v4 Turbo** (`eleven_v4_turbo`,
+  ×0.5 credits) are gen_voice.py's defaults (no `--voice`/`--model` needed; pass them only to
+  audition). v4 takes only Stability + Similarity; no Style/Speed, no SSML `<break>`.
+- **Delivery tags (we write them; the API has no "auto tags").** The app's "Enhance" button is an
+  LLM writing tags into the text; by API we do that job: put ONE light, narration-fit tag at the
+  start of each line's `tts` (`"tts": "[awed] That light has crossed…"`; tags used in the
+  calibration: `[intrigued]`, `[building excitement]`, `[awed]`, `[emphatic]`). Match the beat's
+  intent (hook = intrigue, payoff = awe/emphasis); never comedic or theatrical tags. Tags are
+  filtered out of the word map and never captioned. They count as billed characters.
+- ElevenLabs is paid: state roughly what will be generated before calling it.
+- **Pronunciation (guion.md `PRONUNCIATION:`):** for a name the voice may misread, add a per-line
+  `tts` field in beats.json next to `text` (e.g. `"text": "Quasars outshine galaxies."`,
+  `"tts": "Kway-zars outshine galaxies."`). gen_voice.py sends `tts` to ElevenLabs (and hashes it
+  for the cache) instead of `text`. The word timestamps come from the TTS text, but
+  `KeywordCaptions` shows the `text` words mapped onto those timings (by character position), so
+  the respelling never reaches the screen. Pass the beats.json lines straight in, `tts` included.
+
+## Stage 3 — the composition
+
+- One `.tsx` under `remotion/src/shots/<slug>/`, `compositionConfig` 1080×1920 @30, `durationInSeconds` =
+  `DURATION_S` from `vo.gen.ts` (the real voice length from Stage 2).
   Follow vidtsx-2d-generator's hard rules (frame-based only, monotonic ranges, Easing.bezier).
 - Beats = `<Sequence>` scenes over ONE persistent canvas (the board/equation/array is the
   continuity — rewinds and evolutions happen in a single component's timeline, not cuts).
 - `KeywordCaptions lines={VO} keywords={[...]}` (+ optional `ProgressBar`) mounted at the ROOT
   (global time), scenes beneath. `keywords` = the guion's KEYWORD words (case/punctuation-insensitive).
+- Scene boundaries and reveal cues come from `VO` word times (`word.start * fps`), never from
+  guessed seconds.
 - **THE recurring bug: frames inside a `<Sequence>` are LOCAL.** Converting a global beat
   second to a scene cue is `local_f = global_s*fps − sequence_from`. Check every cue twice.
 - Frame-0 rule: hook scene uses `warm` props (BigTitle/EqRow) and negative `at`s so highlights/
@@ -102,7 +146,7 @@ ANNOTATIONS per beat carry straight over.
   captions in the caption lane (`CAPTION.centerY` 1350, ≤720 px wide, symmetric).
 - Caption keyword = gold italic serif (`TYPE.keyword`); one per chunk, from guion.md KEYWORD.
 
-## Stage 3 — QA (do not skip, it catches real bugs every time)
+## Stage 4 — QA (do not skip, it catches real bugs every time)
 
 ```
 cd remotion && npm run gen        # frames.mjs does NOT run gen-registry itself
@@ -126,40 +170,14 @@ Fix, re-render frames, only then:
 
 ```
 node scripts/render-all.mjs <Id> --scale=1     # -> remotion/out/<Id>.mp4
+ffmpeg -i remotion/out/<Id>.mp4 -i shorts/<slug>/voice/voice.wav -map 0:v -map 1:a -c:v copy \
+  -c:a aac -b:a 192k -t <durationSec> remotion/out/<Id>-voiced.mp4
 ```
-
-## Stage 4 — voice (ElevenLabs, word-exact captions)
-
-```
-python tools/gen_voice.py --beats shorts/<slug>/beats.json \
-    --emit-ts remotion/src/shots/<slug>/vo.gen.ts
-```
-- Per-line TTS with `/with-timestamps` → REAL per-word times (tempo-scaled, global) written
-  into beats.json AND `vo.gen.ts`. The shot imports `{ VO } from './vo.gen'` — captions then
-  highlight on the exact spoken word. Never estimate when a voice track exists.
-- Clips are cached by text-hash: rewriting one line only re-bills that line.
-- Voice: the channel voice `JYUzXNeyCPmymMkfcicu` on **Eleven v4 Turbo** (`eleven_v4_turbo`,
-  ×0.5 credits) are gen_voice.py's defaults (no `--voice`/`--model` needed; pass them only to
-  audition). v4 takes only Stability + Similarity; no Style/Speed, no SSML `<break>`.
-- **Delivery tags (we write them; the API has no "auto tags").** The app's "Enhance" button is an
-  LLM writing tags into the text; by API we do that job: put ONE light, narration-fit tag at the
-  start of each line's `tts` (`"tts": "[awed] That light has crossed…"`; tags used in the
-  calibration: `[intrigued]`, `[building excitement]`, `[awed]`, `[emphatic]`). Match the beat's
-  intent (hook = intrigue, payoff = awe/emphasis); never comedic or theatrical tags. Tags are
-  filtered out of the word map and never captioned. They count as billed characters.
-- ElevenLabs is paid: state roughly what will be generated before calling it.
-- **Pronunciation (guion.md `PRONUNCIATION:`):** for a name the voice may misread, add a per-line
-  `tts` field in beats.json next to `text` (e.g. `"text": "Quasars outshine galaxies."`,
-  `"tts": "Kway-zars outshine galaxies."`). gen_voice.py sends `tts` to ElevenLabs (and hashes it
-  for the cache) instead of `text`. The word timestamps come from the TTS text, but
-  `KeywordCaptions` shows the `text` words mapped onto those timings (by character position), so
-  the respelling never reaches the screen. Pass the beats.json lines straight in, `tts` included.
-- Then re-render the composition (captions retimed) and mux:
-  `ffmpeg -i remotion/out/<Id>.mp4 -i shorts/.../voice/voice.wav -map 0:v -map 1:a -c:v copy
-   -c:a aac -b:a 192k -t <durationSec> remotion/out/<Id>-voiced.mp4`
 
 ## Stage 5 — SFX (the suggest-sfx machinery, shorts flavor)
 
+The script only describes the mood or moment (guion.md `SOUND MOOD:` in NOTES, plus any sound
+moments named in plain words); **production picks every clip** from USAGE.md, never the script.
 Read `brand/brand.md` §7 + **`media/library/sfx/USAGE.md`** (when to use each clip, combo recipes,
 starting gains) + `media/library/sfx/catalog.json` (skip `"legacy": true` and `"superseded": true`
 entries; see `/suggest-sfx`). Library-first; add generic recipes to
@@ -189,8 +207,9 @@ under voice, faded in/out.
 
 ## Done =
 
-script.md + beats.json derived from guion.md (facts verified) · composition QA'd frame-by-frame
-(incl. `--safe` pass) · rendered at scale 1 · voice generated with word-exact captions and muxed ·
+script.md + beats.json derived from guion.md (facts verified) · voice generated first at natural
+pace, timeline from its real word timings · composition animated on that timeline, QA'd
+frame-by-frame (incl. `--safe` pass) · rendered at scale 1 and muxed with the voice ·
 SFX plan authored + audition mixed (~−15.5 LUFS, awaiting the user's ear) · library used_in
 and `media/library/sfx/USAGE.md` updated · **`PRODUCED.md` row added/updated** · anything learned added to the Learnings section of
 `docs/PROJECT_CONTEXT.md` (then tell the user it changed so they re-upload it).

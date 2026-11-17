@@ -80,7 +80,10 @@ BEATS:
 ---
 
 NEW COMPONENTS NEEDED: <anything not in PROJECT_CONTEXT §3, in plain words; "none" if none>
-NOTES: <optional: voice delivery hints, music mood, anything else>
+NOTES: <optional: voice delivery hints, anything else>
+SOUND MOOD: <optional: what the sound should feel like and the moments that matter, in
+  plain words (e.g. 'quiet and vast; one deep hit when the Sun appears'). Narrative intent
+  only: never name clips, production picks every sound from the library>
 PRONUNCIATION: <word — how to say it, e.g. 'quasar — KWAY-zar'; only
   for names the voice may misread>
 
@@ -102,24 +105,29 @@ PRONUNCIATION: <word — how to say it, e.g. 'quasar — KWAY-zar'; only
 
 ---
 
-## Example (two beats)
+## Example (three beats)
 
 FORMAT: Scale
 TARGET LENGTH: 45 s
 TITLE: 1.3 Million Earths Fit Inside the Sun
 SLUG: sun-volume
 TONE: calm awe
-HOOK FRAME: the Sun, huge and glowing; a tiny Earth marked beside it; "1.3 million Earths"
-SCALE: true (beats 1–2)
+HOOK FRAME: close on the Sun's glowing surface, filling the frame, the camera already moving back
+HOOK MOVE: fast pull-back: the whole Sun comes into view with a tiny Earth beside it, and
+  "1.3 million Earths" lands with the voice by ~3 s
+SCALE: true (beats 1–2 and reveal step 1)
 
 SOURCES:
 - Sun's volume ≈ 1.3 million Earths — NASA Sun fact sheet
 - Sun's diameter ≈ 109 × Earth's — NASA Sun fact sheet
+- Jupiter's diameter ≈ one tenth of the Sun's — NASA Sun and Jupiter fact sheets
+- The Sun holds ≈ 99.8% of the solar system's mass — NASA Sun facts
 
 BEATS:
 1. HOOK (0–3 s)
    VO: "1.3 million Earths fit inside the Sun."
-   VISUAL: the Sun with a soft halo; Earth as a tiny dot to its left
+   VISUAL: starts on the HOOK FRAME; the pull-back reveals the Sun with its soft halo and Earth
+     as a tiny dot to its left, the hero number landing as the voice says it
    HERO NUMBER: 1.3 million / "Earths" / label "BY VOLUME"
    KEYWORD: Sun
    ANNOTATIONS: marker on Earth — "EARTH ×1"
@@ -130,3 +138,12 @@ BEATS:
    HERO NUMBER: (none)
    KEYWORD: 109, real
    ANNOTATIONS: scale bar under the Sun — "109 × EARTH'S WIDTH"
+
+4. REVEAL (two of its steps)
+   VO: "Even Jupiter, the biggest planet, is a tenth of its width." / "And the Sun holds 99.8 percent of all the mass in the solar system."
+   VISUAL: step 1, a Scale comparison: Jupiter slides in beside the Sun at true size, Earth still
+     a dot, names underneath. Step 2, a Meter: the Sun shrinks into the center of the gauge, the
+     gold arc fills almost all the way round as 99.8% counts up, label "OF ALL THE MASS"
+   HERO NUMBER: (none)
+   KEYWORD: Jupiter, mass
+   ANNOTATIONS: (none: the comparison names and the meter carry the facts)

@@ -3,7 +3,7 @@
 > **For:** the planning project where topics, aesthetics and scripts are developed.
 > **Pair it with:** `brand.md` (the visual and sound style contract — read it for colors, type,
 > captions, annotations, motion, safe zones and sound taste; this file never repeats it).
-> **Version:** v0.11.0 · 2026-11-16 · phase: *first short done → visual variety kit built*
+> **Version:** v0.11.1 · 2026-11-17 · phase: *first short done → visual variety kit built*
 >
 > This file describes **what can be asked for**, not how it is built. If a script asks for
 > something listed here, it can be made. If it asks for something not listed, flag it as a
@@ -54,30 +54,37 @@ Scripts can ask for any of it by name:
 ## 2. How a short gets made
 
 ```
-idea  →  script  →  animation  →  check  →  voice  →  sound  →  final video
+idea  →  script  →  voice  →  animation  →  check  →  sound  →  final video
 ```
+
+**Voice first** (the default since the quasar short): the narration is recorded before anything is
+animated, at its natural pace, and the animation is timed to the real voice.
 
 1. **Script.** You (in the planning project) write the narration and describe what should be
    on screen for each moment, using the handoff format in section 6.
 2. **Fact check.** Every number and claim is verified before anything is animated. If a fact
    turns out to be wrong or misleading, the script changes, not the truth.
-3. **Animation.** The scenes are built from the visual components in section 3. If a scene
-   needs something that doesn't exist yet, a new component is built first.
-4. **Visual check.** Still frames are rendered at phone size and inspected: is the text
+3. **Voice.** ElevenLabs reads each line (the channel voice on Eleven v4 Turbo) at its natural
+   pace: nothing is sped up to fit a slot. Each line gets one light delivery direction
+   (intrigued, awed, emphatic…) added at this step, matched to the beat; it shapes the reading
+   and never appears on screen. The real timing of every spoken word is captured, and **the
+   short's timeline is built from it**: its length, where each scene starts, and when each reveal
+   lands all follow the voice.
+4. **Animation.** The scenes are built from the visual components in section 3 and timed to the
+   spoken words, so captions and on-screen moments land exactly on the word. If a scene needs
+   something that doesn't exist yet, a new component is built first.
+5. **Visual check.** Still frames are rendered at phone size and inspected: is the text
    readable, is anything cut off, is the first frame composed, and does the hook move fast?
-5. **Voice.** ElevenLabs reads each line (the channel voice on Eleven v4 Turbo). Each line gets
-   one light delivery direction (intrigued, awed, emphatic…) added at this step, matched to the
-   beat; it shapes the reading and never appears on screen. The real timing of every spoken word
-   is captured, so captions and on-screen moments land exactly on the word.
-6. **Sound.** Subtle sound effects are placed on key moments (a soft whoosh on a transition, a
-   gentle impact on the reveal), plus an optional quiet music bed or space ambience. The sound
-   palette (whooshes, risers, soft impacts, ticks, chimes, a deep rumble for massive objects,
-   ambient beds, signature sounds for cosmic events such as a supernova or a star igniting) is
-   listed in `brand.md` §7; a script can name a sound moment in plain words, including an
-   immediate opening hit on the first frame of the hook. Sounds are chosen to work on a phone
-   speaker as well as on headphones. Some sounds are made from the real numbers: a pulsar ticking at its actual rotation period, light "redshifting" as a
-   falling tone, the chirp of two black holes merging. A script can ask for a specific pulsar or
-   merger and it will be built to match.
+6. **Sound.** A script **describes the mood or the moment** in plain words, never a specific
+   clip: the overall feel in the optional `SOUND MOOD:` line (section 6), and any moment that
+   matters in the beat itself ("an immediate opening hit on the first frame", "a deep rumble as
+   the black hole appears"). **Production picks every clip** from the channel's sound library and
+   its usage guide: subtle effects on key moments (a soft whoosh on a transition, a gentle impact
+   on the reveal) plus an optional quiet music bed or space ambience. The sound taste is in
+   `brand.md` §7. Sounds are chosen to work on a phone speaker as well as on headphones. Some
+   sounds are made from the real numbers: a pulsar ticking at its actual rotation period, light
+   "redshifting" as a falling tone, the chirp of two black holes merging. A script can ask for a
+   specific pulsar or merger and it will be built to match.
 7. **Final video.** Rendered at 1080×1920, 30 frames per second.
 
 ### What to hand off for a new short
@@ -215,12 +222,12 @@ word budgets are in §5.
 | **Quiz** *(optional)* | ~2.5 s | "Pause. Can you guess?" Drives comments and rewatches. |
 | **Reveal** | ~45% | The payoff in 2–4 steps, each step landing on a spoken word **and shown with its own picture** (comparison, diagram, bars, timeline, counter). |
 | **Twist** | ~20% | A reframe or bonus insight: the "send this to a friend" moment. |
+| **Loop** | last ~3–4 s | The last frame visually matches the first, so the replay is seamless. |
 
 > **Visual variety (every format, every beat):** one hero object per scene, but the scenes
 > change: a new visual idea at least every ~5–10 s, and every number or comparison in the VO is
 > shown on screen, not just said. Scenes hand over smoothly (a camera move, a morph, an object
 > carried over). See `brand.md` §5.
-| **Loop** | last ~3–4 s | The last frame visually matches the first, so the replay is seamless. |
 
 ### The three formats at a glance
 
@@ -419,7 +426,10 @@ BEATS:
 ---
 
 NEW COMPONENTS NEEDED: <anything not in PROJECT_CONTEXT §3, in plain words; "none" if none>
-NOTES: <optional: voice delivery hints, music mood, anything else>
+NOTES: <optional: voice delivery hints, anything else>
+SOUND MOOD: <optional: what the sound should feel like and the moments that matter, in
+  plain words (e.g. 'quiet and vast; one deep hit when the Sun appears'). Narrative intent
+  only: never name clips, production picks every sound from the library>
 PRONUNCIATION: <word — how to say it, e.g. 'quasar — KWAY-zar'; only
   for names the voice may misread>
 ```
@@ -438,7 +448,7 @@ PRONUNCIATION: <word — how to say it, e.g. 'quasar — KWAY-zar'; only
       counter), and a new visual idea arrives at least every ~5–10 s
 - [ ] The LOOP returns to the hook, with no call to action
 
-### Example (first two beats)
+### Example (three beats)
 
 ```
 FORMAT: Scale
@@ -446,17 +456,22 @@ TARGET LENGTH: 45 s
 TITLE: 1.3 Million Earths Fit Inside the Sun
 SLUG: sun-volume
 TONE: calm awe
-HOOK FRAME: the Sun, huge and glowing; a tiny Earth marked beside it; "1.3 million Earths"
-SCALE: true (beats 1–2)
+HOOK FRAME: close on the Sun's glowing surface, filling the frame, the camera already moving back
+HOOK MOVE: fast pull-back: the whole Sun comes into view with a tiny Earth beside it, and
+  "1.3 million Earths" lands with the voice by ~3 s
+SCALE: true (beats 1–2 and reveal step 1)
 
 SOURCES:
 - Sun's volume ≈ 1.3 million Earths — NASA Sun fact sheet
 - Sun's diameter ≈ 109 × Earth's — NASA Sun fact sheet
+- Jupiter's diameter ≈ one tenth of the Sun's — NASA Sun and Jupiter fact sheets
+- The Sun holds ≈ 99.8% of the solar system's mass — NASA Sun facts
 
 BEATS:
 1. HOOK (0–3 s)
    VO: "1.3 million Earths fit inside the Sun."
-   VISUAL: the Sun with a soft halo; Earth as a tiny dot to its left
+   VISUAL: starts on the HOOK FRAME; the pull-back reveals the Sun with its soft halo and Earth
+     as a tiny dot to its left, the hero number landing as the voice says it
    HERO NUMBER: 1.3 million / "Earths" / label "BY VOLUME"
    KEYWORD: Sun
    ANNOTATIONS: marker on Earth — "EARTH ×1"
@@ -467,6 +482,15 @@ BEATS:
    HERO NUMBER: (none)
    KEYWORD: 109, real
    ANNOTATIONS: scale bar under the Sun — "109 × EARTH'S WIDTH"
+
+4. REVEAL (two of its steps)
+   VO: "Even Jupiter, the biggest planet, is a tenth of its width." / "And the Sun holds 99.8 percent of all the mass in the solar system."
+   VISUAL: step 1, a Scale comparison: Jupiter slides in beside the Sun at true size, Earth still
+     a dot, names underneath. Step 2, a Meter: the Sun shrinks into the center of the gauge, the
+     gold arc fills almost all the way round as 99.8% counts up, label "OF ALL THE MASS"
+   HERO NUMBER: (none)
+   KEYWORD: Jupiter, mass
+   ANNOTATIONS: (none: the comparison names and the meter carry the facts)
 ```
 
 ---
@@ -554,7 +578,7 @@ name is still open.
 
 **Components and formats: done (base).** The base kit (3.1) is built in the brand style and the
 three formats (Impossible Fact, Scale, How It Works) are defined in section 4. The quasar pieces
-(3.4) are built. The Zoom ruler (3.5) is next, once its figures are verified.
+(3.4) are built. The Zoom ruler (3.6) is next, once its figures are verified.
 
 **First short: done.** "What is a quasar?" shipped (opening 2, pull-back). Its lesson (the
 screen showed one thing while the voice explained five) became the visual variety rule and the

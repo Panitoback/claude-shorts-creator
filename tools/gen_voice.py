@@ -2,28 +2,33 @@
 """
 gen_voice.py — ElevenLabs TTS voice track for a TSX short, driven by its beats.json.
 
-Shorts-track voice step. Reads a short's beats.json (vo[] lines with estimated
-start/end seconds), generates each line with ElevenLabs text-to-speech (per line, so a
-single line can be re-rolled without re-billing the rest), time-fits any clip that
-overflows its window (gentle atempo, capped), assembles one timed voice track, and
-writes the ACTUAL line timings back into beats.json — the TSX captions retime from it.
+Shorts-track voice step. Reads a short's beats.json (vo[] lines), generates each line with
+ElevenLabs text-to-speech (per line, so a single line can be re-rolled without re-billing the
+rest), assembles one timed voice track, and writes the REAL line + word timings back into
+beats.json — the composition is animated on them and the captions sync to them.
+
+DEFAULT = VOICE-FIRST (pipeline: script -> voice -> animation -> check -> sound -> final video).
 
 LIBRARY-FIRST: generated lines are cached by (index, text-hash); unchanged lines are
 never re-billed. --force regenerates everything.
 
 Usage:
-  python tools/gen_voice.py --beats shorts/<slug>/beats.json
-  python tools/gen_voice.py --beats ... --mux remotion/out/Short1Chess.mp4   # + voiced preview
-  python tools/gen_voice.py --beats ... --dry-run                            # plan only
-  python tools/gen_voice.py --beats ... --natural --emit-ts <vo.gen.ts>      # VOICE-FIRST (see below)
+  python tools/gen_voice.py --beats shorts/<slug>/beats.json --emit-ts <vo.gen.ts>   # voice-first
+  python tools/gen_voice.py --beats ... --dry-run                     # billed characters / credits
+  python tools/gen_voice.py --beats ... --mux remotion/out/<Id>.mp4   # + voiced preview
+  python tools/gen_voice.py --beats ... --fit-windows                 # LEGACY animation-first
 
-VOICE-FIRST (--natural): no windows, no tempo squeeze. Every line is generated at its natural
+VOICE-FIRST (default): no windows, no tempo squeeze. Every line is generated at its natural
 pace and the timeline is BUILT from the real clip durations: each line starts `gap_before`
 seconds (default format.gap, 0.35) after the previous one ends; the composition is then animated
 on these real word times. beats.json `hook_variants` ({"b": {"text","tts"}, ...}; vo[0] is
 variant "a") are generated too: the hook gets a fixed slot = the longest variant, so everything
 after it is identical in every variant; one voice track per variant (voice-<k>.wav), and
 format.durationSec = last line end + format.tail (default 0.8).
+
+LEGACY (--fit-windows): animation-first. vo[] carries estimated start/end windows; any clip that
+overflows its window is sped up (atempo, capped at 1.3x) and placed at its estimated start.
+Kept only for re-voicing shorts that were animated before voice-first became the default.
 
 Needs ELEVENLABS_API_KEY in .env. ffmpeg/ffprobe on PATH.
 Default voice: the channel voice (JYUzXNeyCPmymMkfcicu). Override with --voice.
@@ -197,10 +202,12 @@ def main():
     ap.add_argument("--emit-ts", help="write the VO (with exact word times) as a TS module, e.g. remotion/src/shots/short-2/vo.gen.ts")
     ap.add_argument("--force", action="store_true")
     ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument("--fit-windows", action="store_true",
+                    help="LEGACY animation-first: squeeze each line into its estimated window")
     ap.add_argument("--natural", action="store_true",
-                    help="voice-first: natural pace, timeline built from the real clip durations")
+                    help="(default now; accepted for old commands) voice-first, natural pace")
     args = ap.parse_args()
-    if args.natural:
+    if not args.fit_windows:
         return natural(args)
 
     beats_path = os.path.abspath(args.beats)
@@ -387,6 +394,12 @@ def natural(args):
         os.makedirs(os.path.dirname(rp), exist_ok=True)
         emit_ts(vo, rp, hooks if len(hooks) > 1 else None, fmt["durationSec"])
         print(f"VO TS module -> {os.path.relpath(rp, ROOT)}")
+    if args.mux:
+        out = os.path.splitext(args.mux)[0] + "-voiced.mp4"
+        run(["ffmpeg", "-y", "-v", "error", "-i", args.mux, "-i", os.path.join(vdir, "voice.wav"),
+             "-map", "0:v", "-map", "1:a", "-c:v", "copy", "-c:a", "aac", "-b:a", "192k",
+             "-t", str(total), out])
+        print(f"voiced preview -> {os.path.relpath(out, ROOT)}")
 
 
 if __name__ == "__main__":
