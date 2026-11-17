@@ -142,6 +142,7 @@ def normalize_clip(path, target_lufs, ceiling_db):
 # usage flags copied from a palette recipe into its catalog entry
 PASS_THROUGH = ("loop", "not_under_narration", "usage_note")
 
+MAX_PROMPT_CHARS = 450  # API limit (HTTP 400 text_too_long above it)
 CREDITS_PER_S = 10  # explicit duration, eleven_text_to_sound_v3: measured 2026-11-15 (docs list 40/s, the v2 price)
 
 
@@ -310,6 +311,9 @@ def main():
     print(f"palette: {len(sounds)} sounds ({len(legacy_ids)} legacy/superseded ignored) | to generate: {len(todo)} | skip (exist): {len(skip)}")
     if skip:
         print("  skipping (library-first):", ", ".join(skip))
+    too_long = [f"{s['id']} ({len(s['prompt'])} chars)" for s, _, _ in todo if len(s["prompt"]) > MAX_PROMPT_CHARS]
+    if too_long:
+        sys.exit(f"prompts over the API's {MAX_PROMPT_CHARS}-char limit, shorten them first: " + ", ".join(too_long))
     if dry:
         total = 0.0
         for s, rel, _ in todo:
@@ -328,6 +332,7 @@ def main():
             audio = generate(api_key, s["prompt"], s["duration_s"], s.get("prompt_influence", pinf), model,
                              loop=s.get("loop", False))
         except urllib.error.HTTPError as e:
+            write_catalog()  # keep what was already generated/archived in this run
             sys.exit(f"ElevenLabs HTTP {e.code}: {e.read().decode('utf-8', 'ignore')[:400]}")
         if keep_old and os.path.exists(path):
             archive(s["id"], path)
