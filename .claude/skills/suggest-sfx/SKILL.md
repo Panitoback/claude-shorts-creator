@@ -71,7 +71,8 @@ Sound taste is a brand contract — read **`brand/brand.md` §7** every time. Th
 3. **Propose the cue list — function-first.** For each beat ask what it needs (brand §7): **motion**
    (whoosh) · **tension** (riser) · **emphasis** (impact/pop) · **snap** (click). Score key
    transitions, reveals, and tasteful click-sequences; a 3–4-shot click-sequence counts as ONE
-   gesture. Mark genuinely deniable texture as `"optional": true`. **Layer the 2–3 biggest moments**
+   gesture. Mark genuinely deniable texture as `"optional": true`. Apply "Placement and
+   audibility" below to every cue (audible-point offset, phone check, no stacking). **Layer the 2–3 biggest moments**
    (build-and-drop): riser→impact on a scripted reveal, whoosh→pop so a cut stands out — in the
    plan a layer is two events at the same/adjacent `at_s` that sum. Sync each cue to the VISUAL
    beat and often the exact word.
@@ -111,6 +112,61 @@ Sound taste is a brand contract — read **`brand/brand.md` §7** every time. Th
      textures under narration".
 8. **Save back.** New clips stay in the library + catalog (they carry to the next video). Update
    `used_in`.
+
+## Placement and audibility (apply while authoring the plan)
+
+Where a sound sits in time matters more than which clip it is. `mix_sfx.py` puts the **start of
+the file** at `at_s`, but the ear hears a clip at its **audible point** (attack or peak), which
+can be a second or more into the file. Always compute:
+
+**`at_s` = picture time − the clip's audible point inside the file.** The measured attack/peak of
+every library clip is in `USAGE.md` → "Timing and phone check". Never place a clip by its start.
+
+| Sound | Align its… | to |
+|---|---|---|
+| snaps, clicks, ticks, pops (a state change) | attack | the frame (0 ms) |
+| hero hits (impact, cosmic event, the reveal) | peak | the frame / the key word |
+| whoosh into a cut or a big move | peak | **100–250 ms before** the cut (the ear cues the eye) |
+| arrivals (a body settles, a label lands after moving) | attack | the **settle**, not the start of the move (~250 ms in) |
+| risers | end of the build (its peak) | the hit; the channel combo then keeps ~0.5 s of near-silence before the hit (USAGE.md) |
+
+- **Target: within ±20 ms of the frame.** At 30 fps one frame is 33 ms, so land on the frame.
+- **Confirm the frame on the render, not the brief.** The shot source gives the frame; check it
+  with `frames.mjs` at that frame (the thing has visibly happened there, not one frame later).
+  Never "fix" an offset before re-checking the picture against a fresh render.
+- **Phone check (Shorts are watched on phones).** Phone speakers play almost nothing under
+  ~300 Hz. A clip that loses more than ~6 dB through a 300 Hz high-pass (the `phone dB` column in
+  USAGE.md) is **invisible on a phone**. Never let a story-critical moment rest on one alone:
+  layer a mid-range sweetener (a clip with a good phone figure) at the same audible point, so the
+  sub-bass is felt on headphones and the mid is heard on the phone. Listen to the final mix once
+  through `-af highpass=f=300` as a phone proxy.
+- **One sound per event; no accidental stacking.** Two cues audible at the same time within
+  ~12 dB of each other read as clutter: keep one, unless it is one of the 2–3 deliberate hero
+  layers. When cues compete, cut by priority: voice > story cue (the event named in the VO) >
+  snap > texture > bed.
+- **A layer has anatomy:** attack (a short mid transient so it reads), body (the weight: the
+  rumble, the boom), tail (the decay into silence). Build hero layers from clips that cover
+  different slots, not two clips that do the same job.
+- **Vary repeats.** A clip repeated in a row (count-up ticks, a click-sequence) gets a small
+  `gain_db` jitter per hit (±1–2 dB, the thinned-out ticks getting slightly quieter) so it never
+  sounds like one sample looped.
+- **Sound follows the same dial as the picture.** If a visual parameter drives the scene
+  (luminosity, size, distance), the sound tracks it: brightening = `glow-swell`; far away = quieter
+  and sparser (an object shrinking to a distant point loses its body sound; don't hit it hard).
+  Honest sound, like honest scale.
+- **Respect the loop seam.** Every cue's tail must finish before `end_s`: the last frame loops
+  into frame 0, so a tail cut at the end is an audible click on replay. Move the cue earlier or
+  pick a shorter clip; never extend the picture (it would break the seamless loop).
+- **Silence is a cue.** Leave the gaps in the voice open unless a cue earns them.
+
+## Final mix checklist (before showing the user a mix)
+
+1. Every cue corresponds to something visible on screen at that moment; remove the rest.
+2. Audible points land on their frames (spot-check the hero cues at phone scale, frame by frame).
+3. Story-critical cues pass the RMS check (≥ +4 dB) **and** survive the 300 Hz phone proxy.
+4. No two non-hero cues overlap within ~12 dB; the 0.5 s silence before the main reveal is intact.
+5. Narration level is even across the short; nothing peaks above the voice.
+6. No tail crosses the loop seam; the bed (if any) fades rather than cutting.
 
 ## sfx-plan.json (the source of truth)
 
@@ -153,7 +209,8 @@ Sound taste is a brand contract — read **`brand/brand.md` §7** every time. Th
 - **Key transitions & reveals only** — plus the diegetic action sounds that ARE a synthetic short's
   content (piece thocks, digit pops). Everything past that is `optional`.
 - **Sync to the visual beat AND the word.** A click exactly on the toggle flip; a pop exactly on
-  the reveal. Off-by-100ms reads as sloppy — use real frame/word times.
+  the reveal. Off-by-100ms reads as sloppy — use real frame/word times, and place each clip by its
+  audible point (attack/peak), not its file start (see "Placement and audibility").
 - **Reusable-first.** Generic names + tags so the library compounds across videos. Reuse before
   you generate. The library is the deliverable that outlives this video.
 - **Function over vibe.** Pick the sound by its job — motion/tension/emphasis/snap (brand §7) —
