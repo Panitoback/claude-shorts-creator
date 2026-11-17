@@ -5,6 +5,7 @@ vertical shorts where every pixel is Remotion TSX.
 
 ## This channel
 
+- **Name:** **Look Back in Time** (decided 2026-11-17).
 - **What:** a code-animated YouTube Shorts channel (also Reels/TikTok) **about the universe**:
   space, scale, light, gravity, time. English narration, minimalist and cinematic.
 - **Hard constraints:** **no AI-generated visuals** (no image or video models, no photos, no
@@ -35,7 +36,6 @@ vertical shorts where every pixel is Remotion TSX.
   gen_voice.py defaults. We write one delivery tag per line in `tts` (the API has no "auto tags";
   see make-short Stage 4). Narration pace ~2.4 words/s (measured with it; re-measure with
   `shorts/_calibration/` if the voice or model changes).
-- **Still open:** channel name.
 - **SFX library:** every clip in `media/library/sfx/clips/` is ours: 34 generated with **our**
   ElevenLabs account (`eleven_text_to_sound_v3`, ~10 credits/s measured) and 4 physics sounds
   synthesized in code (`tools/synth_sfx.py`: redshift glide, pulsar ticks at a real period,
@@ -103,6 +103,11 @@ skills-lock.json  pins the installed remotion-* skills (`npx skills install` res
   SAFE), never hard-coded values. New reusable components go in `src/components/` and get a page
   in `ComponentGallery`.
   `BrandReference` is the brand rendered: re-check it after any token change.
+- **Layout is not hard-coded (16:9-ready):** shorts may later be rendered at 1920×1080 for
+  YouTube long-form compilations. New components and compositions take vertical positions and
+  sizes from props or a shared layout object (safe area, caption lane, title zone; today the
+  `SAFE`/`SAFE_RECT`/`CAPTION` tokens in `brand.ts`) that could get a 16:9 twin, never from
+  literal y values like `top: 1350`. Existing code is NOT to be refactored for this now.
 - **Safe zones:** QA every shot with `--safe` (frames.mjs / render-all.mjs) or `safeOverlay` in
   Studio; nothing important outside the safe rectangle.
 - **QA is not optional:** render frames at phone scale and READ them before any full render.

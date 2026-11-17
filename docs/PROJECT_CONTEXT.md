@@ -3,7 +3,7 @@
 > **For:** the planning project where topics, aesthetics and scripts are developed.
 > **Pair it with:** `brand.md` (the visual and sound style contract — read it for colors, type,
 > captions, annotations, motion, safe zones and sound taste; this file never repeats it).
-> **Version:** v0.11.3 · 2026-11-17 · phase: *first short done → visual variety kit built*
+> **Version:** v0.11.4 · 2026-11-17 · phase: *first short done → visual variety kit built*
 >
 > This file describes **what can be asked for**, not how it is built. If a script asks for
 > something listed here, it can be made. If it asks for something not listed, flag it as a
@@ -13,6 +13,7 @@
 
 ## 1. What this channel is
 
+- **The channel is called *Look Back in Time*.**
 - **Vertical shorts about the universe for YouTube Shorts, TikTok and Instagram Reels.** Usually 30–120 seconds, depending on the format (see section 5).
   Space, scale, light, gravity, time, planets, stars, the things that make the cosmos feel
   unreal but are true.
@@ -585,7 +586,7 @@ What worked and what didn't. Newest first.
 
 **Visual identity: done.** The chosen direction is the *Deep Field hybrid*: cinematic and
 editorial, warm, with sparse scientific annotations. It is written up in `brand.md`. The channel
-name is still open.
+name is decided: ***Look Back in Time***.
 
 **Components and formats: done (base).** The base kit (3.1) is built in the brand style and the
 three formats (Impossible Fact, Scale, How It Works) are defined in section 4. The quasar pieces

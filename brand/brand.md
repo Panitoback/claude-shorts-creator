@@ -14,6 +14,7 @@
 
 ## 1. Identity and voice
 
+- **Channel name:** ***Look Back in Time***.
 - **What it feels like:** looking up at a clear night sky with a very good guide beside you.
   Warm and precise. The universe is the spectacle, so the design stays out of the way.
 - **An energy curve, not one energy level.** The first ~3 s grab (fast, bright, loud enough for

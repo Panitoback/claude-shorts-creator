@@ -144,6 +144,11 @@ python tools/gen_voice.py --beats shorts/<slug>/beats.json \
   1→1.06) so the video loops seamlessly.
 - Safe zones (brand §9): everything important inside `SAFE_RECT` (x 60→900, y 210→1420);
   captions in the caption lane (`CAPTION.centerY` 1350, ≤720 px wide, symmetric).
+- **No hard-coded vertical positions (16:9-ready):** shorts may later be re-rendered at
+  1920×1080 for long-form compilations. In new components and compositions, take y positions and
+  heights from props or the shared layout tokens (safe area, caption lane, title zone: `SAFE`,
+  `SAFE_RECT`, `CAPTION` in `brand.ts`), derived from them rather than typed as literals, so a
+  16:9 layout object can be swapped in later. Don't refactor existing shots for this.
 - Caption keyword = gold italic serif (`TYPE.keyword`); one per chunk, from guion.md KEYWORD.
 
 ## Stage 4 — QA (do not skip, it catches real bugs every time)
