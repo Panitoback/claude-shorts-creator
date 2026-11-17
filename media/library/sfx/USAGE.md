@@ -315,12 +315,14 @@ copied; none of them are installed.
 
 *(Newest first. One entry per produced short: slug, clips used, gains that landed, what to change.)*
 
-- **what-is-a-quasar-v2** (2026-11-17, brand v2.1, `shorts/what-is-a-quasar-v2/sfx-plan.json`; awaiting the user's ear)
+- **what-is-a-quasar-v2** (2026-11-17, brand v2.1, `shorts/what-is-a-quasar-v2/sfx-plan.json`; approved by the user)
   - First plan chosen entirely by production from the script's `SOUND MOOD` (no clips named in the script).
   - User-requested additions (2026-11-17, generated for this short, ~75 credits): `gas-infall-swirl` +3
     on "falling in" while the disk builds (+10.1 phone); `light-glint-flicker` with the flicker after
     "So what's shining?". Under the word itself it measured GONE even at +7 (the duck); moved into the
     0.7 s voice pause at +3: +9.4 phone. **Lesson: a sound for a spoken word goes in the pause after it.**
+  - User: "the gas is too loud, the voice is not clear": `gas-infall-swirl` +3 → **−5** (+10.1 → +4.0
+    phone). **Lesson: a 6 s texture under continuous speech starts at −5, not like a one-shot.**
   - Hook: hook-hit +1 (+25.2 phone), whoosh-deep **+3** from file start 0 (the pull-back starts on
     frame 0, so it can't be peak-aligned before 0; its peak lands at 0.52 s: +6.5), glow-swell 0 on
     "brightest" (+6.3).
@@ -331,8 +333,11 @@ copied; none of them are installed.
   - Counting under continuous speech: meter ticks + number-settle measured gone / weak (duck eats
     them); timeline ticks weak except the gold markers. Accepted as felt-not-heard; to make them
     heard, +3 dB or place the settle in a voice gap.
-  - Bed: accretion-swirl-loop `--under 16 --fade 0.3` for the whole short (the quasar is on screen
-    as disk, hole or point throughout). Final −13.3 LUFS.
+  - Background (first two-layer mix, user-approved): music `bed-mysterious-vast` 19 dB under the
+    voice, duck 9, `--lift "0-3:+3,41.6-43.6:+4,51.8-54:+3"` (hook, "Combined.", twist), fade 0.3;
+    ambient `accretion-swirl-loop` 24 dB under the voice (was 16: the user found the wind too loud),
+    duck 6. Measured: both together ~−38 dB RMS in the voice gaps (~19 dB under the voice's −19),
+    still ~−40 through the phone proxy; under speech they add +0.2 dB. Final −13.7 LUFS.
 
 - **what-is-a-quasar** (2026-11-16, brand v2.0, plans in `shorts/what-is-a-quasar/sfx-plan*.json`)
   - Hook: hook-hit +1 on frame 0 (+25 dB phone); whoosh-deep +2 at the pull-back's peak (+3.2 on

@@ -219,7 +219,9 @@
       "plan_tier": "starter",
       "license": "ElevenLabs generated (Eleven Music) with OUR account (starter plan at generation time). Music Terms (elevenlabs.io/music-terms, 2026-10-09), paid plans: online and offline commercial use permitted except film, TV, radio and studio games; no attribution on paid plans; we own the output (ToS 4(c)(ii)); platform AI-disclosure rules apply (Music Terms 4.4). Starter: 'streaming' column = Prohibited (see USAGE notes)",
       "prompt": "Slow, warm, cinematic ambient music for a space documentary. Instrumental only. Steady, even intensity from start to finish with no big build-ups, no drops and no structural changes, so it can sit under any narration and loop seamlessly. No drums, no epic trailer percussion, no vocals, nothing busy. Mood: mysterious and vast. Deep warm drones and airy evolving pads in A minor, distant low strings, an occasional soft celesta note, around 60 BPM, huge reverb; awe, never scary.",
-      "used_in": [],
+      "used_in": [
+        "what-is-a-quasar-v2"
+      ],
       "loop": true,
       "raw_file": "raw/bed-mysterious-vast.mp3 (local, git-ignored)",
       "loop_from_raw_s": [
