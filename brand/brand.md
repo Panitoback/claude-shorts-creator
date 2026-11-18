@@ -377,6 +377,10 @@ That leaves a **safe rectangle of 840 × 1210 px** from (60, 210) to (900, 1420)
   0 is already complete.)
 - **The last frame leads back into frame 0**, so the loop is seamless: the ending returns to the
   hook's starting state, not to its payoff. There are no subscribe or comment-bait outros.
-- **Audio: −14 LUFS integrated, true peak ≤ −1 dBTP measured on the final encoded file** (two-pass
-  loudnorm aiming at −2.0 dBTP, since the AAC encode adds a few tenths). A review copy keeps the
-  final's audio stream untouched.
+- **Audio: −14 LUFS integrated (±0.5), true peak ≤ −2.0 dBTP measured on the final encoded file**,
+  and the audio ends with the picture (no tail past the last frame: it would freeze the loop seam).
+  `tools/finalize_audio.py` does all three and fails loudly when the file is out of spec. A review
+  copy keeps the final's audio stream untouched.
+- **Checked on the render before anyone watches it:** no near-still run ≥ 4 s, no near-empty frame
+  run > 1 s, no hero too small for ≥ 2 s (`tools/motion_check.py`, `tools/frame_check.py`; flags
+  listed in the QA report).

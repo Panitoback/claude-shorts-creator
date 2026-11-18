@@ -163,7 +163,9 @@ every further call in the same run (the `--safe` pass, a second composition) nee
 READ every PNG (phone scale). Checklist: frame 0 composed & thumbnail-grade · every reveal
 synced to its beat · nothing covering the payoff element · kickers swap with the narration ·
 nothing important outside the safe rectangle in the `--safe` pass · stars cleared behind text ·
-≤2 annotations per scene · loop frame ≈ frame 0.
+≤2 annotations per scene · loop frame ≈ frame 0 · **frame filling (brand §5 v2.4): each scene's
+hero spans ~50–60 % of the safe width or more, small actors (particles, arrows, points) clearly
+visible at phone scale, no scene half black, diagrams centered with labels ≥ 60 px**.
 
 **QA warnings:** components report fixable problems as `[QA]` browser warnings; frames.mjs and
 render-all.mjs print them and write `remotion/out/qa/<Id>-qa.json`. The QA report you give the
@@ -178,6 +180,20 @@ node scripts/render-all.mjs <Id> --scale=1     # -> remotion/out/<Id>.mp4
 ffmpeg -i remotion/out/<Id>.mp4 -i shorts/<slug>/voice/voice.wav -map 0:v -map 1:a -c:v copy \
   -c:a aac -b:a 192k -t <durationSec> remotion/out/<Id>-voiced.mp4
 ```
+
+**Video checks on the full render (do not skip; run AFTER the last frames.mjs pass, which wipes
+out/qa/):**
+
+```
+python tools/motion_check.py remotion/out/<Id>.mp4     # near-still runs ≥ 4 s (per-second motion)
+python tools/frame_check.py remotion/out/<Id>.mp4      # empty frames > 1 s · hero too small ≥ 2 s
+```
+Both add a section to `remotion/out/qa/<Id>-qa.json` (`motion`, `frames`) and rebuild its
+top-level `flags` list. Thresholds are calibrated on "Why Time Only Moves Forward" (see each
+tool's docstring). **The QA report you give the user lists EVERY flag from that file (time range +
+check + message) BEFORE you show or send any video**, or says "no flags". Fix what you can
+(moving content tied to the idea, a push-in, a bigger hero, shorter darkness: brand §5/§8) and
+re-run the checks; anything left is the user's call, so say what it is and why it's there.
 
 ## Stage 5 — SFX (the suggest-sfx machinery, shorts flavor)
 
@@ -212,11 +228,25 @@ Audition over the SFX mix: `python tools/mix_music.py --all --base shorts/<slug>
 (or `--bed <id>`; SFX loops default to `--under 16`; `--from/--to` for a partial bed). Ducked
 under voice, faded in/out.
 
+## Stage 7 — finalize the audio (every final, always last)
+
+```
+python tools/finalize_audio.py shorts/<slug>/output/<slug>-final.mp4 --id <Id>
+```
+Two-pass loudnorm to **−14 LUFS, true peak ≤ −2.0 dBTP measured on the encoded AAC file** (it
+retries with a lower target if the encode overshoots), audio trimmed to end with the picture (a
+longer tail freezes the last frame at the loop seam) with a 20 ms fade. It writes the `audio`
+section of the QA json. **If it prints FAIL (exit 2), the final is NOT delivered**: the output is
+left untouched and the attempt is saved as `<name>.FAILED.mp4`; fix the mix (usually a hot SFX
+hit) and run it again. `--check` measures an existing file against the spec.
+
 ## Done =
 
 script.md + beats.json derived from guion.md (facts verified) · voice generated first at natural
 pace, timeline from its real word timings · composition animated on that timeline, QA'd
 frame-by-frame (incl. `--safe` pass) · rendered at scale 1 and muxed with the voice ·
-SFX plan authored + audition mixed (~−15.5 LUFS, awaiting the user's ear) · library used_in
+video checks run and every flag listed in the QA report before the user saw a video ·
+SFX plan authored + audition mixed (~−15.5 LUFS, awaiting the user's ear) · final passed
+`finalize_audio.py` (−14 LUFS, ≤ −2.0 dBTP) · library used_in
 and `media/library/sfx/USAGE.md` updated · **`PRODUCED.md` row added/updated** · anything learned added to the Learnings section of
 `docs/PROJECT_CONTEXT.md` (then tell the user it changed so they re-upload it).

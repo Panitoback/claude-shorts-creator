@@ -70,7 +70,8 @@ skills win.
 ## Layout
 
 ```
-tools/            Python tools: gen_voice, gen_sfx, synth_sfx, sfx_audition, gen_music, loop_music, mix_sfx, mix_music
+tools/            Python tools: gen_voice, gen_sfx, synth_sfx, sfx_audition, gen_music, loop_music, mix_sfx, mix_music,
+                  finalize_audio (delivery loudness, fails loudly) · motion_check + frame_check (video QA → out/qa/<Id>-qa.json)
 remotion/         the Remotion project — src/components/ (the channel's base kit, brand style),
                   src/lib/ (shared + inherited kits), src/shots/short-N/, src/shots/gallery/
 media/            Remotion's public root: library/ (reusable: sfx, music, logos)
@@ -111,4 +112,6 @@ skills-lock.json  pins the installed remotion-* skills (`npx skills install` res
   literal y values like `top: 1350`. Existing code is NOT to be refactored for this now.
 - **Safe zones:** QA every shot with `--safe` (frames.mjs / render-all.mjs) or `safeOverlay` in
   Studio; nothing important outside the safe rectangle.
-- **QA is not optional:** render frames at phone scale and READ them before any full render.
+- **QA is not optional:** render frames at phone scale and READ them before any full render; on the
+  full render run `tools/motion_check.py` + `tools/frame_check.py` and list every flag in the QA report
+  before the user sees a video; every final goes through `tools/finalize_audio.py` (−14 LUFS, ≤ −2.0 dBTP).

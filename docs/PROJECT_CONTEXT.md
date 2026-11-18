@@ -3,7 +3,7 @@
 > **For:** the planning project where topics, aesthetics and scripts are developed.
 > **Pair it with:** `brand.md` (the visual and sound style contract — read it for colors, type,
 > captions, annotations, motion, safe zones and sound taste; this file never repeats it).
-> **Version:** v0.16.0 · 2026-11-17 · phase: *second short done ("Why Time Only Moves Forward") + dynamism kit + frame-filling review*
+> **Version:** v0.16.1 · 2026-11-17 · phase: *second short done ("Why Time Only Moves Forward") + dynamism kit + frame-filling review*
 >
 > This file describes **what can be asked for**, not how it is built. If a script asks for
 > something listed here, it can be made. If it asks for something not listed, flag it as a
@@ -560,8 +560,14 @@ What worked and what didn't. Newest first.
   a second of dark. Measured motion in the flat stretches went from ~0.2–0.4 to ~1–2 (the box
   scenes, which felt right, measure ~2.5). Scripts can help: give every scene something that
   *moves* in its picture, not just something that appears.
-- **True peak is measured after encoding.** Aiming loudnorm at −1.5 dBTP gave −0.6 on the AAC file;
-  aiming at −2.0 gives −1.1 to −1.4.
+- **True peak is measured after encoding.** Aiming loudnorm at −1.5 dBTP gave −0.6 on the AAC file.
+  The delivery spec is now ≤ −2.0 dBTP on the encoded file, enforced by a tool that retries with a
+  lower target and refuses to deliver a file out of spec.
+- **Every render is now measured before you see it:** motion per second (near-still runs ≥ 4 s),
+  near-empty frames (> 1 s) and hero size (too small for ≥ 2 s), calibrated on this short's review.
+  Each flag comes with the QA report, so a script can be adjusted before the video exists in final
+  form. Practical hint for scripts: transitions between big ideas and dark endings are where flags
+  appear; give them something visible (a moving element, the next picture arriving early).
 
 - **Connected scenes feel faster without being louder.** The dynamism pass on "Why Time Only
   Moves Forward" (a "100" of particles → the box, the box's frame → the balance beam, a dive into
