@@ -76,6 +76,38 @@ export const RADIUS_KM = {
 } as const;
 
 // =============================================================================
+// §11 GROUND VIEW (brand v2.5) — the sky as seen from Earth. Muted true-to-life sky colors are
+// DEPICTIONS (like a true-color planet), never accents. Stops: zenith, mid (~20° elevation), horizon.
+// =============================================================================
+export type SkyPreset = 'night' | 'twilight' | 'dusk' | 'dayMuted' | 'day' | 'eclipse';
+export const SKY: Record<SkyPreset, { zenith: string; mid: string; horizon: string; stars: number }> = {
+  // stars = how much of the starfield shows (0 none … 1 all), brightest first
+  night: { zenith: '#05060a', mid: '#080b14', horizon: '#121a2b', stars: 1 },
+  twilight: { zenith: '#0b1226', mid: '#1a2846', horizon: '#33445f', stars: 0.12 },
+  dusk: { zenith: '#1a2140', mid: '#4a4560', horizon: '#b8764a', stars: 0.02 },
+  dayMuted: { zenith: '#2c4466', mid: '#46607f', horizon: '#6f879e', stars: 0 },
+  // bright day (v2.5): pale blue, lighter toward the horizon. Ivory text reads by PLACEMENT (upper
+  // sky: ≥ 3:1 above ~50° elevation, measured 3.7:1 behind a title) or with SKY_TEXT_SHADOW (6.4:1), never by darkening the sky.
+  day: { zenith: '#4176b6', mid: '#7fa7d4', horizon: '#bcd2e4', stars: 0 },
+  // totality: a dark blue-grey dome with a 360° sunset ring on the horizon
+  eclipse: { zenith: '#0c1222', mid: '#1b2234', horizon: '#8a6a4a', stars: 0.1 },
+};
+// soft dark halo for ivory text over a bright sky (6.4:1 measured around caption glyphs on the day sky, brand §11)
+export const SKY_TEXT_SHADOW = '0 0 22px rgba(5,6,10,0.55), 0 0 8px rgba(5,6,10,0.45), 0 2px 3px rgba(5,6,10,0.35)';
+export const GROUND = {
+  land: '#06070b', // the nearest silhouette: near-black, never #000; farther layers take sky color
+  aerial: 0.55, // how much sky color the farthest layer takes (aerial perspective)
+  wideFov: 60, // degrees across the frame width in a wide landscape
+  eyeM: 1.6, // observer eye height, m
+  moonDark: '#0b0d14', // the Moon's night side against the Sun: the space family, never #000
+  earthshine: '#1a1f2c', // faint lift on that night side
+  corona: '#f4f1ea', // pearly ivory-white (NOT gold)
+  prominence: '#e88a8a',
+} as const;
+// true apparent diameters, degrees (honest scale, brand §11)
+export const APPARENT_DEG = { sun: 0.533, moon: 0.518, moonPerigee: 0.558, moonApogee: 0.491 } as const;
+
+// =============================================================================
 // §3 TYPOGRAPHY — roles, not fonts. Sizes are px on the 1080×1920 canvas.
 // =============================================================================
 export const TYPE = {

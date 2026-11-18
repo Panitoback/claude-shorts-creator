@@ -31,6 +31,10 @@ vertical shorts where every pixel is Remotion TSX.
      `docs/design-notes/zoom-ruler-levels.md`, waiting for the user to verify the figures.
   4. ✅ first short: "What is a quasar?" (+ v2, visual variety) · ✅ second short: "Why Time Only
      Moves Forward" (`shorts/why-time-moves-forward/`, arrow-of-time kit; variant B chosen)
+     · ✅ **ground view** (brand §11, v2.5): second visual mode for near-space topics (SkyView,
+     Horizon, Observer, SkyBody, Eclipse total/annular, AngleCone, GroundScene, TiltUp,
+     PullBackToEarth; one field of view drives honest sizes, `lib/groundSky.ts`), reviewed in the
+     `GroundGallery` composition. Next: "sun-moon-400", then the moon illusion.
   5. custom skills `script-to-short` and `new-component` (then §6 of PROJECT_CONTEXT becomes final)
   6. Manim — only for physics/equation scenes, rendered as clips inside Remotion
 - **Channel voice:** ElevenLabs `JYUzXNeyCPmymMkfcicu` ("Jon") on **Eleven v4 Turbo**, both
@@ -103,7 +107,7 @@ skills-lock.json  pins the installed remotion-* skills (`npx skills install` res
 - **Brand:** `brand/brand.md` and `remotion/src/brand.ts` change together. New shots are built
   from `remotion/src/components/` + the brand tokens (PALETTE, TYPE, CAPTION, ANNOTATION, MOTION,
   SAFE), never hard-coded values. New reusable components go in `src/components/` and get a page
-  in `ComponentGallery`.
+  in `ComponentGallery` (ground-view components: `GroundGallery`).
   `BrandReference` is the brand rendered: re-check it after any token change.
 - **Layout is not hard-coded (16:9-ready):** shorts may later be rendered at 1920×1080 for
   YouTube long-form compilations. New components and compositions take vertical positions and

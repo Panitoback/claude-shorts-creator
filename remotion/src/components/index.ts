@@ -51,3 +51,17 @@ export { ParticleGlyphs, glyphLayout } from './ParticleGlyphs';
 export { OdometerNumber } from './OdometerNumber';
 export { TimeStream } from './TimeStream';
 export type { TimeStreamProps } from './TimeStream';
+// Ground view (brand §11, v2.5): the sky as seen from Earth
+export { SkyView } from './SkyView';
+export type { SkyViewProps, SkyPlanet } from './SkyView';
+export { Horizon, horizonLayers, groundYAt } from './Horizon';
+export type { HorizonLayer, HorizonVariant } from './Horizon';
+export { Observer } from './Observer';
+export type { ObserverPose } from './Observer';
+export { SkyBody, skyBodyRadius } from './SkyBody';
+export { Eclipse } from './Eclipse';
+export { AngleCone, coneDisc } from './AngleCone';
+export { GroundScene } from './GroundScene';
+export type { GroundScenePreset } from './GroundScene';
+export { TiltUp, tiltFor } from './TiltUp';
+export { PullBackToEarth } from './PullBackToEarth';

@@ -6,12 +6,13 @@
 > **Reference scene:** the `BrandReference` composition is this document rendered on screen. If
 > it looks right, the brand is right.
 >
-> v2.4 · 2026-11-17 · direction: *Deep Field hybrid* (cinematic and editorial, with a few
+> v2.5 · 2026-11-18 · direction: *Deep Field hybrid* (cinematic and editorial, with a few
 > scientific annotations) · **energy curve**: a high-energy hook, a calm body, bursts on the peaks ·
 > **visual variety**: scenes change, and every number is shown · **whip transitions** approved as a
 > hand-off (§8) · **dynamism** (v2.3): shape match cuts, fly-throughs, a living camera, punch-ins,
 > beat sync, motion blur on fast moves only (§8) · **fill the frame** (v2.4): hero sizes, motion that
-> registers in sparse scenes, ≤ 1 s of black at the end (§5, §8)
+> registers in sparse scenes, ≤ 1 s of black at the end (§5, §8) · **two visual modes** (v2.5):
+> SPACE VIEW (the default, §1–§10) and **GROUND VIEW**, the sky as seen from Earth (§11)
 
 ---
 
@@ -28,6 +29,11 @@
   never one scene for the whole short: what the voice explains, the screen shows (§5). Numbers
   are set like magazine headlines. A thin line of scientific annotation can prove a point, but
   never decorates.
+- **Two visual modes, one identity (v2.5).** **Space view** (out among the objects, on `space`
+  black) and **ground view** (the sky as you see it from Earth: a true-to-life sky, a dark
+  horizon silhouette, optionally a small observer, §11). Typography, gold, annotations, captions,
+  the energy curve, visual variety, motion and sound rules are the same in both; only the
+  backdrop changes. A short may use one mode or travel between them (§11 transitions).
 - **Minimalist.** If an element doesn't help the viewer understand the one idea of the scene, it
   goes.
 - **Code-drawn, never generated.** There are no photos and no AI images or video. Every object is
@@ -39,7 +45,7 @@
 
 | Role | Name | Value | Use |
 |---|---|---|---|
-| Background | **space** | `#05060a` | Every scene. Near-black and faintly warm, **never pure `#000`** (one exception below) |
+| Background | **space** | `#05060a` | Every space-view scene (ground view uses the sky gradients of §11). Near-black and faintly warm, **never pure `#000`** (one exception below) |
 | Black-hole shadow | **hole** | `#000000` | **The single exception:** only the shadow of a black hole. It must read as darker than space itself (light can't escape), and it sits right next to the brightest white on the channel (a quasar's disk), so the contrast carries the luminosity without flares. Nothing else, ever, is pure black. |
 | Warm wash | spaceWarm | `rgba(255,170,90,.08)` | One soft radial wash behind the hero object, and nothing more |
 | Text | **ivory** | `#f4f1ea` | Numbers, captions, titles: all primary text |
@@ -58,6 +64,10 @@
 - **True-color bodies are an exception to the accents.** Earth may be its own pale blue, Mars its
   own rust, stars their real temperature colors (§5) and a quasar's jets their cool blue-white.
   These are depictions, not accents (and not annotations).
+- **Sky colors are depictions too (v2.5).** In ground view, the muted, true-to-life colors of the
+  sky (a night's deep blue-black, twilight blue, a dusk horizon's dull amber, a day's pale or muted blue,
+  an eclipse's 360° sunset ring) are depictions like a true-color planet, not accents: they never
+  stand in for gold or for annotation blue. Their values live in §11.
 
 ## 3. Typography
 
@@ -384,3 +394,146 @@ That leaves a **safe rectangle of 840 × 1210 px** from (60, 210) to (900, 1420)
 - **Checked on the render before anyone watches it:** no near-still run ≥ 4 s, no near-empty frame
   run > 1 s, no hero too small for ≥ 2 s (`tools/motion_check.py`, `tools/frame_check.py`; flags
   listed in the QA report).
+
+## 11. Ground view (v2.5): the sky as seen from Earth
+
+The channel's near-space topics (Earth, the Moon, the Sun, satellites, the sky you can see) often
+happen *from the ground*. Ground view keeps the whole identity and changes only the backdrop:
+**a sky, a horizon, and sometimes a person looking up.** It feels like the brand's founding image
+(§1): a clear sky with a good guide beside you.
+
+### The sky (`SkyView`)
+
+A gradient **by elevation** (horizon → zenith) in true-to-life colors (depictions, §2), so it stays
+right when the camera tilts or the field of view narrows (a telephoto view only sees the band just
+above the horizon, as a real lens does). Six presets, and the sky can blend from one to the next:
+
+| Preset | Zenith → horizon | Stars | When |
+|---|---|---|---|
+| **night** | `#05060a` → `#121a2b` (a faint airglow at the horizon) | full sky | the default for anything seen at night |
+| **twilight** | `#0b1226` → `#33445f` | the brightest only | the blue hour, after dusk |
+| **dusk** | `#1a2140` → `#b8764a` (a dull amber band, never saturated orange) | none, or 1–2 planets | sunset, sunrise |
+| **dayMuted** | `#2c4466` → `#6f879e` (darker and greyer than a real noon sky, as if exposed for the Sun) | none | a quiet daylight backdrop under text; an annular eclipse's "slightly dimmed daylight" |
+| **day** (bright) | `#4176b6` → `#bcd2e4` (pale blue, **lighter toward the horizon**) | none | full daylight: the start of a total eclipse, so day → totality is a strong contrast |
+| **eclipse** | `#0c1222` → a **360° sunset ring** `#8a6a4a` at the horizon | bright stars and planets come out | totality: a dial blends *day → eclipse* as the Moon covers the Sun |
+
+- **Text always reads, without darkening the sky.** Ivory text (large text) needs ≥ 3 : 1. Every
+  preset except bright day passes everywhere (worst: dusk's horizon 3.25 : 1). Over the **bright day**
+  sky, text reads by **placement** (the upper sky: bare zenith 4.1 : 1, measured 3.6 : 1 behind a
+  title in the top of the safe area) or with the **soft text shadow** (`SKY_TEXT_SHADOW`: a wide,
+  dark, feathered halo, measured 6.5 : 1 around caption glyphs in the caption lane, where the bare
+  sky is only 1.4–2.2 : 1). No scrims, no boxes.
+- **Stars come out one by one, never as a fade of the whole sky.** When the sky darkens, the
+  brightest points appear first (planets, then the brightest stars), each a clear ~0.5 s fade,
+  then fainter ones: the same compression rule as the sky going out (§8), run forwards. A sky
+  that is night from frame 0 already has its stars (§5).
+- **Brightness changes of the whole sky are slow and smooth** (≥ ~1.5 s), never a flicker; the
+  eclipse darkening is the one sky change allowed to be dramatic, and it is still a ramp.
+- **Grain is mandatory** over sky gradients (they band first under compression), as in §5.
+- Stars in ground view follow §5 (sizes, tints, only bright ones twinkle) and never sit on the
+  silhouette: they stop at the horizon.
+
+### The horizon (`Horizon`)
+
+**Flat, dark silhouettes, never photographic:** no texture, no lit faces, no outlines. Variants:
+**hills**, **mountains**, **treeline**, **city skyline** (generic blocks and a few lit windows at
+most, no recognizable skyline or landmark), **sea** (a flat line; the Sun or Moon may lay a soft,
+broken reflection path on it).
+
+- Color: near-black, slightly darker than the sky just above it, never pure `#000`. Farther
+  layers take a little of the sky's color (aerial perspective), so 2–3 layers read as depth.
+- **Real heights at real distances.** Each layer is a true height (a 15–20 m treeline, 30–150 m
+  buildings, 1–3 km mountains) at a true distance, projected with the frame's field of view, so the
+  silhouettes obey the same optics as the Sun and the Moon.
+- **Parallax-ready:** each layer has a depth; moving the camera sideways moves near layers more
+  than far ones, and the sky and stars don't move. (Panning or tilting moves everything together:
+  that's a rotation, not parallax.)
+- **The horizon is always level.** The camera never rolls.
+- **Placement:** by default the horizon sits near the bottom of the safe rectangle and the
+  silhouettes fill the platform-UI band below it (§9), so the sky, the safe area, holds the
+  information. The horizon height is a prop (16:9-ready), never a fixed y.
+
+### The observer (`Observer`, optional)
+
+A small, sober human silhouette looking up, for scale and emotion: the same flat dark as the
+horizon, realistic proportions, a few poses (standing, head tilted up; sitting; pointing). **No
+cartoon look, no face, no gesture bigger than pointing.** One per scene, small (it is never the
+hero; the sky is), standing **on** the nearest horizon layer (never sunk into it).
+
+### The Sun and the Moon in the sky
+
+- **True apparent size, always.** Both are ~0.5° across (Sun 0.533°, Moon 0.49–0.56°, 0.518° on
+  average), drawn against the frame's **field of view** (degrees across the frame width). **Honest
+  optics, two cases:**
+  - **Wide frame** (a landscape, ~60° across): the disc is ~9 px, small and honest. **Never
+    enlarge a disc in a wide frame**: no "giant Moon" pasted over a wide landscape.
+  - **Telephoto** (a narrow field of view, 1–8° across): a **big Sun or Moon is allowed**, because
+    that's what a long lens really shows: at 1.5° the Moon is ~370 px across. The horizon then
+    follows the same optics: whatever stands in front of the disc is **far away, in true
+    proportion** (a ridge or a skyline 10–20 km off; a 150 m tower at 20 km is ~0.43°, a little
+    smaller than the Moon). Say "telephoto" in the script or on screen when it matters (a moon-
+    illusion topic should).
+- When a scene is about their size, a scale bar may say "0.5°".
+- The Sun is a glowing body (§5, gold is right: it is the light source), reddened and dimmer near
+  the horizon. The Moon is the Planet component's Moon, with its phase; in a day sky it is pale
+  and low-contrast, as it really looks.
+
+### The eclipse (`Eclipse`)
+
+One progress dial plays a total solar eclipse in true order, then can play it in reverse:
+
+1. **Partial:** the Moon slides over the Sun. It is seen **only where it covers the Sun** (against
+   a daylight sky the Moon is invisible, as in reality). Its silhouette, whenever it shows, is in
+   the **space color family** (`#0b0d14` with a faint earthshine toward `#1a1f2c`), **never `#000`**
+   (pure black stays the black hole's alone, §2). The sky barely changes until ~90 % coverage,
+   then drops steeply, as in reality.
+2. **Darkening:** the last minute ramps the sky *day → eclipse*; the 360° sunset ring appears on
+   the horizon.
+3. **Baily's beads → diamond ring:** a few small bright points on the limb, then one; small and
+   **subtle**: no rays, no lens flare, no starburst.
+4. **Totality:** the **corona** appears, pearly ivory-white (not gold), soft and fading outward
+   to ~2–3 Sun radii with a few faint streamers; tiny pink-red prominences at the limb (optional).
+   Bright stars and planets come out one by one. The photosphere itself reads near-white (warming
+   only at the limb), so the last crescent is a bright sliver, not an orange one.
+5. **Reverse:** diamond ring on the other side, the corona goes, the sky brightens, the stars go
+   one by one.
+
+**Annular eclipse** (same component): the Moon is ~6 % narrower than the Sun, so totality never
+comes. At mid-eclipse a **thin bright ring of honest width** (0.06 Sun radii: ~12 px on a 200 px Sun,
+**never thickened**), **no corona, no beads, no stars**, and the sky stays light: "slightly dimmed
+daylight" (bright day blended a little toward dayMuted).
+
+### Ready-made ground scenes (`GroundScene`)
+
+- **Sunset on the sea:** the Sun on a sea horizon at true apparent size for the view, reddened and
+  slightly flattened by refraction, a dusk glow around it, a soft broken reflection path on the water.
+- **Full Moon rising over hills:** a full Moon at true apparent size in the blue hour, rising from
+  behind hills pushed far enough away for the field of view (honest optics).
+
+### The angle cone (`AngleCone`)
+
+For "same apparent size" ideas (the Sun is ~400× wider than the Moon and ~400× farther away): two
+**sight lines** from the observer's eye draw outward with a **faint gold wedge** between them; a
+**dashed ghost disc** slides along the cone, growing exactly with distance, and **lands exactly on
+the second disc** ("same angle"). The geometry is exact (a disc at distance d has radius d·sin α).
+The cone's half-angle may be exaggerated for legibility (the true one is 0.26°); say so with a
+small label.
+
+### Between the two modes
+
+Two hand-offs join ground view and space view (they count as camera moves, §8):
+
+- **Tilt up:** the camera tilts up from the horizon; the silhouette slides out of the bottom, the
+  sky deepens from its preset to `space` and the stars thicken into the space-view Starfield.
+  Ease in-out in the body; `EASE.punch` in a hook.
+- **Pull back:** from the observer, the camera rises: the horizon flattens and then curves, the
+  sky goes dark above a thin blue atmosphere limb, and the ground becomes **Earth seen from
+  space** (the Planet component), with a marker ring where the observer stood. Log-scale zoom,
+  motion blur in the fast middle (§8), one deep whoosh.
+
+### Same rules, both modes
+
+The energy curve, visual variety (a new idea every ~5–10 s; every number shown), annotations
+(≤ 2, blue, true), captions and safe zones apply unchanged. **Fill the frame** in ground view: the
+sky and the horizon fill it, so a frame is never empty black; when the Sun or Moon is the hero,
+fill the frame with a narrower field of view, not a bigger disc.

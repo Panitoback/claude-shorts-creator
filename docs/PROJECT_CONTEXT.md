@@ -3,7 +3,7 @@
 > **For:** the planning project where topics, aesthetics and scripts are developed.
 > **Pair it with:** `brand.md` (the visual and sound style contract — read it for colors, type,
 > captions, annotations, motion, safe zones and sound taste; this file never repeats it).
-> **Version:** v0.16.1 · 2026-11-17 · phase: *second short done ("Why Time Only Moves Forward") + dynamism kit + frame-filling review*
+> **Version:** v0.17.0 · 2026-11-18 · phase: *second short done + dynamism kit; ground view (second visual mode) built for near-space topics*
 >
 > This file describes **what can be asked for**, not how it is built. If a script asks for
 > something listed here, it can be made. If it asks for something not listed, flag it as a
@@ -234,6 +234,35 @@ inside scenes**, usable in any short (rules in `brand.md` §8 "Dynamism").
 | **Time stream** | Gold particles flowing one way along a line (time's arrow, a timeline's axis): steady motion that carries the idea "time runs one way" | which line, how dense, when it flows |
 | **3D timeline flight** | The timeline tilts back in perspective while the camera flies along it, then lands flat | which stretch of time to fly over |
 | **Beat sync** | Scene changes and camera accents land on the pulse of the music bed | automatic, once the bed is chosen |
+
+### 3.9 Ground view: the sky as seen from Earth (built, brand style)
+
+The channel's second visual mode, for near-space topics (Earth, the Moon, the Sun, satellites,
+the sky you can see). Same identity as space view: only the backdrop changes (rules in
+`brand.md` §11). A short can stay on the ground, stay in space, or travel between the two.
+**One field of view drives everything:** the Sun, the Moon, the horizon and the stars all share it,
+so sizes are honest. Say *wide* (a landscape, ~60° across: the Sun and Moon are ~9 px) or
+*telephoto* with a number of degrees (1–8°: a big disc over a distant horizon).
+
+| Component | What it shows | Options you can ask for |
+|---|---|---|
+| **Sky view** | The sky from the ground in true-to-life colors, with stars where they would really show | time of day: *night*, *twilight*, *dusk*, *day* (bright pale blue), *muted day*, *eclipse*; a slow change from one to another (e.g. dusk → night); stars coming out one by one (planets first, then the brightest stars), or already there; bright planets placed where you want them |
+| **Horizon** | Flat dark silhouettes along the bottom of the frame, 2–3 layers for depth; real heights at real distances | *hills*, *mountains*, *treeline*, *city skyline* (generic, a few lit windows, no landmarks), *sea* (with a soft reflection path of the Sun or Moon); how high the horizon sits; how far away each layer is; a sideways camera move with true parallax |
+| **Observer** | A small, sober silhouette of a person in profile looking up, for scale and feeling (never cartoonish, never the hero), standing on the hill, not in it | pose: standing looking up, sitting (leaning back on the hands), pointing (arm rising to an angle you choose); where on the horizon; facing left or right |
+| **Sun and Moon in the sky** | The Sun and the Moon at their **true apparent size** (~0.5°) for the view. Both redden near the horizon and the Sun flattens slightly (refraction); the Moon shows its phase and is pale by day | position in the sky (degrees above the horizon, left/right), rising or setting, wide or telephoto, the Moon's phase, an optional "0.5°" scale bar |
+| **Ground scenes** *(ready-made)* | **Sunset on the sea** (the Sun on the sea horizon, dusk glow, broken reflection path) · **Full Moon rising over hills** (blue hour) | which one, field of view, when the body rises or sets |
+| **Eclipse: total** | A total solar eclipse in true order: the Moon slides over the Sun (only seen where it covers it), the bright day sky darkens to a sunset ring all around the horizon, Baily's beads and the diamond ring (small and subtle, no flare), the pearly corona at totality, bright stars and planets coming out; then all of it in reverse | when each stage lands (on spoken words), stop at totality or play it back out, wide (with the horizon and an observer) or telephoto |
+| **Eclipse: annular** | The Moon ~6 % narrower than the Sun: a thin bright ring of honest width, no corona, the sky stays light ("slightly dimmed daylight") | timing, wide or telephoto |
+| **Angle cone** | Two gold sight lines from an observer's eye with a faint gold wedge; a dashed ghost disc slides along the cone, growing with distance, and lands exactly on a second disc: "same angle, same apparent size" (the Sun–Moon 400× coincidence) | the two bodies and their distances along the cone, when the lines draw and the ghost slides, a small label ("SAME ANGLE"); the angle can be drawn wider than the true 0.26° (it gets labelled) |
+| **Tilt up** *(hand-off)* | Ground → space: the camera tilts up from the horizon; the ground and the observer slide out together, the sky deepens into the space starfield | which sky it starts from, speed (calm or a hook-fast move) |
+| **Pull back to Earth** *(hand-off)* | From the observer up through the sky: the horizon curves, a thin blue atmosphere limb, then **Earth seen from space** with a marker ring where the observer stood | where on Earth faces us, how big the globe ends, the label on the marker ("YOU ARE HERE") |
+
+> **Honest optics, by design:** a big Sun or Moon is fine **through a telephoto view** (narrow field
+> of view, distant ridge or skyline in true proportion): that is what a long lens shows, and the
+> moon-illusion topic needs it. What can't be made: a disc enlarged inside a *wide* landscape,
+> photographic landscapes, recognizable skylines or landmarks, lens flares on the Sun.
+> **Text over a bright day sky** goes in the upper sky, or gets the soft text shadow (captions over a
+> bright sky always get it), never a dimmed sky.
 
 Anything else: list it under NEW COMPONENTS NEEDED in the script.
 
@@ -549,6 +578,14 @@ BEATS:
 
 What worked and what didn't. Newest first.
 
+- **Ground view: honest optics carry the look.** Driving every ground-view piece from one field of
+  view (Sun, Moon, horizon, stars) made "true size" automatic and made the telephoto Moon look like
+  a real long-lens photo rather than a pasted disc. Three things only showed up on the render: a
+  sky curve with a sharp kink that a telephoto view magnified into a visible color edge (fixed with
+  a smooth curve), observers sunk into the hill they stand on (now placed on the ground), and an
+  orange photosphere that made the last crescent read as a cartoon sun (now near-white). Sky
+  gradients and the eclipse darkening survived a harsh re-encode (0.8 Mbps, CRF 32) with no new
+  banding and the same stars visible at totality.
 - **Small and empty reads as static, even when it moves.** A frame-by-frame review of "Why Time Only
   Moves Forward" found the heroes too small (the frame mostly black), a corner-sized timeline with
   tiny labels, four near-still stretches and ~4 s of black before the loop, even with the living
@@ -690,6 +727,11 @@ built with the arrow-of-time kit (3.7). Its body was then reworked with the **dy
 (3.8: match cuts, a fly-through, three whips, living camera, punch-ins, beat sync, 3D timeline,
 odometer) and re-rendered as the final, then reworked once more after a frame-by-frame review
 (bigger heroes, a big timeline, motion in every stretch, the heat-death climax; see Learnings).
+
+**Ground view: done (v0.17).** A second visual mode for near-space topics (3.9): the sky from
+the ground, horizons, an observer, the Sun and Moon at true apparent size (wide or telephoto),
+total and annular eclipses, the angle cone, and two hand-offs into space view. Next short:
+"sun-moon-400" (the Sun–Moon size coincidence), then the moon illusion.
 
 **Next:** the custom skills (`script-to-short`,
 `new-component`); section 6 becomes final when `script-to-short` exists. Then Manim, only for
