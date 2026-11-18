@@ -36,10 +36,12 @@ export type ShapeMatchProps = {
   keys: ShapeKey[];
   color?: 'gold' | 'ivory';
   glow?: number; // px of soft glow (default 16)
+  outline?: number; // px: draw only the outline (e.g. a box's frame becoming a beam); collapses to a filled line when thinner than 2× this
+  alpha?: number; // color opacity (default 1), e.g. 0.55 to match a faint box line
   opacity?: Keys;
 };
 
-export const ShapeMatch: React.FC<ShapeMatchProps> = ({ keys, color = 'gold', glow = 16, opacity = 1 }) => {
+export const ShapeMatch: React.FC<ShapeMatchProps> = ({ keys, color = 'gold', glow = 16, outline, alpha = 1, opacity = 1 }) => {
   const f = useCurrentFrame();
   const op = kf(f, opacity, 1);
   if (op <= 0.001) return null;
@@ -47,10 +49,19 @@ export const ShapeMatch: React.FC<ShapeMatchProps> = ({ keys, color = 'gold', gl
   const r = Math.min(g.r ?? 0, g.w / 2, g.h / 2);
   const bg = color === 'gold' ? `linear-gradient(90deg, ${PALETTE.goldDeep}, ${PALETTE.gold})` : PALETTE.ivory;
   const glowC = color === 'gold' ? 'rgba(232,184,108,0.45)' : 'rgba(244,241,234,0.35)';
+  if (outline !== undefined && Math.min(g.w, g.h) > 2 * outline) {
+    const c = color === 'gold' ? PALETTE.gold : PALETTE.ivory;
+    return (
+      <div style={{
+        position: 'absolute', left: g.x - g.w / 2, top: g.y - g.h / 2, width: g.w, height: g.h, borderRadius: r, boxSizing: 'border-box',
+        border: `${outline}px solid ${c}`, opacity: op * alpha, boxShadow: glow > 0 ? `0 0 ${glow}px ${glowC}` : undefined,
+      }} />
+    );
+  }
   return (
     <div style={{
       position: 'absolute', left: g.x - g.w / 2, top: g.y - g.h / 2, width: g.w, height: g.h, borderRadius: r,
-      background: bg, boxShadow: glow > 0 ? `0 0 ${glow}px ${glowC}` : undefined, opacity: op,
+      background: bg, boxShadow: glow > 0 ? `0 0 ${glow}px ${glowC}` : undefined, opacity: op * alpha,
     }} />
   );
 };

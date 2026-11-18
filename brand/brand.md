@@ -6,10 +6,11 @@
 > **Reference scene:** the `BrandReference` composition is this document rendered on screen. If
 > it looks right, the brand is right.
 >
-> v2.2 · 2026-11-17 · direction: *Deep Field hybrid* (cinematic and editorial, with a few
+> v2.3 · 2026-11-17 · direction: *Deep Field hybrid* (cinematic and editorial, with a few
 > scientific annotations) · **energy curve**: a high-energy hook, a calm body, bursts on the peaks ·
 > **visual variety**: scenes change, and every number is shown · **whip transitions** approved as a
-> hand-off (§8)
+> hand-off (§8) · **dynamism** (v2.3): shape match cuts, fly-throughs, a living camera, punch-ins,
+> beat sync, motion blur on fast moves only (§8)
 
 ---
 
@@ -231,8 +232,17 @@ than bouncing. What changes along the energy curve (§1) is speed and camera. Ti
 
 ### Hand-offs between scenes
 
-Approved hand-offs: a **camera move**, a **morph**, an **object carried** into the next scene, and
-the **whip transition**.
+Approved hand-offs, in order of preference: a **shape match cut**, a **fly-through**, a **camera
+move**, a **morph**, an **object carried** into the next scene, and the **whip transition**.
+
+- **Shape match cut (first choice):** one shape survives the cut and changes geometry into the next
+  scene's key element (a sun becomes a bar, a box's frame becomes a balance beam, a line becomes an
+  axis). Ease in-out, ~14–18 frames; the old scene fades around it, the new one builds on its final
+  shape. Component: `ShapeMatch` (filled or outline).
+- **Fly-through:** the camera dives into an object (a digit, a ring, a black hole) and comes out in
+  the next scene: a small wind-up, a log-scale zoom (~24–26 frames), motion blur in the fast middle,
+  a soft landing. One or two per short at most. Component: `FlyThrough`. Sound: one deep whoosh
+  peaking just before the landing.
 
 - **Whip transition:** the outgoing picture sweeps off fast in one direction, with directional
   motion blur, while the next one sweeps in from the opposite side. The swap happens at **peak
@@ -248,6 +258,29 @@ the **whip transition**.
 
 - **Constant motion:** something always moves (a slow drift, infalling gas, the camera), so no
   frame is a still, especially in the hook.
+
+### Dynamism (v2.3)
+
+- **A living camera:** the whole body sits inside one virtual camera (`Camera`) with a slow drift
+  (~10 px, ~12 s period, a ±0.5 % breathing zoom) and **parallax**: the far star layer moves at
+  ~0.15–0.45 of the objects (`CameraLayer depth`). The drift fades to zero in the hook's first frame
+  and the loop's last, so frame 0 still matches the last frame. Captions stay outside the camera.
+- **Punch-in instead of shake:** on the **big hits only** (the main reveal, the final peak such as
+  "heat death"): zoom 1 → 1.03 in 6 frames (ease-out), then it settles back over ~1.2 s (ease
+  in-out). No overshoot. Shake stays banned. At most 2–3 per short.
+- **Anticipation yes, overshoot no:** a big move may start with a small wind-up the other way
+  (≤ 8 % of the move, ~8 frames). Arrivals stay soft: never past the target and back.
+- **Keyword zooms only on peak words,** not on every gold keyword (it would pump all the time).
+- **Beat sync:** scene changes and camera accents land on the pulse of the music bed (the
+  quarter-note grid measured for each bed, `beat.ts`). A cut snaps to the beat only when the beat
+  falls within ~0.18 s of its word; the voice wins otherwise. Punch-ins stay on the spoken hit.
+- **Motion blur only on fast moves:** pull-backs, whips, flights, fly-throughs (`@remotion/motion-blur`,
+  8 samples, 180° shutter), never on slow body motion or on text at rest. Blurred star frames look
+  flatter for a few frames; the streaks read as speed.
+- **Light 3D:** a flat element (a timeline) may tilt back in CSS perspective (≤ ~22°) while the camera
+  flies along it, and come back flat on arrival. No free 3D camera.
+- **Particles that form figures:** drifting particles can condense into a number (5×7 dot font,
+  `ParticleGlyphs`) and release it again; a count can roll on odometer wheels (`OdometerNumber`).
 - **Banned at every energy:** shake, bounce, elastic, spin, lens flares, glitch, neon, fast
   flicker (anything strobing faster than ~3 Hz), hard snaps. Fast means a fast ease-out, not
   jerky.
@@ -261,7 +294,10 @@ Measured from the 5-second hybrid test.
 | Starfield | present from frame 0 | no fade-in: the sky is already there on the first frame (§5) |
 | A body appears | 30 frames (1 s) | fade in plus scale 0.96 → 1 |
 | Its glow blooms | 46 frames (1.5 s) | fades in **slower than the body**, so light follows the object |
-| A number counts up | 48 frames (1.6 s) | counts to its value, easing out (fast start, gentle landing) |
+| A number counts up | 48 frames (1.6 s) | counts to its value, easing out (fast start, gentle landing); or rolls on odometer wheels |
+| Punch-in | 6 + 36 frames | 1 → 1.03 (ease-out), back to 1 (ease in-out); big hits only |
+| Shape match cut | 14–18 frames | geometry and corner radius morph, ease in-out |
+| Fly-through | 24–26 frames | wind-up 8 frames, log zoom, blur in the middle, soft landing |
 | Text arrives | 14 frames (0.5 s) | fade in plus rise of 22 px |
 | Annotation | 8 + 16 + 12 frames | marker appears → line draws → label fades in |
 | Scale bar | 24 frames (0.8 s) | draws **from its center outward** |

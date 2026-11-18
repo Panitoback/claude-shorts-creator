@@ -1,5 +1,5 @@
 {
-  "_note": "why-time-moves-forward variant B (brand v2.2). Clips from media/library/sfx/USAGE.md against guion.md SOUND MOOD; times from the real word times (the same cues as WhyTime.tsx). Bed via mix_music.py: bed-mysterious-vast + space-air-loop, lift 0-3.3:+3,32.0-34.6:+4,61.1-74.6:-4.",
+  "_note": "why-time-moves-forward variant B (brand v2.2). Clips from media/library/sfx/USAGE.md against guion.md SOUND MOOD; times from the real word times (the same cues as WhyTime.tsx). Bed via mix_music.py: bed-minimal-pulse + space-air-loop, lift 0-3.7:+3,32.4-35:+4,61.5-75:-4.",
   "master": "shorts/why-time-moves-forward/output/why-time-moves-forward-b-voiced.mp4",
   "master_fps": 30,
   "catalog": "media/library/sfx/catalog.json",
@@ -123,6 +123,21 @@
       "align": "attack"
     },
     {
+      "at_s": 18.13,
+      "sfx_id": "whoosh-soft",
+      "gain_db": -2,
+      "cue": "WHIP 1: \"Why?\" → the box",
+      "align": "peak"
+    },
+    {
+      "at_s": 20.26,
+      "sfx_id": "sparkle-soft",
+      "gain_db": -4,
+      "cue": "the particles form \"100\"",
+      "align": "attack",
+      "optional": true
+    },
+    {
       "at_s": 23.31,
       "sfx_id": "swish-light",
       "gain_db": -1,
@@ -152,6 +167,13 @@
       "cue": "tick 3",
       "align": "attack",
       "optional": true
+    },
+    {
+      "at_s": 27.759,
+      "sfx_id": "swish-light",
+      "gain_db": -2,
+      "cue": "MATCH CUT: the box's frame becomes the balance beam",
+      "align": "peak"
     },
     {
       "at_s": 29.21,
@@ -189,6 +211,13 @@
       "align": "attack"
     },
     {
+      "at_s": 37.644,
+      "sfx_id": "whoosh-deep",
+      "gain_db": -2,
+      "cue": "FLY-THROUGH: into the odds, out in the entropy gas",
+      "align": "peak"
+    },
+    {
       "at_s": 38.19,
       "sfx_id": "warm-shimmer",
       "gain_db": -3,
@@ -220,9 +249,31 @@
       "optional": true
     },
     {
-      "at_s": 60.397,
+      "at_s": 55.247,
+      "sfx_id": "whoosh-soft",
+      "gain_db": -3,
+      "cue": "WHIP 2: timeline → star birth",
+      "align": "peak"
+    },
+    {
+      "at_s": 58.347,
+      "sfx_id": "tick-soft",
+      "gain_db": 2,
+      "cue": "the odometer lands on -90%",
+      "align": "attack",
+      "optional": true
+    },
+    {
+      "at_s": 59.344,
+      "sfx_id": "whoosh-soft",
+      "gain_db": -4,
+      "cue": "WHIP 3: star birth → timeline",
+      "align": "peak"
+    },
+    {
+      "at_s": 60.394,
       "sfx_id": "whoosh-deep",
-      "gain_db": 0,
+      "gain_db": -2,
       "cue": "TWIST: the timeline rescales to log, the far future opens",
       "align": "peak"
     },

@@ -21,10 +21,26 @@ def E(at, sid, g, cue, align=None, opt=False):
     if opt: e["optional"] = True
     return e
 
+LOOP, STEP, PH = 51.5, 60 / 70, 0.23  # bed-minimal-pulse grid (remotion/src/components/beat.ts)
+def on_beat(t, tol=0.18):  # = onBeat() in WhyTime.tsx
+    k = max(0, int(t // LOOP)); n = max(0, round((t - k * LOOP - PH) / STEP))
+    b = min(k * LOOP + PH + n * STEP, (k + 1) * LOOP + PH)
+    return b if abs(b - t) <= tol else t
+
 def body(V):
     w = lambda l, s: word(V, l, s)
     one = w(15, "one")
+    S1, M = on_beat(w(8, "counting") - 0.1), on_beat(w(13, "vastly"))
+    L1 = on_beat(w(16, "entropy") - 0.15)
+    S2, S3 = on_beat(w(22, "star") - 0.1), on_beat(w(23, "in") - 0.15)
     return [
+        E(S1 - 0.1, "whoosh-soft", -2, "WHIP 1: \"Why?\" → the box", "peak"),
+        E(w(9, "hundred") + 0.45, "sparkle-soft", -4, "the particles form \"100\"", "attack", True),
+        E(M + 0.1, "swish-light", -2, "MATCH CUT: the box's frame becomes the balance beam", "peak"),
+        E(L1 - 0.3, "whoosh-deep", -2, "FLY-THROUGH: into the odds, out in the entropy gas", "peak"),
+        E(S2 - 0.1, "whoosh-soft", -3, "WHIP 2: timeline → star birth", "peak"),
+        E(w(22, "ninety") + 0.9, "tick-soft", 2, "the odometer lands on -90%", "attack", True),
+        E(S3 - 0.1, "whoosh-soft", -4, "WHIP 3: star birth → timeline", "peak"),
         E(w(4, "time") - 0.15, "whoosh-soft", -3, "the dust streams into time's arrow", "peak"),
         E(w(4, "way") - 0.02, "pop-reveal", -4, "arrowhead lands on \"way\"", "attack", True),
         E(w(5, "physics") - 0.1 + 0.75, "tick-soft", 3, "collision, forward (clock 0.5)", "attack"),
@@ -43,7 +59,7 @@ def body(V):
         E(w(19, "started") + 0.05, "pop-reveal", -2, "BIG BANG marker (lowest entropy)", "attack"),
         E(w(19, "low") + 0.05, "tick-soft", 2, "TODAY marker", "attack", True),
         E((V[20]["end"] - 0.1 + w(21, "ever") + 0.6) / 2, "whoosh-wind", -4, "camera glides down to TODAY", "peak", True),
-        E(w(23, "in") - 0.1 + 0.8, "whoosh-deep", 0, "TWIST: the timeline rescales to log, the far future opens", "peak"),
+        E(S3 + 0.15 + 0.8, "whoosh-deep", -2, "TWIST: the timeline rescales to log, the far future opens", "peak"),
         E(w(23, "last") + 0.15, "event-horizon-fade", -4, "LAST STARS FADE: bright stars go out", "attack"),
         E(w(24, "black") + 0.1, "deep-rumble", -4, "black holes; the small one starts to shrink", "attack", True),
         E(w(25, "heat"), "impact-deep-soft", 2, "one soft hit on \"heat death\"", "attack"),
@@ -59,7 +75,7 @@ def plan(variant, V, ev, sil, end, lift):
     return {
         "_note": f"{SL} variant {variant.upper()} (brand v2.2). Clips from media/library/sfx/USAGE.md against guion.md SOUND MOOD; "
                  "times from the real word times (the same cues as WhyTime.tsx). Bed via mix_music.py: "
-                 f"bed-mysterious-vast + space-air-loop, lift {lift}.",
+                 f"bed-minimal-pulse + space-air-loop, lift {lift}.",
         "master": f"{base}-voiced.mp4", "master_fps": 30, "catalog": "media/library/sfx/catalog.json",
         "render": {"preview": f"{base}-voiced.mp4", "out": f"{base}-sfx.mp4", "end_s": end, "duck": True},
         "silence": sil + s2,
@@ -101,7 +117,7 @@ evB = [
     E(B[27]["start"] + 0.2 + 0.9, "swish-light", -4, "LOOP: the point becomes the fan's edge", "peak"),
     E(B[27]["start"] + 1.6, "glow-swell", -3, "the ordered deck forms again", "peak"),
 ]
-pB = plan("b", B, evB, [], 79.633, "0-3.3:+3,32.0-34.6:+4,61.1-74.6:-4")
+pB = plan("b", B, evB, [], 79.633, "0-3.7:+3,32.4-35:+4,61.5-75:-4")
 
 json.dump(pA, open(f"shorts/{SL}/sfx-plan.json", "w", encoding="utf-8"), indent=2, ensure_ascii=False)
 json.dump(pB, open(f"shorts/{SL}/b/sfx-plan.json", "w", encoding="utf-8"), indent=2, ensure_ascii=False)

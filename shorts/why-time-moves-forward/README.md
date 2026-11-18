@@ -20,3 +20,8 @@
 - Outputs (git-ignored): `output/why-time-moves-forward-{a,b}-final.mp4` (voice + SFX + bed-minimal-pulse + space-air-loop,
   −14.2 LUFS, two-pass loudnorm), `-voiced` / `-sfx` intermediates, QA sheets `output/qa-*.png`.
 - Credits: voice = A + the 4 B-only lines, then ~20 for the B hook re-voice; SFX ~25.
+- **Dynamism pass (brand v2.3, 2026-11-17):** the body runs in one `Camera` (drift + parallax, punch-ins on
+  "one" and "heat death"); whip "Why?" → a "100" of particles → the box; match cut box frame → balance beam;
+  fly-through odds → entropy gas; whips timeline → star birth (odometer −90 %) → timeline; 3D tilt + motion blur
+  on the two timeline flights; cut times snapped to the bed-minimal-pulse grid. SFX for the new transitions
+  are generated in `make_sfx_plans.py`.

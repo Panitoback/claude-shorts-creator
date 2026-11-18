@@ -3,7 +3,7 @@
 > **For:** the planning project where topics, aesthetics and scripts are developed.
 > **Pair it with:** `brand.md` (the visual and sound style contract — read it for colors, type,
 > captions, annotations, motion, safe zones and sound taste; this file never repeats it).
-> **Version:** v0.14.0 · 2026-11-17 · phase: *second short done ("Why Time Only Moves Forward")*
+> **Version:** v0.15.0 · 2026-11-17 · phase: *second short done ("Why Time Only Moves Forward") + dynamism kit*
 >
 > This file describes **what can be asked for**, not how it is built. If a script asks for
 > something listed here, it can be made. If it asks for something not listed, flag it as a
@@ -219,6 +219,21 @@ to undo it and stall** (a rewind that gets halfway and falls back).
 | **Particle box** | (a) **A hundred particles** packed in one half of a box; a divider lifts and they spread through the whole box and keep moving, exactly simulated (nothing pushes them). (b) **Two particles colliding**, played forward and then reversed: both look equally natural | (a) how many, which half, when the divider lifts, growing out of one point first, faint (behind a title), box visible or not · (b) forward/reversed timing, motion trails |
 | **Deck of cards** | A fan of cards in perfect order (A → K, suits alternating, no brand marks) that a real riffle shuffle breaks: two packets interleave and the fan re-forms out of order | number of cards, fan size, when each shuffle happens (each shuffle gives a new order), a gold line along the fan's edge with a running glint |
 
+### 3.8 Dynamism kit (built, brand style)
+
+Built after the second short and applied to its body. These are ways to **move between and
+inside scenes**, usable in any short (rules in `brand.md` §8 "Dynamism").
+
+| Component | What it does | Options you can ask for |
+|---|---|---|
+| **Living camera** | The whole short is filmed by one slow-drifting camera, with the stars moving less than the objects (parallax) | camera pans/zooms on chosen words, a small wind-up before a big move, **punch-ins** (a quick 3 % zoom that settles) on the 2–3 biggest hits |
+| **Shape match cut** | One shape survives the cut and becomes the next scene's key element (a sun → a bar, a box's frame → a balance beam, a line → an axis) | which shape becomes which, filled or outline |
+| **Fly-through** | The camera dives into an object (a digit, a ring, a hole) and comes out in the next scene | what to fly into, what comes out on the other side |
+| **Particles form a number** | Drifting particles condense into a number (digits, %, ×, a power of ten) and can release it | the number, when it forms, how many particles |
+| **Odometer number** | A number that rolls on digit wheels (the higher wheels turn only on the carry) | the value(s), units/prefix (−, %), gold or ivory |
+| **3D timeline flight** | The timeline tilts back in perspective while the camera flies along it, then lands flat | which stretch of time to fly over |
+| **Beat sync** | Scene changes and camera accents land on the pulse of the music bed | automatic, once the bed is chosen |
+
 Anything else: list it under NEW COMPONENTS NEEDED in the script.
 
 > **Hero numbers that are too long now get flagged.** If a HERO NUMBER doesn't fit, it is shrunk
@@ -246,9 +261,11 @@ word budgets are in §5.
 
 > **Visual variety (every format, every beat):** one hero object per scene, but the scenes
 > change: a new visual idea at least every ~5–10 s, and every number or comparison in the VO is
-> shown on screen, not just said. Scenes hand over smoothly (a camera move, a morph, an object
-> carried over, or a whip transition: mainly in the hook and on the peaks; sparingly in the calm
-> body). See `brand.md` §5 and §8.
+> shown on screen, not just said. Scenes hand over smoothly: preferably a **shape match cut**
+> (one shape becomes the next scene's element) or a **fly-through**; also a camera move, a morph,
+> an object carried over, or a whip (mainly in the hook and on 2–3 big changes). The camera is
+> never static (slow drift + parallax), with **punch-ins only on the 2–3 biggest hits**, and cuts
+> land on the music's pulse. See `brand.md` §5 and §8.
 
 ### The three formats at a glance
 
@@ -309,11 +326,15 @@ Ideas for future formats (to be decided): *myth vs fact*, *"what if"*, *one numb
 ### What works well on screen
 - **One main object at a time**, big and centered. A phone screen is small; detail gets lost.
 - **Numbers**, especially when they count up live, change scale, or compare two things.
-- **Continuity over cuts, but not one scene.** Scenes flow into each other (a camera move, a
-  morph, the same object carried into the next picture, or a **whip transition**: a fast sweep
-  with motion blur, one whoosh each) instead of hard cuts. Whips belong mainly in the hook (a
-  rapid montage of related pictures, ~0.6–1 s each) and on the peaks; the calm body uses them
-  sparingly. Still never: a hard cut to an unrelated picture with no motion, shake, or flicker.
+- **Continuity over cuts, but not one scene.** Scenes flow into each other instead of hard
+  cuts: first choice a **shape match cut** (a shape becomes the next scene's element) or a
+  **fly-through** (into an object, out in the next scene; one or two per short); also a camera
+  move, a morph, the same object carried over, or a **whip transition** (a fast sweep with motion
+  blur, one whoosh each). Whips belong mainly in the hook (a rapid montage, ~0.6–1 s per picture)
+  and on 2–3 big scene changes.
+- **Motion that feels alive, not busy.** A slow-drifting camera with parallax throughout; a
+  punch-in (3 % zoom) only on the 2–3 biggest hits; scene changes on the music's beat. Not
+  available: shake, bounce or overshoot (brand bans them), and a rotoscope / hand-drawn boil look. Still never: a hard cut to an unrelated picture with no motion, shake, or flicker.
   The short still needs **a new visual idea every ~5–10 s**: one scene for the whole short reads as a still.
 - **Show every number.** A claim with a number or comparison gets its own picture (a scale
   comparison, a diagram, bars or a meter, a timeline, a counter). If the screen looks the same
@@ -328,8 +349,11 @@ Ideas for future formats (to be decided): *myth vs fact*, *"what if"*, *one numb
 - **Thousands of moving particles** (dense galaxies, dust clouds) or heavy blur/glow on many
   objects at once: possible, but slow to render. Use sparingly, for one hero moment.
 - **Busy scenes**: more than about 3 distinct elements moving at once becomes hard to read.
-- **3D**: true 3D camera moves are not currently part of the toolkit. Flat or lightly shaded
-  "2.5D" (spheres with shading, layered depth) works well.
+- **3D**: true 3D camera moves are not part of the toolkit. Flat or lightly shaded "2.5D"
+  (spheres with shading, layered depth) works well, and a flat element such as a timeline can tilt
+  back in perspective while the camera flies along it (3.8).
+- **Motion blur** is used only on fast moves (flights, whips, fly-throughs); it costs render time,
+  so a short gets a few blurred seconds, not a blurred body.
 
 ### Timing and length
 - **Length depends on the format.** The content decides the length; any scene that doesn't add
@@ -524,6 +548,15 @@ BEATS:
 
 What worked and what didn't. Newest first.
 
+- **Connected scenes feel faster without being louder.** The dynamism pass on "Why Time Only
+  Moves Forward" (a "100" of particles → the box, the box's frame → the balance beam, a dive into
+  the odds → "entropy", whips around a separate star-birth scene, a 3D flight down the timeline)
+  kept the same voice and length but no scene starts from nothing. Match cuts first, then
+  fly-throughs; whips only where the topic really changes.
+- **The camera zoom eats the safe margin.** A 4 % body zoom pushed the balance and a wide label
+  against the safe edges; 2.5 % plus a narrower layout fixed it. Leave ~3 % room around wide
+  elements in scenes the camera zooms into.
+
 - **Show the number the way the voice says it.** "Why Time Only Moves Forward" first showed "1 in
   10³⁰" while the narrator said "one in a million trillion trillion": it didn't read. Replaced by
   the spoken words landing one by one ("1 in a million / trillion / trillion") plus a small line
@@ -632,7 +665,9 @@ screen showed one thing while the voice explained five) became the visual variet
 kit in 3.5.
 
 **Second short: done.** "Why Time Only Moves Forward" (variants A egg / B deck; B chosen),
-built with the arrow-of-time kit (3.7).
+built with the arrow-of-time kit (3.7). Its body was then reworked with the **dynamism kit**
+(3.8: match cuts, a fly-through, three whips, living camera, punch-ins, beat sync, 3D timeline,
+odometer) and re-rendered as the final.
 
 **Next:** the custom skills (`script-to-short`,
 `new-component`); section 6 becomes final when `script-to-short` exists. Then Manim, only for

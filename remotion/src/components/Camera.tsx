@@ -22,6 +22,7 @@ export type CameraProps = {
   y?: Keys;
   zoom?: Keys; // multiplier (default 1)
   drift?: number; // px of slow drift (default 10; 0 = locked)
+  driftAmp?: Keys; // drift multiplier over time (default 1), e.g. 0 in a hook/loop so frame 0 = the last frame
   driftPeriod?: number; // seconds (default 12)
   punches?: number[]; // frames of the punch-ins (the big hits, on the beat)
   punch?: number; // punch-in amount (default 0.03)
@@ -45,16 +46,17 @@ export const windupKeys = (from: number, to: number, at: number, len: number, wi
 ];
 
 const CameraInner: React.FC<CameraProps> = ({
-  children, x = 0, y = 0, zoom = 1, drift = 10, driftPeriod = 12, punches = [], punch = 0.03, origin, seed = 1,
+  children, x = 0, y = 0, zoom = 1, drift = 10, driftAmp = 1, driftPeriod = 12, punches = [], punch = 0.03, origin, seed = 1,
 }) => {
   const f = useCurrentFrame();
   const { fps } = useVideoConfig();
   const t = f / fps;
   const P = driftPeriod;
   const ph = seed * 1.7;
-  const dx = drift * Math.sin((2 * Math.PI * t) / P + ph);
-  const dy = drift * 0.7 * Math.sin((2 * Math.PI * t) / (P * 1.31) + ph * 2.1);
-  const dz = (drift > 0 ? 0.005 : 0) * Math.sin((2 * Math.PI * t) / (P * 1.7) + ph * 0.7);
+  const amp = drift * kf(f, driftAmp, 1);
+  const dx = amp * Math.sin((2 * Math.PI * t) / P + ph);
+  const dy = amp * 0.7 * Math.sin((2 * Math.PI * t) / (P * 1.31) + ph * 2.1);
+  const dz = (drift > 0 ? 0.0005 * amp : 0) * Math.sin((2 * Math.PI * t) / (P * 1.7) + ph * 0.7);
   let z = kf(f, zoom, 1) * (1 + dz);
   for (const p of punches) z *= 1 + punch * punchShape(f - p);
   const [ox, oy] = origin ?? [SAFE_RECT.x + SAFE_RECT.w / 2, SAFE_RECT.y + SAFE_RECT.h / 2];

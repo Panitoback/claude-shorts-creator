@@ -123,6 +123,9 @@ export const EASE = {
   punch: Easing.bezier(0.16, 1, 0.3, 1),
 } as const;
 
+// §8 DYNAMISM (brand v2.3): the living camera, punch-in (1 → 1.03, 6 + 36 frames), shape match cuts,
+// fly-throughs, beat grid and motion-blur windows live in components/Camera.tsx, ShapeMatch.tsx,
+// FlyThrough.tsx and beat.ts (their constants are the code twin of brand.md §8 "Dynamism").
 // §8 ENERGY CURVE (brand v2.0): high-energy hook, calm body, bursts on the peaks.
 // Visual variety (brand §5): a new visual idea at least every ~5–10 s; every number is shown.
 export const SCENE = {

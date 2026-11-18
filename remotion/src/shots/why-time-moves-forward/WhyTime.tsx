@@ -2,10 +2,12 @@ import React from 'react';
 import { AbsoluteFill, interpolate, useCurrentFrame } from 'remotion';
 import { CANVAS, CAPTION, EASE, PALETTE, SAFE_RECT, TYPE } from '../../brand';
 import {
-  Balance, BlackHole, CoffeeCup, ComparisonBars, DataLabel, DeckOfCards, Egg, GoldMorphLine, Grain, KeywordCaptions,
-  KineticTitle, ParallaxStars, ParticleBox, Starfield, Timeline, WordDissolve, cupSpiralPts, eggCrackPts, keyNorm,
-  morphLine, morphPoint, morphScribble,
+  Balance, BlackHole, Camera, CameraLayer, CoffeeCup, ComparisonBars, DataLabel, DeckOfCards, Egg, FlyThrough, GoldMorphLine, Grain,
+  KeywordCaptions, KineticTitle, OdometerNumber, ParallaxStars, ParticleBox, ParticleGlyphs, ShapeMatch, Starfield, Timeline,
+  WhipTransition, WordDissolve, cupSpiralPts, eggCrackPts, keyNorm, lineGeom, morphLine, morphPoint, morphScribble, snapToBeat,
+  whipTiming,
 } from '../../components';
+import type { Key } from '../../components/anim';
 import type { CaptionLine, MorphKey, Pt } from '../../components';
 import type { VoLine } from '../../lib/shorts';
 import { DURATION_S as DUR_A, VO as VO_A } from './vo.gen';
@@ -19,6 +21,13 @@ import { DURATION_S as DUR_B, VO as VO_B } from './vo-b.gen';
 // One gold line is the through-line: crack → spiral → handwriting → dust → time's arrow → the
 // timeline's axis → a last faint point → the crack (A) / the fan's edge (B).
 // Layout comes from SAFE_RECT / CAPTION (16:9-ready rule): no literal y positions below.
+// DYNAMISM PASS (2026-11-17, brand §8): the body runs inside one living Camera (drift, parallax star
+// layer, punch-ins only on the main reveal and "heat death"; drift fades to 0 in the hook and loop so
+// the loop still closes). Scenes hand off by match cuts first (a "100" of particles bursts into the box;
+// the box's frame becomes the balance beam; the gold line becomes the axis), one fly-through (the odds →
+// the entropy gas), whips on 3 big changes ("Why?" → the box; timeline → star birth → back). The
+// timeline tilts in CSS 3D while the camera flies along it (motion blur only there). Free cut times
+// snap to the pulse of bed-minimal-pulse (beat.ts) when the beat falls within ~0.18 s of the word.
 
 export type Variant = 'a' | 'b';
 const FPS = CANVAS.FPS;
@@ -29,6 +38,21 @@ const curve = (t: number, xs: number[], ys: number[], e: (x: number) => number =
 // visible window: fade in over inLen from a, fade out over outLen from b
 const win = (t: number, a: number, b: number, inLen = 0.3, outLen = 0.3) =>
   Math.min(curve(t, [a, a + inLen], [0, 1], EASE.out), 1 - curve(t, [b, b + outLen], [0, 1], EASE.in));
+// piecewise keys that may restart ([a,0],[b,22],[c,0],[d,0],…): the tilt of the 3D timeline
+const kfDeg = (f: number, keys: Key[]) => {
+  let v = keys[0][1];
+  for (let i = 0; i < keys.length; i++) {
+    const [k, val, e] = keys[i] as readonly [number, number, string?];
+    if (f < k) {
+      if (i === 0) return v;
+      const [k0, v0] = keys[i - 1];
+      const p = Math.min(1, Math.max(0, (f - k0) / (k - k0)));
+      return v0 + (val - v0) * (e === 'inOut' ? EASE.inOut(p) : p);
+    }
+    v = val;
+  }
+  return v;
+};
 const Fade: React.FC<{ op: number; children: React.ReactNode; style?: React.CSSProperties }> = ({ op, children, style }) =>
   op <= 0.001 ? null : <AbsoluteFill style={{ opacity: Math.min(1, op), ...style }}>{children}</AbsoluteFill>;
 
@@ -55,6 +79,12 @@ const deckEdge = (): Pt[] => {
   });
 };
 
+const BOX = { x: CX, y: CY, w: SAFE_RECT.w * 0.86, h: SAFE_RECT.w * 0.62 };
+const BAL = { y: CY - 40, span: SAFE_RECT.w * 0.3 };
+const HOLE = { x: CX, y: CY - SAFE_RECT.h * 0.06 }; // the fly-through's opening (center of the odds)
+const onBeat = (t: number, tol = 0.18) => { const b = snapToBeat(t); return Math.abs(b - t) <= tol ? b : t; };
+const WHIP_SWAP = whipTiming(0, 8).swap;
+
 const Label: React.FC<{ y: number; children: React.ReactNode }> = ({ y, children }) => (
   <div style={{ position: 'absolute', left: CX - 420, width: 840, top: y, textAlign: 'center', ...TYPE.label, color: PALETTE.sciText } as React.CSSProperties}>{children}</div>
 );
@@ -73,6 +103,7 @@ const cuesOf = (VO: VoLine[]) => {
     but: at(5, 'but'), physics: at(5, 'physics'), they: at(6, 'they'), reverse: at(6, 'reverse'), why1: at(7, 'why'),
     counting: at(8, 'counting'), put: at(9, 'put'), hundred: at(9, 'hundred'), half: at(9, 'half'), go: at(10, 'go'),
     spread: at(11, 'spread'), vastly: at(13, 'vastly'), ways: at(13, 'ways'), mixed: at(13, 'mixed'), sorted: at(13, 'sorted'),
+    ninety: at(22, 'ninety'),
     odds: at(14, 'odds'), side: at(14, 'side'), about: at(15, 'about'), one: at(15, 'one'), trillion2: VO[15].words![6].start,
     thats: at(16, 'that'), entropy: at(16, 'entropy'), number: at(17, 'number'), grows: at(18, 'grows'),
     so: at(19, 'so'), direction: at(19, 'direction'), started: at(19, 'started'), low: at(19, 'low'),
@@ -125,9 +156,21 @@ export const WhyTime: React.FC<{ variant: Variant }> = ({ variant }) => {
   const pullK = Math.exp(curve(t, [H.pull0, H.pull1], [0, Math.log(0.18)], EASE.punch)); // dust shrinks into the sky
   const pullD = Math.exp(curve(t, [H.pull0, H.pull1 + 0.2], [0, Math.log(12)], EASE.punch)); // camera distance
 
+  // ================= shared body: the cut times (snapped to the bed's pulse when close) =================
+  const S1 = onBeat(C.counting - 0.1); // whip: "Why?" → the box
+  const M = onBeat(C.vastly); // match cut: the box's frame → the balance beam
+  const heroIn = C.one - 0.12; // the main reveal (voice + hit: not snapped)
+  const L1 = onBeat(C.entropy - 0.15); // fly-through lands in the entropy gas
+  const FLY_LEN = 24;
+  const FLY_AT = F(L1) - FLY_LEN;
+  const S2 = onBeat(C.star - 0.1); // whip: timeline → star birth
+  const S3 = onBeat(C.in23 - 0.15); // whip: star birth → timeline (then the log rescale)
+  const W1 = F(S1) - WHIP_SWAP, W2 = F(S2) - WHIP_SWAP, W3 = F(S3) - WHIP_SWAP;
+  const G0 = C.l20end - 0.1, G1 = C.ever + 0.6; // the flight down the timeline to TODAY
+
   // ================= shared body: positions =================
-  const glideK = curve(t, [C.l20end - 0.1, C.ever + 0.6], [0, 1], EASE.inOut); // camera glides down to TODAY
-  const rsAt = C.in23 - 0.1;
+  const glideK = curve(t, [G0, G1], [0, 1], EASE.inOut); // camera glides down to TODAY
+  const rsAt = S3 + 0.15;
   const rsLen = 1.4;
   const rsK = curve(t, [rsAt, rsAt + rsLen], [0, 1], EASE.inOut); // same easing/window as the Timeline rescale
   const tlShift = GLIDE * glideK + (TODAY_Y - TL.y - GLIDE) * rsK; // keeps TODAY parked at TODAY_Y during the rescale
@@ -171,14 +214,136 @@ export const WhyTime: React.FC<{ variant: Variant }> = ({ variant }) => {
   ];
 
   // ================= main reveal burst =================
-  const burstP = clamp01((t - C.one) / 0.7);
-  const heroIn = C.one - 0.12;
+  const burstP = clamp01((t - heroIn) / 0.7);
   const oddsW = VO[15].words!; // About · one · in · a · million · trillion · trillion.
+
+  // ================= camera =================
+  const driftAmp: Key[] = [[F(C.time - 0.5), 0], [F(C.time + 0.5), 1, 'inOut'], [F(C.death + 0.6), 1], [F(C.death + 1.6), 0, 'inOut']];
+  const camZoom: Key[] = [[F(M), 1], [F(C.about - 0.2), 1.025, 'inOut'], [FLY_AT, 1.025], [F(L1), 1, 'inOut']];
+  const camX: Key[] = [[FLY_AT, 0], [F(L1), -30, 'inOut'], [F(C.so - 0.3), 30, 'inOut'], [F(C.direction + 0.3), 0, 'inOut']];
+  const blurWins: [number, number][] = [[F(G0 + 0.35), F(G1 - 0.35)], [F(rsAt + 0.3), F(rsAt + rsLen - 0.3)]];
+  const tilt = kfDeg(f, [[F(G0), 0], [F((G0 + G1) / 2), 22, 'inOut'], [F(G1), 0, 'inOut'], [F(rsAt), 0], [F(rsAt + rsLen / 2), 22, 'inOut'], [F(rsAt + rsLen), 0, 'inOut']]);
+
+  // ---------- SETUP (c): a collision, forward then reversed (leaves by the whip) ----------
+  const collisionNode = (
+    <>
+      <Fade op={win(t, C.but + 0.3, S1 + 0.5, 0.3, 0.2)}>
+        <ParticleBox x={CX} y={CY} w={SAFE_RECT.w * 0.86} mode="collide" box={0}
+          clock={[[F(C.physics - 0.1), 0], [F(C.physics + 1.4), 1, 'linear'], [F(C.reverse - 0.6), 1], [F(C.reverse + 0.9), 0, 'linear']]} />
+        <Fade op={win(t, C.physics - 0.05, C.reverse - 0.75, 0.25, 0.2)}>
+          <Label y={CY - SAFE_RECT.h * 0.22}>FORWARD</Label>
+        </Fade>
+        <Fade op={win(t, C.reverse - 0.55, C.why1 - 0.1, 0.25, 0.25)}>
+          <Label y={CY - SAFE_RECT.h * 0.22}>REVERSED</Label>
+        </Fade>
+      </Fade>
+      <KineticTitle x={CX} top={CY - SAFE_RECT.h * 0.2} size={110} outAt={S1 + 0.5} outLen={0.2}
+        lines={[[{ w: 'Why?', start: C.why1, gold: true }]]} />
+    </>
+  );
+
+  // ---------- REVEAL 1–2: "100" of particles → bursts into the box's left half → the divider lifts ----------
+  const boxNode = (
+    <>
+      <ParticleGlyphs box={BOX} text="100" cx={CX} cy={CY} cell={22} start={F(S1) - 20} at={F(C.hundred - 0.35)} len={30} stagger={12}
+        opacity={[[F(C.half - 0.05), 1], [F(C.half + 0.2), 0]]} />
+      <ParticleBox x={BOX.x} y={BOX.y} w={BOX.w} h={BOX.h} releaseAt={F(C.go)} speed={6} at={F(C.half - 0.1)}
+        gather={{ from: [CX, CY], at: F(C.half - 0.05), len: 24 }}
+        box={[[F(C.half - 0.05), 0], [F(C.half + 0.3), 1], [F(M) - 1, 1], [F(M), 0]]} opacity={[[F(M) - 3, 1], [F(M) + 9, 0]]} />
+    </>
+  );
+
+  // ---------- REVEAL 3: the main reveal (punch-in on the hit) ----------
+  const heroNode = (
+    <Fade op={win(t, heroIn, L1 + 0.5, 0.05, 0.01)}>
+      {burstP > 0 && burstP < 1 && (
+        <svg width={CANVAS.W} height={CANVAS.H} style={{ position: 'absolute', left: 0, top: 0 }}>
+          <circle cx={HOLE.x} cy={HOLE.y} r={60 + 420 * EASE.out(burstP)} fill="none" stroke={PALETTE.gold}
+            strokeWidth={6 * (1 - burstP) + 1} opacity={0.6 * (1 - burstP)} />
+        </svg>
+      )}
+      {/* the odds in the narrator's own words (10^30 alone didn't read), each word on its spoken time */}
+      <Label y={CY - SAFE_RECT.h * 0.27}>ODDS: ALL ONE SIDE</Label>
+      <KineticTitle x={CX} top={CY - SAFE_RECT.h * 0.22} size={112} lines={[
+        [{ w: '1', start: oddsW[1].start, gold: true }, { w: 'in', start: oddsW[2].start }, { w: 'a', start: oddsW[3].start }, { w: 'million', start: oddsW[4].start }],
+        [{ w: 'trillion', start: oddsW[5].start, gold: true }],
+        [{ w: 'trillion', start: oddsW[6].start, gold: true }],
+      ]} />
+      <Fade op={curve(t, [oddsW[6].start + 0.45, oddsW[6].start + 0.85], [0, 1], EASE.out)}>
+        <Label y={CY - SAFE_RECT.h * 0.22 + 112 * 3.15}>THAT&apos;S A 1 FOLLOWED BY 30 ZEROS</Label>
+      </Fade>
+    </Fade>
+  );
+
+  // ---------- REVEAL 4: inside the odds — the gas of arrangements, "entropy" ----------
+  const entropyNode = (
+    <>
+      <Fade op={win(t, L1 - 0.8, C.so - 0.2, 0.2, 0.4) * 0.28}>
+        <ParticleBox x={CX} y={CY + SAFE_RECT.h * 0.12} w={SAFE_RECT.w * 0.86} h={SAFE_RECT.w * 0.5} releaseAt={-1000} speed={4} box={0} seed={9} />
+      </Fade>
+      <Fade op={1 - curve(t, [C.so - 0.25, C.so + 0.1], [0, 1], EASE.in)}>
+        <KineticTitle x={CX} top={CY - SAFE_RECT.h * 0.22} size={130} lines={[[{ w: 'entropy', start: C.entropy, gold: true }]]} />
+        <Fade op={curve(t, [C.number - 0.1, C.number + 0.35], [0, 1], EASE.out)}>
+          <div style={{ position: 'absolute', left: CX - 420, width: 840, top: CY - SAFE_RECT.h * 0.22 + 175, textAlign: 'center', ...TYPE.label, color: PALETTE.sciText } as React.CSSProperties}>
+            = NUMBER OF ARRANGEMENTS
+          </div>
+        </Fade>
+      </Fade>
+    </>
+  );
+
+  // ---------- REVEAL 5 → TWIST: the timeline, in 3D perspective while the camera flies along it ----------
+  const timelineNode = (
+    <>
+      <Fade op={1 - curve(t, [C.death + 0.5, C.death + 1.1], [0, 1], EASE.in)} style={{ perspective: '1600px', perspectiveOrigin: `${CX}px ${TODAY_Y}px` }}>
+        <AbsoluteFill style={{ transform: `translateY(${tlShift}px) rotateX(${tilt}deg)`, transformOrigin: `${CX}px ${TODAY_Y - tlShift}px` }}>
+          <Timeline x={TL.x} y={TL.y} length={TL.L} range={[0, 13.8e9]} labelSize={44} at={F(C.direction + 0.2)}
+            rescale={{ at: F(rsAt), len: Math.round(rsLen * FPS), range: LOG_RANGE, log: true }}
+            events={[
+              { t: 0, label: 'Big Bang', date: 'LOWEST ENTROPY', at: F(C.started), hero: true },
+              { t: 13.8e9, label: 'Today', date: '13.8 BILLION YEARS', at: F(C.low) },
+              { t: 1e14, label: 'Last stars fade', date: '100 TRILLION YEARS', at: F(C.last) },
+              { t: 1e100, label: 'Black holes evaporate', date: 'UP TO A GOOGOL YEARS', at: F(C.black) },
+              { t: 1e110, label: 'Heat death', at: F(C.heat), hero: true },
+            ]} />
+          <Fade op={win(t, C.nobody, C.ever, 0.35, 0.4)}>
+            <DataLabel x={TL.x + 44} y={TL.y + 96} label="WHY?" value="still unknown" size={44} />
+          </Fade>
+        </AbsoluteFill>
+      </Fade>
+      {/* a small black hole beside its marker, shrinking away */}
+      {(() => {
+        const r = 34 * (1 - curve(t, [C.evaporate - 0.1, C.evaporate + 1.0], [0, 1], EASE.in));
+        const op = win(t, C.black + 0.1, C.heat, 0.3, 0.3);
+        return r > 0.5 && op > 0 ? <Fade op={op}><BlackHole x={TL.x - 80} y={bhY} r={r} warm /></Fade> : null;
+      })()}
+    </>
+  );
+
+  // ---------- TWIST (a): star birth — its own scene between two whips; the drop rolls on an odometer ----------
+  const barsNode = (
+    <>
+      <div style={{ position: 'absolute', left: SAFE_RECT.x + 80, top: SAFE_RECT.y + 150, ...TYPE.label, color: PALETTE.sciText } as React.CSSProperties}>STAR BIRTH RATE</div>
+      <ComparisonBars x={SAFE_RECT.x + 80} y={SAFE_RECT.y + 240} width={SAFE_RECT.w - 200} gap={190} stagger={12} at={F(C.star + 0.2)} bars={[
+        { label: 'PEAK', value: 100, unit: '%', display: '100%' },
+        { label: 'TODAY', value: 10, unit: '%', display: '~10%', hero: true },
+      ]} />
+      <Fade op={curve(t, [C.ninety - 0.45, C.ninety - 0.2], [0, 1], EASE.out)}>
+        <div style={{ position: 'absolute', left: SAFE_RECT.x + 80, top: SAFE_RECT.y + 700, ...TYPE.label, color: PALETTE.sciText } as React.CSSProperties}>DOWN</div>
+        <OdometerNumber x={SAFE_RECT.x + 80 + 70} y={SAFE_RECT.y + 750} size={170} digits={2} prefix="−" suffix="%"
+          value={[[F(C.ninety - 0.3), 0], [F(C.ninety + 0.9), 90, 'out']]} />
+      </Fade>
+    </>
+  );
 
   return (
     <Grain>
       <AbsoluteFill style={{ background: PALETTE.space }}>
-        <Starfield count={300} bright={12} seed={21} offs={offs} ons={ons} clear={[[SAFE_RECT.x + 60, CAPTION.centerY - 60, SAFE_RECT.w - 120, 120]]} warm />
+        <Camera x={camX} zoom={camZoom} driftAmp={driftAmp} punches={[F(heroIn), F(C.heat)]} blur={blurWins}>
+          <CameraLayer depth={0.2}>
+            <Starfield count={300} bright={12} seed={21} offs={offs} ons={ons} clear={[[SAFE_RECT.x + 60, CAPTION.centerY - 60, SAFE_RECT.w - 120, 120]]} warm />
+          </CameraLayer>
+          <CameraLayer depth={1}>
 
         {/* ---------- HOOK A ---------- */}
         {isA && (
@@ -255,98 +420,30 @@ export const WhyTime: React.FC<{ variant: Variant }> = ({ variant }) => {
           </svg>
         )}
 
-        {/* ---------- SETUP (c): a collision, forward then reversed ---------- */}
-        <Fade op={win(t, C.but + 0.3, C.counting - 0.1, 0.3, 0.35)}>
-          <ParticleBox x={CX} y={CY} w={SAFE_RECT.w * 0.86} mode="collide" box={0}
-            clock={[[F(C.physics - 0.1), 0], [F(C.physics + 1.4), 1, 'linear'], [F(C.reverse - 0.6), 1], [F(C.reverse + 0.9), 0, 'linear']]} />
-          <Fade op={win(t, C.physics - 0.05, C.reverse - 0.75, 0.25, 0.2)}>
-            <Label y={CY - SAFE_RECT.h * 0.22}>FORWARD</Label>
-          </Fade>
-          <Fade op={win(t, C.reverse - 0.55, C.why1 - 0.1, 0.25, 0.25)}>
-            <Label y={CY - SAFE_RECT.h * 0.22}>REVERSED</Label>
-          </Fade>
-        </Fade>
-        <KineticTitle x={CX} top={CY - SAFE_RECT.h * 0.2} size={110} outAt={C.counting - 0.4} outLen={0.25}
-          lines={[[{ w: 'Why?', start: C.why1, gold: true }]]} />
+        {/* ---------- whip 1: "Why?" → the box ---------- */}
+        <WhipTransition at={W1} dur={8} direction="left" from={collisionNode} to={boxNode} />
 
-        {/* ---------- REVEAL 1–2: a hundred particles, the divider lifts, they mix ---------- */}
-        <Fade op={win(t, C.counting - 0.2, C.vastly + 0.4, 0.3, 0.45)}
-          style={{ transform: `translateX(${-SAFE_RECT.w * 0.6 * curve(t, [C.vastly, C.vastly + 0.8], [0, 1], EASE.in)}px)` }}>
-          <ParticleBox x={CX} y={CY} w={SAFE_RECT.w * 0.86} h={SAFE_RECT.w * 0.62} releaseAt={F(C.go)} speed={6}
-            gather={{ from: [CX - SAFE_RECT.w * 0.2, CY], at: F(C.counting), len: 40 }} at={F(C.counting - 0.2)} />
-        </Fade>
-        <Fade op={win(t, C.vastly + 0.35, C.about - 0.1, 0.4, 0.35)}>
-          <Balance x={CX} y={CY - 40} span={SAFE_RECT.w * 0.33} at={F(C.vastly + 0.35)} labelsAt={F(C.ways)} tipAt={F(C.mixed)}
+        {/* ---------- match cut: the box's frame becomes the balance beam ---------- */}
+        <ShapeMatch color="ivory" outline={3} alpha={0.55} glow={0}
+          keys={[{ g: { x: BOX.x, y: BOX.y, w: BOX.w, h: BOX.h, r: 0 }, at: 0 }, { g: lineGeom(CX - BAL.span, BAL.y, CX + BAL.span, BAL.y, 4), at: F(M), len: 18 }]}
+          opacity={[[F(M) - 1, 0], [F(M), 1], [F(M) + 24, 1], [F(M) + 34, 0]]} />
+        <Fade op={win(t, M, C.about - 0.1, 0.01, 0.35)}>
+          <Balance x={CX} y={BAL.y} span={BAL.span} at={F(M) + 14} labelsAt={F(C.ways)} tipAt={F(C.mixed)}
             tipFrames={14} tipEase="punch" valueSize={60}
             left={{ label: 'SORTED', value: 1, display: '1 way', glyph: 'point' }}
             right={{ label: 'MIXED', value: 1e30, display: 'all the rest', glyph: 'stars' }} />
         </Fade>
 
-        {/* ---------- REVEAL 3: the main reveal — 1 in 10^30 (burst, then settle) ---------- */}
-        <Fade op={win(t, heroIn, C.thats - 0.25, 0.05, 0.35)}>
-          {burstP > 0 && burstP < 1 && (
-            <svg width={CANVAS.W} height={CANVAS.H} style={{ position: 'absolute', left: 0, top: 0 }}>
-              <circle cx={CX} cy={CY - SAFE_RECT.h * 0.06} r={60 + 420 * EASE.out(burstP)} fill="none" stroke={PALETTE.gold}
-                strokeWidth={6 * (1 - burstP) + 1} opacity={0.6 * (1 - burstP)} />
-            </svg>
-          )}
-          {/* the odds in the narrator's own words (10^30 alone didn't read), each word on its spoken time */}
-          <Label y={CY - SAFE_RECT.h * 0.27}>ODDS: ALL ONE SIDE</Label>
-          <KineticTitle x={CX} top={CY - SAFE_RECT.h * 0.22} size={112} lines={[
-            [{ w: '1', start: oddsW[1].start, gold: true }, { w: 'in', start: oddsW[2].start }, { w: 'a', start: oddsW[3].start }, { w: 'million', start: oddsW[4].start }],
-            [{ w: 'trillion', start: oddsW[5].start, gold: true }],
-            [{ w: 'trillion', start: oddsW[6].start, gold: true }],
-          ]} />
-          <Fade op={curve(t, [oddsW[6].end + 0.05, oddsW[6].end + 0.45], [0, 1], EASE.out)}>
-            <Label y={CY - SAFE_RECT.h * 0.22 + 112 * 3.15}>THAT&apos;S A 1 FOLLOWED BY 30 ZEROS</Label>
-          </Fade>
-        </Fade>
+        {/* ---------- fly-through: into the odds, out in the entropy gas ---------- */}
+        <FlyThrough from={heroNode} to={entropyNode} at={FLY_AT} len={FLY_LEN} x={HOLE.x} y={HOLE.y} hole={34} />
 
-        {/* ---------- REVEAL 4: entropy = the number of arrangements ---------- */}
-        <Fade op={win(t, C.thats - 0.2, C.so - 0.2, 0.4, 0.4) * 0.28}>
-          <ParticleBox x={CX} y={CY + SAFE_RECT.h * 0.12} w={SAFE_RECT.w * 0.86} h={SAFE_RECT.w * 0.5} releaseAt={-1000} speed={4} box={0} seed={9} />
-        </Fade>
-        <Fade op={1 - curve(t, [C.so - 0.25, C.so + 0.1], [0, 1], EASE.in)}>
-          <KineticTitle x={CX} top={CY - SAFE_RECT.h * 0.22} size={130} lines={[[{ w: 'entropy', start: C.entropy, gold: true }]]} />
-          <Fade op={curve(t, [C.number - 0.1, C.number + 0.35], [0, 1], EASE.out)}>
-            <div style={{ position: 'absolute', left: CX - 420, width: 840, top: CY - SAFE_RECT.h * 0.22 + 175, textAlign: 'center', ...TYPE.label, color: PALETTE.sciText } as React.CSSProperties}>
-              = NUMBER OF ARRANGEMENTS
-            </div>
-          </Fade>
-        </Fade>
-
-        {/* ---------- REVEAL 5 → TWIST: the arrow becomes the timeline's axis ---------- */}
+        {/* the arrow returns and becomes the timeline's axis (the gold line's match cut) */}
         <GoldMorphLine keys={axisLine} draw={[[F(C.so - 0.05), 0], [F(C.so + 0.5), 1, 'out']]}
           opacity={[[F(C.started - 0.2), 1], [F(C.started + 0.3), 0]]} />
-        <Fade op={1 - curve(t, [C.death + 0.5, C.death + 1.1], [0, 1], EASE.in)} style={{ transform: `translateY(${tlShift}px)` }}>
-          <Timeline x={TL.x} y={TL.y} length={TL.L} range={[0, 13.8e9]} labelSize={44} at={F(C.direction + 0.2)}
-            rescale={{ at: F(rsAt), len: Math.round(rsLen * FPS), range: LOG_RANGE, log: true }}
-            events={[
-              { t: 0, label: 'Big Bang', date: 'LOWEST ENTROPY', at: F(C.started), hero: true },
-              { t: 13.8e9, label: 'Today', date: '13.8 BILLION YEARS', at: F(C.low) },
-              { t: 1e14, label: 'Last stars fade', date: '100 TRILLION YEARS', at: F(C.last) },
-              { t: 1e100, label: 'Black holes evaporate', date: 'UP TO A GOOGOL YEARS', at: F(C.black) },
-              { t: 1e110, label: 'Heat death', at: F(C.heat), hero: true },
-            ]} />
-          <Fade op={win(t, C.nobody, C.ever, 0.35, 0.4)}>
-            <DataLabel x={TL.x + 44} y={TL.y + 96} label="WHY?" value="still unknown" size={44} />
-          </Fade>
-        </Fade>
-        {/* a small black hole beside its marker, shrinking away */}
-        {(() => {
-          const r = 34 * (1 - curve(t, [C.evaporate - 0.1, C.evaporate + 1.0], [0, 1], EASE.in));
-          const op = win(t, C.black + 0.1, C.heat, 0.3, 0.3);
-          return r > 0.5 && op > 0 ? <Fade op={op}><BlackHole x={TL.x - 80} y={bhY} r={r} warm /></Fade> : null;
-        })()}
 
-        {/* TWIST (a): star birth, peak vs today — grows out of the TODAY marker */}
-        <Fade op={win(t, C.star - 0.1, C.in23 - 0.2, 0.3, 0.4)} style={{ transform: `scaleY(${1 - curve(t, [C.in23 - 0.2, C.in23 + 0.2], [0, 1], EASE.in)})`, transformOrigin: `0 ${TODAY_Y}px` }}>
-          <div style={{ position: 'absolute', left: TL.x + 44, top: TODAY_Y + 110, ...TYPE.annotation, color: PALETTE.sciText } as React.CSSProperties}>STAR BIRTH RATE</div>
-          <ComparisonBars x={TL.x + 44} y={TODAY_Y + 190} width={SAFE_RECT.w - 220} gap={170} stagger={12} at={F(C.star + 0.2)} bars={[
-            { label: 'PEAK', value: 100, unit: '%', display: '100%' },
-            { label: 'TODAY', value: 10, unit: '%', display: '~10%', hero: true },
-          ]} />
-        </Fade>
+        {/* ---------- whips 2 + 3: timeline → star birth → timeline ---------- */}
+        <WhipTransition at={W2} dur={8} direction="left" from={timelineNode}
+          to={<WhipTransition at={W3} dur={8} direction="right" from={barsNode} to={timelineNode} />} />
 
         {isA ? (
           <Egg x={CX} y={CY} r={EGG_R} wash warm opacity={[[F(C.loop + 0.5), 0], [F(C.loop + 1.6), 1, 'out']]} />
@@ -360,6 +457,8 @@ export const WhyTime: React.FC<{ variant: Variant }> = ({ variant }) => {
           opacity={isA
             ? [[F(C.death + 0.5), 0], [F(C.death + 0.9), 0.6], [F(C.loop + 0.2), 0.6], [F(C.loop + 1.0), 1]]
             : [[F(C.death + 0.5), 0], [F(C.death + 0.9), 0.6], [F(C.loop + 0.2), 0.6], [F(C.loop + 1.0), 1], [F(C.loop + 1.6), 1], [F(C.loop + 2.1), 0]]} />
+          </CameraLayer>
+        </Camera>
         <KeywordCaptions lines={lines} maxChars={18} />
       </AbsoluteFill>
     </Grain>

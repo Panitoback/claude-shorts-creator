@@ -7,6 +7,7 @@ import {
   Balance, ComparisonBars, FlowPaths, Meter, OrbitOverlay, Timeline, linePath, spiralPath,
   WhipMontage, whipTiming,
   Egg, eggCrackPts, CoffeeCup, cupSpiralPts, GoldMorphLine, morphScribble, morphPoint, WordDissolve, ParticleBox, DeckOfCards,
+  Camera, CameraLayer, OdometerNumber,
 } from '../../components';
 import { EASE } from '../../brand';
 import { PlanetKind } from '../../brand';
@@ -20,7 +21,7 @@ const PAGE = 120;
 
 export const compositionConfig = {
   id: 'ComponentGallery',
-  durationInSeconds: 148, // 37 pages × PAGE frames
+  durationInSeconds: 156, // 39 pages × PAGE frames
   fps: 30,
   width: 1080,
   height: 1920,
@@ -28,7 +29,7 @@ export const compositionConfig = {
 
 const Header: React.FC<{ n: number; title: string; note: string }> = ({ n, title, note }) => (
   <div style={{ position: 'absolute', top: 70, left: 60, right: 180 }}>
-    <div style={{ ...TYPE.annotation, color: PALETTE.gold, fontSize: 24 }}>{`${n} / 37 · ${title}`}</div>
+    <div style={{ ...TYPE.annotation, color: PALETTE.gold, fontSize: 24 }}>{`${n} / 39 · ${title}`}</div>
     <div style={{ ...TYPE.annotation, color: PALETTE.sciText, fontSize: 20, letterSpacing: 1, textTransform: 'none', marginTop: 8, opacity: 0.8 }}>{note}</div>
   </div>
 );
@@ -359,6 +360,10 @@ export const ComponentGallery: React.FC = () => (
         <Header n={n} title={title} note={note} />
       </Sequence>
     ))}
+    <Sequence from={PAGE * 37} durationInFrames={PAGE}><OdometerDemo />
+      <Header n={38} title="Odometer number" note="OdometerNumber: digit wheels, the units roll, higher wheels turn only on the carry · leading zeros hidden · tabular, layout never jumps" /></Sequence>
+    <Sequence from={PAGE * 38} durationInFrames={PAGE}><Timeline3DDemo />
+      <Header n={39} title="3D timeline flight" note="timeline in CSS perspective: tilts back (rotateX ≤ 22°) while the camera flies along it, motion blur only during the flight, flat again on arrival" /></Sequence>
   </AbsoluteFill>
   </Grain>
 );
@@ -479,6 +484,40 @@ const ParallaxDemo: React.FC = () => {
       <ParallaxStars dist={d} cx={480} cy={820} z={[-16, -0.3]} fillAt={1 / 0.06} count={150} bright={14} seed={33} />
       <Small x={480} y={1180}>{`camera distance ${d.toFixed(1)} (1 = rest framing)`}</Small>
     </>
+  );
+};
+
+const OdometerDemo: React.FC = () => (
+  <>
+    <Starfield count={160} warm />
+    <Small x={CX} y={SAFE_RECT.y + 150}>{'0 → 90 %, ease-out'}</Small>
+    <OdometerNumber x={CX} y={SAFE_RECT.y + 230} size={170} digits={2} prefix="−" suffix="%" align="center" value={[[15, 0], [55, 90, 'out']]} />
+    <Small x={CX} y={SAFE_RECT.y + 560}>{'0 → 13,800: wheels carry'}</Small>
+    <OdometerNumber x={CX} y={SAFE_RECT.y + 640} size={120} digits={5} align="center" color="ivory" value={[[30, 0], [100, 13800, 'out']]} />
+  </>
+);
+
+const Timeline3DDemo: React.FC = () => {
+  const f = useCurrentFrame();
+  const tilt = interpolate(f, [15, 50, 85], [0, 22, 0], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: EASE.inOut });
+  const shift = interpolate(f, [15, 85], [0, -380], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: EASE.inOut });
+  const y0 = SAFE_RECT.y + 120;
+  return (
+    <Camera blur={[[30, 70]]}>
+      <CameraLayer depth={0.2}><Starfield count={220} warm /></CameraLayer>
+      <CameraLayer depth={1}>
+        <AbsoluteFill style={{ perspective: '1600px', perspectiveOrigin: `${CX}px ${y0}px` }}>
+          <AbsoluteFill style={{ transform: `translateY(${shift}px) rotateX(${tilt}deg)`, transformOrigin: `${CX}px ${y0 - shift}px` }}>
+            <Timeline x={SAFE_RECT.x + 140} y={y0 + 40} length={900} range={[0, 13.8e9]} labelSize={44} warm
+              events={[
+                { t: 0, label: 'Big Bang', date: 'LOWEST ENTROPY', at: -100, hero: true },
+                { t: 4.6e9, label: 'Halfway', date: '4.6 BILLION YEARS', at: -100 },
+                { t: 13.8e9, label: 'Today', date: '13.8 BILLION YEARS', at: -100 },
+              ]} />
+          </AbsoluteFill>
+        </AbsoluteFill>
+      </CameraLayer>
+    </Camera>
   );
 };
 

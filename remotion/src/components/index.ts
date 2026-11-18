@@ -48,3 +48,4 @@ export { ShapeMatch, circleGeom, barGeom, lineGeom, geomAt } from './ShapeMatch'
 export type { ShapeGeom, ShapeKey } from './ShapeMatch';
 export { FlyThrough } from './FlyThrough';
 export { ParticleGlyphs, glyphLayout } from './ParticleGlyphs';
+export { OdometerNumber } from './OdometerNumber';
