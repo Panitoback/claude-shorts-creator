@@ -340,6 +340,9 @@ copied; none of them are installed.
     each time so they don't repeat), whoosh-deep −2 peaking 0.3 s before the fly-through lands,
     swish-light −2 on the box → beam match cut, sparkle-soft −4 when the "100" forms, tick-soft +2 when
     the odometer lands. The rescale whoosh-deep dropped 0 → −2 (it now follows a whip by ~0.9 s).
+  - **True peak:** two-pass loudnorm now aims at **−2.0 dBTP**; the AAC finals measure −1.2 (A) / −1.4 (B)
+    (at −1.5 they came out at −0.6). Same SFX plan for the frame-filling rework (the collision rings land
+    on the existing tick-soft cues).
   - New clips: `shell-crack`, `card-riffle` (~25 credits). Hook A: hook-hit **−4** + shell-crack +6 on the
     egg splitting (0.42 s); hook B: hook-hit −3 + card-riffle +9 / +4 on the two riffles. Morph swishes
     +2 / whoosh-soft +1; pull-back whoosh-deep +3 (+10 phone); glow-swell 0 on "Big Bang".

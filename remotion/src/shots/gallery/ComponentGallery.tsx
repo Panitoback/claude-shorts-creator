@@ -7,7 +7,7 @@ import {
   Balance, ComparisonBars, FlowPaths, Meter, OrbitOverlay, Timeline, linePath, spiralPath,
   WhipMontage, whipTiming,
   Egg, eggCrackPts, CoffeeCup, cupSpiralPts, GoldMorphLine, morphScribble, morphPoint, WordDissolve, ParticleBox, DeckOfCards,
-  Camera, CameraLayer, OdometerNumber,
+  Camera, CameraLayer, OdometerNumber, TimeStream,
 } from '../../components';
 import { EASE } from '../../brand';
 import { PlanetKind } from '../../brand';
@@ -21,7 +21,7 @@ const PAGE = 120;
 
 export const compositionConfig = {
   id: 'ComponentGallery',
-  durationInSeconds: 156, // 39 pages × PAGE frames
+  durationInSeconds: 160, // 40 pages × PAGE frames
   fps: 30,
   width: 1080,
   height: 1920,
@@ -29,7 +29,7 @@ export const compositionConfig = {
 
 const Header: React.FC<{ n: number; title: string; note: string }> = ({ n, title, note }) => (
   <div style={{ position: 'absolute', top: 70, left: 60, right: 180 }}>
-    <div style={{ ...TYPE.annotation, color: PALETTE.gold, fontSize: 24 }}>{`${n} / 39 · ${title}`}</div>
+    <div style={{ ...TYPE.annotation, color: PALETTE.gold, fontSize: 24 }}>{`${n} / 40 · ${title}`}</div>
     <div style={{ ...TYPE.annotation, color: PALETTE.sciText, fontSize: 20, letterSpacing: 1, textTransform: 'none', marginTop: 8, opacity: 0.8 }}>{note}</div>
   </div>
 );
@@ -364,6 +364,8 @@ export const ComponentGallery: React.FC = () => (
       <Header n={38} title="Odometer number" note="OdometerNumber: digit wheels, the units roll, higher wheels turn only on the carry · leading zeros hidden · tabular, layout never jumps" /></Sequence>
     <Sequence from={PAGE * 38} durationInFrames={PAGE}><Timeline3DDemo />
       <Header n={39} title="3D timeline flight" note="timeline in CSS perspective: tilts back (rotateX ≤ 22°) while the camera flies along it, motion blur only during the flight, flat again on arrival" /></Sequence>
+    <Sequence from={PAGE * 39} durationInFrames={PAGE}><TimeStreamDemo />
+      <Header n={40} title="Time stream" note="TimeStream: gold particles flowing one way along a line (time's arrow, a timeline's axis) · own speed + lane each, fade at both ends · motion for sparse scenes" /></Sequence>
   </AbsoluteFill>
   </Grain>
 );
@@ -520,5 +522,15 @@ const Timeline3DDemo: React.FC = () => {
     </Camera>
   );
 };
+
+const TimeStreamDemo: React.FC = () => (
+  <>
+    <Starfield count={160} warm />
+    <Small x={CX} y={SAFE_RECT.y + 120}>{"along time's arrow (horizontal, wide lane)"}</Small>
+    <TimeStream x0={SAFE_RECT.x + 60} y0={SAFE_RECT.y + 260} x1={SAFE_RECT.x + SAFE_RECT.w - 60} y1={SAFE_RECT.y + 260} from={0.1} to={3.6} n={80} spread={56} dot={7} seed={3} />
+    <Small x={CX} y={SAFE_RECT.y + 420}>{"down a timeline's axis (vertical, narrow lane)"}</Small>
+    <TimeStream x0={CX} y0={SAFE_RECT.y + 480} x1={CX} y1={SAFE_RECT.y + SAFE_RECT.h - 80} from={0.1} to={3.6} n={110} speed={300} spread={22} dot={6} seed={5} />
+  </>
+);
 
 export default ComponentGallery;

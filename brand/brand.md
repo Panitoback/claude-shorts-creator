@@ -6,11 +6,12 @@
 > **Reference scene:** the `BrandReference` composition is this document rendered on screen. If
 > it looks right, the brand is right.
 >
-> v2.3 · 2026-11-17 · direction: *Deep Field hybrid* (cinematic and editorial, with a few
+> v2.4 · 2026-11-17 · direction: *Deep Field hybrid* (cinematic and editorial, with a few
 > scientific annotations) · **energy curve**: a high-energy hook, a calm body, bursts on the peaks ·
 > **visual variety**: scenes change, and every number is shown · **whip transitions** approved as a
 > hand-off (§8) · **dynamism** (v2.3): shape match cuts, fly-throughs, a living camera, punch-ins,
-> beat sync, motion blur on fast moves only (§8)
+> beat sync, motion blur on fast moves only (§8) · **fill the frame** (v2.4): hero sizes, motion that
+> registers in sparse scenes, ≤ 1 s of black at the end (§5, §8)
 
 ---
 
@@ -128,6 +129,13 @@ sans. Both are free Google fonts, so nothing has to be installed.
   true-scale object would be invisible, draw it at the smallest visible size (about 4 px), mark
   it with an annotation ring and say so in the script. Never quietly enlarge it.
 - **One hero object per scene.** Secondary objects are smaller, dimmer or both.
+- **Fill the frame (v2.4).** Unless the scene is about true scale, the hero object (an egg, a cup,
+  a particle box, a balance, a diagram) spans **~50–60 % of the safe width or more**; no scene is
+  half empty black. Small actors (particles, an arrow, a point, a black hole beside a diagram) are
+  drawn **clearly visible at phone scale**: particles ≥ ~10 px radius in a hero role (~24 px when two
+  of them are the whole scene), lines ~6–10 px, an arrowhead ~90 px. A diagram (timeline, chart)
+  is centered and uses the safe height, with labels at 60 px or more. Keep ~3 % room around wide
+  elements in scenes the camera pushes into.
 
 ### Visual variety
 
@@ -281,6 +289,19 @@ move**, a **morph**, an **object carried** into the next scene, and the **whip t
   flies along it, and come back flat on arrival. No free 3D camera.
 - **Particles that form figures:** drifting particles can condense into a number (5×7 dot font,
   `ParticleGlyphs`) and release it again; a count can roll on odometer wheels (`OdometerNumber`).
+- **Motion that registers (v2.4).** On a dark, sparse frame a slow drift changes almost no pixels, so
+  it reads as a still. Every scene gets **a slow push-in** (~1.03–1.08 over the scene, reset inside a
+  whip or eased back before the next), and every sparse scene gets **moving content tied to its
+  idea**: a stream of gold particles flowing one way along time's arrow or a timeline's axis, a gas
+  still mixing faintly (~30 %) behind a diagram, a counter rolling. Check it by measuring per-second
+  motion on the render: no near-still second except deliberate holds (the loop's last frames, the
+  darkness before the ending).
+- **Darkness is short (v2.4).** A near-black screen lasts **≤ 1 s**, even at an ending about the dark
+  (heat death). Something visible stays: the last glowing point.
+- **The sky going out** (an ending like heat death) is a climax, not a fade: **every star in the
+  frame**, in every layer, switches off one by one (each a clear ~0.5 s fade), slowly at first and
+  faster toward the peak word, until only the last point is left (`Starfield offAll`). Never dim the
+  whole sky at once (compression smears global fades).
 - **Banned at every energy:** shake, bounce, elastic, spin, lens flares, glitch, neon, fast
   flicker (anything strobing faster than ~3 Hz), hard snaps. Fast means a fast ease-out, not
   jerky.
@@ -356,3 +377,6 @@ That leaves a **safe rectangle of 840 × 1210 px** from (60, 210) to (900, 1420)
   0 is already complete.)
 - **The last frame leads back into frame 0**, so the loop is seamless: the ending returns to the
   hook's starting state, not to its payoff. There are no subscribe or comment-bait outros.
+- **Audio: −14 LUFS integrated, true peak ≤ −1 dBTP measured on the final encoded file** (two-pass
+  loudnorm aiming at −2.0 dBTP, since the AAC encode adds a few tenths). A review copy keeps the
+  final's audio stream untouched.

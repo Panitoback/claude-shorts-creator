@@ -3,7 +3,7 @@
 > **For:** the planning project where topics, aesthetics and scripts are developed.
 > **Pair it with:** `brand.md` (the visual and sound style contract — read it for colors, type,
 > captions, annotations, motion, safe zones and sound taste; this file never repeats it).
-> **Version:** v0.15.0 · 2026-11-17 · phase: *second short done ("Why Time Only Moves Forward") + dynamism kit*
+> **Version:** v0.16.0 · 2026-11-17 · phase: *second short done ("Why Time Only Moves Forward") + dynamism kit + frame-filling review*
 >
 > This file describes **what can be asked for**, not how it is built. If a script asks for
 > something listed here, it can be made. If it asks for something not listed, flag it as a
@@ -122,7 +122,7 @@ All of these can arrive already in place on the first frame, so they work in a h
 
 | Component | What it shows | Options you can ask for |
 |---|---|---|
-| **Starfield** | The background sky: mostly faint stars in real temperature colors, a few bright ones with a tiny halo that twinkle. Kept clear behind text and around planets; tuned to survive platform compression. | density, how many bright stars, twinkle on/off, overall brightness (dims when something very luminous is on screen), bright stars switching off one by one (each a clear ~0.5 s fade, never the whole sky dimming) |
+| **Starfield** | The background sky: mostly faint stars in real temperature colors, a few bright ones with a tiny halo that twinkle. Kept clear behind text and around planets; tuned to survive platform compression. | density, how many bright stars, twinkle on/off, overall brightness (dims when something very luminous is on screen), bright stars switching off one by one (each a clear ~0.5 s fade, never the whole sky dimming), or **every star in the frame** going out one by one, faster and faster, until the sky is dark (an ending like heat death) |
 | **Glowing body** | A sun or star: limb-darkened disc with a soft halo that blooms in after the disc and breathes gently | size, position, kind by temperature: *sun* (yellow), *red*, *white*, *blue*; glow strength |
 | **Planet / moon** | A sphere lit from one side, night side falling to black, true muted colors, with each body's signature features: Earth's real continents (+ soft clouds), the Moon's soft maria and bright craters, cratered Mercury (craters as soft shading, never outlines), Mars's polar caps and dark regions, Jupiter's belts and Great Red Spot, Saturn's soft bands and ring with the Cassini division, Venus's faint cloud swirls, Neptune's streaks; Uranus nearly featureless (accurate). Small bodies (under ~60 px) are simplified to color and shading. | which body (Mercury, Venus, Earth, Moon, Mars, Jupiter, Saturn, Uranus, Neptune), size, position, light direction, how much is lit (phase), which side faces us, slow rotation (e.g. Earth turning), axial tilt (Uranus ~98° with its faint ring), atmosphere glow (Earth by default), the warm wash behind it when it's the hero |
 | **Hero number** | Big serif number that counts up, gold italic unit, subject line under it, small label above | value, unit, subject, label, count up or just appear, starting value, size (hero or secondary). Long values shrink to fit the safe area. Power-of-ten form for numbers too long in words: "1 in 10³⁰" (gold italic words before the number, the exponent counts up). ⚠ When the narrator says the number in words ("a million trillion trillion"), show those words instead: "1 in 10³⁰" didn't read on #3. |
@@ -230,7 +230,8 @@ inside scenes**, usable in any short (rules in `brand.md` §8 "Dynamism").
 | **Shape match cut** | One shape survives the cut and becomes the next scene's key element (a sun → a bar, a box's frame → a balance beam, a line → an axis) | which shape becomes which, filled or outline |
 | **Fly-through** | The camera dives into an object (a digit, a ring, a hole) and comes out in the next scene | what to fly into, what comes out on the other side |
 | **Particles form a number** | Drifting particles condense into a number (digits, %, ×, a power of ten) and can release it | the number, when it forms, how many particles |
-| **Odometer number** | A number that rolls on digit wheels (the higher wheels turn only on the carry) | the value(s), units/prefix (−, %), gold or ivory |
+| **Odometer number** | A number that rolls on digit wheels (the higher wheels turn only on the carry) | the value(s), units/prefix (−, %), gold or ivory, as an exponent (10 with a rolling power, e.g. ways to arrange: 10⁰ → 10²⁹) |
+| **Time stream** | Gold particles flowing one way along a line (time's arrow, a timeline's axis): steady motion that carries the idea "time runs one way" | which line, how dense, when it flows |
 | **3D timeline flight** | The timeline tilts back in perspective while the camera flies along it, then lands flat | which stretch of time to fly over |
 | **Beat sync** | Scene changes and camera accents land on the pulse of the music bed | automatic, once the bed is chosen |
 
@@ -548,6 +549,20 @@ BEATS:
 
 What worked and what didn't. Newest first.
 
+- **Small and empty reads as static, even when it moves.** A frame-by-frame review of "Why Time Only
+  Moves Forward" found the heroes too small (the frame mostly black), a corner-sized timeline with
+  tiny labels, four near-still stretches and ~4 s of black before the loop, even with the living
+  camera on. Fixed by: hero objects at ~55 % of the safe width, a big centered timeline (60 px
+  labels), big particles and arrow, a slow push-in per scene, **moving content tied to each idea**
+  (a stream of particles along time's arrow and down the timeline, the gas mixing behind the
+  balance), "entropy" shown with the real count (a sorted box mixing while the ways to arrange it
+  roll from 10⁰ to 10²⁹), and a heat-death climax where every star goes out one by one, then under
+  a second of dark. Measured motion in the flat stretches went from ~0.2–0.4 to ~1–2 (the box
+  scenes, which felt right, measure ~2.5). Scripts can help: give every scene something that
+  *moves* in its picture, not just something that appears.
+- **True peak is measured after encoding.** Aiming loudnorm at −1.5 dBTP gave −0.6 on the AAC file;
+  aiming at −2.0 gives −1.1 to −1.4.
+
 - **Connected scenes feel faster without being louder.** The dynamism pass on "Why Time Only
   Moves Forward" (a "100" of particles → the box, the box's frame → the balance beam, a dive into
   the odds → "entropy", whips around a separate star-birth scene, a 3D flight down the timeline)
@@ -667,7 +682,8 @@ kit in 3.5.
 **Second short: done.** "Why Time Only Moves Forward" (variants A egg / B deck; B chosen),
 built with the arrow-of-time kit (3.7). Its body was then reworked with the **dynamism kit**
 (3.8: match cuts, a fly-through, three whips, living camera, punch-ins, beat sync, 3D timeline,
-odometer) and re-rendered as the final.
+odometer) and re-rendered as the final, then reworked once more after a frame-by-frame review
+(bigger heroes, a big timeline, motion in every stretch, the heat-death climax; see Learnings).
 
 **Next:** the custom skills (`script-to-short`,
 `new-component`); section 6 becomes final when `script-to-short` exists. Then Manim, only for

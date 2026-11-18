@@ -25,3 +25,9 @@
   fly-through odds → entropy gas; whips timeline → star birth (odometer −90 %) → timeline; 3D tilt + motion blur
   on the two timeline flights; cut times snapped to the bed-minimal-pulse grid. SFX for the new transitions
   are generated in `make_sfx_plans.py`.
+- **Frame-filling rework (brand v2.4, 2026-11-17, after the user's frame-by-frame review):** EGG_R 0.37 × safe width;
+  timeline centered, L to the caption lane, 60 px labels; collision dots 24 px + impact rings; arrow 10 px with a
+  big head; `Stream` particles along the arrow and down the timeline axis; faint gas behind the balance; per-scene
+  push-ins (zoom back to 1 before the loop); entropy = a sorted box mixing while `10^n` rolls 0 → 29 (C(100,50) ≈ 1e29);
+  big evaporating black hole mid-axis; heat death = both star layers switching off one by one (`Starfield offAll`),
+  then the glowing point → crack → egg (≤ 1 s dark). Loudnorm target −2.0 dBTP (finals −1.2 / −1.4).

@@ -49,3 +49,5 @@ export type { ShapeGeom, ShapeKey } from './ShapeMatch';
 export { FlyThrough } from './FlyThrough';
 export { ParticleGlyphs, glyphLayout } from './ParticleGlyphs';
 export { OdometerNumber } from './OdometerNumber';
+export { TimeStream } from './TimeStream';
+export type { TimeStreamProps } from './TimeStream';

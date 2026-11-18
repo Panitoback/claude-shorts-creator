@@ -18,10 +18,11 @@ export type OdometerNumberProps = {
   color?: 'gold' | 'ivory';
   align?: 'left' | 'center';
   opacity?: Keys;
+  collapse?: boolean; // hidden leading wheels take no width (e.g. an exponent next to its base: no gap while it has one digit)
 };
 
 export const OdometerNumber: React.FC<OdometerNumberProps> = ({
-  value, digits, x, y, size = 150, prefix = '', suffix = '', color = 'gold', align = 'left', opacity = 1,
+  value, digits, x, y, size = 150, prefix = '', suffix = '', color = 'gold', align = 'left', opacity = 1, collapse = false,
 }) => {
   const f = useCurrentFrame();
   const op = kf(f, opacity, 1);
@@ -50,7 +51,7 @@ export const OdometerNumber: React.FC<OdometerNumberProps> = ({
     <div style={{ position: 'absolute', left, top: y, display: 'flex', alignItems: 'flex-start', opacity: op, whiteSpace: 'nowrap' }}>
       {prefix && <div style={{ ...font, position: 'absolute', right: '100%', paddingRight: size * 0.05 }}>{prefix}</div>}
       {wheels.map((w, i) => (
-        <div key={i} style={{ width: digitW, height: lineH, overflow: 'hidden', opacity: w.visible, textAlign: 'center' }}>
+        <div key={i} style={{ width: collapse ? digitW * w.visible : digitW, height: lineH, overflow: 'hidden', opacity: w.visible, textAlign: 'center' }}>
           <div style={{ transform: `translateY(${-w.pos * lineH}px)` }}>
             {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0].map((d, k) => <div key={k} style={font}>{d}</div>)}
           </div>

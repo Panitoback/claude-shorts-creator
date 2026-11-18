@@ -126,6 +126,9 @@ export const EASE = {
 // §8 DYNAMISM (brand v2.3): the living camera, punch-in (1 → 1.03, 6 + 36 frames), shape match cuts,
 // fly-throughs, beat grid and motion-blur windows live in components/Camera.tsx, ShapeMatch.tsx,
 // FlyThrough.tsx and beat.ts (their constants are the code twin of brand.md §8 "Dynamism").
+// §5/§8 FILL THE FRAME (brand v2.4): hero ≥ ~50–60 % of the safe width, motion that registers in sparse
+// scenes (components/TimeStream.tsx, per-scene push-ins), ≤ 1 s of near-black, the sky going out star by
+// star (Starfield offAll). Audio delivery: −14 LUFS, true peak ≤ −1 dBTP on the encoded file.
 // §8 ENERGY CURVE (brand v2.0): high-energy hook, calm body, bursts on the peaks.
 // Visual variety (brand §5): a new visual idea at least every ~5–10 s; every number is shown.
 export const SCENE = {

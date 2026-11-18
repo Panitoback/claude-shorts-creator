@@ -32,12 +32,13 @@ export type StarfieldProps = {
   offs?: number[];
   offLen?: number; // frames each star takes to go out (default 15)
   ons?: number[]; // frames each switched-off star comes back (same order), e.g. so a loop's last frame matches frame 0
+  offAll?: boolean; // offs/ons index EVERY star (bright ones first, then by size), not just the bright ones: the whole sky going dark star by star
   at?: number;
   warm?: boolean;
 };
 
 export const Starfield: React.FC<StarfieldProps> = ({
-  count = 300, bright = 12, seed = 7, clear = [], avoid = [], twinkle = true, opacity = 1, offs = [], offLen = 15, ons = [], at = 0, warm = false,
+  count = 300, bright = 12, seed = 7, clear = [], avoid = [], twinkle = true, opacity = 1, offs = [], offLen = 15, ons = [], offAll = false, at = 0, warm = false,
 }) => {
   const f = useCurrentFrame();
   const stars = useMemo(() => {
@@ -50,6 +51,12 @@ export const Starfield: React.FC<StarfieldProps> = ({
     return idx;
   }, [stars, bright, avoid]);
   const brightRank = useMemo(() => new Map(brightSet.map((i, k) => [i, k])), [brightSet]);
+  const offRank = useMemo(() => {
+    if (!offAll) return brightRank;
+    const inBright = new Set(brightSet);
+    const rest = stars.map((s, i) => [s.r, i] as const).filter(([, i]) => !inBright.has(i)).sort((a, b) => b[0] - a[0]).map(([, i]) => i);
+    return new Map([...brightSet, ...rest].map((i, k) => [i, k]));
+  }, [offAll, brightRank, brightSet, stars]);
   const sky = ramp(f, startOf(at, warm), MOTION.skyFade) * opacity;
 
   return (
@@ -63,8 +70,8 @@ export const Starfield: React.FC<StarfieldProps> = ({
         </radialGradient>
       </defs>
       {stars.map((s, i) => {
-        const rank = brightRank.get(i);
-        const isBright = rank !== undefined;
+        const isBright = brightRank.has(i);
+        const rank = offRank.get(i);
         const off = rank !== undefined && rank < offs.length
           ? Math.min(1, 1 - ramp(f, offs[rank], offLen) + (rank < ons.length ? ramp(f, ons[rank], offLen) : 0)) : 1;
         if (off <= 0) return null;

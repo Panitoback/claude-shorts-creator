@@ -4,7 +4,7 @@ import { CANVAS, CAPTION, EASE, PALETTE, SAFE_RECT, TYPE } from '../../brand';
 import {
   Balance, BlackHole, Camera, CameraLayer, CoffeeCup, ComparisonBars, DataLabel, DeckOfCards, Egg, FlyThrough, GoldMorphLine, Grain,
   KeywordCaptions, KineticTitle, OdometerNumber, ParallaxStars, ParticleBox, ParticleGlyphs, ShapeMatch, Starfield, Timeline,
-  WhipTransition, WordDissolve, cupSpiralPts, eggCrackPts, keyNorm, lineGeom, morphLine, morphPoint, morphScribble, snapToBeat,
+  TimeStream, WhipTransition, WordDissolve, cupSpiralPts, eggCrackPts, keyNorm, lineGeom, morphLine, morphPoint, morphScribble, snapToBeat,
   whipTiming,
 } from '../../components';
 import type { Key } from '../../components/anim';
@@ -59,12 +59,13 @@ const Fade: React.FC<{ op: number; children: React.ReactNode; style?: React.CSSP
 // ---- layout (from the safe rectangle) ----
 const CX = SAFE_RECT.x + SAFE_RECT.w / 2; // 480
 const CY = SAFE_RECT.y + SAFE_RECT.h * 0.42; // ≈ 718: the hero object's center
-const EGG_R = SAFE_RECT.w * 0.27;
+const EGG_R = SAFE_RECT.w * 0.37; // half its height: the egg spans ~55 % of the safe width (review 2026-11-17)
 const CUP_R = SAFE_RECT.w * 0.22;
 const WORD = { y: CY - SAFE_RECT.h * 0.09, size: 170 };
 const SCRIB: [number, number, number, number] = [CX - 300, CY + 40, 600, 110];
 const ARROW = { x0: CX - SAFE_RECT.w * 0.38, x1: CX + SAFE_RECT.w * 0.38, y: CY };
-const TL = { x: SAFE_RECT.x + 140, y: SAFE_RECT.y + 90, L: 720 };
+const TL = { x: SAFE_RECT.x + 110, y: SAFE_RECT.y + 90, L: CAPTION.centerY - 150 - (SAFE_RECT.y + 120) }; // axis + 60 px labels ≈ centered, top to the caption lane
+const TL_LABEL = 60;
 const TODAY_Y = SAFE_RECT.y + 120; // where the camera parks the TODAY marker
 const GLIDE = TODAY_Y - (TL.y + TL.L); // translate that brings TODAY (linear axis end) to TODAY_Y
 const LOG_RANGE: [number, number] = [1.38e10, 1e110];
@@ -80,14 +81,27 @@ const deckEdge = (): Pt[] => {
 };
 
 const BOX = { x: CX, y: CY, w: SAFE_RECT.w * 0.86, h: SAFE_RECT.w * 0.62 };
-const BAL = { y: CY - 40, span: SAFE_RECT.w * 0.3 };
+const BAL = { y: CY - 40, span: SAFE_RECT.w * 0.26 };
 const HOLE = { x: CX, y: CY - SAFE_RECT.h * 0.06 }; // the fly-through's opening (center of the odds)
 const onBeat = (t: number, tol = 0.18) => { const b = snapToBeat(t); return Math.abs(b - t) <= tol ? b : t; };
 const WHIP_SWAP = whipTiming(0, 8).swap;
 
-const Label: React.FC<{ y: number; children: React.ReactNode }> = ({ y, children }) => (
-  <div style={{ position: 'absolute', left: CX - 420, width: 840, top: y, textAlign: 'center', ...TYPE.label, color: PALETTE.sciText } as React.CSSProperties}>{children}</div>
+const Label: React.FC<{ y: number; size?: number; spacing?: number; children: React.ReactNode }> = ({ y, size, spacing, children }) => (
+  <div style={{ position: 'absolute', left: CX - 420, width: 840, top: y, textAlign: 'center', ...TYPE.label, color: PALETTE.sciText,
+    ...(size ? { fontSize: size } : {}), ...(spacing !== undefined ? { letterSpacing: spacing } : {}) } as React.CSSProperties}>{children}</div>
 );
+// a gold ring that expands and fades once (an impact, a marker igniting)
+const Ring: React.FC<{ x: number; y: number; t: number; at: number; r0?: number; r1?: number; dur?: number; w?: number }> = ({ x, y, t, at, r0 = 24, r1 = 240, dur = 0.7, w = 6 }) => {
+  const p = (t - at) / dur;
+  if (p <= 0 || p >= 1) return null;
+  return (
+    <svg width={CANVAS.W} height={CANVAS.H} style={{ position: 'absolute', left: 0, top: 0, overflow: 'visible' }}>
+      <circle cx={x} cy={y} r={r0 + (r1 - r0) * EASE.out(p)} fill="none" stroke={PALETTE.gold} strokeWidth={w * (1 - p) + 1.5} opacity={0.75 * (1 - p)} />
+    </svg>
+  );
+};
+// one-by-one switch-off times: n stars between a and b (seconds), the rate accelerating toward b
+const offTimes = (n: number, a: number, b: number) => Array.from({ length: n }, (_, i) => F(a + (b - a) * Math.pow(n === 1 ? 0 : i / (n - 1), 0.6)));
 
 // ---- cues ----
 const cuesOf = (VO: VoLine[]) => {
@@ -174,7 +188,6 @@ export const WhyTime: React.FC<{ variant: Variant }> = ({ variant }) => {
   const rsLen = 1.4;
   const rsK = curve(t, [rsAt, rsAt + rsLen], [0, 1], EASE.inOut); // same easing/window as the Timeline rescale
   const tlShift = GLIDE * glideK + (TODAY_Y - TL.y - GLIDE) * rsK; // keeps TODAY parked at TODAY_Y during the rescale
-  const bhY = TL.y + TL.L * logU(1e100) + tlShift;
 
   // the last faint gold point: born at the heat-death marker, drifts to the center
   const pointLine: MorphKey[] = isA
@@ -190,9 +203,16 @@ export const WhyTime: React.FC<{ variant: Variant }> = ({ variant }) => {
     ];
 
   // ================= the sky =================
-  const offs = [F(C.last + 0.15), F(C.last + 0.55), F(C.last + 0.95), F(C.fade + 0.2), F(C.black + 0.1), F(C.black + 0.5),
-    F(C.evaporate), F(C.evaporate + 0.4), F(C.heat - 0.1), F(C.death + 0.2), F(C.death + 0.6), F(C.no)];
-  const ons = offs.map((_, i) => F(C.loop + 0.4 + i * 0.12));
+  // HEAT DEATH CLIMAX: every star in the frame (both layers) switches off one by one, each a clear 0.5 s
+  // fade: a few on "the last stars fade", more on the black holes, the rest accelerating from "heat death"
+  // until the sky is dark (then only the gold point is left). They relight while the egg re-forms.
+  const skyOffs = (nLast: number, nBlack: number, nHeat: number) => [
+    ...offTimes(nLast, C.last + 0.15, C.fade + 0.9), ...offTimes(nBlack, C.black, C.evaporate + 1.4), ...offTimes(nHeat, C.heat - 0.1, C.spend + 0.6),
+  ];
+  const offs = skyOffs(14, 30, 230);
+  const ons = offs.map((_, i) => F(C.loop + 0.3 + (2.0 * i) / offs.length));
+  const offsNear = skyOffs(3, 6, 48);
+  const onsNear = offsNear.map((_, i) => F(C.loop + 0.3 + (2.0 * i) / offsNear.length));
 
   // ================= B: deck hook + bridge =================
   const B = isA ? null : {
@@ -219,8 +239,25 @@ export const WhyTime: React.FC<{ variant: Variant }> = ({ variant }) => {
 
   // ================= camera =================
   const driftAmp: Key[] = [[F(C.time - 0.5), 0], [F(C.time + 0.5), 1, 'inOut'], [F(C.death + 0.6), 1], [F(C.death + 1.6), 0, 'inOut']];
-  const camZoom: Key[] = [[F(M), 1], [F(C.about - 0.2), 1.025, 'inOut'], [FLY_AT, 1.025], [F(L1), 1, 'inOut']];
-  const camX: Key[] = [[FLY_AT, 0], [F(L1), -30, 'inOut'], [F(C.so - 0.3), 30, 'inOut'], [F(C.direction + 0.3), 0, 'inOut']];
+  // every scene gets a slow push-in (reset inside a whip or eased back before the next scene), so no
+  // stretch reads as a still; back to exactly 1 before the loop (frame 0 = the last frame)
+  const camZoom: Key[] = [
+    [F(C.time - 0.5), 1], [F(C.why1 + 0.6), 1.08, 'inOut'], // the arrow + the collision
+    [F(S1) - 4, 1.08], [F(S1) + 4, 1, 'inOut'], // reset inside whip 1
+    [F(M - 0.2), 1.06, 'inOut'], // the box
+    [F(C.about - 0.2), 1.05, 'inOut'], // the balance
+    [F(heroIn), 1, 'inOut'], // pull back for the reveal
+    [FLY_AT, 1.1, 'inOut'], // push into the odds
+    [F(L1), 1, 'inOut'],
+    [F(C.so - 0.3), 1.03, 'inOut'], // entropy (its layout already fills the frame)
+    [F(C.direction + 0.3), 1, 'inOut'],
+    [F(G0), 1.06, 'inOut'], [F(G1), 1, 'inOut'], // the timeline, then the flight to TODAY
+    [F(S2) - 4, 1.04, 'inOut'], [F(S2) + 4, 1, 'inOut'],
+    [F(S3) - 4, 1.06, 'inOut'], [F(S3) + 4, 1, 'inOut'],
+    [F(C.heat), 1.08, 'inOut'], // the far future, to the climax
+    [F(C.loop + 0.5), 1, 'inOut'],
+  ];
+  const camX = 0;
   const blurWins: [number, number][] = [[F(G0 + 0.35), F(G1 - 0.35)], [F(rsAt + 0.3), F(rsAt + rsLen - 0.3)]];
   const tilt = kfDeg(f, [[F(G0), 0], [F((G0 + G1) / 2), 22, 'inOut'], [F(G1), 0, 'inOut'], [F(rsAt), 0], [F(rsAt + rsLen / 2), 22, 'inOut'], [F(rsAt + rsLen), 0, 'inOut']]);
 
@@ -228,13 +265,15 @@ export const WhyTime: React.FC<{ variant: Variant }> = ({ variant }) => {
   const collisionNode = (
     <>
       <Fade op={win(t, C.but + 0.3, S1 + 0.5, 0.3, 0.2)}>
-        <ParticleBox x={CX} y={CY} w={SAFE_RECT.w * 0.86} mode="collide" box={0}
+        <ParticleBox x={CX} y={CY} w={SAFE_RECT.w * 0.86} mode="collide" box={0} dot={24}
           clock={[[F(C.physics - 0.1), 0], [F(C.physics + 1.4), 1, 'linear'], [F(C.reverse - 0.6), 1], [F(C.reverse + 0.9), 0, 'linear']]} />
+        <Ring x={CX} y={CY} t={t} at={C.physics + 0.6} r1={260} />
+        <Ring x={CX} y={CY} t={t} at={C.reverse + 0.1} r1={260} />
         <Fade op={win(t, C.physics - 0.05, C.reverse - 0.75, 0.25, 0.2)}>
-          <Label y={CY - SAFE_RECT.h * 0.22}>FORWARD</Label>
+          <Label y={CY - SAFE_RECT.h * 0.24} size={44}>FORWARD</Label>
         </Fade>
         <Fade op={win(t, C.reverse - 0.55, C.why1 - 0.1, 0.25, 0.25)}>
-          <Label y={CY - SAFE_RECT.h * 0.22}>REVERSED</Label>
+          <Label y={CY - SAFE_RECT.h * 0.24} size={44}>REVERSED</Label>
         </Fade>
       </Fade>
       <KineticTitle x={CX} top={CY - SAFE_RECT.h * 0.2} size={110} outAt={S1 + 0.5} outLen={0.2}
@@ -245,9 +284,9 @@ export const WhyTime: React.FC<{ variant: Variant }> = ({ variant }) => {
   // ---------- REVEAL 1–2: "100" of particles → bursts into the box's left half → the divider lifts ----------
   const boxNode = (
     <>
-      <ParticleGlyphs box={BOX} text="100" cx={CX} cy={CY} cell={22} start={F(S1) - 20} at={F(C.hundred - 0.35)} len={30} stagger={12}
+      <ParticleGlyphs box={BOX} text="100" cx={CX} cy={CY} cell={26} dot={10} start={F(S1) - 20} at={F(C.hundred - 0.35)} len={30} stagger={12}
         opacity={[[F(C.half - 0.05), 1], [F(C.half + 0.2), 0]]} />
-      <ParticleBox x={BOX.x} y={BOX.y} w={BOX.w} h={BOX.h} releaseAt={F(C.go)} speed={6} at={F(C.half - 0.1)}
+      <ParticleBox x={BOX.x} y={BOX.y} w={BOX.w} h={BOX.h} releaseAt={F(C.go)} speed={6} dot={10} at={F(C.half - 0.1)}
         gather={{ from: [CX, CY], at: F(C.half - 0.05), len: 24 }}
         box={[[F(C.half - 0.05), 0], [F(C.half + 0.3), 1], [F(M) - 1, 1], [F(M), 0]]} opacity={[[F(M) - 3, 1], [F(M) + 9, 0]]} />
     </>
@@ -270,26 +309,31 @@ export const WhyTime: React.FC<{ variant: Variant }> = ({ variant }) => {
         [{ w: 'trillion', start: oddsW[6].start, gold: true }],
       ]} />
       <Fade op={curve(t, [oddsW[6].start + 0.45, oddsW[6].start + 0.85], [0, 1], EASE.out)}>
-        <Label y={CY - SAFE_RECT.h * 0.22 + 112 * 3.15}>THAT&apos;S A 1 FOLLOWED BY 30 ZEROS</Label>
+        <Label y={CY - SAFE_RECT.h * 0.22 + 112 * 3.15} size={26} spacing={6}>THAT&apos;S A 1 FOLLOWED BY 30 ZEROS</Label>
       </Fade>
     </Fade>
   );
 
-  // ---------- REVEAL 4: inside the odds — the gas of arrangements, "entropy" ----------
+  // ---------- REVEAL 4: inside the odds — entropy, shown: a sorted box mixes while the count of ways
+  // to arrange it rolls up. Real numbers: 100 particles all on one side = 1 way (10^0); spread 50/50 =
+  // C(100, 50) ≈ 1.0 × 10^29 ways. The exponent rolls on an odometer as the gas spreads. ----------
+  const EBOX = { x: CX, y: SAFE_RECT.y + 610, w: SAFE_RECT.w * 0.86, h: SAFE_RECT.w * 0.5 };
+  const eRel = C.number + 0.1; // the divider lifts on "number (of possible arrangements)"
+  const WAYS = { y: EBOX.y + EBOX.h / 2 + 50, size: 128 };
   const entropyNode = (
-    <>
-      <Fade op={win(t, L1 - 0.8, C.so - 0.2, 0.2, 0.4) * 0.28}>
-        <ParticleBox x={CX} y={CY + SAFE_RECT.h * 0.12} w={SAFE_RECT.w * 0.86} h={SAFE_RECT.w * 0.5} releaseAt={-1000} speed={4} box={0} seed={9} />
+    <Fade op={1 - curve(t, [C.so - 0.25, C.so + 0.1], [0, 1], EASE.in)}>
+      <KineticTitle x={CX} top={SAFE_RECT.y + 70} size={130} lines={[[{ w: 'entropy', start: C.entropy, gold: true }]]} />
+      <Fade op={curve(t, [C.number - 0.1, C.number + 0.35], [0, 1], EASE.out)}>
+        <Label y={SAFE_RECT.y + 235}>= NUMBER OF ARRANGEMENTS</Label>
       </Fade>
-      <Fade op={1 - curve(t, [C.so - 0.25, C.so + 0.1], [0, 1], EASE.in)}>
-        <KineticTitle x={CX} top={CY - SAFE_RECT.h * 0.22} size={130} lines={[[{ w: 'entropy', start: C.entropy, gold: true }]]} />
-        <Fade op={curve(t, [C.number - 0.1, C.number + 0.35], [0, 1], EASE.out)}>
-          <div style={{ position: 'absolute', left: CX - 420, width: 840, top: CY - SAFE_RECT.h * 0.22 + 175, textAlign: 'center', ...TYPE.label, color: PALETTE.sciText } as React.CSSProperties}>
-            = NUMBER OF ARRANGEMENTS
-          </div>
-        </Fade>
+      <ParticleBox x={EBOX.x} y={EBOX.y} w={EBOX.w} h={EBOX.h} releaseAt={F(eRel)} speed={7} dot={10} seed={9} at={F(L1) - 20} />
+      <Fade op={curve(t, [L1 + 0.4, L1 + 0.8], [0, 1], EASE.out)}>
+        <Label y={WAYS.y}>WAYS TO ARRANGE THEM</Label>
+        <div style={{ position: 'absolute', left: CX - 150, top: WAYS.y + 50, ...TYPE.number, fontSize: WAYS.size, lineHeight: `${WAYS.size * 1.05}px`, color: PALETTE.ivory } as React.CSSProperties}>10</div>
+        <OdometerNumber x={CX - 150 + WAYS.size * 1.24 - 8} y={WAYS.y + 30} size={WAYS.size * 0.6} digits={2} collapse
+          value={[[F(eRel + 0.15), 0], [F(eRel + 2.6), 29, 'out']]} />
       </Fade>
-    </>
+    </Fade>
   );
 
   // ---------- REVEAL 5 → TWIST: the timeline, in 3D perspective while the camera flies along it ----------
@@ -297,7 +341,7 @@ export const WhyTime: React.FC<{ variant: Variant }> = ({ variant }) => {
     <>
       <Fade op={1 - curve(t, [C.death + 0.5, C.death + 1.1], [0, 1], EASE.in)} style={{ perspective: '1600px', perspectiveOrigin: `${CX}px ${TODAY_Y}px` }}>
         <AbsoluteFill style={{ transform: `translateY(${tlShift}px) rotateX(${tilt}deg)`, transformOrigin: `${CX}px ${TODAY_Y - tlShift}px` }}>
-          <Timeline x={TL.x} y={TL.y} length={TL.L} range={[0, 13.8e9]} labelSize={44} at={F(C.direction + 0.2)}
+          <Timeline x={TL.x} y={TL.y} length={TL.L} range={[0, 13.8e9]} labelSize={TL_LABEL} at={F(C.direction + 0.2)}
             rescale={{ at: F(rsAt), len: Math.round(rsLen * FPS), range: LOG_RANGE, log: true }}
             events={[
               { t: 0, label: 'Big Bang', date: 'LOWEST ENTROPY', at: F(C.started), hero: true },
@@ -306,16 +350,19 @@ export const WhyTime: React.FC<{ variant: Variant }> = ({ variant }) => {
               { t: 1e100, label: 'Black holes evaporate', date: 'UP TO A GOOGOL YEARS', at: F(C.black) },
               { t: 1e110, label: 'Heat death', at: F(C.heat), hero: true },
             ]} />
+          <TimeStream x0={TL.x} y0={TL.y} x1={TL.x} y1={TL.y + TL.L} from={C.started - 0.2} to={C.death + 0.5} n={110} speed={300} spread={22} dot={6} seed={5} />
+          <Ring x={TL.x} y={TL.y} t={t} at={C.started} r1={200} />
+          <Ring x={TL.x} y={TL.y + TL.L} t={t} at={C.low} r1={160} w={4} />
           <Fade op={win(t, C.nobody, C.ever, 0.35, 0.4)}>
-            <DataLabel x={TL.x + 44} y={TL.y + 96} label="WHY?" value="still unknown" size={44} />
+            <DataLabel x={TL.x + 54} y={TL.y + 150} label="WHY?" value="still unknown" size={60} />
           </Fade>
         </AbsoluteFill>
       </Fade>
-      {/* a small black hole beside its marker, shrinking away */}
+      {/* a big black hole in the empty middle of the log axis, evaporating away */}
       {(() => {
-        const r = 34 * (1 - curve(t, [C.evaporate - 0.1, C.evaporate + 1.0], [0, 1], EASE.in));
-        const op = win(t, C.black + 0.1, C.heat, 0.3, 0.3);
-        return r > 0.5 && op > 0 ? <Fade op={op}><BlackHole x={TL.x - 80} y={bhY} r={r} warm /></Fade> : null;
+        const r = 120 * (1 - curve(t, [C.evaporate - 0.1, C.heat - 0.3], [0, 1], EASE.in));
+        const op = win(t, C.black + 0.05, C.heat, 0.4, 0.3);
+        return r > 0.5 && op > 0 ? <Fade op={op}><BlackHole x={CX + 110} y={TODAY_Y + TL.L * 0.46} r={r} warm /></Fade> : null;
       })()}
     </>
   );
@@ -339,9 +386,12 @@ export const WhyTime: React.FC<{ variant: Variant }> = ({ variant }) => {
   return (
     <Grain>
       <AbsoluteFill style={{ background: PALETTE.space }}>
-        <Camera x={camX} zoom={camZoom} driftAmp={driftAmp} punches={[F(heroIn), F(C.heat)]} blur={blurWins}>
+        <Camera x={camX} zoom={camZoom} drift={30} driftPeriod={8} driftAmp={driftAmp} punches={[F(heroIn), F(C.heat)]} blur={blurWins}>
           <CameraLayer depth={0.2}>
-            <Starfield count={300} bright={12} seed={21} offs={offs} ons={ons} clear={[[SAFE_RECT.x + 60, CAPTION.centerY - 60, SAFE_RECT.w - 120, 120]]} warm />
+            <Starfield count={300} bright={12} seed={21} offs={offs} ons={ons} offAll clear={[[SAFE_RECT.x + 60, CAPTION.centerY - 60, SAFE_RECT.w - 120, 120]]} warm />
+          </CameraLayer>
+          <CameraLayer depth={0.55}>
+            <Starfield count={60} bright={6} seed={57} offs={offsNear} ons={onsNear} offAll clear={[[SAFE_RECT.x + 60, CAPTION.centerY - 60, SAFE_RECT.w - 120, 120]]} warm />
           </CameraLayer>
           <CameraLayer depth={1}>
 
@@ -411,12 +461,13 @@ export const WhyTime: React.FC<{ variant: Variant }> = ({ variant }) => {
         )}
 
         {/* ---------- SETUP (b): the dust streams into time's arrow ---------- */}
-        <GoldMorphLine keys={arrowLine} dust={[[F(C.time - 0.25), 1], [F(C.time + 0.5), 0]]} spread={300}
+        <GoldMorphLine keys={arrowLine} width={10} dustSize={5} dust={[[F(C.time - 0.25), 1], [F(C.time + 0.5), 0]]} spread={300}
           opacity={[[F(C.time - 0.3), 0], [F(C.time - 0.1), 1], [F(C.but + 0.3), 1], [F(C.but + 0.45), 0]]} />
+        <TimeStream x0={ARROW.x0} y0={ARROW.y} x1={ARROW.x1} y1={ARROW.y} from={C.time + 0.2} to={C.but + 0.2} n={80} spread={56} dot={7} seed={3} />
         {arrowHead > 0.001 && (
           <svg width={CANVAS.W} height={CANVAS.H} style={{ position: 'absolute', left: 0, top: 0, opacity: arrowHead }}>
-            <path d={`M${ARROW.x1 - 26},${ARROW.y - 20} L${ARROW.x1 + 4},${ARROW.y} L${ARROW.x1 - 26},${ARROW.y + 20}`} fill="none"
-              stroke={PALETTE.gold} strokeWidth={5} strokeLinecap="round" strokeLinejoin="round" />
+            <path d={`M${ARROW.x1 - 50},${ARROW.y - 40} L${ARROW.x1 + 6},${ARROW.y} L${ARROW.x1 - 50},${ARROW.y + 40}`} fill="none"
+              stroke={PALETTE.gold} strokeWidth={10} strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         )}
 
@@ -427,6 +478,9 @@ export const WhyTime: React.FC<{ variant: Variant }> = ({ variant }) => {
         <ShapeMatch color="ivory" outline={3} alpha={0.55} glow={0}
           keys={[{ g: { x: BOX.x, y: BOX.y, w: BOX.w, h: BOX.h, r: 0 }, at: 0 }, { g: lineGeom(CX - BAL.span, BAL.y, CX + BAL.span, BAL.y, 4), at: F(M), len: 18 }]}
           opacity={[[F(M) - 1, 0], [F(M), 1], [F(M) + 24, 1], [F(M) + 34, 0]]} />
+        <Fade op={win(t, M + 0.2, C.about - 0.1, 0.5, 0.35) * 0.3}>
+          <ParticleBox x={CX} y={CY + SAFE_RECT.h * 0.1} w={SAFE_RECT.w * 0.9} h={SAFE_RECT.h * 0.55} releaseAt={-1000} speed={6} dot={8} box={0} seed={4} />
+        </Fade>
         <Fade op={win(t, M, C.about - 0.1, 0.01, 0.35)}>
           <Balance x={CX} y={BAL.y} span={BAL.span} at={F(M) + 14} labelsAt={F(C.ways)} tipAt={F(C.mixed)}
             tipFrames={14} tipEase="punch" valueSize={60}
@@ -438,7 +492,7 @@ export const WhyTime: React.FC<{ variant: Variant }> = ({ variant }) => {
         <FlyThrough from={heroNode} to={entropyNode} at={FLY_AT} len={FLY_LEN} x={HOLE.x} y={HOLE.y} hole={34} />
 
         {/* the arrow returns and becomes the timeline's axis (the gold line's match cut) */}
-        <GoldMorphLine keys={axisLine} draw={[[F(C.so - 0.05), 0], [F(C.so + 0.5), 1, 'out']]}
+        <GoldMorphLine keys={axisLine} width={6} draw={[[F(C.so - 0.05), 0], [F(C.so + 0.5), 1, 'out']]}
           opacity={[[F(C.started - 0.2), 1], [F(C.started + 0.3), 0]]} />
 
         {/* ---------- whips 2 + 3: timeline → star birth → timeline ---------- */}
@@ -446,17 +500,32 @@ export const WhyTime: React.FC<{ variant: Variant }> = ({ variant }) => {
           to={<WhipTransition at={W3} dur={8} direction="right" from={barsNode} to={timelineNode} />} />
 
         {isA ? (
-          <Egg x={CX} y={CY} r={EGG_R} wash warm opacity={[[F(C.loop + 0.5), 0], [F(C.loop + 1.6), 1, 'out']]} />
+          <Egg x={CX} y={CY} r={EGG_R} wash warm opacity={[[F(C.loop + 0.2), 0], [F(C.loop + 1.3), 1, 'out']]} />
         ) : (
           <DeckOfCards x={DECK.x} y={DECK.y} radius={DECK.radius} arc={DECK.arc} cardW={DECK.cardW} edge={1}
             at={LAST_F - (100000 % 75) - 75 * 4} /* glint phase on the last frame = the warm hook deck's on frame 0 */ opacity={[[F(C.loop + 0.6), 0], [F(C.loop + 1.8), 1, 'out']]} />
         )}
 
         {/* the last faint gold point → crack (A) / the fan's edge (B) */}
-        <GoldMorphLine keys={pointLine} draw={isA ? 0.15 : 1} width={4}
+        <GoldMorphLine keys={pointLine} draw={isA ? 0.15 : 1} width={isA ? 4 : 4}
           opacity={isA
-            ? [[F(C.death + 0.5), 0], [F(C.death + 0.9), 0.6], [F(C.loop + 0.2), 0.6], [F(C.loop + 1.0), 1]]
-            : [[F(C.death + 0.5), 0], [F(C.death + 0.9), 0.6], [F(C.loop + 0.2), 0.6], [F(C.loop + 1.0), 1], [F(C.loop + 1.6), 1], [F(C.loop + 2.1), 0]]} />
+            ? [[F(C.death + 0.5), 0], [F(C.death + 0.9), 1], [F(C.loop + 1.0), 1]]
+            : [[F(C.death + 0.5), 0], [F(C.death + 0.9), 1], [F(C.loop + 1.6), 1], [F(C.loop + 2.1), 0]]} />
+        {/* the point's glow: the last light in the universe, breathing until it becomes the crack */}
+        {(() => {
+          const g = win(t, C.death + 0.6, C.loop + 0.35, 0.4, 0.3);
+          if (g <= 0) return null;
+          const k = curve(t, [C.death + 0.9, C.death + 2.1], [0, 1], EASE.inOut);
+          const px = TL.x + (CX - TL.x) * k, py = TODAY_Y + TL.L + (CY - TODAY_Y - TL.L) * k;
+          const br = 1 + 0.15 * Math.sin(t * 3);
+          return (
+            <svg width={CANVAS.W} height={CANVAS.H} style={{ position: 'absolute', left: 0, top: 0 }}>
+              <defs><radialGradient id="lastLight"><stop offset="0%" stopColor={PALETTE.gold} stopOpacity={0.9} /><stop offset="35%" stopColor={PALETTE.gold} stopOpacity={0.35} /><stop offset="100%" stopColor={PALETTE.gold} stopOpacity={0} /></radialGradient></defs>
+              <circle cx={px} cy={py} r={70 * br} fill="url(#lastLight)" opacity={g} />
+              <circle cx={px} cy={py} r={9} fill={PALETTE.ivory} opacity={g} />
+            </svg>
+          );
+        })()}
           </CameraLayer>
         </Camera>
         <KeywordCaptions lines={lines} maxChars={18} />
