@@ -15,11 +15,12 @@ import { PlanetKind } from '../../brand';
 // For review only, not channel content. Page titles sit in the TOP UNSAFE MARGIN on purpose
 // (debug labels), so everything inside the safe rectangle is the component itself.
 // QA: node scripts/frames.mjs ComponentGallery 110,230,... --scale=0.5 [--safe]
+import MotionDemo, { MOTION_DEMO_T } from './MotionDemo';
 const PAGE = 120;
 
 export const compositionConfig = {
   id: 'ComponentGallery',
-  durationInSeconds: 132, // 33 pages × PAGE frames
+  durationInSeconds: 148, // 37 pages × PAGE frames
   fps: 30,
   width: 1080,
   height: 1920,
@@ -27,7 +28,7 @@ export const compositionConfig = {
 
 const Header: React.FC<{ n: number; title: string; note: string }> = ({ n, title, note }) => (
   <div style={{ position: 'absolute', top: 70, left: 60, right: 180 }}>
-    <div style={{ ...TYPE.annotation, color: PALETTE.gold, fontSize: 24 }}>{`${n} / 33 · ${title}`}</div>
+    <div style={{ ...TYPE.annotation, color: PALETTE.gold, fontSize: 24 }}>{`${n} / 37 · ${title}`}</div>
     <div style={{ ...TYPE.annotation, color: PALETTE.sciText, fontSize: 20, letterSpacing: 1, textTransform: 'none', marginTop: 8, opacity: 0.8 }}>{note}</div>
   </div>
 );
@@ -346,6 +347,18 @@ export const ComponentGallery: React.FC = () => (
       <HeroNumber value={10} exponent={30} prefix="1 in" label="ODDS: ALL ONE SIDE" y={SAFE_RECT.y + 120} at={10} />
       <Small x={SAFE_RECT.x + SAFE_RECT.w / 2} y={SAFE_RECT.y + 620}>{'exponent counts up · prefix in gold italic'}</Small>
       <Header n={33} title="Hero number · exponent" note="power-of-ten form for numbers too long in words: base + superscript (the exponent counts up)" /></Sequence>
+    {/* 34-37: the dynamism kit, as cut from the MotionDemo composition (that one has the music + SFX) */}
+    {([
+      [34, 0, 'Living camera + parallax', 'Camera: slow drift + breathing zoom · CameraLayer depth 0.15 / 0.45 / 1 = parallax · pan on the beat'],
+      [35, MOTION_DEMO_T.match - 40, 'Shape match cut + punch-in', 'ShapeMatch: the sun becomes the PEAK bar (geometry + radius morph, ease in-out) · punch-in 1 → 1.03, no overshoot'],
+      [36, MOTION_DEMO_T.whipSwap - 20, 'Whip + particles form a number', 'ParticleGlyphs: 100 drifting particles condense into 10^30 (5×7 dots) · punch-in when it lands, on the beat'],
+      [37, MOTION_DEMO_T.fly - 30, 'Fly-through', 'FlyThrough: wind-up, dive into the "0" (log zoom), motion blur in the fast middle, soft landing in the next scene'],
+    ] as const).map(([n, start, title, note]) => (
+      <Sequence key={n} from={PAGE * (n - 1)} durationInFrames={PAGE}>
+        <Sequence from={-start}><MotionDemo audio={false} /></Sequence>
+        <Header n={n} title={title} note={note} />
+      </Sequence>
+    ))}
   </AbsoluteFill>
   </Grain>
 );
