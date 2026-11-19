@@ -6,13 +6,15 @@
 > **Reference scene:** the `BrandReference` composition is this document rendered on screen. If
 > it looks right, the brand is right.
 >
-> v2.5 · 2026-11-18 · direction: *Deep Field hybrid* (cinematic and editorial, with a few
+> v2.6 · 2026-11-18 · direction: *Deep Field hybrid* (cinematic and editorial, with a few
 > scientific annotations) · **energy curve**: a high-energy hook, a calm body, bursts on the peaks ·
 > **visual variety**: scenes change, and every number is shown · **whip transitions** approved as a
 > hand-off (§8) · **dynamism** (v2.3): shape match cuts, fly-throughs, a living camera, punch-ins,
 > beat sync, motion blur on fast moves only (§8) · **fill the frame** (v2.4): hero sizes, motion that
 > registers in sparse scenes, ≤ 1 s of black at the end (§5, §8) · **two visual modes** (v2.5):
-> SPACE VIEW (the default, §1–§10) and **GROUND VIEW**, the sky as seen from Earth (§11)
+> SPACE VIEW (the default, §1–§10) and **GROUND VIEW**, the sky as seen from Earth (§11) ·
+> **Race format** (v2.6): one calm continuous scene, the exception to the hook burst, the new-idea
+> rhythm and hero size (§5, §8)
 
 ---
 
@@ -162,6 +164,10 @@ One hero object per scene, **not one scene per short**.
   move, a morph, an object carried into the next scene, or a **whip transition** (§8: mainly the
   hook and the peaks), never a hard cut to an unrelated picture with no motion. The short still
   travels through several scenes.
+- **Race exception (v2.6, PROJECT_CONTEXT §4).** A Race short is ONE continuous scene by design:
+  rows of small movers from one starting line, arriving one by one. Its constant motion satisfies
+  visual variety; the new-idea rhythm and the hero-size targets don't apply to it. The race scene
+  is tagged *intentional* so the render checks don't flag it (empty frames are still checked).
 
 ## 6. Annotations
 
@@ -247,6 +253,10 @@ than bouncing. What changes along the energy curve (§1) is speed and camera. Ti
 | **Hook** (first ~3 s) | **high energy** | fast camera moves with a **strong ease-out** (`EASE.punch`: the bulk of the move in its first 12–24 frames, then a soft landing, ~1.5 s at most in all; big zooms are eased in log scale so the zoom looks even); ignition / zoom reveals; a **kinetic title synced to the voice** (word by word, each word arriving on its spoken time with a fast rise); **parallax depth** (2–3 star layers moving at different speeds during camera moves); **a clear visual change every 2–3 s** for the first ~10 s |
 | **Body** | **calm, cinematic** | the table below: slow arrivals, ease in-out camera moves, ambient life |
 | **Peaks** (main reveal, twist) | **a burst, then settle** | one fast move or ignition (`EASE.punch`, its bulk in 12–24 frames) on the beat, synced to its sound; then back to body pacing within ~1 s |
+
+**Race (v2.6) is calm end to end:** no hook burst, no peaks, no punch-ins or whips. Frame 0 is the
+full board; the movers depart together on the hook line (smooth ease-in, then a steady cruise) and
+each one eases to a stop on arrival. Sound: a calm bed, a soft cue on each arrival, no hook hit.
 
 ### Hand-offs between scenes
 

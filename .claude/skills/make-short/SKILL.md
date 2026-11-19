@@ -185,9 +185,16 @@ ffmpeg -i remotion/out/<Id>.mp4 -i shorts/<slug>/voice/voice.wav -map 0:v -map 1
 out/qa/):**
 
 ```
-python tools/motion_check.py remotion/out/<Id>.mp4     # near-still runs ≥ 4 s (per-second motion)
-python tools/frame_check.py remotion/out/<Id>.mp4      # empty frames > 1 s · hero too small ≥ 2 s
+python tools/motion_check.py remotion/out/<Id>.mp4 --beats shorts/<slug>/beats.json   # near-still runs ≥ 4 s (per-second motion)
+python tools/frame_check.py remotion/out/<Id>.mp4 --beats shorts/<slug>/beats.json    # empty frames > 1 s · hero too small ≥ 2 s
 ```
+**Intentional scenes:** a scene that breaks the variety/hero-size rules ON PURPOSE gets a tag in
+beats.json, `"qa": {"intentional": [{"from_s": 3.2, "to_s": 38.0, "reason": "Race scene"}]}`
+(optional `"checks"`, default `["near-still", "small-content"]`; add `"empty-frame"` only if
+darkness is the design). Every **Race** short (PROJECT_CONTEXT §4) tags its race scene, from the
+first frame of the rows to the start of the loop return. Never tag a scene to silence a real
+flag: the tag is for formats whose rules say so. Waived runs land in each section's `"waived"`
+list; mention them in the QA report as "waived (intentional: <reason>)".
 Both add a section to `remotion/out/qa/<Id>-qa.json` (`motion`, `frames`) and rebuild its
 top-level `flags` list. Thresholds are calibrated on "Why Time Only Moves Forward" (see each
 tool's docstring). **The QA report you give the user lists EVERY flag from that file (time range +

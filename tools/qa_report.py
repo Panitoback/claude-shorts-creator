@@ -98,6 +98,43 @@ def fps_of(video):
     return float(a) / float(b)
 
 
+# Checks an "intentional" window waives when it doesn't name its own: the two rules a Race scene
+# (PROJECT_CONTEXT §4) breaks on purpose — "a new idea every 5–10 s" (near-still) and hero size
+# (small-content). Empty frames stay checked unless a window lists "empty-frame" explicitly.
+DEFAULT_WAIVED = ("near-still", "small-content")
+
+
+def intentional_windows(beats_path=None, cli=None):
+    """Scenes tagged intentional, as [{'from_s', 'to_s', 'reason', 'checks'}].
+
+    From beats.json: {"qa": {"intentional": [{"from_s": 3.2, "to_s": 38, "reason": "Race scene",
+    "checks": ["near-still", "small-content"]}]}} ("checks" optional, default DEFAULT_WAIVED).
+    From the CLI: "FROM-TO" strings in seconds (default checks)."""
+    out = []
+    if beats_path:
+        data = json.load(open(beats_path, encoding="utf-8"))
+        for w in (data.get("qa") or {}).get("intentional", []):
+            out.append({"from_s": float(w["from_s"]), "to_s": float(w["to_s"]),
+                        "reason": w.get("reason", ""), "checks": list(w.get("checks") or DEFAULT_WAIVED)})
+    for spec in cli or []:
+        a, b = spec.split("-", 1)
+        out.append({"from_s": float(a), "to_s": float(b), "reason": "--intentional", "checks": list(DEFAULT_WAIVED)})
+    return out
+
+
+def intentional_mask(windows, check, n, unit_s):
+    """[bool] per unit (a second or a frame): True where `check` is waived by an intentional window."""
+    m = [False] * n
+    for w in windows:
+        if check not in w["checks"]:
+            continue
+        for i in range(n):
+            t0, t1 = i * unit_s, (i + 1) * unit_s
+            if min(t1, w["to_s"]) - max(t0, w["from_s"]) >= 0.5 * unit_s:  # mostly inside
+                m[i] = True
+    return m
+
+
 def runs(flags_per_unit, min_len):
     """[(start, end_exclusive)] of consecutive True values at least min_len long."""
     out, s = [], None

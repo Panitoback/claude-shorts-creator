@@ -3,7 +3,7 @@
 > **For:** the planning project where topics, aesthetics and scripts are developed.
 > **Pair it with:** `brand.md` (the visual and sound style contract — read it for colors, type,
 > captions, annotations, motion, safe zones and sound taste; this file never repeats it).
-> **Version:** v0.17.0 · 2026-11-18 · phase: *second short done + dynamism kit; ground view (second visual mode) built for near-space topics*
+> **Version:** v0.18.0 · 2026-11-18 · phase: *second short done + dynamism kit; ground view (second visual mode) built for near-space topics; new calm format: Race*
 >
 > This file describes **what can be asked for**, not how it is built. If a script asks for
 > something listed here, it can be made. If it asks for something not listed, flag it as a
@@ -24,7 +24,8 @@
 - **Minimalist and cinematic, with an energy curve.** The first ~3 seconds hit hard (a fast
   camera move or an ignition, the title arriving word by word with the voice, a sound you hear
   even on a phone); the body is calm and cinematic; the main reveal and the twist get a short
-  burst, then settle. One idea per short, one hero object on screen at a time, lots of
+  burst, then settle (the **Race** format, §4, is the one calm exception: no burst, the movers
+  carry it). One idea per short, one hero object on screen at a time, lots of
   dark space. Warm starlight on near-black, big editorial serif numbers, gold for the word that
   matters, and an occasional thin blue scientific annotation. The full look is in `brand.md`.
 
@@ -203,6 +204,9 @@ For a single big count-up, use the **Hero number** (3.1).
 |---|---|
 | **Zoom ruler** (continuous zoom galaxy → disk, with a scale bar that re-labels at each level) | Levels and figures sent for verification; built after approval |
 | Light ray (light crossing space, redshifting) | Idea, not designed |
+| **Race board** (for the Race format, §4): rows from one starting line to each destination, all movers departing together and arriving one by one in order, the real value written on each row as it arrives, the RULE LINE in small type under the board, a soft cue per arrival, the movers gliding back for the loop | Designed (§4); built with the first Race short |
+| **Spacecraft** (the Race mover): a small stylized craft in the brand style (soft shading, warm light, a faint engine glow; no outlines, no agency logos, no real mission markings) | Built with the first Race short |
+| **Car** and **Runner silhouette** (alternative Race movers for extended versions: a generic car with no brand marks; a sober runner in profile, like the ground-view observer) | Planned, after the spacecraft |
 
 ### 3.7 Everyday objects and the arrow of time (built, brand style)
 
@@ -275,8 +279,9 @@ Anything else: list it under NEW COMPONENTS NEEDED in the script.
 ## 4. Formats
 
 A *format* is a reusable structure for a short: what it promises the viewer, how long it runs,
-and which components carry it. Every format is built on the six-beat base below. Lengths and
-word budgets are in §5.
+and which components carry it. Impossible Fact, Scale and How It Works are built on the six-beat
+base below; **Race** has its own three beats and its own rules (its section says exactly which
+base rules it replaces). Lengths and word budgets are in §5.
 
 ### Base: the six-beat short
 
@@ -295,15 +300,17 @@ word budgets are in §5.
 > (one shape becomes the next scene's element) or a **fly-through**; also a camera move, a morph,
 > an object carried over, or a whip (mainly in the hook and on 2–3 big changes). The camera is
 > never static (slow drift + parallax), with **punch-ins only on the 2–3 biggest hits**, and cuts
-> land on the music's pulse. See `brand.md` §5 and §8.
+> land on the music's pulse. See `brand.md` §5 and §8. **Race** is the exception: one continuous
+> scene whose constant motion replaces the "new idea every 5–10 s" and hero-size rules (§4 Race).
 
-### The three formats at a glance
+### The four formats at a glance
 
 | Format | Promise to the viewer | Length | Hook (frame 0 → ~3 s) | Carried by |
 |---|---|---|---|---|
 | **Impossible Fact** | "That can't be true." One counter-intuitive fact, proven fast | 30–60 s | The object on frame 0; the fact (hero number or title) lands fast with the voice | Hero number, Caption with keyword, Data label, Marker, Glowing body / Planet |
 | **Scale** | "I finally *feel* how big that is." A size, distance or time next to something familiar | 40–75 s | A fast zoom or pull-back that puts the big thing and the familiar thing side by side, or lands the hero number over the big thing | Scale comparison, Hero number, Scale bar, Marker, Glowing body / Planet |
 | **How It Works** | "Oh, *that's* how it works." A mechanism explained step by step | 60–120 s | The end result switching on or revealed fast (what the short will explain) | Any of the base kit and the visual variety kit (3.5), plus whatever new components the steps need (listed under NEW COMPONENTS NEEDED; all of them get built) |
+| **Race** | "Who gets there first, and how long does it take?" A calm, single-scene comparison | 10–40 s | No burst: the full board on frame 0, movers departing together on the hook line | Race board + one mover (spacecraft; later car or runner), Starfield, Planet / Glowing body as destination markers (3.6) |
 
 ### Impossible Fact
 
@@ -347,6 +354,41 @@ word budgets are in §5.
   If a step needs something that isn't in §3, list it under NEW COMPONENTS NEEDED: this format
   is where new components come from.
 
+### Race
+
+A calm, satisfying comparison: several journeys from one starting point, side by side, revealed
+in order. Example: Earth → each planet, at a probe's speed.
+
+- **One continuous scene.** No transitions, no montage, no whips, no punch-ins. One row per
+  destination (3–8 rows), all starting from the same line (START). All movers depart together
+  and **arrive one by one, staggered in ROWS order**.
+- **The animation orders the reveal; it does not measure time.** The arrival order is true, but
+  the gaps between arrivals are paced for watching (each arrival gets its own moment, roughly
+  1.5–4 s apart), not proportional to the real values. The **real value is written on each row
+  the moment its mover arrives**: that text is the claim, so it must be in SOURCES. No separate
+  "not to scale" tag: SCALE says *not to scale (Race timing)* and the written values carry the truth.
+- **The rule behind the numbers is on screen**, in one small line under the board (RULE LINE):
+  the speed, the path (e.g. straight line) and which distance was used (average, closest
+  approach…), e.g. "AT 58,000 KM/H · STRAIGHT LINE · AVERAGE DISTANCE". Every value on the board
+  must follow from that one rule.
+- **Hook:** calm. Frame 0 is the complete board (rows named, movers on the starting line, rule
+  line visible); the movers depart by the end of the spoken hook (≤ 7 words). No hook burst, no
+  fast camera move, no kinetic title required; the hook line appears as a normal caption.
+- **Body:** the race itself, with **no narration**. Something is always moving until the last
+  arrival; the camera keeps its slow drift.
+- **Loop:** an optional closing line (≤ 10 words) after the last arrival, then the movers glide
+  back to the starting line, so the last frame matches frame 0.
+- **Sound:** a calm music bed and a **soft cue on each arrival** (automatic, one per row); no
+  hook hit, no peak bursts. SOUND MOOD can still describe the feel.
+- **Rules it replaces** (so the script needs no exceptions): the six-beat structure (it uses
+  HOOK / RACE / LOOP), the hook energy and HOOK MOVE, the "new visual idea every ~5–10 s" rule
+  (constant motion satisfies visual variety), the hero-size rule (rows of small movers are the
+  design), the hero number, and the 2-annotation limit for the board's own names and values
+  (it still applies to any extra annotation). Production tags the race scene as *intentional*,
+  so the automatic checks for stills and small content don't flag it; empty frames are still checked.
+- **Rules it keeps:** every value sourced; captions for whatever is spoken; no call to action;
+  a seamless loop; one mover kind per short.
+
 Ideas for future formats (to be decided): *myth vs fact*, *"what if"*, *one number explained*.
 
 ---
@@ -365,7 +407,8 @@ Ideas for future formats (to be decided): *myth vs fact*, *"what if"*, *one numb
 - **Motion that feels alive, not busy.** A slow-drifting camera with parallax throughout; a
   punch-in (3 % zoom) only on the 2–3 biggest hits; scene changes on the music's beat. Not
   available: shake, bounce or overshoot (brand bans them), and a rotoscope / hand-drawn boil look. Still never: a hard cut to an unrelated picture with no motion, shake, or flicker.
-  The short still needs **a new visual idea every ~5–10 s**: one scene for the whole short reads as a still.
+  The short still needs **a new visual idea every ~5–10 s**: one scene for the whole short reads as a still
+  (except a **Race**, §4, whose movers never stop moving).
 - **Show every number.** A claim with a number or comparison gets its own picture (a scale
   comparison, a diagram, bars or a meter, a timeline, a counter). If the screen looks the same
   with the sound off, the claim isn't shown.
@@ -394,13 +437,14 @@ Ideas for future formats (to be decided): *myth vs fact*, *"what if"*, *one numb
   | Impossible Fact | 30–60 s | ~70–145 words |
   | Scale | 40–75 s | ~95–180 words |
   | How It Works | 60–120 s | ~145–290 words |
+  | Race | 10–40 s | ≤ 17 words: a hook ≤ 7 words + an optional closing line ≤ 10 words |
 
 - **Hard ceiling: 180 s** (the YouTube Shorts limit, and Instagram's limit for reaching
   non-followers). Only with explicit approval.
 - These ranges are **provisional**. Revisit them once we have retention data from the first
   5–10 shorts.
 - **Scene length:** each scene or reveal step lasts 3–8 seconds; a beat can contain several steps. A single visual held longer than ~8 seconds
-  needs something changing on screen.
+  needs something changing on screen. (A Race is one scene by design; its arrivals are the change.)
 - **Hook:** the first spoken line should land within the first 3 seconds.
 
 ### Text on screen
@@ -432,14 +476,15 @@ lives in the repo as `shorts/script-template.md`, and the two are kept identical
 brackets; going over one gets flagged before production.
 
 ```
-FORMAT: Scale | Impossible Fact | How It Works
+FORMAT: Scale | Impossible Fact | How It Works | Race
 TARGET LENGTH: XX s
 TITLE: <the short's title, as it would appear on YouTube> [≤ 60 characters]
 SLUG: <folder name: lowercase-with-dashes, e.g. sun-volume> [2–4 words]
 TONE: <calm awe | playful | eerie | matter-of-fact>
 HOOK FRAME: <what the very first frame shows: composed, subject already there, no fade from black. It is the START of the hook's motion, not the cover (the cover is picked at upload)>
-HOOK MOVE: <the fast change in the first ~3 s that delivers the surprise: ignition, pull-back, dive-in, zoom, or a whip montage (rapid related pictures, ~0.6–1 s each, joined by whip transitions)…>
+HOOK MOVE: <the fast change in the first ~3 s that delivers the surprise: ignition, pull-back, dive-in, zoom, or a whip montage (rapid related pictures, ~0.6–1 s each, joined by whip transitions)…> <Race: write "none (Race)": the movers' departure is the hook's motion>
 SCALE: <true | not to scale> <required if any scene is about size or distance; say which scenes>
+> Race: SCALE is "not to scale (Race timing)": the arrival ORDER is true, the gaps between arrivals are not.
 
 SOURCES:
 - <fact> — <source: link, or named reference such as NASA, ESA, a textbook>
@@ -502,6 +547,33 @@ BEATS:
    VO: "<optional short closing line. No 'like and subscribe', no questions to the audience>"
    VISUAL: returns to the HOOK FRAME, so the replay is seamless
 
+BEATS FOR A RACE (FORMAT: Race uses these three beats INSTEAD of 1–6 above):
+> One continuous scene, no transitions. Total VO ≤ 17 words (hook + optional closing line).
+> Row names and values belong to the race board: they are not annotations and don't count
+>   toward the 2-annotation limit. No HERO NUMBER, no QUIZ.
+
+MOVER: <spacecraft (built with the first Race short) | car | runner (both planned, §3.6)>
+START: <the shared starting line, e.g. "Earth">
+RULE LINE: <the one small line under the board stating how every value was worked out: the
+  speed, the path, which distance, e.g. "AT 58,000 KM/H · STRAIGHT LINE · AVERAGE DISTANCE"> [≤ 48 characters]
+ROWS: [3–8 rows, listed in ARRIVAL ORDER, first arrival first]
+- <destination> — <real value exactly as written on the row, e.g. "6 months"> [name ≤ 12 characters, value ≤ 12 characters]
+- <destination> — <value>
+
+1. HOOK (0–3 s) [VO ≤ 7 words]
+   VO: "<the question or claim the race answers>"
+   VISUAL: frame 0 = the board already in place (rows named, movers on the starting line, RULE
+     LINE visible); the movers depart together by the end of the line
+   KEYWORD: <word>
+
+2. RACE [no VO]
+   VISUAL: <optional: anything specific about the movers or the board; arrivals are automatic,
+     one by one in ROWS order, each row's value appearing as its mover arrives>
+
+3. LOOP [VO ≤ 10 words, or none]
+   VO: "<optional closing line, after the last arrival>"
+   VISUAL: the movers glide back to the starting line, so the last frame matches frame 0
+
 ---
 
 NEW COMPONENTS NEEDED: <anything not in PROJECT_CONTEXT §3, in plain words; "none" if none>
@@ -523,9 +595,15 @@ PRONUNCIATION: <word — how to say it, e.g. 'quasar — KWAY-zar'; only
 - [ ] VO has no symbols/abbreviations; every KEYWORD appears verbatim in its VO
 - [ ] SCALE stated for any scene about size or distance
 - [ ] The HOOK FRAME is composed, and the HOOK MOVE shows the surprising thing within ~3 s
+      (Race: frame 0 is the full board, movers on the starting line; HOOK MOVE "none (Race)")
 - [ ] Each REVEAL step shows its claim visually (comparison, diagram, bars/meter, timeline or
-      counter), and a new visual idea arrives at least every ~5–10 s
+      counter), and a new visual idea arrives at least every ~5–10 s (not for Race: its constant
+      motion replaces this rule)
 - [ ] The LOOP returns to the hook, with no call to action
+- [ ] Race only: 10–40 s; 3–8 ROWS listed in arrival order, each value written as it should
+      appear and backed by SOURCES (or by sourced distances + the speed in the RULE LINE); one
+      RULE LINE naming speed, path and which distance; VO = hook ≤ 7 words + optional closing
+      line, nothing during the race
 
 ### Example (three beats)
 
@@ -732,6 +810,10 @@ odometer) and re-rendered as the final, then reworked once more after a frame-by
 the ground, horizons, an observer, the Sun and Moon at true apparent size (wide or telephoto),
 total and annular eclipses, the angle cone, and two hand-offs into space view. Next short:
 "sun-moon-400" (the Sun–Moon size coincidence), then the moon illusion.
+
+**Race format: defined (v0.18).** A calm, single-scene comparison (§4): rows from one starting
+line, movers arriving one by one, the real value written on each row. Its race board and the
+spacecraft get built with the first Race short; the car and the runner come later.
 
 **Next:** the custom skills (`script-to-short`,
 `new-component`); section 6 becomes final when `script-to-short` exists. Then Manim, only for

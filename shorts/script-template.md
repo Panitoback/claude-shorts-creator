@@ -7,14 +7,15 @@
 
 ---
 
-FORMAT: Scale | Impossible Fact | How It Works
+FORMAT: Scale | Impossible Fact | How It Works | Race
 TARGET LENGTH: XX s
 TITLE: <the short's title, as it would appear on YouTube> [≤ 60 characters]
 SLUG: <folder name: lowercase-with-dashes, e.g. sun-volume> [2–4 words]
 TONE: <calm awe | playful | eerie | matter-of-fact>
 HOOK FRAME: <what the very first frame shows: composed, subject already there, no fade from black. It is the START of the hook's motion, not the cover (the cover is picked at upload)>
-HOOK MOVE: <the fast change in the first ~3 s that delivers the surprise: ignition, pull-back, dive-in, zoom, or a whip montage (rapid related pictures, ~0.6–1 s each, joined by whip transitions)…>
+HOOK MOVE: <the fast change in the first ~3 s that delivers the surprise: ignition, pull-back, dive-in, zoom, or a whip montage (rapid related pictures, ~0.6–1 s each, joined by whip transitions)…> <Race: write "none (Race)": the movers' departure is the hook's motion>
 SCALE: <true | not to scale> <required if any scene is about size or distance; say which scenes>
+> Race: SCALE is "not to scale (Race timing)": the arrival ORDER is true, the gaps between arrivals are not.
 
 SOURCES:
 - <fact> — <source: link, or named reference such as NASA, ESA, a textbook>
@@ -77,6 +78,33 @@ BEATS:
    VO: "<optional short closing line. No 'like and subscribe', no questions to the audience>"
    VISUAL: returns to the HOOK FRAME, so the replay is seamless
 
+BEATS FOR A RACE (FORMAT: Race uses these three beats INSTEAD of 1–6 above):
+> One continuous scene, no transitions. Total VO ≤ 17 words (hook + optional closing line).
+> Row names and values belong to the race board: they are not annotations and don't count
+>   toward the 2-annotation limit. No HERO NUMBER, no QUIZ.
+
+MOVER: <spacecraft (built with the first Race short) | car | runner (both planned, §3.6)>
+START: <the shared starting line, e.g. "Earth">
+RULE LINE: <the one small line under the board stating how every value was worked out: the
+  speed, the path, which distance, e.g. "AT 58,000 KM/H · STRAIGHT LINE · AVERAGE DISTANCE"> [≤ 48 characters]
+ROWS: [3–8 rows, listed in ARRIVAL ORDER, first arrival first]
+- <destination> — <real value exactly as written on the row, e.g. "6 months"> [name ≤ 12 characters, value ≤ 12 characters]
+- <destination> — <value>
+
+1. HOOK (0–3 s) [VO ≤ 7 words]
+   VO: "<the question or claim the race answers>"
+   VISUAL: frame 0 = the board already in place (rows named, movers on the starting line, RULE
+     LINE visible); the movers depart together by the end of the line
+   KEYWORD: <word>
+
+2. RACE [no VO]
+   VISUAL: <optional: anything specific about the movers or the board; arrivals are automatic,
+     one by one in ROWS order, each row's value appearing as its mover arrives>
+
+3. LOOP [VO ≤ 10 words, or none]
+   VO: "<optional closing line, after the last arrival>"
+   VISUAL: the movers glide back to the starting line, so the last frame matches frame 0
+
 ---
 
 NEW COMPONENTS NEEDED: <anything not in PROJECT_CONTEXT §3, in plain words; "none" if none>
@@ -99,9 +127,15 @@ PRONUNCIATION: <word — how to say it, e.g. 'quasar — KWAY-zar'; only
 - [ ] VO has no symbols/abbreviations; every KEYWORD appears verbatim in its VO
 - [ ] SCALE stated for any scene about size or distance
 - [ ] The HOOK FRAME is composed, and the HOOK MOVE shows the surprising thing within ~3 s
+      (Race: frame 0 is the full board, movers on the starting line; HOOK MOVE "none (Race)")
 - [ ] Each REVEAL step shows its claim visually (comparison, diagram, bars/meter, timeline or
-      counter), and a new visual idea arrives at least every ~5–10 s
+      counter), and a new visual idea arrives at least every ~5–10 s (not for Race: its constant
+      motion replaces this rule)
 - [ ] The LOOP returns to the hook, with no call to action
+- [ ] Race only: 10–40 s; 3–8 ROWS listed in arrival order, each value written as it should
+      appear and backed by SOURCES (or by sourced distances + the speed in the RULE LINE); one
+      RULE LINE naming speed, path and which distance; VO = hook ≤ 7 words + optional closing
+      line, nothing during the race
 
 ---
 
