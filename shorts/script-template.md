@@ -84,15 +84,17 @@ BEATS FOR A RACE (FORMAT: Race uses these three beats INSTEAD of 1–6 above):
 >   toward the 2-annotation limit. No HERO NUMBER, no QUIZ.
 
 MOVER: <spacecraft (built with the first Race short) | car | runner (both planned, §3.6)>
+SPEED HEADER: <what is racing and how fast, shown big above the board for the whole video:
+  label / value, e.g. "NEW HORIZONS' LAUNCH SPEED" / "36,000 mph"> [label ≤ 30 characters, value ≤ 12]
 START: <the shared starting line, e.g. "Earth">
 RULE LINE: <the one small line under the board stating how every value was worked out: the
-  speed, the path, which distance, e.g. "AT 58,000 KM/H · STRAIGHT LINE · AVERAGE DISTANCE"> [≤ 48 characters]
+  path and which distance (the speed is in the SPEED HEADER), e.g. "STRAIGHT LINE · AVERAGE DISTANCE"> [≤ 48 characters]
 ROWS: [3–8 rows, listed in ARRIVAL ORDER, first arrival first]
 - <destination> — <real value exactly as written on the row, e.g. "6 months"> [name ≤ 12 characters, value ≤ 12 characters]
 - <destination> — <value>
 
 1. HOOK (0–3 s) [VO ≤ 7 words]
-   VO: "<the question or claim the race answers>"
+   VO: "<the question or claim the race answers, naming the mover, e.g. '…by spacecraft?'>"
    VISUAL: frame 0 = the board already in place (rows named, movers on the starting line, RULE
      LINE visible); the movers depart together by the end of the line
    KEYWORD: <word>
@@ -133,9 +135,9 @@ PRONUNCIATION: <word — how to say it, e.g. 'quasar — KWAY-zar'; only
       motion replaces this rule)
 - [ ] The LOOP returns to the hook, with no call to action
 - [ ] Race only: 10–40 s; 3–8 ROWS listed in arrival order, each value written as it should
-      appear and backed by SOURCES (or by sourced distances + the speed in the RULE LINE); one
-      RULE LINE naming speed, path and which distance; VO = hook ≤ 7 words + optional closing
-      line, nothing during the race
+      appear and backed by SOURCES (or by sourced distances + the speed in the SPEED HEADER); one
+      SPEED HEADER naming the mover and its speed; one RULE LINE naming path and which distance;
+      VO = hook ≤ 7 words naming the mover + optional closing line, nothing during the race
 
 ---
 

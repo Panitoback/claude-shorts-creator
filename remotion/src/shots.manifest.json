@@ -9,7 +9,7 @@
  },
  {
   "id": "ComponentGallery",
-  "durationInSeconds": 160,
+  "durationInSeconds": 164,
   "fps": 30,
   "width": 1080,
   "height": 1920,
@@ -34,6 +34,14 @@
  {
   "id": "Short12Orbit",
   "durationInSeconds": 42,
+  "fps": 30,
+  "width": 1080,
+  "height": 1920,
+  "transparent": false
+ },
+ {
+  "id": "SpacecraftToEveryPlanet",
+  "durationInSeconds": 25.433,
   "fps": 30,
   "width": 1080,
   "height": 1920,

@@ -1,0 +1,179 @@
+{
+  "_note": "Race short (PROJECT_CONTEXT v0.18.0 §4). Voice-first: gen_voice fills start/end/words. The race timeline (race.*) is in seconds on the global timeline; the composition reads it from here via the shot file.",
+  "slug": "spacecraft-to-every-planet",
+  "format": {
+    "name": "Race",
+    "fps": 30,
+    "width": 1080,
+    "height": 1920,
+    "targetSec": 24,
+    "leadIn": 0.15,
+    "gap": 0.35,
+    "tail": 0.8,
+    "durationSec": 24.167
+  },
+  "vo": [
+    {
+      "text": "How long to each planet by spacecraft?",
+      "tts": "[intrigued] How long to each planet by spacecraft?",
+      "keywords": [
+        "spacecraft"
+      ],
+      "start": 0.31,
+      "end": 3.19,
+      "words": [
+        {
+          "w": "How",
+          "start": 0.31,
+          "end": 0.47
+        },
+        {
+          "w": "long",
+          "start": 0.63,
+          "end": 0.87
+        },
+        {
+          "w": "to",
+          "start": 0.95,
+          "end": 1.03
+        },
+        {
+          "w": "each",
+          "start": 1.11,
+          "end": 1.35
+        },
+        {
+          "w": "planet",
+          "start": 1.51,
+          "end": 1.91
+        },
+        {
+          "w": "by",
+          "start": 1.99,
+          "end": 2.15
+        },
+        {
+          "w": "spacecraft?",
+          "start": 2.23,
+          "end": 3.19
+        }
+      ]
+    },
+    {
+      "text": "The real New Horizons reached Jupiter in thirteen months.",
+      "tts": "[awed] The real New Horizons reached Jupiter in thirteen months.",
+      "keywords": [
+        "Jupiter"
+      ],
+      "gap_before": 16.0,
+      "start": 19.19,
+      "end": 23.35,
+      "words": [
+        {
+          "w": "The",
+          "start": 19.19,
+          "end": 19.35
+        },
+        {
+          "w": "real",
+          "start": 19.51,
+          "end": 19.83
+        },
+        {
+          "w": "New",
+          "start": 19.91,
+          "end": 20.07
+        },
+        {
+          "w": "Horizons",
+          "start": 20.15,
+          "end": 20.71
+        },
+        {
+          "w": "reached",
+          "start": 20.79,
+          "end": 21.11
+        },
+        {
+          "w": "Jupiter",
+          "start": 21.27,
+          "end": 21.67
+        },
+        {
+          "w": "in",
+          "start": 21.75,
+          "end": 21.99
+        },
+        {
+          "w": "thirteen",
+          "start": 22.07,
+          "end": 22.55
+        },
+        {
+          "w": "months.",
+          "start": 22.63,
+          "end": 23.35
+        }
+      ]
+    }
+  ],
+  "race": {
+    "mover": "spacecraft",
+    "start": "Earth",
+    "rule": "STRAIGHT LINE · CLOSEST DISTANCE",
+    "depart": "line 1, word 'spacecraft'",
+    "rows": [
+      {
+        "name": "Venus",
+        "value": "27 days",
+        "arrive_s": 4.4
+      },
+      {
+        "name": "Mars",
+        "value": "39 days",
+        "arrive_s": 6.0
+      },
+      {
+        "name": "Mercury",
+        "value": "55 days",
+        "arrive_s": 7.6
+      },
+      {
+        "name": "Jupiter",
+        "value": "14 months",
+        "arrive_s": 9.6
+      },
+      {
+        "name": "Saturn",
+        "value": "2.3 years",
+        "arrive_s": 11.8
+      },
+      {
+        "name": "Uranus",
+        "value": "5 years",
+        "arrive_s": 14.4
+      },
+      {
+        "name": "Neptune",
+        "value": "8.4 years",
+        "arrive_s": 17.4,
+        "gold": true
+      }
+    ],
+    "loop": "after line 2 ends: values fade, ships glide back ~1.3 s, ~0.5 s still = frame 0",
+    "header": {
+      "label": "NEW HORIZONS' LAUNCH SPEED",
+      "value": "36,000 mph"
+    }
+  },
+  "qa": {
+    "intentional": [
+      {
+        "from_s": 0.0,
+        "to_s": 23.63,
+        "reason": "Race scene (PROJECT_CONTEXT §4)"
+      }
+    ]
+  },
+  "voiceStatus": "elevenlabs:JYUzXNeyCPmymMkfcicu:eleven_v4_turbo:natural"
+}

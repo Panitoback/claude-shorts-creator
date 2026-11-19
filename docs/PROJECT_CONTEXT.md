@@ -3,7 +3,7 @@
 > **For:** the planning project where topics, aesthetics and scripts are developed.
 > **Pair it with:** `brand.md` (the visual and sound style contract — read it for colors, type,
 > captions, annotations, motion, safe zones and sound taste; this file never repeats it).
-> **Version:** v0.18.0 · 2026-11-18 · phase: *second short done + dynamism kit; ground view (second visual mode) built for near-space topics; new calm format: Race*
+> **Version:** v0.18.1 · 2026-11-19 · phase: *sun-moon-400 published; first Race short in production (race board + spacecraft built)*
 >
 > This file describes **what can be asked for**, not how it is built. If a script asks for
 > something listed here, it can be made. If it asks for something not listed, flag it as a
@@ -204,8 +204,8 @@ For a single big count-up, use the **Hero number** (3.1).
 |---|---|
 | **Zoom ruler** (continuous zoom galaxy → disk, with a scale bar that re-labels at each level) | Levels and figures sent for verification; built after approval |
 | Light ray (light crossing space, redshifting) | Idea, not designed |
-| **Race board** (for the Race format, §4): rows from one starting line to each destination, all movers departing together and arriving one by one in order, the real value written on each row as it arrives, the RULE LINE in small type under the board, a soft cue per arrival, the movers gliding back for the loop | Designed (§4); built with the first Race short |
-| **Spacecraft** (the Race mover): a small stylized craft in the brand style (soft shading, warm light, a faint engine glow; no outlines, no agency logos, no real mission markings) | Built with the first Race short |
+| **Race board** (for the Race format, §4): rows from one starting line to each destination, all movers departing together and arriving one by one in order, the real value written on each row as it arrives, the RULE LINE in small type under the board, a soft cue per arrival, the movers gliding back for the loop | **Built** (v0.18.1, first Race short). Up to 8 rows; one value can be gold (the payoff) |
+| **Spacecraft** (the Race mover): a small stylized craft in the brand style (soft shading, warm light, a faint engine glow; no outlines, no agency logos, no real mission markings) | **Built** (v0.18.1): a generic probe (body, dish, boom) with an idling engine glow that brightens on departure and a short trail |
 | **Car** and **Runner silhouette** (alternative Race movers for extended versions: a generic car with no brand marks; a sober runner in profile, like the ground-view observer) | Planned, after the spacecraft |
 
 ### 3.7 Everyday objects and the arrow of time (built, brand style)
@@ -367,11 +367,15 @@ in order. Example: Earth → each planet, at a probe's speed.
   1.5–4 s apart), not proportional to the real values. The **real value is written on each row
   the moment its mover arrives**: that text is the claim, so it must be in SOURCES. No separate
   "not to scale" tag: SCALE says *not to scale (Race timing)* and the written values carry the truth.
+- **Say what is racing and how fast.** A SPEED HEADER above the board names the mover and its
+  speed in big type for the whole video (e.g. "NEW HORIZONS' LAUNCH SPEED" / "36,000 mph"), and the
+  hook line names the mover ("…by spacecraft?"). A verb like "fly" alone leaves the viewer
+  guessing whether it is a plane or a probe (learned on the first Race).
 - **The rule behind the numbers is on screen**, in one small line under the board (RULE LINE):
-  the speed, the path (e.g. straight line) and which distance was used (average, closest
-  approach…), e.g. "AT 58,000 KM/H · STRAIGHT LINE · AVERAGE DISTANCE". Every value on the board
-  must follow from that one rule.
-- **Hook:** calm. Frame 0 is the complete board (rows named, movers on the starting line, rule
+  the path (e.g. straight line) and which distance was used (average, closest approach…), e.g.
+  "STRAIGHT LINE · AVERAGE DISTANCE". Every value on the board must follow from the SPEED HEADER
+  and that one rule.
+- **Hook:** calm. Frame 0 is the complete board (speed header, rows named, movers on the starting line, rule
   line visible); the movers depart by the end of the spoken hook (≤ 7 words). No hook burst, no
   fast camera move, no kinetic title required; the hook line appears as a normal caption.
 - **Body:** the race itself, with **no narration**. Something is always moving until the last
@@ -553,15 +557,17 @@ BEATS FOR A RACE (FORMAT: Race uses these three beats INSTEAD of 1–6 above):
 >   toward the 2-annotation limit. No HERO NUMBER, no QUIZ.
 
 MOVER: <spacecraft (built with the first Race short) | car | runner (both planned, §3.6)>
+SPEED HEADER: <what is racing and how fast, shown big above the board for the whole video:
+  label / value, e.g. "NEW HORIZONS' LAUNCH SPEED" / "36,000 mph"> [label ≤ 30 characters, value ≤ 12]
 START: <the shared starting line, e.g. "Earth">
 RULE LINE: <the one small line under the board stating how every value was worked out: the
-  speed, the path, which distance, e.g. "AT 58,000 KM/H · STRAIGHT LINE · AVERAGE DISTANCE"> [≤ 48 characters]
+  path and which distance (the speed is in the SPEED HEADER), e.g. "STRAIGHT LINE · AVERAGE DISTANCE"> [≤ 48 characters]
 ROWS: [3–8 rows, listed in ARRIVAL ORDER, first arrival first]
 - <destination> — <real value exactly as written on the row, e.g. "6 months"> [name ≤ 12 characters, value ≤ 12 characters]
 - <destination> — <value>
 
 1. HOOK (0–3 s) [VO ≤ 7 words]
-   VO: "<the question or claim the race answers>"
+   VO: "<the question or claim the race answers, naming the mover, e.g. '…by spacecraft?'>"
    VISUAL: frame 0 = the board already in place (rows named, movers on the starting line, RULE
      LINE visible); the movers depart together by the end of the line
    KEYWORD: <word>
@@ -601,9 +607,9 @@ PRONUNCIATION: <word — how to say it, e.g. 'quasar — KWAY-zar'; only
       motion replaces this rule)
 - [ ] The LOOP returns to the hook, with no call to action
 - [ ] Race only: 10–40 s; 3–8 ROWS listed in arrival order, each value written as it should
-      appear and backed by SOURCES (or by sourced distances + the speed in the RULE LINE); one
-      RULE LINE naming speed, path and which distance; VO = hook ≤ 7 words + optional closing
-      line, nothing during the race
+      appear and backed by SOURCES (or by sourced distances + the speed in the SPEED HEADER); one
+      SPEED HEADER naming the mover and its speed; one RULE LINE naming path and which distance;
+      VO = hook ≤ 7 words naming the mover + optional closing line, nothing during the race
 
 ### Example (three beats)
 
@@ -783,6 +789,12 @@ What worked and what didn't. Newest first.
 - **Sound stays under the voice.** Sparse effects on the key moments; never noise textures under
   narration. (Since brand v2.0 the hook and the peaks are louder than the body, still under the
   voice.)
+- **Race (first one, v0.18.1):** a script written without the Race section came in as a 5-beat,
+  no-voice, 13 s piece with a launch hit and a punch-in; production adapted it to HOOK / RACE / LOOP.
+  Re-upload this file before writing the next Race. With only a hook and a closing line, the race
+  itself is ~16 s without voice: the music bed has to sit higher than in a narrated short (about
+  10 dB under the voice instead of 19) so the video still reaches delivery loudness, and the arrival
+  cues stay soft. Gaps of ~1.6 → 3 s between arrivals read well; 7 rows fit the safe area.
 
 ---
 
@@ -808,8 +820,8 @@ odometer) and re-rendered as the final, then reworked once more after a frame-by
 
 **Ground view: done (v0.17).** A second visual mode for near-space topics (3.9): the sky from
 the ground, horizons, an observer, the Sun and Moon at true apparent size (wide or telephoto),
-total and annular eclipses, the angle cone, and two hand-offs into space view. Next short:
-"sun-moon-400" (the Sun–Moon size coincidence), then the moon illusion.
+total and annular eclipses, the angle cone, and two hand-offs into space view. Third short
+"sun-moon-400" (the Sun–Moon size coincidence): published. Next: the moon illusion.
 
 **Race format: defined (v0.18).** A calm, single-scene comparison (§4): rows from one starting
 line, movers arriving one by one, the real value written on each row. Its race board and the

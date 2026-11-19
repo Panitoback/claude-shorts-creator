@@ -7,7 +7,7 @@ import {
   Balance, ComparisonBars, FlowPaths, Meter, OrbitOverlay, Timeline, linePath, spiralPath,
   WhipMontage, whipTiming,
   Egg, eggCrackPts, CoffeeCup, cupSpiralPts, GoldMorphLine, morphScribble, morphPoint, WordDissolve, ParticleBox, DeckOfCards,
-  Camera, CameraLayer, OdometerNumber, TimeStream,
+  Camera, CameraLayer, OdometerNumber, TimeStream, RaceBoard,
 } from '../../components';
 import { EASE } from '../../brand';
 import { PlanetKind } from '../../brand';
@@ -21,7 +21,7 @@ const PAGE = 120;
 
 export const compositionConfig = {
   id: 'ComponentGallery',
-  durationInSeconds: 160, // 40 pages × PAGE frames
+  durationInSeconds: 164, // 41 pages × PAGE frames
   fps: 30,
   width: 1080,
   height: 1920,
@@ -29,7 +29,7 @@ export const compositionConfig = {
 
 const Header: React.FC<{ n: number; title: string; note: string }> = ({ n, title, note }) => (
   <div style={{ position: 'absolute', top: 70, left: 60, right: 180 }}>
-    <div style={{ ...TYPE.annotation, color: PALETTE.gold, fontSize: 24 }}>{`${n} / 40 · ${title}`}</div>
+    <div style={{ ...TYPE.annotation, color: PALETTE.gold, fontSize: 24 }}>{`${n} / 41 · ${title}`}</div>
     <div style={{ ...TYPE.annotation, color: PALETTE.sciText, fontSize: 20, letterSpacing: 1, textTransform: 'none', marginTop: 8, opacity: 0.8 }}>{note}</div>
   </div>
 );
@@ -366,6 +366,8 @@ export const ComponentGallery: React.FC = () => (
       <Header n={39} title="3D timeline flight" note="timeline in CSS perspective: tilts back (rotateX ≤ 22°) while the camera flies along it, motion blur only during the flight, flat again on arrival" /></Sequence>
     <Sequence from={PAGE * 39} durationInFrames={PAGE}><TimeStreamDemo />
       <Header n={40} title="Time stream" note="TimeStream: gold particles flowing one way along a line (time's arrow, a timeline's axis) · own speed + lane each, fade at both ends · motion for sparse scenes" /></Sequence>
+    <Sequence from={PAGE * 40} durationInFrames={PAGE}><RaceDemo />
+      <Header n={41} title="Race board + spacecraft" note="RaceBoard: rows from one START line, movers at constant speed, value on arrival (one gold), soft flash · rewind back to START (loop) · Spacecraft: generic probe, engine idle/flare, trail" /></Sequence>
   </AbsoluteFill>
   </Grain>
 );
@@ -531,6 +533,28 @@ const TimeStreamDemo: React.FC = () => (
     <Small x={CX} y={SAFE_RECT.y + 420}>{"down a timeline's axis (vertical, narrow lane)"}</Small>
     <TimeStream x0={CX} y0={SAFE_RECT.y + 480} x1={CX} y1={SAFE_RECT.y + SAFE_RECT.h - 80} from={0.1} to={3.6} n={110} speed={300} spread={22} dot={6} seed={5} />
   </>
+);
+
+const RaceDemo: React.FC = () => (
+  <AbsoluteFill>
+    <Starfield count={120} warm />
+    <RaceBoard
+      rows={[
+        { label: 'EARTH → MOON', dest: 'moon', value: '7 hours', arrive: 30 },
+        { label: 'EARTH → MARS', dest: 'mars', value: '39 days', arrive: 52 },
+        { label: 'EARTH → JUPITER', dest: 'jupiter', value: '14 months', arrive: 78, gold: true },
+      ]}
+      depart={10}
+      gap={180}
+      top={SAFE_RECT.y + 200}
+      rule={'AT 36,000 MPH · STRAIGHT LINE\nCLOSEST DISTANCE'}
+      valuesOut={92}
+      rewind={{ at: 95, len: 22 }}
+      moverLength={66}
+      destR={30}
+      warm
+    />
+  </AbsoluteFill>
 );
 
 export default ComponentGallery;

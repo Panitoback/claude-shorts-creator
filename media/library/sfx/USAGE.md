@@ -333,6 +333,19 @@ copied; none of them are installed.
 
 *(Newest first. One entry per produced short: slug, clips used, gains that landed, what to change.)*
 
+- **spacecraft-to-every-planet** (2026-11-19, first **Race**, `shorts/spacecraft-to-every-planet/sfx-plan.json`; approved by the user)
+  - Only a hook and a closing line are spoken; the ~16 s race in between has no voice. Cues: pop-reveal per
+    arrival, −11.5 → −10.0 dB rising slightly row by row, Neptune (the gold payoff) −8.5 + glow-swell −7 under
+    the hold; whoosh-soft −9 on the departure (optional, phone-invisible: accepted, Race has no hook hit);
+    whoosh-reverse −4 peaking mid-rewind. Pitch-rising ticks were asked for but mix_sfx has no pitch control.
+  - **Loudness lesson:** with so little voice, pop-reveal at its usual −1…−4 dB set the true peak (−0.3 dBFS)
+    while the integrated level stayed ~−15.8 LUFS, so finalize_audio failed. What passed: pops −8.5…−11.5,
+    music `bed-minimal-pulse` **10 dB under the voice** (`--voice voice/voice.wav` as the duck key, not the SFX
+    mix, or the bed ducks on every tick), then a light peak limiter (alimiter limit 0.5 at 192 kHz) on the
+    voice transients before finalize. Final −14.5 LUFS / −2.4 dBTP.
+  - mix_music.py fix: base and key are padded to the video length (a base whose audio ended 0.1 s early
+    made ffmpeg hang forever before -t).
+
 - **why-time-moves-forward** (2026-11-17, brand v2.2, `shorts/why-time-moves-forward/sfx-plan.json` + `b/sfx-plan.json`; approved by the user)
   - Two variants, one body: the plans are generated from the real word times (body cues shifted by the
     constant offset of line 4), so re-voicing a hook re-times every cue for free.

@@ -126,9 +126,12 @@ def mix_layers(base, voice, out, layers, end):
     dur = end if end is not None else probe_duration(base)
     n = len(layers)
     # input 0 = base (voice + SFX, what we hear), input 1 = voice only (the duck key)
-    cmd = ["ffmpeg", "-y", "-hide_banner", "-i", base, "-i", voice]
-    parts = ["[0:a]aformat=sample_rates=48000:channel_layouts=stereo[main]",
-             f"[1:a]aformat=sample_rates=48000:channel_layouts=stereo,asplit={n}"
+    cmd = ["ffmpeg", "-y", "-hide_banner", "-nostdin", "-i", base, "-i", voice]
+    # base and key are padded to `dur`: if their audio ends a few ms before the video (e.g. 24.64 s
+    # vs 24.767 s), the sidechain/amix would wait for samples that never come and ffmpeg hangs
+    # before reaching -t (seen 2026-11-19 on spacecraft-to-every-planet).
+    parts = [f"[0:a]aformat=sample_rates=48000:channel_layouts=stereo,apad=whole_dur={dur:.3f}[main]",
+             f"[1:a]aformat=sample_rates=48000:channel_layouts=stereo,apad=whole_dur={dur:.3f},asplit={n}"
              + "".join(f"[key{i}]" for i in range(n))]
     outs = []
     for i, L in enumerate(layers):

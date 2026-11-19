@@ -67,3 +67,7 @@ export { TiltUp, tiltFor } from './TiltUp';
 export { PullBackToEarth } from './PullBackToEarth';
 export { LightFlow } from './LightFlow';
 export type { LightFlowProps } from './LightFlow';
+export { Spacecraft } from './Spacecraft';
+export type { SpacecraftProps } from './Spacecraft';
+export { RaceBoard } from './RaceBoard';
+export type { RaceBoardProps, RaceRow } from './RaceBoard';
