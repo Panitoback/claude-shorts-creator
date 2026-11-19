@@ -5,15 +5,16 @@ import Shot1, { compositionConfig as cfg1 } from './shots/gallery/ComponentGalle
 import Shot2, { compositionConfig as cfg2 } from './shots/gallery/GroundGallery';
 import Shot3, { compositionConfig as cfg3 } from './shots/gallery/MotionDemo';
 import Shot4, { compositionConfig as cfg4 } from './shots/short-12/Short12Orbit';
-import Shot5, { compositionConfig as cfg5 } from './shots/what-is-a-quasar-v2/WhatIsAQuasarV2A';
-import Shot6, { compositionConfig as cfg6 } from './shots/what-is-a-quasar/WhatIsAQuasarA';
-import Shot7, { compositionConfig as cfg7 } from './shots/what-is-a-quasar/WhatIsAQuasarB';
-import Shot8, { compositionConfig as cfg8 } from './shots/what-is-a-quasar/WhatIsAQuasarC';
-import Shot9, { compositionConfig as cfg9 } from './shots/what-is-a-quasar/WhatIsAQuasarOpening1';
-import Shot10, { compositionConfig as cfg10 } from './shots/what-is-a-quasar/WhatIsAQuasarOpening2';
-import Shot11, { compositionConfig as cfg11 } from './shots/what-is-a-quasar/WhatIsAQuasarOpening3';
-import Shot12, { compositionConfig as cfg12 } from './shots/why-time-moves-forward/WhyTimeA';
-import Shot13, { compositionConfig as cfg13 } from './shots/why-time-moves-forward/WhyTimeB';
+import Shot5, { compositionConfig as cfg5 } from './shots/sun-moon-400/SunMoon400';
+import Shot6, { compositionConfig as cfg6 } from './shots/what-is-a-quasar-v2/WhatIsAQuasarV2A';
+import Shot7, { compositionConfig as cfg7 } from './shots/what-is-a-quasar/WhatIsAQuasarA';
+import Shot8, { compositionConfig as cfg8 } from './shots/what-is-a-quasar/WhatIsAQuasarB';
+import Shot9, { compositionConfig as cfg9 } from './shots/what-is-a-quasar/WhatIsAQuasarC';
+import Shot10, { compositionConfig as cfg10 } from './shots/what-is-a-quasar/WhatIsAQuasarOpening1';
+import Shot11, { compositionConfig as cfg11 } from './shots/what-is-a-quasar/WhatIsAQuasarOpening2';
+import Shot12, { compositionConfig as cfg12 } from './shots/what-is-a-quasar/WhatIsAQuasarOpening3';
+import Shot13, { compositionConfig as cfg13 } from './shots/why-time-moves-forward/WhyTimeA';
+import Shot14, { compositionConfig as cfg14 } from './shots/why-time-moves-forward/WhyTimeB';
 
 export const shots: { Comp: React.FC; config: any }[] = [
   { Comp: Shot0 as React.FC, config: cfg0 },
@@ -30,4 +31,5 @@ export const shots: { Comp: React.FC; config: any }[] = [
   { Comp: Shot11 as React.FC, config: cfg11 },
   { Comp: Shot12 as React.FC, config: cfg12 },
   { Comp: Shot13 as React.FC, config: cfg13 },
+  { Comp: Shot14 as React.FC, config: cfg14 },
 ];

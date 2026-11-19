@@ -1,0 +1,248 @@
+{
+  "_note": "sun-moon-400 (brand v2.5). Clips from media/library/sfx/USAGE.md against guion.md SOUND MOOD; times from the real word times (make_sfx_plan.py, same cues as SunMoon400.tsx). Bed via mix_music.py: bed-mysterious-vast, lift hook +3 / partial eclipse +2 / TOTALITY -12 (the music almost drops out) / twist +2; ground ambiences by segment (mix_music --ambient id@from-to): wind on the ridge (hook, totality -3, future/loop), sea at sunset, dusk crickets at moonrise; space scenes have none.",
+  "master": "shorts/sun-moon-400/output/sun-moon-400-voiced.mp4",
+  "master_fps": 30,
+  "catalog": "media/library/sfx/catalog.json",
+  "render": {
+    "preview": "shorts/sun-moon-400/output/sun-moon-400-voiced.mp4",
+    "out": "shorts/sun-moon-400/output/sun-moon-400-sfx.mp4",
+    "end_s": 53.167,
+    "duck": true
+  },
+  "silence": [
+    {
+      "from_s": 25.18,
+      "to_s": 25.66,
+      "note": "near-silence right before totality (the riser crest has passed)"
+    }
+  ],
+  "events": [
+    {
+      "at_s": 0.01,
+      "sfx_id": "hook-hit",
+      "gain_db": 0,
+      "cue": "frame 0: totality over the ridge (corona, Venus)",
+      "align": "attack"
+    },
+    {
+      "at_s": 0.853,
+      "sfx_id": "whoosh-deep",
+      "gain_db": 1,
+      "cue": "fly-through into the Moon's disc: fastest at the cover point, lands on '400'",
+      "align": "peak"
+    },
+    {
+      "at_s": 3.833,
+      "sfx_id": "swish-light",
+      "gain_db": -5,
+      "cue": "shape match: the space Sun shrinks into the setting Sun",
+      "align": "peak"
+    },
+    {
+      "at_s": 6.333,
+      "sfx_id": "birds-settle",
+      "gain_db": -18,
+      "cue": "dusk over the ridge: a few distant birds settle as the Moon rises (ground ambience)",
+      "align": "start",
+      "optional": true
+    },
+    {
+      "at_s": 6.033,
+      "sfx_id": "whoosh-soft",
+      "gain_db": -1,
+      "cue": "whip 1 (sunset -> moonrise), peak on the swap ('same')",
+      "align": "peak"
+    },
+    {
+      "at_s": 7.883,
+      "sfx_id": "pop-reveal",
+      "gain_db": -7,
+      "cue": "hero '½ degree' arrives ('half')",
+      "align": "attack",
+      "optional": true
+    },
+    {
+      "at_s": 12.467,
+      "sfx_id": "swish-light",
+      "gain_db": -6,
+      "cue": "shape match: the Moon's disc becomes the diagram's Moon",
+      "align": "peak"
+    },
+    {
+      "at_s": 12.633,
+      "sfx_id": "photon-travel",
+      "gain_db": -4,
+      "cue": "the two sight lines draw from the eye to the Sun's edges",
+      "align": "attack"
+    },
+    {
+      "at_s": 15.2,
+      "sfx_id": "pop-reveal",
+      "gain_db": -2,
+      "cue": "label '400 × farther'",
+      "align": "attack"
+    },
+    {
+      "at_s": 17.8,
+      "sfx_id": "pop-reveal",
+      "gain_db": -1,
+      "cue": "label '400 × wider' (jitter)",
+      "align": "attack"
+    },
+    {
+      "at_s": 20.53,
+      "sfx_id": "chime-discovery",
+      "gain_db": -1,
+      "cue": "the Sun's ghost lands exactly on the Moon: same angle (in the 0.25 s voice gap before 'They cancel out')",
+      "align": "attack"
+    },
+    {
+      "at_s": 21.933,
+      "sfx_id": "whoosh-wind",
+      "gain_db": -12,
+      "cue": "camera drops back to the ground (the observer stays)",
+      "align": "peak"
+    },
+    {
+      "at_s": 21.8,
+      "sfx_id": "eclipse-hush",
+      "gain_db": -14,
+      "cue": "daylight on the ridge: breeze + distant birds that fall silent as the Moon covers the Sun (the eclipse hush)",
+      "align": "start"
+    },
+    {
+      "at_s": 25.13,
+      "sfx_id": "riser-long",
+      "gain_db": -9,
+      "cue": "slow tension under the partial eclipse; crest just before the hush",
+      "align": "peak"
+    },
+    {
+      "at_s": 25.68,
+      "sfx_id": "glow-swell",
+      "gain_db": -8,
+      "cue": "MAIN REVEAL: totality on 'covers'; the swell STARTS here (no onset in the hush) and crests as the corona blooms",
+      "align": "start"
+    },
+    {
+      "at_s": 25.68,
+      "sfx_id": "hook-hit",
+      "gain_db": -6,
+      "cue": "phone layer of the main reveal, same audible point",
+      "align": "peak"
+    },
+    {
+      "at_s": 33.37,
+      "sfx_id": "sparkle-soft",
+      "gain_db": 0,
+      "cue": "Venus switches on ('planets')",
+      "align": "attack"
+    },
+    {
+      "at_s": 34.25,
+      "sfx_id": "sparkle-soft",
+      "gain_db": -7,
+      "cue": "the first bright star ('stars'), quieter",
+      "align": "attack",
+      "optional": true
+    },
+    {
+      "at_s": 37.2,
+      "sfx_id": "whoosh-deep",
+      "gain_db": -6,
+      "cue": "whip 2 up out of the eclipse into space (2nd and last whoosh-deep)",
+      "align": "peak"
+    },
+    {
+      "at_s": 37.2,
+      "sfx_id": "impact-deep-soft",
+      "gain_db": -4,
+      "cue": "soft low hit on 'But it won't last'",
+      "align": "peak"
+    },
+    {
+      "at_s": 38.8,
+      "sfx_id": "photon-travel",
+      "gain_db": -3,
+      "cue": "laser Earth -> Moon ('Lasers')",
+      "align": "attack"
+    },
+    {
+      "at_s": 41.583,
+      "sfx_id": "pop-reveal",
+      "gain_db": -1,
+      "cue": "hero '1.5 inches' arrives",
+      "align": "attack"
+    },
+    {
+      "at_s": 43.75,
+      "sfx_id": "tick-soft",
+      "gain_db": 4,
+      "cue": "odometer rolling to 600 (tick 1, thinned)",
+      "align": "attack"
+    },
+    {
+      "at_s": 43.95,
+      "sfx_id": "tick-soft",
+      "gain_db": 3,
+      "cue": "odometer rolling to 600 (tick 2, thinned)",
+      "align": "attack"
+    },
+    {
+      "at_s": 44.15,
+      "sfx_id": "tick-soft",
+      "gain_db": 4,
+      "cue": "odometer rolling to 600 (tick 3, thinned)",
+      "align": "attack"
+    },
+    {
+      "at_s": 44.38,
+      "sfx_id": "tick-soft",
+      "gain_db": 2,
+      "cue": "odometer rolling to 600 (tick 4, thinned)",
+      "align": "attack"
+    },
+    {
+      "at_s": 44.6,
+      "sfx_id": "tick-soft",
+      "gain_db": 3,
+      "cue": "odometer rolling to 600 (tick 5, thinned)",
+      "align": "attack"
+    },
+    {
+      "at_s": 44.833,
+      "sfx_id": "number-settle",
+      "gain_db": 5,
+      "cue": "'600' settles",
+      "align": "attack"
+    },
+    {
+      "at_s": 46.767,
+      "sfx_id": "swish-light",
+      "gain_db": -5,
+      "cue": "shape match: the Moon's ring grows into the annular ring",
+      "align": "peak"
+    },
+    {
+      "at_s": 48.643,
+      "sfx_id": "impact-deep-soft",
+      "gain_db": -5,
+      "cue": "gentle emphasis + punch-in on 'eclipses' (2nd and last impact-deep-soft)",
+      "align": "peak"
+    },
+    {
+      "at_s": 51.333,
+      "sfx_id": "whoosh-reverse",
+      "gain_db": -4,
+      "cue": "time runs back: the Moon grows to today's size, the ring closes",
+      "align": "peak"
+    },
+    {
+      "at_s": 51.5,
+      "sfx_id": "sparkle-soft",
+      "gain_db": -3,
+      "cue": "Venus switches on again (tail ends before the seam)",
+      "align": "attack"
+    }
+  ]
+}

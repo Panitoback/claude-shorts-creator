@@ -2,7 +2,7 @@ import React from 'react';
 import { AbsoluteFill, Sequence, useCurrentFrame } from 'remotion';
 import { CANVAS, CAPTION, PALETTE, SAFE_RECT, SKY_TEXT_SHADOW, SkyPreset, TYPE } from '../../brand';
 import {
-  AngleCone, coneDisc, DataLabel, groundYAt, Eclipse, GlowingBody, Grain, GroundScene, Horizon, kf, Marker, Observer, Planet, PullBackToEarth, SkyBody, SkyView, TiltUp,
+  AngleCone, coneDisc, DataLabel, LightFlow, groundYAt, Eclipse, GlowingBody, Grain, GroundScene, Horizon, kf, Marker, Observer, Planet, PullBackToEarth, SkyBody, SkyView, TiltUp,
 } from '../../components';
 import { HorizonVariant } from '../../components/Horizon';
 import { eclipseState, moonRadiusPx, skyToScreen, sunRadiusPx } from '../../lib/groundSky';
@@ -135,6 +135,8 @@ const ConeDemo: React.FC = () => {
         <EclipseBody x={moon.x} y={moon.y} r={moon.r} kind="moon" />
       </div>
       <AngleCone eye={eye} toward={toward} halfAngle={half} reach={1090} drawAt={10} ghost={{ from: 260, to: 1000, at: 50, len: 50 }} label="same angle" />
+      {/* LightFlow: light pulses running down the sight lines, Sun → eye */}
+      <LightFlow points={[[sun.x, sun.y], eye]} at={40} period={12} travel={26} length={150} width={6} />
       <Small x={CX} y={SAFE_RECT.y + SAFE_RECT.h - 60}>{'half-angle exaggerated (6°, true 0.26°) · ghost lands on the Sun'}</Small>
     </>
   );

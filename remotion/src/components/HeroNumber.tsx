@@ -16,6 +16,7 @@ export type HeroNumberProps = {
   exponent?: number; // power-of-ten form: value is the base (10), the exponent is the superscript and is what counts up
   countFrom?: number; // default 0
   count?: boolean; // false = no count-up, just arrive (default true)
+  display?: string; // literal text shown instead of the number (e.g. "½"); no count-up
   y?: number; // top of the block (default 230 = just inside the safe top)
   x?: number; // horizontal center (default 540)
   scale?: number; // 1 = hero size; ~0.5 for a secondary number (auto-reduced if the line won't fit)
@@ -37,12 +38,12 @@ const decimalsOf = (v: number) => Math.min(2, (String(v).split('.')[1] || '').le
 
 export const HeroNumber: React.FC<HeroNumberProps> = ({
   value, decimals, grouping = false, unit, subject, label, prefix, exponent, countFrom = 0, count = true,
-  y = 230, x = 540, scale = 1, at = 0, warm = false,
+  y = 230, x = 540, scale = 1, at = 0, warm = false, display,
 }) => {
   const f = useCurrentFrame();
   const d = decimals ?? decimalsOf(value);
-  const fmt = (n: number) =>
-    grouping ? n.toLocaleString('en-US', { minimumFractionDigits: d, maximumFractionDigits: d }) : n.toFixed(d);
+  const fmt = (n: number) => display ?? (
+    grouping ? n.toLocaleString('en-US', { minimumFractionDigits: d, maximumFractionDigits: d }) : n.toFixed(d));
   // Number + unit always stay on ONE line. The line's real width is MEASURED after layout (fonts
   // are loaded before Remotion renders a frame); if, at `scale`, it would leave the safe rectangle
   // around its center `x`, the whole block shrinks to fit (§9) and a [QA] warning is logged.
@@ -59,7 +60,7 @@ export const HeroNumber: React.FC<HeroNumberProps> = ({
   }
   const s = startOf(at, warm);
   const numIn = ramp(f, s, MOTION.rise);
-  const n = count && exponent === undefined ? ramp(f, s + 4, MOTION.countUp, countFrom, value) : value;
+  const n = count && !display && exponent === undefined ? ramp(f, s + 4, MOTION.countUp, countFrom, value) : value;
   const ex = exponent === undefined ? 0 : count ? Math.round(ramp(f, s + 4, MOTION.countUp, countFrom, exponent)) : exponent;
   const unitAt = s + 4 + (count ? MOTION.countUp - MOTION.overlap : 6);
   const unitIn = ramp(f, unitAt, MOTION.rise);

@@ -300,6 +300,44 @@
       ],
       "loop_xfade_s": 2.0,
       "seam_db": 0.39
+    },
+    {
+      "id": "bed-sky-wonder",
+      "file": "clips/bed-sky-wonder.mp3",
+      "category": "cinematic-ambient",
+      "tags": [
+        "earth",
+        "sky",
+        "dusk",
+        "eclipse",
+        "wonder",
+        "calm",
+        "piano",
+        "choir-pad",
+        "strings",
+        "bed",
+        "loop"
+      ],
+      "duration_s": 53.0,
+      "requested_ms": 60000,
+      "peak_dbfs": -4.8,
+      "loudness_lufs": -20.0,
+      "source": "elevenlabs:music",
+      "model": "music_v2_5",
+      "force_instrumental": true,
+      "account": "ours",
+      "plan_tier": "starter",
+      "license": "ElevenLabs generated (Eleven Music) with OUR account (starter plan at generation time). Music Terms (elevenlabs.io/music-terms, 2026-10-09), paid plans: online and offline commercial use permitted except film, TV, radio and studio games; no attribution on paid plans; we own the output (ToS 4(c)(ii)); platform AI-disclosure rules apply (Music Terms 4.4). Starter: 'streaming' column = Prohibited (see USAGE notes)",
+      "prompt": "Slow, calm, cinematic ambient music for a documentary about the sky as seen from Earth: watching the Sun and the Moon at dusk from a quiet hill. Instrumental only. Steady, even intensity from start to finish with no big build-ups, no drops and no structural changes, so it can sit under any narration and loop seamlessly. No drums, no percussion, no vocals, nothing busy. Mood: quiet wonder and calm awe, earthly and intimate rather than cosmic. Warm low strings holding long chords in D major, a soft wordless choir pad very far in the background, a few sparse, gentle felt-piano notes with long gaps between them, around 58 BPM, warm natural reverb.",
+      "used_in": [],
+      "loop": true,
+      "raw_file": "raw/bed-sky-wonder.mp3 (local, git-ignored)",
+      "loop_from_raw_s": [
+        3.0,
+        58.0
+      ],
+      "loop_xfade_s": 2.0,
+      "seam_db": -0.18
     }
   ]
 }

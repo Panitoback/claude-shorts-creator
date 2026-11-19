@@ -1233,6 +1233,131 @@
       "used_in": [
         "why-time-moves-forward"
       ]
+    },
+    {
+      "id": "ground-wind-loop",
+      "file": "clips/ground-wind-loop.mp3",
+      "category": "ambient",
+      "tags": [
+        "ambient",
+        "ground",
+        "wind",
+        "hill",
+        "outdoor",
+        "bed",
+        "loop",
+        "earth"
+      ],
+      "duration_s": 30.0,
+      "peak_dbfs": -1.5,
+      "loudness_lufs": -20.5,
+      "phone_db": -7.9,
+      "source": "elevenlabs:sound-generation",
+      "model": "eleven_text_to_sound_v3",
+      "license": "ElevenLabs generated (text-to-sfx); owner: the generating account, commercial use per the account's ElevenLabs plan",
+      "prompt": "A seamless, very quiet outdoor ambience of a soft, steady breeze over an open grassy hilltop: a gentle airy rustle of grass and a smooth low hush of moving air, calm and spacious. Steady level from start to end, no gusts, no birds, no insects, no voices, no traffic, no music.",
+      "loop": true,
+      "used_in": []
+    },
+    {
+      "id": "ground-sea-loop",
+      "file": "clips/ground-sea-loop.mp3",
+      "category": "ambient",
+      "tags": [
+        "ambient",
+        "ground",
+        "sea",
+        "waves",
+        "shore",
+        "bed",
+        "loop",
+        "earth"
+      ],
+      "duration_s": 30.0,
+      "peak_dbfs": -1.5,
+      "loudness_lufs": -26.6,
+      "phone_db": -1.0,
+      "source": "elevenlabs:sound-generation",
+      "model": "eleven_text_to_sound_v3",
+      "license": "ElevenLabs generated (text-to-sfx); owner: the generating account, commercial use per the account's ElevenLabs plan",
+      "prompt": "A seamless, very quiet ambience of gentle sea waves heard from a short distance: slow, soft washes of small waves on a sandy shore, evenly spaced and calm, with a faint airy hiss between them. Steady level from start to end, no seagulls, no wind gusts, no voices, no boats, no music.",
+      "loop": true,
+      "used_in": []
+    },
+    {
+      "id": "ground-dusk-loop",
+      "file": "clips/ground-dusk-loop.mp3",
+      "category": "ambient",
+      "tags": [
+        "ambient",
+        "ground",
+        "dusk",
+        "crickets",
+        "countryside",
+        "night",
+        "bed",
+        "loop",
+        "earth"
+      ],
+      "duration_s": 30.0,
+      "peak_dbfs": -1.5,
+      "loudness_lufs": -22.7,
+      "phone_db": -5.1,
+      "source": "elevenlabs:sound-generation",
+      "model": "eleven_text_to_sound_v3",
+      "license": "ElevenLabs generated (text-to-sfx); owner: the generating account, commercial use per the account's ElevenLabs plan",
+      "prompt": "A seamless, very quiet countryside ambience at dusk: faint distant crickets chirping softly and evenly, a light breath of open air, calm and peaceful. Steady level from start to end, no birds, no dogs, no cars, no voices, no loud close insects, no music.",
+      "loop": true,
+      "used_in": []
+    },
+    {
+      "id": "birds-settle",
+      "file": "clips/birds-settle.mp3",
+      "category": "texture",
+      "tags": [
+        "ground",
+        "birds",
+        "dusk",
+        "settle",
+        "fade",
+        "earth"
+      ],
+      "duration_s": 6.0,
+      "peak_dbfs": -1.5,
+      "loudness_lufs": -14.6,
+      "attack_s": 0.48,
+      "peak_s": 0.74,
+      "phone_db": -1.2,
+      "source": "elevenlabs:sound-generation",
+      "model": "eleven_text_to_sound_v3",
+      "license": "ElevenLabs generated (text-to-sfx); owner: the generating account, commercial use per the account's ElevenLabs plan",
+      "prompt": "A few distant songbirds settling down at dusk: sparse, soft, unhurried last chirps from far away in an open landscape that thin out and fade to silence by the end. Gentle and calm, no close or loud calls, no crows or gulls, no wind gusts, no music.",
+      "used_in": []
+    },
+    {
+      "id": "eclipse-hush",
+      "file": "clips/eclipse-hush.mp3",
+      "category": "texture",
+      "tags": [
+        "ground",
+        "eclipse",
+        "hush",
+        "birds",
+        "silence",
+        "stillness",
+        "earth"
+      ],
+      "duration_s": 8.0,
+      "peak_dbfs": -7.7,
+      "loudness_lufs": -20.0,
+      "attack_s": 0.01,
+      "peak_s": 2.11,
+      "phone_db": -4.8,
+      "source": "elevenlabs:sound-generation",
+      "model": "eleven_text_to_sound_v3",
+      "license": "ElevenLabs generated (text-to-sfx); owner: the generating account, commercial use per the account's ElevenLabs plan",
+      "prompt": "A soft daytime outdoor ambience of a light breeze and a few distant birds that slowly thins out and goes still, the birds falling silent one by one and the air settling into an almost silent hush, as if nature holds its breath. Ends in near silence. Calm and natural, no tones, no music, no rumble.",
+      "used_in": []
     }
   ]
 }

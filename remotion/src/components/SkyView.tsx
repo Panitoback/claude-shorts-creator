@@ -18,7 +18,7 @@ import { STAR_MIN_A, STAR_MIN_R } from './Starfield';
 // `reveal` dial passes its rank — never a fade of the whole sky (compression smears those, brand §8).
 // By default `reveal` follows the presets (night 1, twilight 0.12, dusk planets only, day 0).
 // Faint stars are static; only the bright ones twinkle (brand §5).
-export type SkyPlanet = { az: number; el: number; r?: number };
+export type SkyPlanet = { az: number; el: number; r?: number; on?: number; off?: number; star?: boolean }; // on/off: frames it switches on/off (~0.5 s fade each); star = a bright star (smaller, tinted)
 export type SkyViewProps = {
   sky?: SkyPreset; // default 'night'
   to?: SkyPreset; // second preset to blend toward
@@ -31,6 +31,7 @@ export type SkyViewProps = {
   bright?: number; // how many twinkle with a halo (default 12)
   reveal?: Keys; // override: 0..1 how much of the starfield is out
   planets?: SkyPlanet[]; // bright points that come out first (Venus, Jupiter…)
+  colorFov?: number; // spread the sky COLORS as if the frame were this wide (telephoto stylization: keeps blue overhead and the glow low, sizes stay true)
   glow?: { az: number; el: number; color?: string; strength?: number; radiusDeg?: number }; // soft sky glow around the Sun at dusk
   seed?: number;
 };
@@ -40,7 +41,7 @@ const FADE = 15; // frames per star (≈ 0.5 s)
 type DomeStar = { az: number; el: number; r: number; a: number; t: number };
 
 export const SkyView: React.FC<SkyViewProps> = ({
-  sky = 'night', to, mix: mixK = 0, toSpace = 0, fov = 60, tilt = 0, horizonY, stars = 520, bright = 12, reveal, planets = [], glow, seed = 5,
+  sky = 'night', to, mix: mixK = 0, toSpace = 0, fov = 60, tilt = 0, horizonY, stars = 520, bright = 12, reveal, planets = [], glow, colorFov, seed = 5,
 }) => {
   const f = useCurrentFrame();
   const id = useMemo(() => `sky${uid++}`, []);
@@ -55,10 +56,10 @@ export const SkyView: React.FC<SkyViewProps> = ({
     const n = 28;
     return Array.from({ length: n + 1 }, (_, i) => {
       const y = (i / n) * CANVAS.H;
-      return { o: i / n, c: blendedSkyAt(sky, b, t, sp, elevationAt(y, view), PALETTE.space) };
+      return { o: i / n, c: blendedSkyAt(sky, b, t, sp, elevationAt(y, colorFov ? { ...view, fov: colorFov } : view), PALETTE.space) };
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [sky, b, t, sp, view.tilt, fov, horizonY]);
+  }, [sky, b, t, sp, view.tilt, fov, horizonY, colorFov]);
 
   const dome = useMemo<DomeStar[]>(() => {
     const rnd = mulberry32(seed);
@@ -137,14 +138,16 @@ export const SkyView: React.FC<SkyViewProps> = ({
         );
       })}
       {planets.map((p, i) => {
-        const a = alphaFor(thrPlanet(i));
+        const a = p.on !== undefined
+          ? Math.max(0, Math.min(1, (f - p.on) / FADE) - (p.off !== undefined ? Math.min(1, Math.max(0, (f - p.off) / FADE)) : 0))
+          : alphaFor(thrPlanet(i));
         if (a <= 0) return null;
         const [x, y] = skyToScreen(p.az, p.el, view);
-        const r = p.r ?? 3.2;
+        const r = p.r ?? (p.star ? 2.6 : 3.2);
         return (
           <g key={`p${i}`} opacity={a}>
             <circle cx={x} cy={y} r={r * 4.5} fill={`url(#${id}h)`} />
-            <circle cx={x} cy={y} r={r} fill={mix('#fff6ea', '#ffe9c4', 0.4)} />
+            <circle cx={x} cy={y} r={r} fill={p.star ? starTint(0.75) : mix('#fff6ea', '#ffe9c4', 0.4)} />
           </g>
         );
       })}

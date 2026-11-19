@@ -36,7 +36,10 @@ Usage:
   --lift "t0-t1:+dB,…"  raise the music on these windows (the peaks), 0.6 s linear ramps
   --fade 1.5            music fade in/out seconds
   --from 12 --to 31     play the music only in this window
-  --ambient <id>        ambient loop (SFX-library loop id)
+  --ambient <id>        ambient loop (SFX-library loop id), for the whole short; or SEGMENTS, one
+                        ambient after another as the scene changes (never two at once):
+                        "ground-sea-loop@3.6-6.1,ground-dusk-loop@6.1-12.3,ground-wind-loop@21.7-37.2:-4"
+                        (id@from-to, optional :±dB on top of --ambient-under for that segment)
   --ambient-under 24    dB under the voice (default 24)
   --ambient-duck 6      extra dB under speech (default 6)
   --ambient-fade 0.3    ambient fade in/out seconds
@@ -204,18 +207,29 @@ def main():
         lufs = clip.get("loudness_lufs") or measure_lufs(path)
         return voice_lufs - under - lufs
 
-    amb_layer = None
+    amb_layers = []
     if amb_id:
-        if amb_id not in loops:
-            sys.exit(f"--ambient {amb_id}: not an SFX-library loop ({', '.join(loops)})")
-        c = loops[amb_id]
-        path = rp(os.path.join("media", "library", "sfx", c["file"]))
         u = flag(args, "--ambient-under", 24.0, float)
-        amb_layer = {"file": path, "gain": gain_for(c, path, u),
-                     "duck": flag(args, "--ambient-duck", 6.0, float),
-                     "fade": flag(args, "--ambient-fade", 0.3, float)}
-        print(f"  ambient {amb_id}: {u:g} dB under the voice -> gain {amb_layer['gain']:.1f} dB,"
-              f" duck {amb_layer['duck']:g} dB")
+        segs = []
+        for part in amb_id.split(","):
+            m = re.fullmatch(r"\s*([\w-]+)(?:@([\d.]+)-([\d.]+))?(?::([+-]?[\d.]+))?\s*", part)
+            if not m:
+                sys.exit(f"--ambient: can't read segment {part!r} (id or id@from-to[:±dB])")
+            segs.append((m.group(1), m.group(2) and float(m.group(2)), m.group(3) and float(m.group(3)),
+                         float(m.group(4) or 0)))
+        for sid, t0, t1, off in segs:
+            if sid not in loops:
+                sys.exit(f"--ambient {sid}: not an SFX-library loop ({', '.join(loops)})")
+            c = loops[sid]
+            path = rp(os.path.join("media", "library", "sfx", c["file"]))
+            L = {"file": path, "gain": gain_for(c, path, u) + off,
+                 "duck": flag(args, "--ambient-duck", 6.0, float),
+                 "fade": flag(args, "--ambient-fade", 0.3, float), "t0": t0, "t1": t1}
+            amb_layers.append(L)
+            where = f" {t0:g}-{t1:g} s" if t0 is not None else ""
+            print(f"  ambient {sid}{where}: {u - off:g} dB under the voice -> gain {L['gain']:.1f} dB,"
+                  f" duck {L['duck']:g} dB")
+        amb_id = "-".join(dict.fromkeys(sg[0] for sg in segs)) if len(segs) > 1 else segs[0][0]
 
     stem = os.path.splitext(os.path.basename(base))[0]
     results = []
@@ -239,8 +253,7 @@ def main():
                            "lift": lift})
             print(f"  music {mid}: {u:g} dB under the voice -> gain {layers[0]['gain']:.1f} dB"
                   + (f", lifts {lift}" if lift else ""))
-        if amb_layer:
-            layers.append(amb_layer)
+        layers += amb_layers
         if out_override and len(targets) == 1:
             out = rp(out_override)
         else:

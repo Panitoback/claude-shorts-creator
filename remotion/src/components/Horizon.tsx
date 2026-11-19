@@ -17,7 +17,12 @@ import { mix } from './color';
 // Farther layers take some of the sky's horizon color (aerial perspective). `dolly` (metres sideways)
 // gives true parallax: near layers move more than far ones. The horizon is always level.
 export type HorizonVariant = 'hills' | 'mountains' | 'treeline' | 'city' | 'sea';
-export type HorizonLayer = { variant: HorizonVariant; distance: number; height?: number; seed?: number };
+export type HorizonLayer = {
+  variant: HorizonVariant; distance: number; height?: number; seed?: number;
+  trees?: number; // hills only: scattered trees on the ridge, 0..1 density (0.1 = a few)
+  treeHeight?: number; // m (default 9)
+  treeX?: number[]; // hills only: explicit tree positions, m from the frame center (composition control)
+};
 export type HorizonProps = {
   layers?: HorizonLayer[]; // far → near order not required (sorted by distance)
   variant?: HorizonVariant; // shortcut: default layers for this variant at this fov
@@ -67,6 +72,53 @@ const profile = (l: HorizonLayer, half: number): Prof => {
       const x = x0 + i * step;
       const h = H * (0.55 + 0.28 * Math.sin(x / lam + ph[0]) + 0.13 * Math.sin(x / (lam * 0.37) + ph[1]) + 0.04 * Math.sin(x / (lam * 0.11) + ph[2]));
       pts.push([x, Math.max(0, h)]);
+    }
+    if ((l.trees && l.trees > 0) || l.treeX) {
+      // a few trees standing on the ridge at real heights: narrow conifers with a stepped edge.
+      // (Broadleaf crowns overhang their trunk; a height profile can't leave sky under a crown, so
+      // they read as blocks: conifers only.) `treeX` places them (m from frame center) for
+      // composition; otherwise `trees` scatters them by density.
+      const TH = l.treeHeight ?? 9;
+      type T = { x: number; h: number; w: number };
+      const mk = (x: number): T => {
+        const h = TH * (0.7 + rnd() * 0.45);
+        return { x, h, w: h * (0.26 + rnd() * 0.14) };
+      };
+      const ts: T[] = [];
+      if (l.treeX) l.treeX.forEach((x) => ts.push(mk(x)));
+      else {
+        let x = x0;
+        while (x < x1) {
+          x += (TH * (0.6 + rnd() * 1.4)) / Math.max(0.02, l.trees ?? 0.1);
+          if (rnd() < 0.5) {
+            const n = 1 + Math.floor(rnd() * 3); // small clumps
+            for (let j = 0; j < n; j++) ts.push(mk(x + j * TH * 0.45));
+          }
+        }
+      }
+      const base = (xx: number) => {
+        const i = Math.max(0, Math.min(N, Math.round((xx - x0) / step)));
+        return pts[i][1];
+      };
+      const treeH = (t: T, dx: number) => {
+        const u = Math.abs(dx) / (t.w / 2);
+        if (u >= 1) return -1;
+        const v = 1 - u;
+        return t.h * v * (0.88 + 0.12 * ((v * 5) % 1));
+      };
+      const fine: [number, number][] = [];
+      const fstep = Math.min(step, TH / 40);
+      for (let xx = x0; xx <= x1; xx += fstep) {
+        let h = base(xx);
+        for (const t of ts) {
+          if (Math.abs(xx - t.x) > t.h) continue;
+          const th = treeH(t, xx - t.x);
+          if (th >= 0) h = Math.max(h, base(t.x) + th);
+        }
+        fine.push([xx, h]);
+      }
+      pts.length = 0;
+      pts.push(...fine);
     }
   } else if (l.variant === 'mountains') {
     // midpoint displacement ridge, deterministic
@@ -147,7 +199,7 @@ export const groundYAt = (x: number, horizonY: number, opts: { layers?: HorizonL
   // a treeline's observer stands on the ground in front of the trees, not on their tops
   if (near.variant === 'treeline') return hy - angularDeg(1.5 - GROUND.eyeM, near.distance) * k;
   const half = Math.tan((fov * 0.8 * Math.PI) / 180) * near.distance + 60;
-  const P = profile(near, half).pts.map(([mx, h]) => [CANVAS.W / 2 + angularDeg(mx, near.distance) * k, hy - angularDeg(h - GROUND.eyeM, near.distance) * k] as const);
+  const P = profile({ ...near, trees: 0, treeX: undefined }, half).pts.map(([mx, h]) => [CANVAS.W / 2 + angularDeg(mx, near.distance) * k, hy - angularDeg(h - GROUND.eyeM, near.distance) * k] as const);
   let best = Infinity;
   for (let i = 0; i < P.length - 1; i++) {
     const [x0, y0] = P[i];

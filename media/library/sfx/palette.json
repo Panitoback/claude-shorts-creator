@@ -1,659 +1,745 @@
 {
-  "note": "Generation recipes for the shared SFX library (media/library/sfx/). SOURCE OF TRUTH for what the library should contain: one entry per reusable, generically-named sound, every one generated with OUR ElevenLabs account. tools/gen_sfx.py reads this, generates any MISSING clip via the ElevenLabs Sound Effects API (explicit duration_s always: 40 credits/s; never auto duration), loudness-normalizes it (brand §7: ~-20 LUFS, -1.5 dBFS peak) and writes catalog.json. Organized by FUNCTION (brand §7): motion (whoosh) · tension (riser) · emphasis (impact/reveal) · snap (click) · texture · ambient (seamless loops, \"loop\": true). Brand taste: a calm, cinematic universe channel, felt rather than heard: soft, warm, spacious. Never sci-fi lasers, beeps, glitch or static, trailer slams, cymbal-urgency risers, or anything cartoonish. Per-sound overrides: prompt_influence, loop. Usage flags copied to the catalog: not_under_narration, usage_note. Recipes with a \"synth\" block are rendered from code by tools/synth_sfx.py (deterministic, no API) instead.",
-  "defaults": {
-    "prompt_influence": 0.45,
-    "target_lufs": -20.0,
-    "ceiling_dbfs": -1.5,
-    "model": "eleven_text_to_sound_v3"
+ "note": "Generation recipes for the shared SFX library (media/library/sfx/). SOURCE OF TRUTH for what the library should contain: one entry per reusable, generically-named sound, every one generated with OUR ElevenLabs account. tools/gen_sfx.py reads this, generates any MISSING clip via the ElevenLabs Sound Effects API (explicit duration_s always: 40 credits/s; never auto duration), loudness-normalizes it (brand §7: ~-20 LUFS, -1.5 dBFS peak) and writes catalog.json. Organized by FUNCTION (brand §7): motion (whoosh) · tension (riser) · emphasis (impact/reveal) · snap (click) · texture · ambient (seamless loops, \"loop\": true). Brand taste: a calm, cinematic universe channel, felt rather than heard: soft, warm, spacious. Never sci-fi lasers, beeps, glitch or static, trailer slams, cymbal-urgency risers, or anything cartoonish. Per-sound overrides: prompt_influence, loop. Usage flags copied to the catalog: not_under_narration, usage_note. Recipes with a \"synth\" block are rendered from code by tools/synth_sfx.py (deterministic, no API) instead.",
+ "defaults": {
+  "prompt_influence": 0.45,
+  "target_lufs": -20.0,
+  "ceiling_dbfs": -1.5,
+  "model": "eleven_text_to_sound_v3"
+ },
+ "sounds": [
+  {
+   "id": "whoosh-soft",
+   "category": "motion",
+   "duration_s": 1.0,
+   "tags": [
+    "whoosh",
+    "transition",
+    "cut",
+    "air",
+    "motion"
+   ],
+   "prompt": "A short, soft air whoosh for a scene transition. Smooth gentle movement of air in the low-mids, calm and cinematic, restrained, not aggressive or bright. Quick and clean, no metallic ring, no music."
   },
-  "sounds": [
-    {
-      "id": "whoosh-soft",
-      "category": "motion",
-      "duration_s": 1.0,
-      "tags": [
-        "whoosh",
-        "transition",
-        "cut",
-        "air",
-        "motion"
-      ],
-      "prompt": "A short, soft air whoosh for a scene transition. Smooth gentle movement of air in the low-mids, calm and cinematic, restrained, not aggressive or bright. Quick and clean, no metallic ring, no music."
-    },
-    {
-      "id": "whoosh-wind",
-      "category": "motion",
-      "duration_s": 1.5,
-      "tags": [
-        "whoosh",
-        "wind",
-        "glide",
-        "float",
-        "drift",
-        "motion"
-      ],
-      "prompt": "A soft, drawn-out airy whoosh for a gliding camera move through space. Smooth sustained breath of air that swells and fades, gentle and cinematic, like floating past a planet. No aggression, no metallic ring, no music."
-    },
-    {
-      "id": "whoosh-deep",
-      "category": "motion",
-      "duration_s": 2.0,
-      "tags": [
-        "whoosh",
-        "deep",
-        "zoom",
-        "scale",
-        "fly-by",
-        "motion"
-      ],
-      "prompt": "A slow, wide whoosh for a big zoom across a vast distance, made for a phone speaker: a bright, breathy, airy rush of mid and high frequency wind that sweeps past smoothly, with only a light low undertone. Cinematic and calm, never loud. No metallic ring, no laser, no music.",
-      "post": "exciter-parallel"
-    },
-    {
-      "id": "whoosh-reverse",
-      "category": "motion",
-      "duration_s": 1.5,
-      "tags": [
-        "whoosh",
-        "reverse",
-        "rewind",
-        "backwards",
-        "time",
-        "motion"
-      ],
-      "prompt": "A soft reversed air whoosh, like time rewinding: a smooth backwards-sucking sweep that rises and cuts off cleanly. Restrained and cinematic, low-mids, no metallic ring, no music."
-    },
-    {
-      "id": "swish-light",
-      "category": "motion",
-      "duration_s": 0.5,
-      "tags": [
-        "swish",
-        "quick",
-        "label",
-        "small-move",
-        "motion"
-      ],
-      "prompt": "A very short, light, airy swish for a small element sliding into place. Delicate and soft, quick, clean, dry, no metallic ring, no music."
-    },
-    {
-      "id": "riser-soft",
-      "category": "tension",
-      "duration_s": 3.0,
-      "tags": [
-        "riser",
-        "swell",
-        "build",
-        "anticipation",
-        "tension"
-      ],
-      "prompt": "A gentle upward riser building light anticipation. A smooth airy tonal swell that grows slowly and resolves softly at the top, calm and cinematic, subtle. Not dramatic, no big hit at the end, no cymbal, no drums."
-    },
-    {
-      "id": "riser-long",
-      "category": "tension",
-      "duration_s": 6.0,
-      "tags": [
-        "riser",
-        "long",
-        "build",
-        "suspense",
-        "pre-reveal",
-        "tension"
-      ],
-      "prompt": "A slow, long cinematic riser for a held moment before a big reveal. Soft warm tonal pad and airy texture rising steadily in pitch and intensity over six seconds, spacious and awe-filled, ending softly without a hit. No cymbal swell, no drums, no urgency, no melody."
-    },
-    {
-      "id": "riser-shimmer",
-      "category": "tension",
-      "duration_s": 4.0,
-      "tags": [
-        "riser",
-        "shimmer",
-        "sparkle",
-        "wonder",
-        "light",
-        "tension"
-      ],
-      "prompt": "A soft shimmering riser: delicate glassy sparkles and a warm airy tone rising together, like starlight slowly brightening. Gentle, wondrous and calm, ending softly with no hit. No cymbal, no drums, no melody."
-    },
-    {
-      "id": "impact-soft",
-      "category": "emphasis",
-      "duration_s": 1.5,
-      "tags": [
-        "impact",
-        "hit",
-        "emphasis",
-        "soft",
-        "thud",
-        "underline"
-      ],
-      "prompt": "A soft, warm low impact marking a moment. A gentle rounded thud with a short natural tail, cinematic and restrained, felt more than heard. Not a big trailer boom, no harsh slam, no music."
-    },
-    {
-      "id": "impact-deep-soft",
-      "category": "emphasis",
-      "duration_s": 2.5,
-      "tags": [
-        "impact",
-        "deep",
-        "reveal",
-        "payoff",
-        "long-tail",
-        "emphasis"
-      ],
-      "prompt": "A soft, deep impact with a gentle long tail, for a meaningful reveal. A warm low thud that blooms and decays smoothly, cinematic and restrained, felt in the chest but never loud. Not a harsh trailer slam, no distortion, no music.",
-      "post": "exciter-parallel"
-    },
-    {
-      "id": "pop-reveal",
-      "category": "emphasis",
-      "duration_s": 0.5,
-      "tags": [
-        "pop",
-        "reveal",
-        "appear",
-        "label",
-        "number",
-        "emphasis"
-      ],
-      "prompt": "A gentle soft pop for something appearing on screen. A rounded warm pop with a tiny delicate glint, clean and understated. Short, not loud, dry, not cartoonish, no music."
-    },
-    {
-      "id": "impact-cosmic",
-      "category": "emphasis",
-      "duration_s": 4.0,
-      "tags": [
-        "impact",
-        "cosmic",
-        "hero",
-        "payoff",
-        "vast",
-        "bloom",
-        "emphasis"
-      ],
-      "prompt": "A vast, slow cosmic impact for the biggest reveal: a deep soft sub-bass bloom with a warm swelling tonal halo that spreads out and fades over four seconds, like light from a distant explosion reaching you. Majestic, calm and spacious, never harsh or loud. No trailer slam, no distortion, no drums, no music."
-    },
-    {
-      "id": "hook-hit",
-      "category": "emphasis",
-      "duration_s": 1.5,
-      "tags": [
-        "hook",
-        "hit",
-        "opening",
-        "impact",
-        "cinematic",
-        "first-second",
-        "emphasis"
-      ],
-      "prompt": "A cinematic opening hit that starts instantly at time zero: a tight, punchy transient with clear mid and high presence that cuts through a phone speaker, a warm low thump under it, and a short clean tail gone within 1.5 seconds. Confident, polished, premium, like a documentary title hit. No glitch, no static, no distortion, no cartoon, no riser, no metallic clang, no music.",
-      "usage_note": "the first second of a short (hook); not the main reveal"
-    },
-    {
-      "id": "glow-swell",
-      "category": "emphasis",
-      "duration_s": 3.0,
-      "tags": [
-        "swell",
-        "glow",
-        "light",
-        "brighten",
-        "switch-on",
-        "emphasis"
-      ],
-      "prompt": "A warm glowing swell for something lighting up: a soft tonal pad that brightens and blooms over three seconds, then settles, like a star igniting. Warm, calm and luminous, no hit, no drums, no melody."
-    },
-    {
-      "id": "ui-click-soft",
-      "category": "snap",
-      "duration_s": 0.5,
-      "tags": [
-        "click",
-        "select",
-        "tick",
-        "snap"
-      ],
-      "prompt": "A single soft, clean click. A subtle muted tick, understated and precise, like a high-end interface element locking into place. Very short, dry, no reverb, no music."
-    },
-    {
-      "id": "tick-soft",
-      "category": "snap",
-      "duration_s": 0.5,
-      "tags": [
-        "tick",
-        "count",
-        "step",
-        "ruler",
-        "snap"
-      ],
-      "prompt": "A single tiny, soft tick, like one step of a precise counter or a fine instrument dial. Very short, delicate, clean and dry, quiet, no echo, no music."
-    },
-    {
-      "id": "number-settle",
-      "category": "snap",
-      "duration_s": 0.8,
-      "tags": [
-        "number",
-        "settle",
-        "lock",
-        "counter-end",
-        "result",
-        "snap"
-      ],
-      "prompt": "A soft, satisfying settle sound for a counting number landing on its final value: a gentle rounded click with a tiny warm resonant tail. Short, clean, understated, not cartoonish, no music."
-    },
-    {
-      "id": "sparkle-soft",
-      "category": "texture",
-      "duration_s": 1.5,
-      "tags": [
-        "sparkle",
-        "twinkle",
-        "glint",
-        "stars",
-        "shimmer",
-        "texture"
-      ],
-      "prompt": "A light, delicate sparkle: a soft glistening of tiny glassy bell-like particles, like distant stars twinkling. Gentle, airy and calm, quick, no harshness, not whimsical or cartoonish, no music."
-    },
-    {
-      "id": "warm-shimmer",
-      "category": "texture",
-      "duration_s": 2.5,
-      "tags": [
-        "shimmer",
-        "warm",
-        "swell",
-        "wonder",
-        "awe",
-        "texture"
-      ],
-      "prompt": "A warm, tender shimmer swell: a soft glowing rise of gentle bell and harp-like sparkle blooming warmly and fading, wondrous and calm, full of quiet awe. No drums, no melody, no music."
-    },
-    {
-      "id": "deep-rumble",
-      "category": "texture",
-      "duration_s": 4.0,
-      "tags": [
-        "rumble",
-        "low",
-        "gravity",
-        "black-hole",
-        "massive",
-        "texture"
-      ],
-      "prompt": "The presence of something immense, like a black hole, audible on a phone: a dark breathy airy rush and a low cello-like tonal growl in the mid range, over a soft deep drone, swelling slowly and fading. Calm and ominous, never loud. No crackle, no static, no distortion, no debris, no music.",
-      "post": "exciter-parallel"
-    },
-    {
-      "id": "chime-discovery",
-      "category": "texture",
-      "duration_s": 2.0,
-      "tags": [
-        "chime",
-        "discovery",
-        "insight",
-        "wonder",
-        "fact",
-        "texture"
-      ],
-      "prompt": "A soft discovery chime: two gentle warm bell tones rising, with a light airy shimmer, like a quiet moment of understanding. Calm, wondrous and clean, soft natural tail, not a game reward sound, no music."
-    },
-    {
-      "id": "space-drone-loop",
-      "category": "ambient",
-      "duration_s": 30.0,
-      "loop": true,
-      "prompt_influence": 0.6,
-      "tags": [
-        "ambient",
-        "drone",
-        "space",
-        "bed",
-        "loop",
-        "texture"
-      ],
-      "prompt": "A seamless ambient space drone: a deep, warm, slowly evolving low tonal pad with soft airy harmonics, calm, vast and contemplative, like floating in deep space. Steady level from start to end, no rhythm, no melody, no drums, no hits, no beeps."
-    },
-    {
-      "id": "space-air-loop",
-      "category": "ambient",
-      "duration_s": 30.0,
-      "loop": true,
-      "prompt_influence": 0.6,
-      "tags": [
-        "ambient",
-        "air",
-        "room-tone",
-        "space",
-        "bed",
-        "loop",
-        "texture"
-      ],
-      "prompt": "A seamless, very quiet airy ambience of empty space: a soft, smooth, gently moving hiss of air with a faint distant shimmer, calm and spacious. Steady level from start to end, no tones, no wind gusts, no rhythm, no melody, no beeps."
-    },
-    {
-      "id": "supernova",
-      "category": "emphasis",
-      "duration_s": 5.0,
-      "tags": [
-        "supernova",
-        "explosion",
-        "boom",
-        "star-death",
-        "hero",
-        "payoff"
-      ],
-      "prompt": "A distant supernova for a phone speaker: it opens with a bright, crisp burst of light, a clear mid-high crack and a shimmering airy flash you hear on any speaker, then a soft deep boom rolls away under a long glittering debris shimmer over five seconds. Vast and awe-filled, never harsh. No trailer slam, no distortion, no fire crackle, no laser, no beeps, no music."
-    },
-    {
-      "id": "stellar-collapse",
-      "category": "emphasis",
-      "duration_s": 3.0,
-      "tags": [
-        "collapse",
-        "implosion",
-        "reverse",
-        "suck",
-        "thud",
-        "star-death"
-      ],
-      "prompt": "A star collapsing: a smooth reversed sucking whoosh that pulls inward and accelerates, ending in a single dull, heavy, muffled thud. Dark, calm and cinematic, low-mids, restrained, no metallic ring, no distortion, No sci-fi laser, no beeps, no music."
-    },
-    {
-      "id": "star-ignite",
-      "category": "emphasis",
-      "duration_s": 3.0,
-      "tags": [
-        "ignite",
-        "star-birth",
-        "swell",
-        "glow",
-        "warm",
-        "fusion"
-      ],
-      "prompt": "A star igniting: a soft warm swell that rises, catches with a gentle bloom and settles into a steady warm glow. Luminous, calm and hopeful, a warm tonal pad with a soft airy shimmer, no hit, no drums, No sci-fi laser, no beeps, no music."
-    },
-    {
-      "id": "light-speed-pass",
-      "category": "motion",
-      "duration_s": 1.5,
-      "tags": [
-        "light",
-        "speed",
-        "zip",
-        "pass-by",
-        "fast",
-        "photon"
-      ],
-      "prompt": "Something passing by at light speed: a bright, airy, smooth zip that rushes past from left to right with a soft doppler drop, clean and quick. Light and elegant, not aggressive, no engine, no jet, no metallic ring, No sci-fi laser, no beeps, no music."
-    },
-    {
-      "id": "photon-travel",
-      "category": "motion",
-      "duration_s": 2.0,
-      "tags": [
-        "photon",
-        "light",
-        "travel",
-        "ping",
-        "tonal",
-        "journey"
-      ],
-      "prompt": "A single soft tonal ping that glides smoothly across the stereo field, like one particle of light travelling through empty space. Pure, gentle and calm, a soft glassy tone with a faint airy trail, No sci-fi laser, no beeps, no music."
-    },
-    {
-      "id": "gamma-flash",
-      "category": "emphasis",
-      "duration_s": 1.0,
-      "tags": [
-        "flash",
-        "gamma",
-        "burst",
-        "bright",
-        "hit",
-        "light"
-      ],
-      "prompt": "A sudden bright flash of light as a sound: a crisp, bright, airy hit with a quick shimmering bloom that fades fast. Sharp but clean and soft-edged, never harsh, piercing or distorted, no explosion, No sci-fi laser, no beeps, no music."
-    },
-    {
-      "id": "event-horizon-fade",
-      "category": "texture",
-      "duration_s": 4.0,
-      "tags": [
-        "black-hole",
-        "event-horizon",
-        "fade",
-        "muffle",
-        "low-pass",
-        "silence"
-      ],
-      "prompt": "A soft airy cosmic tone that gradually becomes muffled and darker, as if being low-pass filtered, slowing and sinking until it fades into complete silence. Calm, eerie and smooth, like falling past the edge of a black hole, no hits, No sci-fi laser, no beeps, no music."
-    },
-    {
-      "id": "spaghettify-stretch",
-      "category": "texture",
-      "duration_s": 3.0,
-      "tags": [
-        "stretch",
-        "black-hole",
-        "tidal",
-        "descend",
-        "pitch-bend",
-        "gravity"
-      ],
-      "prompt": "A smooth sustained tone being stretched: it slowly bends, elongates and descends in pitch, warping gently as if pulled apart by immense gravity. Eerie but calm and smooth, a soft tonal pad, no cartoon slide whistle, no hits, No sci-fi laser, no beeps, no music."
-    },
-    {
-      "id": "jet-launch",
-      "category": "motion",
-      "duration_s": 2.5,
-      "tags": [
-        "jet",
-        "beam",
-        "energy",
-        "surge",
-        "quasar",
-        "launch"
-      ],
-      "prompt": "A focused surge of energy shooting outward like a narrow beam: a smooth rising rush of airy tonal energy that tightens and streaks away, powerful but calm and controlled. Cinematic, clean, no explosion, no engine, no laser zap, no music."
-    },
-    {
-      "id": "accretion-swirl-loop",
-      "category": "ambient",
-      "duration_s": 30.0,
-      "loop": true,
-      "prompt_influence": 0.6,
-      "tags": [
-        "ambient",
-        "accretion",
-        "swirl",
-        "gas",
-        "black-hole",
-        "loop",
-        "bed"
-      ],
-      "prompt": "A seamless ambient loop of hot gas swirling around a black hole: a soft airy hiss and a breathy, shimmering mid-range swirl that slowly sweeps around, clearly audible on small speakers, over a gentle warm low tone. Slow, steady and hypnotic, no rhythm, no pulses, no melody, no hits, no beeps, no static."
-    },
-    {
-      "id": "radiation-hum",
-      "category": "texture",
-      "duration_s": 4.0,
-      "tags": [
-        "hum",
-        "radiation",
-        "energy",
-        "glow",
-        "bed-safe",
-        "quasar"
-      ],
-      "usage_note": "Clean tone, safe under narration.",
-      "prompt": "A soft, warm, energetic hum: a smooth steady tonal drone with a gentle slow shimmer, like invisible radiation pouring from a glowing object. Clean and pure, calm, quiet. Absolutely no static, no crackle, no noise bursts, no buzz, No sci-fi laser, no beeps, no music."
-    },
-    {
-      "id": "solar-flare-surge",
-      "category": "texture",
-      "duration_s": 3.0,
-      "not_under_narration": true,
-      "usage_note": "Has plasma crackle: use only in pauses, never under narration (brand §7).",
-      "tags": [
-        "solar-flare",
-        "plasma",
-        "surge",
-        "sun",
-        "crackle",
-        "pause-only"
-      ],
-      "prompt": "A solar flare erupting: a hot plasma swell that surges up and rolls away, with a soft fizzing crackle of energy in the swell. Powerful but calm and cinematic, not harsh, no explosion debris, No sci-fi laser, no beeps, no music."
-    },
-    {
-      "id": "redshift-slide",
-      "category": "texture",
-      "duration_s": 2.5,
-      "tags": [
-        "redshift",
-        "pitch",
-        "glide",
-        "doppler",
-        "expansion",
-        "light"
-      ],
-      "synth": {
-        "kind": "redshift",
-        "f0": 880,
-        "f1": 220,
-        "dur": 2.5
-      },
-      "prompt": "(synthesized) a soft tone gliding down from 880 Hz to 220 Hz over 2.5 s"
-    },
-    {
-      "id": "pulsar-ticks",
-      "category": "texture",
-      "duration_s": 8.0,
-      "tags": [
-        "pulsar",
-        "ticks",
-        "rotation",
-        "period",
-        "neutron-star",
-        "clock"
-      ],
-      "synth": {
-        "kind": "pulsar",
-        "period": 1.3373,
-        "dur": 8.0,
-        "thump_harmonics": 0.6,
-        "tick_level": 1.2
-      },
-      "prompt": "(synthesized) soft ticks every 1.3373 s, the rotation period of PSR B1919+21, the first pulsar found (1967)"
-    },
-    {
-      "id": "pulsar-ticks-fast",
-      "category": "texture",
-      "duration_s": 6.0,
-      "tags": [
-        "pulsar",
-        "fastest",
-        "buzz",
-        "rotation",
-        "neutron-star",
-        "millisecond"
-      ],
-      "synth": {
-        "kind": "pulsar",
-        "period": 0.0013966480446927375,
-        "dur": 6.0,
-        "period_start": 0.5,
-        "ramp": 0.8,
-        "tick_level": 1.2
-      },
-      "prompt": "(synthesized) PSR J1748-2446ad, the fastest known pulsar: ticks spin up from 2 per second to its real 716 per second over 4.8 s, fusing into a 716 Hz tone, then hold the real rate"
-    },
-    {
-      "id": "gw-chirp",
-      "category": "texture",
-      "duration_s": 3.0,
-      "tags": [
-        "gravitational-wave",
-        "chirp",
-        "merger",
-        "black-hole",
-        "ligo",
-        "ringdown"
-      ],
-      "synth": {
-        "kind": "chirp",
-        "f0": 40,
-        "f_peak": 320,
-        "dur": 2.6,
-        "ring_s": 0.4,
-        "harmonics": 1.0,
-        "overtones": 6
-      },
-      "prompt": "(synthesized) black-hole merger chirp: inspiral 40->320 Hz over 2.6 s (f ~ (tc-t)^-3/8, amplitude ~ f^2/3), then a 0.4 s ringdown",
-      "post": "exciter-parallel"
-    },
-    {
-      "id": "gas-infall-swirl",
-      "category": "texture",
-      "duration_s": 6.0,
-      "prompt_influence": 0.55,
-      "tags": [
-        "gas",
-        "infall",
-        "swirl",
-        "accretion",
-        "disk",
-        "forming",
-        "spiral",
-        "black-hole"
-      ],
-      "usage_note": "gas falling in and spiraling into a forming accretion disk (the disk being born on screen); not a bed, one per short",
-      "prompt": "Hot gas streaming inward and spiraling around a black hole: a soft breathy airy rush that starts distant and thin, then gathers and accelerates into a smooth swirling whoosh that circles faster and settles into a warm steady swirl. Clear mid-range hiss audible on small speakers, over a gentle warm low tone. Calm and cinematic, no rhythm, no hits, no beeps, no static, no music."
-    },
-    {
-      "id": "light-glint-flicker",
-      "category": "texture",
-      "duration_s": 1.5,
-      "tags": [
-        "light",
-        "glint",
-        "flicker",
-        "shine",
-        "shimmer",
-        "sparkle"
-      ],
-      "usage_note": "a brief flicker of light (something shining for an instant); short, under narration is fine",
-      "prompt": "A brief soft flicker of light: two or three quick, delicate glassy shimmers that glint and fade, warm and airy, like light catching for an instant. Gentle, clear on small speakers, no harshness, not cartoonish, no beeps, no music."
-    },
-    {
-      "id": "shell-crack",
-      "category": "objects",
-      "duration_s": 1.0,
-      "tags": [
-        "crack",
-        "egg",
-        "shell",
-        "break",
-        "snap",
-        "hook"
-      ],
-      "prompt": "A single crisp eggshell crack, close and intimate: a dry brittle snap of thin shell with a tiny crunchy tail. Clean, present in the mid-highs so it is heard on a phone speaker. Quiet room, no reverb, no music, no voice."
-    },
-    {
-      "id": "card-riffle",
-      "category": "objects",
-      "duration_s": 1.5,
-      "tags": [
-        "cards",
-        "shuffle",
-        "riffle",
-        "deck",
-        "flutter"
-      ],
-      "prompt": "A playing card riffle shuffle, close up: two halves of a deck flicking together in a fast papery flutter, then a soft tap as the cards square up. Crisp, clean, intimate, no reverb, no music, no voice."
-    }
-  ]
+  {
+   "id": "whoosh-wind",
+   "category": "motion",
+   "duration_s": 1.5,
+   "tags": [
+    "whoosh",
+    "wind",
+    "glide",
+    "float",
+    "drift",
+    "motion"
+   ],
+   "prompt": "A soft, drawn-out airy whoosh for a gliding camera move through space. Smooth sustained breath of air that swells and fades, gentle and cinematic, like floating past a planet. No aggression, no metallic ring, no music."
+  },
+  {
+   "id": "whoosh-deep",
+   "category": "motion",
+   "duration_s": 2.0,
+   "tags": [
+    "whoosh",
+    "deep",
+    "zoom",
+    "scale",
+    "fly-by",
+    "motion"
+   ],
+   "prompt": "A slow, wide whoosh for a big zoom across a vast distance, made for a phone speaker: a bright, breathy, airy rush of mid and high frequency wind that sweeps past smoothly, with only a light low undertone. Cinematic and calm, never loud. No metallic ring, no laser, no music.",
+   "post": "exciter-parallel"
+  },
+  {
+   "id": "whoosh-reverse",
+   "category": "motion",
+   "duration_s": 1.5,
+   "tags": [
+    "whoosh",
+    "reverse",
+    "rewind",
+    "backwards",
+    "time",
+    "motion"
+   ],
+   "prompt": "A soft reversed air whoosh, like time rewinding: a smooth backwards-sucking sweep that rises and cuts off cleanly. Restrained and cinematic, low-mids, no metallic ring, no music."
+  },
+  {
+   "id": "swish-light",
+   "category": "motion",
+   "duration_s": 0.5,
+   "tags": [
+    "swish",
+    "quick",
+    "label",
+    "small-move",
+    "motion"
+   ],
+   "prompt": "A very short, light, airy swish for a small element sliding into place. Delicate and soft, quick, clean, dry, no metallic ring, no music."
+  },
+  {
+   "id": "riser-soft",
+   "category": "tension",
+   "duration_s": 3.0,
+   "tags": [
+    "riser",
+    "swell",
+    "build",
+    "anticipation",
+    "tension"
+   ],
+   "prompt": "A gentle upward riser building light anticipation. A smooth airy tonal swell that grows slowly and resolves softly at the top, calm and cinematic, subtle. Not dramatic, no big hit at the end, no cymbal, no drums."
+  },
+  {
+   "id": "riser-long",
+   "category": "tension",
+   "duration_s": 6.0,
+   "tags": [
+    "riser",
+    "long",
+    "build",
+    "suspense",
+    "pre-reveal",
+    "tension"
+   ],
+   "prompt": "A slow, long cinematic riser for a held moment before a big reveal. Soft warm tonal pad and airy texture rising steadily in pitch and intensity over six seconds, spacious and awe-filled, ending softly without a hit. No cymbal swell, no drums, no urgency, no melody."
+  },
+  {
+   "id": "riser-shimmer",
+   "category": "tension",
+   "duration_s": 4.0,
+   "tags": [
+    "riser",
+    "shimmer",
+    "sparkle",
+    "wonder",
+    "light",
+    "tension"
+   ],
+   "prompt": "A soft shimmering riser: delicate glassy sparkles and a warm airy tone rising together, like starlight slowly brightening. Gentle, wondrous and calm, ending softly with no hit. No cymbal, no drums, no melody."
+  },
+  {
+   "id": "impact-soft",
+   "category": "emphasis",
+   "duration_s": 1.5,
+   "tags": [
+    "impact",
+    "hit",
+    "emphasis",
+    "soft",
+    "thud",
+    "underline"
+   ],
+   "prompt": "A soft, warm low impact marking a moment. A gentle rounded thud with a short natural tail, cinematic and restrained, felt more than heard. Not a big trailer boom, no harsh slam, no music."
+  },
+  {
+   "id": "impact-deep-soft",
+   "category": "emphasis",
+   "duration_s": 2.5,
+   "tags": [
+    "impact",
+    "deep",
+    "reveal",
+    "payoff",
+    "long-tail",
+    "emphasis"
+   ],
+   "prompt": "A soft, deep impact with a gentle long tail, for a meaningful reveal. A warm low thud that blooms and decays smoothly, cinematic and restrained, felt in the chest but never loud. Not a harsh trailer slam, no distortion, no music.",
+   "post": "exciter-parallel"
+  },
+  {
+   "id": "pop-reveal",
+   "category": "emphasis",
+   "duration_s": 0.5,
+   "tags": [
+    "pop",
+    "reveal",
+    "appear",
+    "label",
+    "number",
+    "emphasis"
+   ],
+   "prompt": "A gentle soft pop for something appearing on screen. A rounded warm pop with a tiny delicate glint, clean and understated. Short, not loud, dry, not cartoonish, no music."
+  },
+  {
+   "id": "impact-cosmic",
+   "category": "emphasis",
+   "duration_s": 4.0,
+   "tags": [
+    "impact",
+    "cosmic",
+    "hero",
+    "payoff",
+    "vast",
+    "bloom",
+    "emphasis"
+   ],
+   "prompt": "A vast, slow cosmic impact for the biggest reveal: a deep soft sub-bass bloom with a warm swelling tonal halo that spreads out and fades over four seconds, like light from a distant explosion reaching you. Majestic, calm and spacious, never harsh or loud. No trailer slam, no distortion, no drums, no music."
+  },
+  {
+   "id": "hook-hit",
+   "category": "emphasis",
+   "duration_s": 1.5,
+   "tags": [
+    "hook",
+    "hit",
+    "opening",
+    "impact",
+    "cinematic",
+    "first-second",
+    "emphasis"
+   ],
+   "prompt": "A cinematic opening hit that starts instantly at time zero: a tight, punchy transient with clear mid and high presence that cuts through a phone speaker, a warm low thump under it, and a short clean tail gone within 1.5 seconds. Confident, polished, premium, like a documentary title hit. No glitch, no static, no distortion, no cartoon, no riser, no metallic clang, no music.",
+   "usage_note": "the first second of a short (hook); not the main reveal"
+  },
+  {
+   "id": "glow-swell",
+   "category": "emphasis",
+   "duration_s": 3.0,
+   "tags": [
+    "swell",
+    "glow",
+    "light",
+    "brighten",
+    "switch-on",
+    "emphasis"
+   ],
+   "prompt": "A warm glowing swell for something lighting up: a soft tonal pad that brightens and blooms over three seconds, then settles, like a star igniting. Warm, calm and luminous, no hit, no drums, no melody."
+  },
+  {
+   "id": "ui-click-soft",
+   "category": "snap",
+   "duration_s": 0.5,
+   "tags": [
+    "click",
+    "select",
+    "tick",
+    "snap"
+   ],
+   "prompt": "A single soft, clean click. A subtle muted tick, understated and precise, like a high-end interface element locking into place. Very short, dry, no reverb, no music."
+  },
+  {
+   "id": "tick-soft",
+   "category": "snap",
+   "duration_s": 0.5,
+   "tags": [
+    "tick",
+    "count",
+    "step",
+    "ruler",
+    "snap"
+   ],
+   "prompt": "A single tiny, soft tick, like one step of a precise counter or a fine instrument dial. Very short, delicate, clean and dry, quiet, no echo, no music."
+  },
+  {
+   "id": "number-settle",
+   "category": "snap",
+   "duration_s": 0.8,
+   "tags": [
+    "number",
+    "settle",
+    "lock",
+    "counter-end",
+    "result",
+    "snap"
+   ],
+   "prompt": "A soft, satisfying settle sound for a counting number landing on its final value: a gentle rounded click with a tiny warm resonant tail. Short, clean, understated, not cartoonish, no music."
+  },
+  {
+   "id": "sparkle-soft",
+   "category": "texture",
+   "duration_s": 1.5,
+   "tags": [
+    "sparkle",
+    "twinkle",
+    "glint",
+    "stars",
+    "shimmer",
+    "texture"
+   ],
+   "prompt": "A light, delicate sparkle: a soft glistening of tiny glassy bell-like particles, like distant stars twinkling. Gentle, airy and calm, quick, no harshness, not whimsical or cartoonish, no music."
+  },
+  {
+   "id": "warm-shimmer",
+   "category": "texture",
+   "duration_s": 2.5,
+   "tags": [
+    "shimmer",
+    "warm",
+    "swell",
+    "wonder",
+    "awe",
+    "texture"
+   ],
+   "prompt": "A warm, tender shimmer swell: a soft glowing rise of gentle bell and harp-like sparkle blooming warmly and fading, wondrous and calm, full of quiet awe. No drums, no melody, no music."
+  },
+  {
+   "id": "deep-rumble",
+   "category": "texture",
+   "duration_s": 4.0,
+   "tags": [
+    "rumble",
+    "low",
+    "gravity",
+    "black-hole",
+    "massive",
+    "texture"
+   ],
+   "prompt": "The presence of something immense, like a black hole, audible on a phone: a dark breathy airy rush and a low cello-like tonal growl in the mid range, over a soft deep drone, swelling slowly and fading. Calm and ominous, never loud. No crackle, no static, no distortion, no debris, no music.",
+   "post": "exciter-parallel"
+  },
+  {
+   "id": "chime-discovery",
+   "category": "texture",
+   "duration_s": 2.0,
+   "tags": [
+    "chime",
+    "discovery",
+    "insight",
+    "wonder",
+    "fact",
+    "texture"
+   ],
+   "prompt": "A soft discovery chime: two gentle warm bell tones rising, with a light airy shimmer, like a quiet moment of understanding. Calm, wondrous and clean, soft natural tail, not a game reward sound, no music."
+  },
+  {
+   "id": "space-drone-loop",
+   "category": "ambient",
+   "duration_s": 30.0,
+   "loop": true,
+   "prompt_influence": 0.6,
+   "tags": [
+    "ambient",
+    "drone",
+    "space",
+    "bed",
+    "loop",
+    "texture"
+   ],
+   "prompt": "A seamless ambient space drone: a deep, warm, slowly evolving low tonal pad with soft airy harmonics, calm, vast and contemplative, like floating in deep space. Steady level from start to end, no rhythm, no melody, no drums, no hits, no beeps."
+  },
+  {
+   "id": "space-air-loop",
+   "category": "ambient",
+   "duration_s": 30.0,
+   "loop": true,
+   "prompt_influence": 0.6,
+   "tags": [
+    "ambient",
+    "air",
+    "room-tone",
+    "space",
+    "bed",
+    "loop",
+    "texture"
+   ],
+   "prompt": "A seamless, very quiet airy ambience of empty space: a soft, smooth, gently moving hiss of air with a faint distant shimmer, calm and spacious. Steady level from start to end, no tones, no wind gusts, no rhythm, no melody, no beeps."
+  },
+  {
+   "id": "supernova",
+   "category": "emphasis",
+   "duration_s": 5.0,
+   "tags": [
+    "supernova",
+    "explosion",
+    "boom",
+    "star-death",
+    "hero",
+    "payoff"
+   ],
+   "prompt": "A distant supernova for a phone speaker: it opens with a bright, crisp burst of light, a clear mid-high crack and a shimmering airy flash you hear on any speaker, then a soft deep boom rolls away under a long glittering debris shimmer over five seconds. Vast and awe-filled, never harsh. No trailer slam, no distortion, no fire crackle, no laser, no beeps, no music."
+  },
+  {
+   "id": "stellar-collapse",
+   "category": "emphasis",
+   "duration_s": 3.0,
+   "tags": [
+    "collapse",
+    "implosion",
+    "reverse",
+    "suck",
+    "thud",
+    "star-death"
+   ],
+   "prompt": "A star collapsing: a smooth reversed sucking whoosh that pulls inward and accelerates, ending in a single dull, heavy, muffled thud. Dark, calm and cinematic, low-mids, restrained, no metallic ring, no distortion, No sci-fi laser, no beeps, no music."
+  },
+  {
+   "id": "star-ignite",
+   "category": "emphasis",
+   "duration_s": 3.0,
+   "tags": [
+    "ignite",
+    "star-birth",
+    "swell",
+    "glow",
+    "warm",
+    "fusion"
+   ],
+   "prompt": "A star igniting: a soft warm swell that rises, catches with a gentle bloom and settles into a steady warm glow. Luminous, calm and hopeful, a warm tonal pad with a soft airy shimmer, no hit, no drums, No sci-fi laser, no beeps, no music."
+  },
+  {
+   "id": "light-speed-pass",
+   "category": "motion",
+   "duration_s": 1.5,
+   "tags": [
+    "light",
+    "speed",
+    "zip",
+    "pass-by",
+    "fast",
+    "photon"
+   ],
+   "prompt": "Something passing by at light speed: a bright, airy, smooth zip that rushes past from left to right with a soft doppler drop, clean and quick. Light and elegant, not aggressive, no engine, no jet, no metallic ring, No sci-fi laser, no beeps, no music."
+  },
+  {
+   "id": "photon-travel",
+   "category": "motion",
+   "duration_s": 2.0,
+   "tags": [
+    "photon",
+    "light",
+    "travel",
+    "ping",
+    "tonal",
+    "journey"
+   ],
+   "prompt": "A single soft tonal ping that glides smoothly across the stereo field, like one particle of light travelling through empty space. Pure, gentle and calm, a soft glassy tone with a faint airy trail, No sci-fi laser, no beeps, no music."
+  },
+  {
+   "id": "gamma-flash",
+   "category": "emphasis",
+   "duration_s": 1.0,
+   "tags": [
+    "flash",
+    "gamma",
+    "burst",
+    "bright",
+    "hit",
+    "light"
+   ],
+   "prompt": "A sudden bright flash of light as a sound: a crisp, bright, airy hit with a quick shimmering bloom that fades fast. Sharp but clean and soft-edged, never harsh, piercing or distorted, no explosion, No sci-fi laser, no beeps, no music."
+  },
+  {
+   "id": "event-horizon-fade",
+   "category": "texture",
+   "duration_s": 4.0,
+   "tags": [
+    "black-hole",
+    "event-horizon",
+    "fade",
+    "muffle",
+    "low-pass",
+    "silence"
+   ],
+   "prompt": "A soft airy cosmic tone that gradually becomes muffled and darker, as if being low-pass filtered, slowing and sinking until it fades into complete silence. Calm, eerie and smooth, like falling past the edge of a black hole, no hits, No sci-fi laser, no beeps, no music."
+  },
+  {
+   "id": "spaghettify-stretch",
+   "category": "texture",
+   "duration_s": 3.0,
+   "tags": [
+    "stretch",
+    "black-hole",
+    "tidal",
+    "descend",
+    "pitch-bend",
+    "gravity"
+   ],
+   "prompt": "A smooth sustained tone being stretched: it slowly bends, elongates and descends in pitch, warping gently as if pulled apart by immense gravity. Eerie but calm and smooth, a soft tonal pad, no cartoon slide whistle, no hits, No sci-fi laser, no beeps, no music."
+  },
+  {
+   "id": "jet-launch",
+   "category": "motion",
+   "duration_s": 2.5,
+   "tags": [
+    "jet",
+    "beam",
+    "energy",
+    "surge",
+    "quasar",
+    "launch"
+   ],
+   "prompt": "A focused surge of energy shooting outward like a narrow beam: a smooth rising rush of airy tonal energy that tightens and streaks away, powerful but calm and controlled. Cinematic, clean, no explosion, no engine, no laser zap, no music."
+  },
+  {
+   "id": "accretion-swirl-loop",
+   "category": "ambient",
+   "duration_s": 30.0,
+   "loop": true,
+   "prompt_influence": 0.6,
+   "tags": [
+    "ambient",
+    "accretion",
+    "swirl",
+    "gas",
+    "black-hole",
+    "loop",
+    "bed"
+   ],
+   "prompt": "A seamless ambient loop of hot gas swirling around a black hole: a soft airy hiss and a breathy, shimmering mid-range swirl that slowly sweeps around, clearly audible on small speakers, over a gentle warm low tone. Slow, steady and hypnotic, no rhythm, no pulses, no melody, no hits, no beeps, no static."
+  },
+  {
+   "id": "radiation-hum",
+   "category": "texture",
+   "duration_s": 4.0,
+   "tags": [
+    "hum",
+    "radiation",
+    "energy",
+    "glow",
+    "bed-safe",
+    "quasar"
+   ],
+   "usage_note": "Clean tone, safe under narration.",
+   "prompt": "A soft, warm, energetic hum: a smooth steady tonal drone with a gentle slow shimmer, like invisible radiation pouring from a glowing object. Clean and pure, calm, quiet. Absolutely no static, no crackle, no noise bursts, no buzz, No sci-fi laser, no beeps, no music."
+  },
+  {
+   "id": "solar-flare-surge",
+   "category": "texture",
+   "duration_s": 3.0,
+   "not_under_narration": true,
+   "usage_note": "Has plasma crackle: use only in pauses, never under narration (brand §7).",
+   "tags": [
+    "solar-flare",
+    "plasma",
+    "surge",
+    "sun",
+    "crackle",
+    "pause-only"
+   ],
+   "prompt": "A solar flare erupting: a hot plasma swell that surges up and rolls away, with a soft fizzing crackle of energy in the swell. Powerful but calm and cinematic, not harsh, no explosion debris, No sci-fi laser, no beeps, no music."
+  },
+  {
+   "id": "redshift-slide",
+   "category": "texture",
+   "duration_s": 2.5,
+   "tags": [
+    "redshift",
+    "pitch",
+    "glide",
+    "doppler",
+    "expansion",
+    "light"
+   ],
+   "synth": {
+    "kind": "redshift",
+    "f0": 880,
+    "f1": 220,
+    "dur": 2.5
+   },
+   "prompt": "(synthesized) a soft tone gliding down from 880 Hz to 220 Hz over 2.5 s"
+  },
+  {
+   "id": "pulsar-ticks",
+   "category": "texture",
+   "duration_s": 8.0,
+   "tags": [
+    "pulsar",
+    "ticks",
+    "rotation",
+    "period",
+    "neutron-star",
+    "clock"
+   ],
+   "synth": {
+    "kind": "pulsar",
+    "period": 1.3373,
+    "dur": 8.0,
+    "thump_harmonics": 0.6,
+    "tick_level": 1.2
+   },
+   "prompt": "(synthesized) soft ticks every 1.3373 s, the rotation period of PSR B1919+21, the first pulsar found (1967)"
+  },
+  {
+   "id": "pulsar-ticks-fast",
+   "category": "texture",
+   "duration_s": 6.0,
+   "tags": [
+    "pulsar",
+    "fastest",
+    "buzz",
+    "rotation",
+    "neutron-star",
+    "millisecond"
+   ],
+   "synth": {
+    "kind": "pulsar",
+    "period": 0.0013966480446927375,
+    "dur": 6.0,
+    "period_start": 0.5,
+    "ramp": 0.8,
+    "tick_level": 1.2
+   },
+   "prompt": "(synthesized) PSR J1748-2446ad, the fastest known pulsar: ticks spin up from 2 per second to its real 716 per second over 4.8 s, fusing into a 716 Hz tone, then hold the real rate"
+  },
+  {
+   "id": "gw-chirp",
+   "category": "texture",
+   "duration_s": 3.0,
+   "tags": [
+    "gravitational-wave",
+    "chirp",
+    "merger",
+    "black-hole",
+    "ligo",
+    "ringdown"
+   ],
+   "synth": {
+    "kind": "chirp",
+    "f0": 40,
+    "f_peak": 320,
+    "dur": 2.6,
+    "ring_s": 0.4,
+    "harmonics": 1.0,
+    "overtones": 6
+   },
+   "prompt": "(synthesized) black-hole merger chirp: inspiral 40->320 Hz over 2.6 s (f ~ (tc-t)^-3/8, amplitude ~ f^2/3), then a 0.4 s ringdown",
+   "post": "exciter-parallel"
+  },
+  {
+   "id": "gas-infall-swirl",
+   "category": "texture",
+   "duration_s": 6.0,
+   "prompt_influence": 0.55,
+   "tags": [
+    "gas",
+    "infall",
+    "swirl",
+    "accretion",
+    "disk",
+    "forming",
+    "spiral",
+    "black-hole"
+   ],
+   "usage_note": "gas falling in and spiraling into a forming accretion disk (the disk being born on screen); not a bed, one per short",
+   "prompt": "Hot gas streaming inward and spiraling around a black hole: a soft breathy airy rush that starts distant and thin, then gathers and accelerates into a smooth swirling whoosh that circles faster and settles into a warm steady swirl. Clear mid-range hiss audible on small speakers, over a gentle warm low tone. Calm and cinematic, no rhythm, no hits, no beeps, no static, no music."
+  },
+  {
+   "id": "light-glint-flicker",
+   "category": "texture",
+   "duration_s": 1.5,
+   "tags": [
+    "light",
+    "glint",
+    "flicker",
+    "shine",
+    "shimmer",
+    "sparkle"
+   ],
+   "usage_note": "a brief flicker of light (something shining for an instant); short, under narration is fine",
+   "prompt": "A brief soft flicker of light: two or three quick, delicate glassy shimmers that glint and fade, warm and airy, like light catching for an instant. Gentle, clear on small speakers, no harshness, not cartoonish, no beeps, no music."
+  },
+  {
+   "id": "shell-crack",
+   "category": "objects",
+   "duration_s": 1.0,
+   "tags": [
+    "crack",
+    "egg",
+    "shell",
+    "break",
+    "snap",
+    "hook"
+   ],
+   "prompt": "A single crisp eggshell crack, close and intimate: a dry brittle snap of thin shell with a tiny crunchy tail. Clean, present in the mid-highs so it is heard on a phone speaker. Quiet room, no reverb, no music, no voice."
+  },
+  {
+   "id": "card-riffle",
+   "category": "objects",
+   "duration_s": 1.5,
+   "tags": [
+    "cards",
+    "shuffle",
+    "riffle",
+    "deck",
+    "flutter"
+   ],
+   "prompt": "A playing card riffle shuffle, close up: two halves of a deck flicking together in a fast papery flutter, then a soft tap as the cards square up. Crisp, clean, intimate, no reverb, no music, no voice."
+  },
+  {
+   "id": "ground-wind-loop",
+   "category": "ambient",
+   "duration_s": 30.0,
+   "loop": true,
+   "prompt_influence": 0.6,
+   "tags": [
+    "ambient",
+    "ground",
+    "wind",
+    "hill",
+    "outdoor",
+    "bed",
+    "loop",
+    "earth"
+   ],
+   "prompt": "A seamless, very quiet outdoor ambience of a soft, steady breeze over an open grassy hilltop: a gentle airy rustle of grass and a smooth low hush of moving air, calm and spacious. Steady level from start to end, no gusts, no birds, no insects, no voices, no traffic, no music."
+  },
+  {
+   "id": "ground-sea-loop",
+   "category": "ambient",
+   "duration_s": 30.0,
+   "loop": true,
+   "prompt_influence": 0.6,
+   "tags": [
+    "ambient",
+    "ground",
+    "sea",
+    "waves",
+    "shore",
+    "bed",
+    "loop",
+    "earth"
+   ],
+   "prompt": "A seamless, very quiet ambience of gentle sea waves heard from a short distance: slow, soft washes of small waves on a sandy shore, evenly spaced and calm, with a faint airy hiss between them. Steady level from start to end, no seagulls, no wind gusts, no voices, no boats, no music."
+  },
+  {
+   "id": "ground-dusk-loop",
+   "category": "ambient",
+   "duration_s": 30.0,
+   "loop": true,
+   "prompt_influence": 0.6,
+   "tags": [
+    "ambient",
+    "ground",
+    "dusk",
+    "crickets",
+    "countryside",
+    "night",
+    "bed",
+    "loop",
+    "earth"
+   ],
+   "prompt": "A seamless, very quiet countryside ambience at dusk: faint distant crickets chirping softly and evenly, a light breath of open air, calm and peaceful. Steady level from start to end, no birds, no dogs, no cars, no voices, no loud close insects, no music."
+  },
+  {
+   "id": "birds-settle",
+   "category": "texture",
+   "duration_s": 6.0,
+   "prompt_influence": 0.5,
+   "tags": [
+    "ground",
+    "birds",
+    "dusk",
+    "settle",
+    "fade",
+    "earth"
+   ],
+   "prompt": "A few distant songbirds settling down at dusk: sparse, soft, unhurried last chirps from far away in an open landscape that thin out and fade to silence by the end. Gentle and calm, no close or loud calls, no crows or gulls, no wind gusts, no music."
+  },
+  {
+   "id": "eclipse-hush",
+   "category": "texture",
+   "duration_s": 8.0,
+   "prompt_influence": 0.5,
+   "tags": [
+    "ground",
+    "eclipse",
+    "hush",
+    "birds",
+    "silence",
+    "stillness",
+    "earth"
+   ],
+   "prompt": "A soft daytime outdoor ambience of a light breeze and a few distant birds that slowly thins out and goes still, the birds falling silent one by one and the air settling into an almost silent hush, as if nature holds its breath. Ends in near silence. Calm and natural, no tones, no music, no rumble."
+  }
+ ]
 }

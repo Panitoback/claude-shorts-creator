@@ -25,11 +25,12 @@ export type EclipseProps = {
   prominences?: boolean; // tiny pink-red prominences at the limb during totality (default true)
   streamers?: number; // faint coronal streamers (default 6: two broad equatorial + four short)
   glow?: number; // the Sun's soft halo strength (default 1)
+  corona?: Keys; // multiplier on the corona (keys): let it bloom slower than the last sliver vanishes
 };
 
 let uid = 0;
 
-export const Eclipse: React.FC<EclipseProps> = ({ x, y, r, sep, angle = 200, moonScale = 1.03, prominences = true, streamers = 6, glow = 1 }) => {
+export const Eclipse: React.FC<EclipseProps> = ({ x, y, r, sep, angle = 200, moonScale = 1.03, prominences = true, streamers = 6, glow = 1, corona = 1 }) => {
   const f = useCurrentFrame();
   const id = React.useMemo(() => `ec${uid++}`, []);
   const s = kf(f, sep, 2.5);
@@ -40,10 +41,10 @@ export const Eclipse: React.FC<EclipseProps> = ({ x, y, r, sep, angle = 200, moo
   const mr = moonScale * r;
   const total = moonScale >= 1;
   // corona: starts showing during the diamond ring (gap < ~1.2 % R☉), full in totality
-  const cor = total ? clamp01(1 - st.gap / 0.012) : 0;
+  const cor = total ? clamp01(1 - st.gap / 0.012) * kf(f, corona, 1) : 0;
   // Moon disc against the sky: visible once the sky is dark
   // (only from the diamond ring on: at 97 % the Moon off the Sun is still lost in the sky glare)
-  const moonVis = cor;
+  const moonVis = total ? clamp01(1 - st.gap / 0.012) : 0;
   const sunGlow = Math.sqrt(st.sun) * glow;
   // the side where the last sunlight shines: opposite the Moon's offset
   const lastA = s >= 0 ? a + Math.PI : a;

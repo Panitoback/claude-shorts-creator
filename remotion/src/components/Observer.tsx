@@ -16,7 +16,7 @@ export type ObserverProps = {
   h: number; // standing height in px (the figure is scaled from it in every pose)
   pose?: ObserverPose;
   facing?: 'right' | 'left';
-  look?: number; // how far the head tips back, degrees (default 32 = looking up high)
+  look?: Keys; // how far the head tips back, degrees (default 32 = looking up high); keys = a slow head turn
   point?: Keys; // pointing: arm elevation above the horizon, degrees (default 40)
   color?: string; // default GROUND.land
   at?: number;
@@ -68,7 +68,7 @@ export const Observer: React.FC<ObserverProps> = ({
   const neckB = add(hip, dir(P.torso), S.torso);
   const shoulder = add(hip, dir(P.torso), S.torso * 0.86);
   const neckT = add(neckB, dir(P.neck), S.neck);
-  const headTilt = -look; // tipping back
+  const headTilt = -kf(f, look, 32); // tipping back
   const headC = add(neckT, dir(headTilt), 0.062);
   const elbow = add(shoulder, dir(P.upper), S.upper);
   const wrist = add(elbow, dir(P.fore), S.fore);

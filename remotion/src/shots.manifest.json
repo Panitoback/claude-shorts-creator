@@ -40,6 +40,14 @@
   "transparent": false
  },
  {
+  "id": "SunMoon400",
+  "durationInSeconds": 53.167,
+  "fps": 30,
+  "width": 1080,
+  "height": 1920,
+  "transparent": false
+ },
+ {
   "id": "WhatIsAQuasarV2A",
   "durationInSeconds": 73.8,
   "fps": 30,

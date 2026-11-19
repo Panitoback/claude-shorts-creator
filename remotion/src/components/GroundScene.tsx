@@ -28,10 +28,11 @@ export type GroundSceneProps = {
   layers?: HorizonLayer[]; // override the horizon
   variant?: HorizonVariant;
   tilt?: Keys;
+  colorFov?: number; // see SkyView
   children?: React.ReactNode; // drawn above everything (observer, captions, annotations)
 };
 
-export const GroundScene: React.FC<GroundSceneProps> = ({ preset, horizonY, fov = 8, az = 0, el, sky, to, mix, layers, variant, tilt = 0, children }) => {
+export const GroundScene: React.FC<GroundSceneProps> = ({ preset, horizonY, fov = 8, az = 0, el, sky, to, mix, layers, variant, tilt = 0, colorFov, children }) => {
   const f = useCurrentFrame();
   const sunset = preset === 'sunsetSea';
   const e = el ?? (sunset ? 0.45 : 0.6);
@@ -42,7 +43,7 @@ export const GroundScene: React.FC<GroundSceneProps> = ({ preset, horizonY, fov 
   const L = layers ?? (sunset ? [{ variant: 'sea' as const, distance: 1e9 }] : horizonLayers(hv, fov));
   return (
     <>
-      <SkyView sky={skyP} to={to} mix={mix} fov={fov} tilt={tilt} horizonY={horizonY}
+      <SkyView sky={skyP} to={to} mix={mix} fov={fov} tilt={tilt} horizonY={horizonY} colorFov={colorFov}
         glow={sunset ? { az: kf(f, az, 0), el: kf(f, e, 0), strength: 1, radiusDeg: Math.min(18, fov * 0.9) } : undefined} />
       <SkyBody kind={sunset ? 'sun' : 'moon'} az={az} el={e} fov={fov} tilt={tilt} horizonY={horizonY} phase={1} light={sunset ? 225 : 250} />
       <Horizon layers={L} fov={fov} tilt={tilt} horizonY={horizonY} sky={skyP} to={to} mix={mix}
