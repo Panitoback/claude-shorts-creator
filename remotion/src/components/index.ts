@@ -83,3 +83,16 @@ export { SpeedHeader } from './SpeedHeader';
 export type { SpeedHeaderProps, SpeedState } from './SpeedHeader';
 export { ElapsedCounter } from './ElapsedCounter';
 export type { ElapsedCounterProps } from './ElapsedCounter';
+// "Fold Paper 42 Times" kit: exponential growth on a true-scale climb
+export { PaperFoldStack } from './PaperFoldStack';
+export type { PaperFoldStackProps } from './PaperFoldStack';
+export { AltitudeAscent } from './AltitudeAscent';
+export type { AltitudeAscentProps, AscentWorld } from './AltitudeAscent';
+export { GenericTower } from './GenericTower';
+export type { GenericTowerProps } from './GenericTower';
+export { SpaceStation } from './SpaceStation';
+export type { SpaceStationProps } from './SpaceStation';
+export { AltitudeLine } from './AltitudeLine';
+export type { AltitudeLineProps } from './AltitudeLine';
+export { FieldRibbon } from './FieldRibbon';
+export type { FieldRibbonProps } from './FieldRibbon';

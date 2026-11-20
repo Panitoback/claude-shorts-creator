@@ -40,7 +40,8 @@
         "blue-man-1-door",
         "why-time-moves-forward",
         "spacecraft-to-every-planet",
-        "car-and-runner-to-every-planet"
+        "car-and-runner-to-every-planet",
+        "fold-paper-to-the-moon"
       ]
     },
     {
@@ -71,7 +72,8 @@
         "vox-1-coffee",
         "short-12-orbit",
         "blue-man-1-door",
-        "why-time-moves-forward"
+        "why-time-moves-forward",
+        "fold-paper-to-the-moon"
       ]
     },
     {
@@ -99,7 +101,8 @@
       "post": "exciter-parallel",
       "used_in": [
         "what-is-a-quasar-v2",
-        "why-time-moves-forward"
+        "why-time-moves-forward",
+        "fold-paper-to-the-moon"
       ]
     },
     {
@@ -135,7 +138,8 @@
         "ch-5-three-skills",
         "why-time-moves-forward",
         "spacecraft-to-every-planet",
-        "car-and-runner-to-every-planet"
+        "car-and-runner-to-every-planet",
+        "fold-paper-to-the-moon"
       ]
     },
     {
@@ -161,7 +165,8 @@
       "prompt": "A very short, light, airy swish for a small element sliding into place. Delicate and soft, quick, clean, dry, no metallic ring, no music.",
       "used_in": [
         "why-time-moves-forward",
-        "car-and-runner-to-every-planet"
+        "car-and-runner-to-every-planet",
+        "fold-paper-to-the-moon"
       ]
     },
     {
@@ -195,7 +200,8 @@
         "short-11-map",
         "short-12-orbit",
         "ch-5-three-skills",
-        "blue-man-1-door"
+        "blue-man-1-door",
+        "fold-paper-to-the-moon"
       ]
     },
     {
@@ -320,7 +326,8 @@
         "short-12-orbit",
         "ch-5-three-skills",
         "what-is-a-quasar-v2",
-        "why-time-moves-forward"
+        "why-time-moves-forward",
+        "fold-paper-to-the-moon"
       ]
     },
     {
@@ -364,7 +371,8 @@
         "what-is-a-quasar-v2",
         "why-time-moves-forward",
         "spacecraft-to-every-planet",
-        "car-and-runner-to-every-planet"
+        "car-and-runner-to-every-planet",
+        "fold-paper-to-the-moon"
       ]
     },
     {
@@ -392,7 +400,8 @@
       "prompt": "A vast, slow cosmic impact for the biggest reveal: a deep soft sub-bass bloom with a warm swelling tonal halo that spreads out and fades over four seconds, like light from a distant explosion reaching you. Majestic, calm and spacious, never harsh or loud. No trailer slam, no distortion, no drums, no music.",
       "used_in": [
         "what-is-a-quasar-v2",
-        "why-time-moves-forward"
+        "why-time-moves-forward",
+        "fold-paper-to-the-moon"
       ]
     },
     {
@@ -421,7 +430,8 @@
       "usage_note": "the first second of a short (hook); not the main reveal",
       "used_in": [
         "what-is-a-quasar-v2",
-        "why-time-moves-forward"
+        "why-time-moves-forward",
+        "fold-paper-to-the-moon"
       ]
     },
     {
@@ -511,7 +521,8 @@
       "prompt": "A single tiny, soft tick, like one step of a precise counter or a fine instrument dial. Very short, delicate, clean and dry, quiet, no echo, no music.",
       "used_in": [
         "what-is-a-quasar-v2",
-        "why-time-moves-forward"
+        "why-time-moves-forward",
+        "fold-paper-to-the-moon"
       ]
     },
     {
@@ -537,7 +548,8 @@
       "license": "ElevenLabs generated (text-to-sfx); owner: the generating account, commercial use per the account's ElevenLabs plan",
       "prompt": "A soft, satisfying settle sound for a counting number landing on its final value: a gentle rounded click with a tiny warm resonant tail. Short, clean, understated, not cartoonish, no music.",
       "used_in": [
-        "what-is-a-quasar-v2"
+        "what-is-a-quasar-v2",
+        "fold-paper-to-the-moon"
       ]
     },
     {
@@ -1420,6 +1432,32 @@
       "used_in": [
         "car-and-runner-to-every-planet"
       ]
+    },
+    {
+      "id": "paper-fold",
+      "file": "clips/paper-fold.mp3",
+      "category": "objects",
+      "tags": [
+        "paper",
+        "fold",
+        "crease",
+        "snap",
+        "sheet"
+      ],
+      "duration_s": 1.0,
+      "peak_dbfs": -1.9,
+      "loudness_lufs": -25.7,
+      "attack_s": 0.6,
+      "peak_s": 0.63,
+      "phone_db": -0.5,
+      "source": "elevenlabs:sound-generation",
+      "model": "eleven_text_to_sound_v3",
+      "license": "ElevenLabs generated (text-to-sfx); owner: the generating account, commercial use per the account's ElevenLabs plan",
+      "prompt": "A single sheet of paper folded in half and creased flat, close and intimate: a quick soft papery flip followed by a crisp short crease snap as a fingernail presses the fold. Clean, dry, present in the mid-highs so it is heard on a phone speaker. Quiet room, no reverb, no music, no voice.",
+      "used_in": [
+        "fold-paper-to-the-moon"
+      ],
+      "note": "take 2 of 2 (audition 2026-11-20), adopted by envelope; approved with the short by the user"
     }
   ]
 }

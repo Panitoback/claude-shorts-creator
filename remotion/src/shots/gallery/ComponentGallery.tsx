@@ -18,11 +18,12 @@ import { PlanetKind } from '../../brand';
 // (debug labels), so everything inside the safe rectangle is the component itself.
 // QA: node scripts/frames.mjs ComponentGallery 110,230,... --scale=0.5 [--safe]
 import MotionDemo, { MOTION_DEMO_T } from './MotionDemo';
+import { AscentDemo, FieldRibbonDemo, PaperFoldDemo } from './FoldKitDemos';
 const PAGE = 120;
 
 export const compositionConfig = {
   id: 'ComponentGallery',
-  durationInSeconds: 172, // 43 pages × PAGE frames
+  durationInSeconds: 184, // 46 pages × PAGE frames
   fps: 30,
   width: 1080,
   height: 1920,
@@ -30,7 +31,7 @@ export const compositionConfig = {
 
 const Header: React.FC<{ n: number; title: string; note: string }> = ({ n, title, note }) => (
   <div style={{ position: 'absolute', top: 70, left: 60, right: 180 }}>
-    <div style={{ ...TYPE.annotation, color: PALETTE.gold, fontSize: 24 }}>{`${n} / 43 · ${title}`}</div>
+    <div style={{ ...TYPE.annotation, color: PALETTE.gold, fontSize: 24 }}>{`${n} / 46 · ${title}`}</div>
     <div style={{ ...TYPE.annotation, color: PALETTE.sciText, fontSize: 20, letterSpacing: 1, textTransform: 'none', marginTop: 8, opacity: 0.8 }}>{note}</div>
   </div>
 );
@@ -373,6 +374,12 @@ export const ComponentGallery: React.FC = () => (
       <Header n={42} title="Runner + car (Race movers)" note="Runner: generic sprinter, poses set → sprint cycle → upright stop → breathing, warm rim light, muted singlet colors · Car: generic profile, turning wheels, headlight idle/flare, trail" /></Sequence>
     <Sequence from={PAGE * 42} durationInFrames={PAGE}><MultiRaceDemo />
       <Header n={43} title="Multi race board + title swap" note="MultiRaceBoard: single lane unfolds into the board · two races on the same lanes (parks behind), values in a right column, gold hand-off, rewind that grows a mover · TitleSwap · SpeedHeader (state change + second line) · ElapsedCounter (lands on each value)" /></Sequence>
+    <Sequence from={PAGE * 43} durationInFrames={PAGE}><PaperFoldDemo />
+      <Header n={44} title="Paper fold stack" note="PaperFoldStack: edge-on sheet, height = 0.1 mm × 2^n exactly · animated folds (in-plane flap, then toward the camera, alternating like real folding) · layers as hairlines · hScale squeezes only the length in a macro shot" /></Sequence>
+    <Sequence from={PAGE * 44} durationInFrames={PAGE}><AscentDemo />
+      <Header n={45} title="Altitude ascent" note="AltitudeAscent: one log-paced true-scale climb (side view) · observer + GenericTower (828 m) → curving Earth, AltitudeLine at 100 km, SpaceStation (symbol size) → Earth + Moon at true distance · column tip glows gold" /></Sequence>
+    <Sequence from={PAGE * 45} durationInFrames={PAGE}><FieldRibbonDemo />
+      <Header n={46} title="Field ribbon" note="FieldRibbon: generic football fields top-down, goal line to goal line, true along the row · track → pull back to all 176 · the ribbon folds 13× into a block (width drawn ≥ 8 px)" /></Sequence>
   </AbsoluteFill>
   </Grain>
 );

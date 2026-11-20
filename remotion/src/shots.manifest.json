@@ -16,8 +16,16 @@
   "transparent": false
  },
  {
+  "id": "FoldPaperToTheMoon",
+  "durationInSeconds": 55.867,
+  "fps": 30,
+  "width": 1080,
+  "height": 1920,
+  "transparent": false
+ },
+ {
   "id": "ComponentGallery",
-  "durationInSeconds": 172,
+  "durationInSeconds": 184,
   "fps": 30,
   "width": 1080,
   "height": 1920,

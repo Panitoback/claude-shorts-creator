@@ -3,7 +3,7 @@
 > **For:** the planning project where topics, aesthetics and scripts are developed.
 > **Pair it with:** `brand.md` (the visual and sound style contract — read it for colors, type,
 > captions, annotations, motion, safe zones and sound taste; this file never repeats it).
-> **Version:** v0.19.1 · 2026-11-19 · phase: *first Race short final; second Race (no voice, car + runner) in production: runner, car, two-race board built*
+> **Version:** v0.20.1 · 2026-11-20 · phase: *"Fold Paper 42 Times" (Scale) in production: exponential-growth kit built (paper fold stack, altitude ascent, generic tower, space station, altitude line, field ribbon)*
 >
 > This file describes **what can be asked for**, not how it is built. If a script asks for
 > something listed here, it can be made. If it asks for something not listed, flag it as a
@@ -274,6 +274,25 @@ so sizes are honest. Say *wide* (a landscape, ~60° across: the Sun and Moon are
 > **Text over a bright day sky** goes in the upper sky, or gets the soft text shadow (captions over a
 > bright sky always get it), never a dimmed sky.
 
+### 3.10 Exponential growth and the climb (built, brand style)
+
+Built for "Fold Paper 42 Times and You Reach the Moon". A **true-scale climb**: one side view where
+altitude is up, so the same picture can start on a sheet of paper on the ground and end at the Moon,
+honest in every frame. Ask for it by name in VISUAL.
+
+| Component | What it shows | Options you can ask for |
+|---|---|---|
+| **Paper fold stack** | A sheet of paper seen edge-on that folds in half again and again: the flap lifts up and over (then the next fold flips toward the camera, alternating like real folding), layers visible as fine lines while they are thick enough. Its height is **exactly 0.1 mm × 2^folds** at the scene's scale, so it can keep doubling into a column that reaches space; the tip can glow gold so a hairline column stays findable. | fold count over time (synced to an Odometer number), animated folds or smooth growth, a macro shot (thickness true, the sheet's length squeezed to fit, a "0.1 MM" scale bar), seen edge-on or slightly from above, rewind (folds going back down), gold tint |
+| **Altitude ascent** | One continuous, log-paced camera climb in side view, true to scale every frame: a dusk ground view (generic skyline) → a person and a supertall tower at real heights → the ground curving into Earth's limb, the sky turning to space → a station on its orbit → Earth and the Moon at true sizes and true distance | how fast each stretch goes (equal time per doubling, or a hook-fast jump with motion blur), what stands on the ground (observer, tower), where the Moon sits (angle), labels pinned to any height or object |
+| **Generic supertall tower** | One needle-like tower as a flat dark silhouette at a **true** height (e.g. 828 m), symmetric stepped setbacks and a long spire: "the tallest kind of building", deliberately not any real landmark | height, position, a few faint lit windows |
+| **Space station** | A small generic orbital station (long truss, four pairs of dark solar wings, ivory modules; no agency markings). At true scale it is far below a pixel, so it is drawn at a findable symbol size with a marker, on a faint orbit line | position/altitude, size, panel glint |
+| **Altitude line** | A thin dashed blue line at a given altitude, following the curve of the planet's limb, with a label ("EDGE OF SPACE · 62 MI"); counts as an annotation | altitude, label + value, where it draws from (e.g. where a column pierces it) |
+| **Field ribbon** | A row of generic football fields seen from straight above (muted green, white yard lines, no logos), goal line to goal line down the frame, with a thin ivory ribbon (toilet paper) along it that can fold onto itself again and again into a small block. True along its length | how many fields, the ribbon's real length, camera track along the row / pull back to the whole row, folds over time (synced to an Odometer) |
+
+Also new: the **Scale bar** can be **vertical** (to measure a thickness or a height), and the
+**Comparison bars** can show fold counts, which on a distance axis *is* a log scale (each fold = the
+same length): label it LOG SCALE.
+
 Anything else: list it under NEW COMPONENTS NEEDED in the script.
 
 > **Hero numbers that are too long now get flagged.** If a HERO NUMBER doesn't fit, it is shrunk
@@ -293,7 +312,7 @@ base rules it replaces). Lengths and word budgets are in §5.
 
 | Beat | Time | Purpose |
 |---|---|---|
-| **Hook** | 0–3 s (always fixed) | **High energy.** The first frame is composed (no fade from black) and is the start of a fast move (ignition, pull-back, dive-in) that lands the surprising thing within ~3 s, with the title arriving word by word on the voice and a sound heard even on a phone. A clear visual change every 2–3 s for the first ~10 s. The cover is picked at upload, not frame 0. |
+| **Hook** | 0–3 s (always fixed) | **High energy.** The first frame is composed (no fade from black) and is the start of a fast move (ignition, pull-back, dive-in) that lands the surprising thing within ~3 s, with the title arriving word by word on the voice and a sound heard even on a phone. A clear visual change every 2–3 s for the first ~10 s. The cover is picked at upload, not frame 0. **The hook opens a question, it doesn't spend the payoff:** if the short has a bigger reveal later (a twist, a last rung), the hook line points at it as a question instead of stating the full answer up front ("Just 42 folds to reach the Moon. How many to cross the universe?"), so the viewer stays to find out. |
 | **Setup** | ~20% | Show the situation fast; build the tension the hook promised. |
 | **Quiz** *(optional)* | ~2.5 s | "Pause. Can you guess?" Drives comments and rewatches. |
 | **Reveal** | ~45% | The payoff in 2–4 steps, each step landing on a spoken word **and shown with its own picture** (comparison, diagram, bars, timeline, counter). |
@@ -676,6 +695,24 @@ BEATS:
 ## 7. Learnings
 
 What worked and what didn't. Newest first.
+
+- **Don't spend the payoff in the hook (the user's note on "Fold Paper 42 Times").** "Just 42 folds
+  to reach the Moon" gives the answer in the first line, and the short's biggest number (103 folds
+  to cross the observable universe) never gets teased. Better: state the first fact and open a
+  question that only the end answers ("Just 42 folds to reach the Moon. How many to cross the
+  universe?"). One hook line, two jobs: a fact that hooks + an open loop that holds.
+
+- **A true-scale climb can carry a whole Scale short.** "Fold Paper 42 Times" runs hook → setup →
+  five rungs → the Moon in ONE side-view picture whose scale is driven by the fold count (the
+  column's tip rides at a fixed height on screen while the camera pulls back), so every frame is
+  honest and nothing cuts until the twist. What the render showed: at true scale the Moon is a
+  3-pixel speck and the station is sub-pixel, so they need a ring / a symbol size to be found;
+  a plain green field at block scale reads as a still frame (fixed by pulling back again on
+  "10 miles" with a ghost of the ribbon); and only lengths can be honest when the subject is
+  1 cm wide and 16 km long (widths are drawn at a visible minimum, and said so). A sheet "on a
+  table" had to move to the ground so the 14-fold column could be measured beside a person.
+  The voice ran 56 s for a 46 s script: the breaths before each number slow the read to
+  ~1.8 words/s, so a ladder script should budget ~2 words/s.
 
 - **Ground view: honest optics carry the look.** Driving every ground-view piece from one field of
   view (Sun, Moon, horizon, stars) made "true size" automatic and made the telephoto Moon look like

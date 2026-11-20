@@ -2,21 +2,22 @@
 import type React from 'react';
 import Shot0, { compositionConfig as cfg0 } from './shots/brand/BrandReference';
 import Shot1, { compositionConfig as cfg1 } from './shots/car-and-runner-to-every-planet/CarAndRunnerToEveryPlanet';
-import Shot2, { compositionConfig as cfg2 } from './shots/gallery/ComponentGallery';
-import Shot3, { compositionConfig as cfg3 } from './shots/gallery/GroundGallery';
-import Shot4, { compositionConfig as cfg4 } from './shots/gallery/MotionDemo';
-import Shot5, { compositionConfig as cfg5 } from './shots/short-12/Short12Orbit';
-import Shot6, { compositionConfig as cfg6 } from './shots/spacecraft-to-every-planet/SpacecraftToEveryPlanet';
-import Shot7, { compositionConfig as cfg7 } from './shots/sun-moon-400/SunMoon400';
-import Shot8, { compositionConfig as cfg8 } from './shots/what-is-a-quasar-v2/WhatIsAQuasarV2A';
-import Shot9, { compositionConfig as cfg9 } from './shots/what-is-a-quasar/WhatIsAQuasarA';
-import Shot10, { compositionConfig as cfg10 } from './shots/what-is-a-quasar/WhatIsAQuasarB';
-import Shot11, { compositionConfig as cfg11 } from './shots/what-is-a-quasar/WhatIsAQuasarC';
-import Shot12, { compositionConfig as cfg12 } from './shots/what-is-a-quasar/WhatIsAQuasarOpening1';
-import Shot13, { compositionConfig as cfg13 } from './shots/what-is-a-quasar/WhatIsAQuasarOpening2';
-import Shot14, { compositionConfig as cfg14 } from './shots/what-is-a-quasar/WhatIsAQuasarOpening3';
-import Shot15, { compositionConfig as cfg15 } from './shots/why-time-moves-forward/WhyTimeA';
-import Shot16, { compositionConfig as cfg16 } from './shots/why-time-moves-forward/WhyTimeB';
+import Shot2, { compositionConfig as cfg2 } from './shots/fold-paper-to-the-moon/FoldPaperToTheMoon';
+import Shot3, { compositionConfig as cfg3 } from './shots/gallery/ComponentGallery';
+import Shot4, { compositionConfig as cfg4 } from './shots/gallery/GroundGallery';
+import Shot5, { compositionConfig as cfg5 } from './shots/gallery/MotionDemo';
+import Shot6, { compositionConfig as cfg6 } from './shots/short-12/Short12Orbit';
+import Shot7, { compositionConfig as cfg7 } from './shots/spacecraft-to-every-planet/SpacecraftToEveryPlanet';
+import Shot8, { compositionConfig as cfg8 } from './shots/sun-moon-400/SunMoon400';
+import Shot9, { compositionConfig as cfg9 } from './shots/what-is-a-quasar-v2/WhatIsAQuasarV2A';
+import Shot10, { compositionConfig as cfg10 } from './shots/what-is-a-quasar/WhatIsAQuasarA';
+import Shot11, { compositionConfig as cfg11 } from './shots/what-is-a-quasar/WhatIsAQuasarB';
+import Shot12, { compositionConfig as cfg12 } from './shots/what-is-a-quasar/WhatIsAQuasarC';
+import Shot13, { compositionConfig as cfg13 } from './shots/what-is-a-quasar/WhatIsAQuasarOpening1';
+import Shot14, { compositionConfig as cfg14 } from './shots/what-is-a-quasar/WhatIsAQuasarOpening2';
+import Shot15, { compositionConfig as cfg15 } from './shots/what-is-a-quasar/WhatIsAQuasarOpening3';
+import Shot16, { compositionConfig as cfg16 } from './shots/why-time-moves-forward/WhyTimeA';
+import Shot17, { compositionConfig as cfg17 } from './shots/why-time-moves-forward/WhyTimeB';
 
 export const shots: { Comp: React.FC; config: any }[] = [
   { Comp: Shot0 as React.FC, config: cfg0 },
@@ -36,4 +37,5 @@ export const shots: { Comp: React.FC; config: any }[] = [
   { Comp: Shot14 as React.FC, config: cfg14 },
   { Comp: Shot15 as React.FC, config: cfg15 },
   { Comp: Shot16 as React.FC, config: cfg16 },
+  { Comp: Shot17 as React.FC, config: cfg17 },
 ];

@@ -297,6 +297,7 @@ Gains are starting `gain_db` values. Status for all: approved, untested in a rea
 |---|---|---|---|---|
 | `shell-crack` | an egg / shell / thin brittle thing cracking or breaking open (the `Egg` split); a faint replay of it bridges a loop back to a crack on frame 0 | glass or ice (too dry and small); stacking two within 0.5 s. **Its attack is 0.33 s into the file**: align by attack, never put the attack before 0.33 s | `hook-hit` on frame 0 (lower the hit to −4 so the crack isn't masked) | +6 on a hook, −6 as a faint loop bridge |
 | `card-riffle` | a riffle shuffle of a deck (`DeckOfCards` riffles); align by attack on the riffle's start, the flutter peaks 0.6 s later | generic paper sounds; under the word it illustrates at low gain (a flutter, not a transient: the duck eats it) | `hook-hit` −3 on frame 0 | +9 on a hook under speech, +4 for a second riffle |
+| `paper-fold` (new, 2026-11-20, approved with the short) | a sheet of paper being folded and creased (`PaperFoldStack` folds): a soft flip, then a crisp crease snap; **its attack is 0.6 s into the file**: align by attack on the frame the flap lands | rapid series under speech (the duck eats them: only the ones in voice gaps read on a phone); generic paper rustle | `tick-soft` for the fold counter | +4 to +8 under speech (short clip, catalogs at −25.7 LUFS), −2 to −4 in a fast series |
 | `sprint-start` | a runner bursting off the line (push-off scuff + ~5 light spike footsteps, ~1.2 s of steps); the hook launch of a runner, a field of runners starting together | anything that isn't running; looping it under a long run (the steps would read as a stutter) | `whoosh-soft` −5 just after it on a hook | 0 on a hook (phone-audible), −3 later |
 | `car-pull-away` | a car departing calmly (engine note rising, peak ~0.7 s, fades away) | screeches, chases; ⚠ phone −8 dB: the engine body is low, the mix still read +3 to +5 dB on phone in a no-voice mix | — | −2 under a quiet bed |
 
@@ -335,6 +336,12 @@ copied; none of them are installed.
 ## Mix log
 
 *(Newest first. One entry per produced short: slug, clips used, gains that landed, what to change.)*
+- **fold-paper-to-the-moon** (2026-11-20, Scale, `shorts/fold-paper-to-the-moon/sfx-plan.json` from `make_sfx_plan.py`; approved by the user; music `bed-bright-motion` 16 dB under the voice, lifts hook +3 / Moon +4 / universe +4, a −6 dip under "10 miles of toilet paper")
+  - New clip (ours, ~20 credits, 2 takes): `paper-fold`, take 2 by envelope (one clean crease snap).
+  - Cues: hook-hit 0 on frame 0 (+7.6 phone) + whoosh-deep +3 on the climb · whoosh-reverse −3 on the rewind · paper-fold +7 / +4 / +8 on folds 1–3 (fold 2, in a voice gap, reads +20 phone; folds 1 and 3 under speech barely read) · fast folds −1 → −4 (optional, felt) · tick-soft +7 in the breath BEFORE each rung's number (3 of 4 read on phone; under the number itself they were GONE) · whoosh-deep +2 on the Moon pull-back · impact-cosmic +2 + hook-hit **+3** on "Moon" (the word is spoken on the hit: at −6 the layer was GONE on phone, at +3 still only +2.9) · number-settle on 273,000 and on 13 · ribbon folds paper-fold −3/−4 every other fold · riser-soft 0 → impact-deep-soft +1 + pop-reveal −3 on "universe" (+13.8 phone) · paper-fold −2 on "one fold".
+  - **Lesson:** a hit ON a spoken keyword fights the voice; land story hits in the voice's gaps (ticks before the number, not on it) or put them a beat after the word.
+  - Final −14.2 LUFS / −2.0 dBTP at the first attempt (no limiter needed).
+
 
 - **car-and-runner-to-every-planet** (2026-11-19, first **no-voice** Race, two races on one board; `shorts/car-and-runner-to-every-planet/sfx-plan.json`; approved by the user; music `bed-bright-motion` chosen over `bed-minimal-pulse` for a playful no-voice Race)
   - New clips (ours, ~90 credits for 2 takes each, take 1 adopted by envelope shape): `sprint-start`, `car-pull-away`.
