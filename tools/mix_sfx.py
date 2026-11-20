@@ -18,6 +18,10 @@ Usage:
   python tools/mix_sfx.py plan.json --no-duck --end 60 --out path.mp4
   python tools/mix_sfx.py plan.json --check          # phone check of the existing mix, no render
 
+PITCH: an event may carry "pitch_st" (semitones, e.g. 0.5 or -2): the clip is resampled (pitch AND
+speed change together, like tape), so a repeated cue can rise row by row. Its attack/peak offsets and
+duration are scaled to match, so "align" stays exact.
+
 ALIGN: an event may carry "align": "attack" | "peak". Then at_s is the PICTURE time of the hit
 and the clip starts at at_s - its attack_s / peak_s (measured per clip in catalog.json by
 gen_sfx.py --measure). Without align, at_s is the file start (old behaviour).
@@ -129,14 +133,15 @@ def main():
             continue
         align = e.get("align")
         at = float(e["at_s"])
+        rate = 2 ** (float(e.get("pitch_st", 0)) / 12)   # >1 = higher and shorter
         if align in ("attack", "peak"):
             off = clip.get(f"{align}_s")
             if off is None:
                 bad_align.append(f"{e['sfx_id']} (no {align}_s in the catalog: run gen_sfx.py --measure)")
                 continue
-            start, hit = at - off, at
+            start, hit = at - off / rate, at
         elif align in (None, "start"):
-            start, hit = at, at + clip.get("peak_s", 0.0)   # unaligned: heard at its peak
+            start, hit = at, at + clip.get("peak_s", 0.0) / rate   # unaligned: heard at its peak
         else:
             bad_align.append(f"{e['sfx_id']} (align must be attack|peak, got {align!r})")
             continue
@@ -145,7 +150,7 @@ def main():
             continue
         if start >= end:
             continue
-        events.append({**e, "file": f, "clip": clip, "start_s": round(start, 3), "hit_s": round(hit, 3)})
+        events.append({**e, "file": f, "clip": clip, "rate": rate, "start_s": round(start, 3), "hit_s": round(hit, 3)})
     events.sort(key=lambda e: e["start_s"])
 
     # cue sheet
@@ -161,7 +166,7 @@ def main():
         phs = "  ?" if ph is None else f"{ph:5.1f}" + ("!" if ph < sfx_measure.PHONE_WARN_DB else " ")
         print(f"  {float(e['at_s']):>7.2f} {e.get('align', '-'):>6} {e['start_s']:>7.2f}  {e['sfx_id']:<18} "
               f"{e.get('gain_db', 0):>4}dB {phs}  {e.get('cue', '')[:56]}{opt}")
-        if e["start_s"] + float(e["clip"].get("duration_s") or 0) > end + 0.01:
+        if e["start_s"] + float(e["clip"].get("duration_s") or 0) / e["rate"] > end + 0.01:
             seam.append(f"{e['sfx_id']} @ {e['start_s']:.2f}s")
     print("  (phone = the clip's own level through a 300 Hz high-pass; '!' = phone-invisible clip, "
           "give it a mid layer — USAGE.md)")
@@ -202,7 +207,8 @@ def main():
     for i, e in enumerate(events):
         ms = int(round(float(e["start_s"]) * 1000))
         g = float(e.get("gain_db", 0))
-        parts.append(f"[{i + 1}:a]aformat=sample_rates=48000:channel_layouts=stereo,"
+        pitch = (f"asetrate={48000 * e['rate']:.1f},aresample=48000," if abs(e["rate"] - 1) > 1e-6 else "")
+        parts.append(f"[{i + 1}:a]aformat=sample_rates=48000:channel_layouts=stereo,{pitch}"
                      f"adelay={ms}:all=1,volume={g:.2f}dB[e{i}]")
         labels.append(f"[e{i}]")
 
@@ -251,7 +257,8 @@ def phone_check(events, preview, out, end):
     # Floor = the preview's average level (per band) minus 20 dB. In a gap in the voice the
     # preview is near silence, so a bare ratio would call any whisper "audible"; against this
     # floor a cue in a gap must reach at least ~20 dB under the program's typical level to count.
-    floors = {f: sfx_measure.energy(tracks[("prev", f)]) / max(1, len(tracks[("prev", f)])) * 0.01
+    # A silent preview (a no-voice short) would give a zero floor: never go under -60 dBFS RMS.
+    floors = {f: max(1e-6, sfx_measure.energy(tracks[("prev", f)]) / max(1, len(tracks[("prev", f)])) * 0.01)
               for f in (None, hp)}
     gone = []
     for e in events:

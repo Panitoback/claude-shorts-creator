@@ -740,6 +740,34 @@
     "earth"
    ],
    "prompt": "A soft daytime outdoor ambience of a light breeze and a few distant birds that slowly thins out and goes still, the birds falling silent one by one and the air settling into an almost silent hush, as if nature holds its breath. Ends in near silence. Calm and natural, no tones, no music, no rumble."
+  },
+  {
+   "id": "sprint-start",
+   "category": "objects",
+   "duration_s": 2.0,
+   "tags": [
+    "sprint",
+    "runner",
+    "footsteps",
+    "start",
+    "track",
+    "launch"
+   ],
+   "prompt": "A sprinter explodes out of the starting blocks on an outdoor running track: one short scuff of a push-off, then five quick, light spike footsteps accelerating away from the listener. Close, clean and realistic but soft, slightly roomy, no crowd, no starting gun, no voice, no breathing, no music."
+  },
+  {
+   "id": "car-pull-away",
+   "category": "objects",
+   "duration_s": 2.5,
+   "tags": [
+    "car",
+    "engine",
+    "depart",
+    "pull away",
+    "drive",
+    "road"
+   ],
+   "prompt": "A small modern car gently pulling away from a stop on a quiet road: a soft, warm engine note rising smoothly as it accelerates, tires rolling on asphalt, passing calmly into the distance. Realistic, restrained and clean, no horn, no tire screech, no revving, no music."
   }
  ]
 }

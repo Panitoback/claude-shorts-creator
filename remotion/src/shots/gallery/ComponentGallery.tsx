@@ -8,6 +8,7 @@ import {
   WhipMontage, whipTiming,
   Egg, eggCrackPts, CoffeeCup, cupSpiralPts, GoldMorphLine, morphScribble, morphPoint, WordDissolve, ParticleBox, DeckOfCards,
   Camera, CameraLayer, OdometerNumber, TimeStream, RaceBoard,
+  Runner, Car, MultiRaceBoard, TitleSwap, SpeedHeader, ElapsedCounter,
 } from '../../components';
 import { EASE } from '../../brand';
 import { PlanetKind } from '../../brand';
@@ -21,7 +22,7 @@ const PAGE = 120;
 
 export const compositionConfig = {
   id: 'ComponentGallery',
-  durationInSeconds: 164, // 41 pages × PAGE frames
+  durationInSeconds: 172, // 43 pages × PAGE frames
   fps: 30,
   width: 1080,
   height: 1920,
@@ -29,7 +30,7 @@ export const compositionConfig = {
 
 const Header: React.FC<{ n: number; title: string; note: string }> = ({ n, title, note }) => (
   <div style={{ position: 'absolute', top: 70, left: 60, right: 180 }}>
-    <div style={{ ...TYPE.annotation, color: PALETTE.gold, fontSize: 24 }}>{`${n} / 41 · ${title}`}</div>
+    <div style={{ ...TYPE.annotation, color: PALETTE.gold, fontSize: 24 }}>{`${n} / 43 · ${title}`}</div>
     <div style={{ ...TYPE.annotation, color: PALETTE.sciText, fontSize: 20, letterSpacing: 1, textTransform: 'none', marginTop: 8, opacity: 0.8 }}>{note}</div>
   </div>
 );
@@ -368,6 +369,10 @@ export const ComponentGallery: React.FC = () => (
       <Header n={40} title="Time stream" note="TimeStream: gold particles flowing one way along a line (time's arrow, a timeline's axis) · own speed + lane each, fade at both ends · motion for sparse scenes" /></Sequence>
     <Sequence from={PAGE * 40} durationInFrames={PAGE}><RaceDemo />
       <Header n={41} title="Race board + spacecraft" note="RaceBoard: rows from one START line, movers at constant speed, value on arrival (one gold), soft flash · rewind back to START (loop) · Spacecraft: generic probe, engine idle/flare, trail" /></Sequence>
+    <Sequence from={PAGE * 41} durationInFrames={PAGE}><MoversDemo />
+      <Header n={42} title="Runner + car (Race movers)" note="Runner: generic sprinter, poses set → sprint cycle → upright stop → breathing, warm rim light, muted singlet colors · Car: generic profile, turning wheels, headlight idle/flare, trail" /></Sequence>
+    <Sequence from={PAGE * 42} durationInFrames={PAGE}><MultiRaceDemo />
+      <Header n={43} title="Multi race board + title swap" note="MultiRaceBoard: single lane unfolds into the board · two races on the same lanes (parks behind), values in a right column, gold hand-off, rewind that grows a mover · TitleSwap · SpeedHeader (state change + second line) · ElapsedCounter (lands on each value)" /></Sequence>
   </AbsoluteFill>
   </Grain>
 );
@@ -553,6 +558,53 @@ const RaceDemo: React.FC = () => (
       moverLength={66}
       destR={30}
       warm
+    />
+  </AbsoluteFill>
+);
+
+const MoversDemo: React.FC = () => {
+  const f = useCurrentFrame();
+  const y1 = SAFE_RECT.y + 330;
+  const y2 = SAFE_RECT.y + 700;
+  const y3 = SAFE_RECT.y + 1000;
+  return (
+    <AbsoluteFill>
+      <Starfield count={120} warm />
+      <Small x={CX} y={y1 - 230}>{'set · sprint · stop · breathing (hook size 110 px)'}</Small>
+      <Runner x={SAFE_RECT.x + 110} y={y1} h={110} set={1} />
+      <Runner x={SAFE_RECT.x + 330} y={y1} h={110} run={1} phase={(f / 30) * 2.4 * Math.PI * 2} />
+      <Runner x={SAFE_RECT.x + 560} y={y1} h={110} />
+      <Runner x={SAFE_RECT.x + 760} y={y1} h={110} breath={0.5 + 0.5 * Math.sin(f / 14)} />
+      <Small x={CX} y={y2 - 140}>{'board size (40 px), running'}</Small>
+      {[0, 1, 2, 3].map((k) => (
+        <Runner key={k} x={SAFE_RECT.x + 140 + k * 180} y={y2} h={40} run={1} phase={(f / 30) * 2.2 * Math.PI * 2 + k} />
+      ))}
+      <Small x={CX} y={y3 - 120}>{'car: idle → departure (wheels, headlight, trail)'}</Small>
+      <Car x={SAFE_RECT.x + 200} y={y3} length={92} light={0.25} />
+      <Car x={SAFE_RECT.x + 600} y={y3} length={92} light={1} trail={1} turn={f * 0.4} />
+    </AbsoluteFill>
+  );
+};
+
+const MultiRaceDemo: React.FC = () => (
+  <AbsoluteFill>
+    <Starfield count={120} warm />
+    <TitleSwap states={[{ at: 0, lines: [[{ w: 'By' }, { w: 'car?', gold: true }]] }, { at: 62, lines: [[{ w: 'And' }, { w: 'running?', gold: true }]] }]} top={SAFE_RECT.y + 20} />
+    <SpeedHeader states={[{ at: 0, label: 'A CAR ON CRUISE CONTROL', value: '60 mph' }]} y={SAFE_RECT.y + 150} sub={{ text: "USAIN BOLT'S TOP SPEED · 27.8 MPH", in: 62 }} />
+    <ElapsedCounter marks={[[16, 0], [34, 45], [48, 700], [58, 5100], [64, 5100], [65, 0], [68, 0], [80, 97], [92, 1500], [104, 11000]]} label="YEARS PASSED" y={SAFE_RECT.y + 330} opacity={[[10, 0], [16, 1], [60, 1], [64, 0], [66, 0], [68, 1]]} />
+    <MultiRaceBoard
+      rows={[{ label: 'EARTH → VENUS', dest: 'venus' }, { label: 'EARTH → JUPITER', dest: 'jupiter' }, { label: 'EARTH → NEPTUNE', dest: 'neptune' }]}
+      races={[
+        { mover: 'car', size: 46, depart: 16, arrive: [34, 48, 58], values: ['45 YEARS', '700 YEARS', '5,100 YEARS'], valuePos: 'above', gold: 2, goldOff: 104, appear: { at: 6, len: 8 }, glow: [[64, 1], [76, 0]] },
+        { mover: 'runner', size: 40, depart: 68, arrive: [80, 92, 104], values: ['97 YEARS', '1,500 YEARS', '11,000 YEARS'], valuePos: 'below', valueSize: 34, valueOpacity: 0.75, gold: 2, appear: { at: 62, len: 6 }, parkBehind: 0 },
+      ]}
+      top={SAFE_RECT.y + 520}
+      gap={130}
+      destX={SAFE_RECT.x + SAFE_RECT.w - 264}
+      valueSide="right"
+      fold={[[0, 1], [12, 0, 'inOut']]}
+      rowsIn={{ at: 8, len: 8 }}
+      rule={'STRAIGHT LINE · STEADY SPEED'}
     />
   </AbsoluteFill>
 );

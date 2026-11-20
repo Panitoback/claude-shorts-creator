@@ -1,0 +1,120 @@
+{
+  "_note": "No-voice Race (guion NOTES: single-lane hook + two races). No vo[]: the timeline is the guion's frames, mirrored as constants in remotion/src/shots/car-and-runner-to-every-planet/CarAndRunnerToEveryPlanet.tsx.",
+  "slug": "car-and-runner-to-every-planet",
+  "format": {
+    "name": "Race",
+    "fps": 30,
+    "width": 1080,
+    "height": 1920,
+    "targetSec": 30,
+    "durationSec": 29.6
+  },
+  "vo": [],
+  "race": {
+    "movers": [
+      "runner (hook)",
+      "car",
+      "runner"
+    ],
+    "start": "Earth",
+    "rule": "STRAIGHT LINE · STEADY SPEED / NO STOPS · EACH PLANET AT ITS CLOSEST",
+    "hook": {
+      "depart_s": 0.3,
+      "arrive_s": 2.2,
+      "value": "11,000 years"
+    },
+    "car": {
+      "header": "A CAR ON CRUISE CONTROL / 60 mph",
+      "depart_s": 4.8,
+      "rows": [
+        {
+          "name": "Venus",
+          "value": "45 YEARS",
+          "arrive_s": 6.2
+        },
+        {
+          "name": "Mars",
+          "value": "65 YEARS",
+          "arrive_s": 7.6
+        },
+        {
+          "name": "Mercury",
+          "value": "91 YEARS",
+          "arrive_s": 9.0
+        },
+        {
+          "name": "Jupiter",
+          "value": "700 YEARS",
+          "arrive_s": 10.6
+        },
+        {
+          "name": "Saturn",
+          "value": "1,400 YEARS",
+          "arrive_s": 12.3
+        },
+        {
+          "name": "Uranus",
+          "value": "3,000 YEARS",
+          "arrive_s": 14.1
+        },
+        {
+          "name": "Neptune",
+          "value": "5,100 YEARS",
+          "arrive_s": 16.1
+        }
+      ]
+    },
+    "runner": {
+      "header": "USAIN BOLT'S TOP SPEED · 27.8 MPH",
+      "depart_s": 18.0,
+      "rows": [
+        {
+          "name": "Venus",
+          "value": "97 YEARS",
+          "arrive_s": 19.0
+        },
+        {
+          "name": "Mars",
+          "value": "140 YEARS",
+          "arrive_s": 20.0
+        },
+        {
+          "name": "Mercury",
+          "value": "200 YEARS",
+          "arrive_s": 21.0
+        },
+        {
+          "name": "Jupiter",
+          "value": "1,500 YEARS",
+          "arrive_s": 22.1
+        },
+        {
+          "name": "Saturn",
+          "value": "3,100 YEARS",
+          "arrive_s": 23.2
+        },
+        {
+          "name": "Uranus",
+          "value": "6,600 YEARS",
+          "arrive_s": 24.4
+        },
+        {
+          "name": "Neptune",
+          "value": "11,000 YEARS",
+          "arrive_s": 25.8
+        }
+      ]
+    },
+    "clock": "YEARS PASSED, lands on each value at its arrival (production change)",
+    "loop": "f840 values out, f846-864 fold back, f848-882 Neptune runner rewinds + grows, f882-888 still = frame 0"
+  },
+  "qa": {
+    "intentional": [
+      {
+        "from_s": 3.733,
+        "to_s": 28.0,
+        "reason": "Race scene (PROJECT_CONTEXT §4): the board, from the unfold to the loop return"
+      }
+    ]
+  }
+}

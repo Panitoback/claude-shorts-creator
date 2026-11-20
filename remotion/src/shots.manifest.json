@@ -8,8 +8,16 @@
   "transparent": false
  },
  {
+  "id": "CarAndRunnerToEveryPlanet",
+  "durationInSeconds": 29.6,
+  "fps": 30,
+  "width": 1080,
+  "height": 1920,
+  "transparent": false
+ },
+ {
   "id": "ComponentGallery",
-  "durationInSeconds": 164,
+  "durationInSeconds": 172,
   "fps": 30,
   "width": 1080,
   "height": 1920,

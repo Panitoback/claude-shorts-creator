@@ -45,6 +45,9 @@ Usage:
   --ambient-fade 0.3    ambient fade in/out seconds
   --bed <id>            legacy single-layer flag: routed to --music or --ambient by catalog
                         (--under / --duck are accepted as the music aliases)
+  --voice-lufs -16.5    no-voice shorts: the loudness a voice WOULD have (the reference for the
+                        --*-under levels) instead of measuring --voice; with no --voice the duck key
+                        is silence, so nothing ducks
   --end 60              trim output to N seconds (default: full base)
   --print               show the resolved settings, no render
 
@@ -126,7 +129,9 @@ def mix_layers(base, voice, out, layers, end):
     dur = end if end is not None else probe_duration(base)
     n = len(layers)
     # input 0 = base (voice + SFX, what we hear), input 1 = voice only (the duck key)
-    cmd = ["ffmpeg", "-y", "-hide_banner", "-nostdin", "-i", base, "-i", voice]
+    cmd = ["ffmpeg", "-y", "-hide_banner", "-nostdin", "-i", base]
+    # no voice (a no-voice short): a silent key, so the layers never duck
+    cmd += ["-i", voice] if voice else ["-f", "lavfi", "-t", f"{dur:.3f}", "-i", "anullsrc=r=48000:cl=stereo"]
     # base and key are padded to `dur`: if their audio ends a few ms before the video (e.g. 24.64 s
     # vs 24.767 s), the sidechain/amix would wait for samples that never come and ffmpeg hangs
     # before reaching -t (seen 2026-11-19 on spacecraft-to-every-planet).
@@ -170,7 +175,8 @@ def mix_layers(base, voice, out, layers, end):
 def main():
     args = sys.argv[1:]
     base = rp(flag(args, "--base", ""))
-    voice = rp(flag(args, "--voice")) if "--voice" in args else base
+    voice_lufs_ref = flag(args, "--voice-lufs", None, float)
+    voice = rp(flag(args, "--voice")) if "--voice" in args else (None if voice_lufs_ref is not None else base)
     end = flag(args, "--end", None, float)
     out_override = flag(args, "--out", None)
 
@@ -203,8 +209,8 @@ def main():
         sys.exit("give --music <id> and/or --ambient <id>  (music: " + ", ".join(music)
                  + " | ambient loops: " + ", ".join(loops) + ")")
 
-    voice_lufs = measure_lufs(voice)
-    print(f"base: {show(base)}   voice ref: {show(voice)} ({voice_lufs} LUFS)")
+    voice_lufs = voice_lufs_ref if voice_lufs_ref is not None else measure_lufs(voice)
+    print(f"base: {show(base)}   voice ref: {show(voice) if voice else 'none (--voice-lufs)'} ({voice_lufs} LUFS)")
 
     def gain_for(clip, path, under):
         lufs = clip.get("loudness_lufs") or measure_lufs(path)

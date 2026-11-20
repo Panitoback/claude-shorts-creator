@@ -83,7 +83,7 @@ BEATS FOR A RACE (FORMAT: Race uses these three beats INSTEAD of 1–6 above):
 > Row names and values belong to the race board: they are not annotations and don't count
 >   toward the 2-annotation limit. No HERO NUMBER, no QUIZ.
 
-MOVER: <spacecraft (built with the first Race short) | car | runner (both planned, §3.6)>
+MOVER: <spacecraft | car | runner (all built, §3.6); a no-voice Race may run two of them one after the other (§4 Race, variant)>
 SPEED HEADER: <what is racing and how fast, shown big above the board for the whole video:
   label / value, e.g. "NEW HORIZONS' LAUNCH SPEED" / "36,000 mph"> [label ≤ 30 characters, value ≤ 12]
 START: <the shared starting line, e.g. "Earth">

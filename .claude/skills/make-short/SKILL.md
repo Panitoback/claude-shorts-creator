@@ -142,8 +142,10 @@ python tools/gen_voice.py --beats shorts/<slug>/beats.json \
 - Frame-0 rule: hook scene uses `warm` props (BigTitle/EqRow) and negative `at`s so highlights/
   stamps are already on at f0. Loop scene reverses the hook's punch-in (settle 1.06→1 vs grow
   1→1.06) so the video loops seamlessly.
-- Safe zones (brand §9): everything important inside `SAFE_RECT` (x 60→900, y 210→1420);
-  captions in the caption lane (`CAPTION.centerY` 1350, ≤720 px wide, symmetric).
+- Safe zones (brand §9, v2.7): everything important inside `SAFE_RECT` (x 60→1020, y 210→1600),
+  CENTERED on x 540 (the right rail is ignored on purpose) and FILLING it: size the board / hero to
+  the full height, don't leave a black band at the bottom. Captions in the caption lane
+  (`CAPTION.centerY` 1500, ≤720 px wide, symmetric).
 - **No hard-coded vertical positions (16:9-ready):** shorts may later be re-rendered at
   1920×1080 for long-form compilations. In new components and compositions, take y positions and
   heights from props or the shared layout tokens (safe area, caption lane, title zone: `SAFE`,

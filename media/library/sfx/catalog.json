@@ -39,7 +39,8 @@
         "ch-5-three-skills",
         "blue-man-1-door",
         "why-time-moves-forward",
-        "spacecraft-to-every-planet"
+        "spacecraft-to-every-planet",
+        "car-and-runner-to-every-planet"
       ]
     },
     {
@@ -133,7 +134,8 @@
         "short-12-orbit",
         "ch-5-three-skills",
         "why-time-moves-forward",
-        "spacecraft-to-every-planet"
+        "spacecraft-to-every-planet",
+        "car-and-runner-to-every-planet"
       ]
     },
     {
@@ -158,7 +160,8 @@
       "license": "ElevenLabs generated (text-to-sfx); owner: the generating account, commercial use per the account's ElevenLabs plan",
       "prompt": "A very short, light, airy swish for a small element sliding into place. Delicate and soft, quick, clean, dry, no metallic ring, no music.",
       "used_in": [
-        "why-time-moves-forward"
+        "why-time-moves-forward",
+        "car-and-runner-to-every-planet"
       ]
     },
     {
@@ -281,7 +284,8 @@
         "vox-1-coffee",
         "short-11-map",
         "short-12-orbit",
-        "why-time-moves-forward"
+        "why-time-moves-forward",
+        "car-and-runner-to-every-planet"
       ]
     },
     {
@@ -359,7 +363,8 @@
         "ch-5-three-skills",
         "what-is-a-quasar-v2",
         "why-time-moves-forward",
-        "spacecraft-to-every-planet"
+        "spacecraft-to-every-planet",
+        "car-and-runner-to-every-planet"
       ]
     },
     {
@@ -444,7 +449,8 @@
       "used_in": [
         "what-is-a-quasar-v2",
         "why-time-moves-forward",
-        "spacecraft-to-every-planet"
+        "spacecraft-to-every-planet",
+        "car-and-runner-to-every-planet"
       ]
     },
     {
@@ -1362,6 +1368,58 @@
       "license": "ElevenLabs generated (text-to-sfx); owner: the generating account, commercial use per the account's ElevenLabs plan",
       "prompt": "A soft daytime outdoor ambience of a light breeze and a few distant birds that slowly thins out and goes still, the birds falling silent one by one and the air settling into an almost silent hush, as if nature holds its breath. Ends in near silence. Calm and natural, no tones, no music, no rumble.",
       "used_in": []
+    },
+    {
+      "id": "sprint-start",
+      "file": "clips/sprint-start.mp3",
+      "category": "objects",
+      "tags": [
+        "sprint",
+        "runner",
+        "footsteps",
+        "start",
+        "track",
+        "launch"
+      ],
+      "duration_s": 2.0,
+      "peak_dbfs": -1.5,
+      "loudness_lufs": -25.8,
+      "attack_s": 0.04,
+      "peak_s": 0.05,
+      "phone_db": -1.1,
+      "source": "elevenlabs:sound-generation",
+      "model": "eleven_text_to_sound_v3",
+      "license": "ElevenLabs generated (text-to-sfx); owner: the generating account, commercial use per the account's ElevenLabs plan",
+      "prompt": "A sprinter explodes out of the starting blocks on an outdoor running track: one short scuff of a push-off, then five quick, light spike footsteps accelerating away from the listener. Close, clean and realistic but soft, slightly roomy, no crowd, no starting gun, no voice, no breathing, no music.",
+      "used_in": [
+        "car-and-runner-to-every-planet"
+      ]
+    },
+    {
+      "id": "car-pull-away",
+      "file": "clips/car-pull-away.mp3",
+      "category": "objects",
+      "tags": [
+        "car",
+        "engine",
+        "depart",
+        "pull away",
+        "drive",
+        "road"
+      ],
+      "duration_s": 2.48,
+      "peak_dbfs": -8.3,
+      "loudness_lufs": -20.0,
+      "attack_s": 0.44,
+      "peak_s": 0.72,
+      "phone_db": -8.0,
+      "source": "elevenlabs:sound-generation",
+      "model": "eleven_text_to_sound_v3",
+      "license": "ElevenLabs generated (text-to-sfx); owner: the generating account, commercial use per the account's ElevenLabs plan",
+      "prompt": "A small modern car gently pulling away from a stop on a quiet road: a soft, warm engine note rising smoothly as it accelerates, tires rolling on asphalt, passing calmly into the distance. Realistic, restrained and clean, no horn, no tire screech, no revving, no music.",
+      "used_in": [
+        "car-and-runner-to-every-planet"
+      ]
     }
   ]
 }

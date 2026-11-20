@@ -1,0 +1,196 @@
+{
+  "_note": "No-voice Race. Times = the guion's frames /30 (same constants as the shot). Arrival ticks: pop-reveal rising +0.5 st per row (cars 0→2.5, runners +5→+7.5: same tick, lighter and higher). Bed via mix_music.py --voice-lufs.",
+  "master": "shorts/car-and-runner-to-every-planet/output/car-and-runner-to-every-planet-base.mp4",
+  "master_fps": 30,
+  "catalog": "media/library/sfx/catalog.json",
+  "render": {
+    "preview": "shorts/car-and-runner-to-every-planet/output/car-and-runner-to-every-planet-base.mp4",
+    "out": "shorts/car-and-runner-to-every-planet/output/car-and-runner-to-every-planet-sfx.mp4",
+    "end_s": 29.6,
+    "duck": false
+  },
+  "events": [
+    {
+      "at_s": 0.3,
+      "sfx_id": "sprint-start",
+      "gain_db": 0,
+      "align": "attack",
+      "cue": "hook: the runner explodes out of the crouch (phone-audible start cue)"
+    },
+    {
+      "at_s": 0.433,
+      "sfx_id": "whoosh-soft",
+      "gain_db": -5,
+      "align": "peak",
+      "cue": "hook: light whoosh as it reaches full sprint"
+    },
+    {
+      "at_s": 2.2,
+      "sfx_id": "impact-soft",
+      "gain_db": -2,
+      "align": "attack",
+      "cue": "hook: arrival at Neptune + '11,000 years' lands (body)"
+    },
+    {
+      "at_s": 2.2,
+      "sfx_id": "pop-reveal",
+      "gain_db": -3,
+      "align": "attack",
+      "cue": "hook: landing hit, mid layer (phone)"
+    },
+    {
+      "at_s": 3.967,
+      "sfx_id": "whoosh-soft",
+      "gain_db": -4,
+      "align": "peak",
+      "cue": "morph: the lane unfolds into the board, 'By car?'"
+    },
+    {
+      "at_s": 4.8,
+      "sfx_id": "car-pull-away",
+      "gain_db": -2,
+      "align": "attack",
+      "cue": "all seven cars depart"
+    },
+    {
+      "at_s": 6.2,
+      "sfx_id": "pop-reveal",
+      "gain_db": -8.5,
+      "pitch_st": 0.0,
+      "align": "attack",
+      "cue": "car arrival 1: Venus"
+    },
+    {
+      "at_s": 7.6,
+      "sfx_id": "pop-reveal",
+      "gain_db": -8.2,
+      "pitch_st": 0.5,
+      "align": "attack",
+      "cue": "car arrival 2: Mars"
+    },
+    {
+      "at_s": 9.0,
+      "sfx_id": "pop-reveal",
+      "gain_db": -7.9,
+      "pitch_st": 1.0,
+      "align": "attack",
+      "cue": "car arrival 3: Mercury"
+    },
+    {
+      "at_s": 10.6,
+      "sfx_id": "pop-reveal",
+      "gain_db": -7.6,
+      "pitch_st": 1.5,
+      "align": "attack",
+      "cue": "car arrival 4: Jupiter"
+    },
+    {
+      "at_s": 12.3,
+      "sfx_id": "pop-reveal",
+      "gain_db": -7.3,
+      "pitch_st": 2.0,
+      "align": "attack",
+      "cue": "car arrival 5: Saturn"
+    },
+    {
+      "at_s": 14.1,
+      "sfx_id": "pop-reveal",
+      "gain_db": -7.0,
+      "pitch_st": 2.5,
+      "align": "attack",
+      "cue": "car arrival 6: Uranus"
+    },
+    {
+      "at_s": 16.1,
+      "sfx_id": "pop-reveal",
+      "gain_db": -5.5,
+      "pitch_st": 2.5,
+      "align": "attack",
+      "cue": "car arrival 7: Neptune (gold, a touch fuller)"
+    },
+    {
+      "at_s": 17.4,
+      "sfx_id": "swish-light",
+      "gain_db": -3,
+      "align": "peak",
+      "cue": "title swap to 'And running?'"
+    },
+    {
+      "at_s": 18.0,
+      "sfx_id": "sprint-start",
+      "gain_db": -3,
+      "align": "attack",
+      "cue": "all seven runners burst out"
+    },
+    {
+      "at_s": 19.0,
+      "sfx_id": "pop-reveal",
+      "gain_db": -10.0,
+      "pitch_st": 5.0,
+      "align": "attack",
+      "cue": "runner arrival 1: Venus (same tick, lighter and higher)"
+    },
+    {
+      "at_s": 20.0,
+      "sfx_id": "pop-reveal",
+      "gain_db": -9.7,
+      "pitch_st": 5.5,
+      "align": "attack",
+      "cue": "runner arrival 2: Mars (same tick, lighter and higher)"
+    },
+    {
+      "at_s": 21.0,
+      "sfx_id": "pop-reveal",
+      "gain_db": -9.4,
+      "pitch_st": 6.0,
+      "align": "attack",
+      "cue": "runner arrival 3: Mercury (same tick, lighter and higher)"
+    },
+    {
+      "at_s": 22.1,
+      "sfx_id": "pop-reveal",
+      "gain_db": -9.1,
+      "pitch_st": 6.5,
+      "align": "attack",
+      "cue": "runner arrival 4: Jupiter (same tick, lighter and higher)"
+    },
+    {
+      "at_s": 23.2,
+      "sfx_id": "pop-reveal",
+      "gain_db": -8.8,
+      "pitch_st": 7.0,
+      "align": "attack",
+      "cue": "runner arrival 5: Saturn (same tick, lighter and higher)"
+    },
+    {
+      "at_s": 24.4,
+      "sfx_id": "pop-reveal",
+      "gain_db": -8.5,
+      "pitch_st": 7.5,
+      "align": "attack",
+      "cue": "runner arrival 6: Uranus (same tick, lighter and higher)"
+    },
+    {
+      "at_s": 25.8,
+      "sfx_id": "pop-reveal",
+      "gain_db": -6.5,
+      "pitch_st": 7.5,
+      "align": "attack",
+      "cue": "runner arrival 7: Neptune (same tick, lighter and higher) — 11,000, gold"
+    },
+    {
+      "at_s": 25.8,
+      "sfx_id": "glow-swell",
+      "gain_db": -5,
+      "align": "attack",
+      "cue": "Neptune '11,000' turns gold: a gentle swell under the hold"
+    },
+    {
+      "at_s": 28.833,
+      "sfx_id": "whoosh-reverse",
+      "gain_db": -3,
+      "align": "peak",
+      "cue": "rewind: the Neptune runner glides back to START, peak mid-glide"
+    }
+  ]
+}

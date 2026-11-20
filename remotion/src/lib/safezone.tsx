@@ -28,7 +28,7 @@ export const SafeZoneOverlay: React.FC = () => (
     />
     <div style={{ ...tag, top: SAFE.top - 34, left: SAFE.left + 8 }}>SAFE TOP {SAFE.top}px · platform tabs</div>
     <div style={{ ...tag, top: CANVAS.H - SAFE.bottom + 12, left: SAFE.left + 8 }}>SAFE BOTTOM {SAFE.bottom}px · handle, title, description</div>
-    <div style={{ ...tag, top: SAFE.top + 12, right: 8, width: SAFE.right - 16, textAlign: 'right' }}>RIGHT {SAFE.right}px · like/share rail</div>
+    <div style={{ ...tag, top: SAFE.top + 12, right: 8, width: SAFE.right - 16, textAlign: 'right' }}>RIGHT {SAFE.right}px · margin (rail ignored, v2.7)</div>
     <div style={{ ...tag, top: CAPTION.centerY - 66, left: (CANVAS.W - CAPTION.maxWidth) / 2 + 8, color: '#ffd58a', fontSize: 18 }}>CAPTION LANE</div>
   </AbsoluteFill>
 );

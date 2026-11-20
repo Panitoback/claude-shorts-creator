@@ -292,7 +292,9 @@
       "plan_tier": "starter",
       "license": "ElevenLabs generated (Eleven Music) with OUR account (starter plan at generation time). Music Terms (elevenlabs.io/music-terms, 2026-10-09), paid plans: online and offline commercial use permitted except film, TV, radio and studio games; no attribution on paid plans; we own the output (ToS 4(c)(ii)); platform AI-disclosure rules apply (Music Terms 4.4). Starter: 'streaming' column = Prohibited (see USAGE notes)",
       "prompt": "Cinematic ambient music for a space documentary, a little more energetic and moving. Instrumental only. Steady, even intensity from start to finish with no big build-ups, no drops and no structural changes, so it can sit under any narration and loop seamlessly. Mood: bright, curious and in motion. A lively but soft synth arpeggio in sixteenth notes over warm pads in E major, a gentle rhythmic pulse with very light, soft percussion (brushed shaker, soft muted kick), around 92 BPM, airy and spacious. No epic trailer drums, no big hits, no vocals, not aggressive, not busy.",
-      "used_in": [],
+      "used_in": [
+        "car-and-runner-to-every-planet"
+      ],
       "loop": true,
       "raw_file": "raw/bed-bright-motion.mp3 (local, git-ignored)",
       "loop_from_raw_s": [

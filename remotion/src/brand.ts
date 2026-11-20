@@ -125,7 +125,7 @@ export const TYPE = {
 // §4 CAPTIONS
 // =============================================================================
 export const CAPTION = {
-  centerY: 1350, // vertical center of the caption block (block must end above y1420)
+  centerY: 1500, // vertical center of the caption block (block must end above y1600, the v2.7 safe bottom)
   maxWidth: 720, // symmetric around x=540 so it never enters the right-side UI rail
   maxWords: 4,
   wordOnFrames: 5, // a word brightens over 5 frames as it is spoken
@@ -195,15 +195,18 @@ export const MOTION = {
 } as const;
 
 // =============================================================================
-// §9 SAFE ZONES — conservative union of YouTube Shorts, TikTok and Instagram Reels UI.
+// §9 SAFE ZONES (brand v2.7, the user's call 2026-11-19): CENTERED and frame-filling. The right-hand
+// button rail is ignored (right margin = left margin, everything symmetric around x 540); the bottom
+// keeps a moderate margin (320) instead of the conservative 500, so the graphics can be bigger.
 // Nothing important (text, key objects) inside these margins.
 // =============================================================================
 export const CANVAS = { W: 1080, H: 1920, FPS: 30 } as const;
-// bottom 500: measured on a real phone — Shorts' handle/title/description reach ~y1420.
-export const SAFE = { top: 210, bottom: 500, left: 60, right: 180 } as const;
+// bottom 320: Shorts' handle/title/description can reach ~y1420 on a phone (measured); v2.7 accepts
+// that overlap on the lowest band for a fuller frame. Was { bottom: 500, right: 180 } until v2.6.
+export const SAFE = { top: 210, bottom: 320, left: 60, right: 60 } as const;
 export const SAFE_RECT = {
   x: SAFE.left,
   y: SAFE.top,
-  w: CANVAS.W - SAFE.left - SAFE.right, // 840
-  h: CANVAS.H - SAFE.top - SAFE.bottom, // 1210
+  w: CANVAS.W - SAFE.left - SAFE.right, // 960
+  h: CANVAS.H - SAFE.top - SAFE.bottom, // 1390
 } as const;

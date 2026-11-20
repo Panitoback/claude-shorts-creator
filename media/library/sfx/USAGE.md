@@ -95,6 +95,7 @@ Starting gains are educated guesses until a produced short measures them (see Ma
   (−22.1). Add **+3 to +5 dB** on top of the usual start (already included below).
 - A cue that sits fully under continuous speech may never measure (the duck eats it): accept
   felt-not-heard or move it to a gap.
+- **Rising repeats: `pitch_st`** (semitones) on a plan event resamples the clip (pitch and speed together, like tape; `align` stays exact). The Race ticks: +0.5 st per row; a second mover's ticks +5 st above the first's ("same tick, lighter and higher").
 - **Repeats get a small jitter** (±1–2 dB per hit, thinning ticks slightly quieter) so a
   repeated clip never sounds like one sample looped.
 
@@ -296,6 +297,8 @@ Gains are starting `gain_db` values. Status for all: approved, untested in a rea
 |---|---|---|---|---|
 | `shell-crack` | an egg / shell / thin brittle thing cracking or breaking open (the `Egg` split); a faint replay of it bridges a loop back to a crack on frame 0 | glass or ice (too dry and small); stacking two within 0.5 s. **Its attack is 0.33 s into the file**: align by attack, never put the attack before 0.33 s | `hook-hit` on frame 0 (lower the hit to −4 so the crack isn't masked) | +6 on a hook, −6 as a faint loop bridge |
 | `card-riffle` | a riffle shuffle of a deck (`DeckOfCards` riffles); align by attack on the riffle's start, the flutter peaks 0.6 s later | generic paper sounds; under the word it illustrates at low gain (a flutter, not a transient: the duck eats it) | `hook-hit` −3 on frame 0 | +9 on a hook under speech, +4 for a second riffle |
+| `sprint-start` | a runner bursting off the line (push-off scuff + ~5 light spike footsteps, ~1.2 s of steps); the hook launch of a runner, a field of runners starting together | anything that isn't running; looping it under a long run (the steps would read as a stutter) | `whoosh-soft` −5 just after it on a hook | 0 on a hook (phone-audible), −3 later |
+| `car-pull-away` | a car departing calmly (engine note rising, peak ~0.7 s, fades away) | screeches, chases; ⚠ phone −8 dB: the engine body is low, the mix still read +3 to +5 dB on phone in a no-voice mix | — | −2 under a quiet bed |
 
 ### Physics (code, `tools/synth_sfx.py`)
 | Clip | For | Avoid | Pairs with | Start gain |
@@ -332,6 +335,12 @@ copied; none of them are installed.
 ## Mix log
 
 *(Newest first. One entry per produced short: slug, clips used, gains that landed, what to change.)*
+
+- **car-and-runner-to-every-planet** (2026-11-19, first **no-voice** Race, two races on one board; `shorts/car-and-runner-to-every-planet/sfx-plan.json`; approved by the user; music `bed-bright-motion` chosen over `bed-minimal-pulse` for a playful no-voice Race)
+  - New clips (ours, ~90 credits for 2 takes each, take 1 adopted by envelope shape): `sprint-start`, `car-pull-away`.
+  - Cues: sprint-start 0 (hook) / −3 (runner field) · whoosh-soft −5 hook, −4 on the morph · impact-soft −2 + pop-reveal −3 when "11,000 years" lands · car-pull-away −2 · car ticks pop-reveal −8.5 → −7.0 at +0 → +2.5 st, Neptune −5.5 · swish-light −3 on the title swap · runner ticks pop-reveal −10 → −8.5 at +5 → +7.5 st, Neptune −6.5 + glow-swell −5 · whoosh-reverse −3 mid-rewind.
+  - **No voice:** the music is the program. `mix_music.py --voice-lufs -15.2` (the first Race's voice level as the reference, silent duck key) `--music-under 13 --music-duck 0`; at −10 under the bed masked the ticks (phone +1 to +3 dB). The phone check of a no-voice short must use a music-only render as `--preview` (against a silent base every cue reads "+120 dB").
+  - **Loudness:** the bed alone has a 16 dB peak-to-loudness ratio, so the ticks set the true peak: finalize failed at −15.0 LUFS. Fix: a fast limiter on the whole mix at 192 kHz (`alimiter limit=0.25 attack=0.5 release=40 level=disabled`) before finalize_audio → −14.5 LUFS / −2.5 dBTP, every cue still ≥ +3 dB on phone (the hook's pop raised to −3 to survive it).
 
 - **spacecraft-to-every-planet** (2026-11-19, first **Race**, `shorts/spacecraft-to-every-planet/sfx-plan.json`; approved by the user)
   - Only a hook and a closing line are spoken; the ~16 s race in between has no voice. Cues: pop-reveal per

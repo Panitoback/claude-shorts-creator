@@ -6,7 +6,7 @@
 > **Reference scene:** the `BrandReference` composition is this document rendered on screen. If
 > it looks right, the brand is right.
 >
-> v2.6 · 2026-11-18 · direction: *Deep Field hybrid* (cinematic and editorial, with a few
+> v2.7 · 2026-11-19 · direction: *Deep Field hybrid* (cinematic and editorial, with a few
 > scientific annotations) · **energy curve**: a high-energy hook, a calm body, bursts on the peaks ·
 > **visual variety**: scenes change, and every number is shown · **whip transitions** approved as a
 > hand-off (§8) · **dynamism** (v2.3): shape match cuts, fly-throughs, a living camera, punch-ins,
@@ -14,7 +14,8 @@
 > registers in sparse scenes, ≤ 1 s of black at the end (§5, §8) · **two visual modes** (v2.5):
 > SPACE VIEW (the default, §1–§10) and **GROUND VIEW**, the sky as seen from Earth (§11) ·
 > **Race format** (v2.6): one calm continuous scene, the exception to the hook burst, the new-idea
-> rhythm and hero size (§5, §8)
+> rhythm and hero size (§5, §8) · **centered, fuller safe area** (v2.7): right rail ignored, bottom
+> margin 320 instead of 500, a 960 × 1390 safe rectangle (§9)
 
 ---
 
@@ -88,7 +89,7 @@ sans. Both are free Google fonts, so nothing has to be installed.
 | **Annotation** | Inter 600, UPPERCASE, spaced | 28 px (never smaller) | sciText, value in sci | "EARTH ×1", "109 × EARTH'S WIDTH" |
 
 - Size steps up for importance, never sideways: hero number → unit → subject → caption → label.
-- A hero number plus its unit must fit within **~670 px of width** (§9). If it doesn't, shorten
+- A hero number plus its unit must fit within **~800 px of width** (§9; ~670 px before v2.7). If it doesn't, shorten
   it ("1.3 million", not "1,300,000"), or move the unit to the subject line.
 - Numbers use tabular figures, so a count-up doesn't jitter.
 
@@ -97,8 +98,8 @@ sans. Both are free Google fonts, so nothing has to be installed.
 - **Sans text with the keyword in gold italic serif.** Spoken words are ivory, words not yet
   spoken are faint ivory, and the keyword turns gold as it is said.
 - **At most 4 words on screen at once**, in one line, centered.
-- **The caption lane** is centered at y = 1350, at most 720 px wide, and symmetric around the
-  center of the screen, so it never reaches the right-hand button rail (§9).
+- **The caption lane** is centered at y = 1500 (v2.7; 1350 before), at most 720 px wide, and
+  symmetric around the center of the screen (§9).
 - **One keyword per caption chunk at most.** The keyword is the word that carries the idea
   ("*Sun*", "*falling*", "*sideways*"), not just any long word.
 - Captions follow the narration exactly. Word timings come from the real voice, never estimates.
@@ -362,20 +363,23 @@ Measured from the 5-second hybrid test.
 ## 9. Layout and safe zones
 
 The canvas is 1080×1920. Shorts, TikTok and Reels all lay their own buttons and text over the
-video. These margins are the **conservative overlap of all three**; nothing that matters (text,
-hero objects, annotations) goes inside them.
+video. **Since v2.7 (2026-11-19) the layout is centered and frame-filling**: the right-hand button
+rail is ignored (the right margin equals the left one, so everything is symmetric around x = 540)
+and the bottom keeps a moderate margin instead of the conservative one, so graphics can be bigger.
+Nothing that matters (text, hero objects, annotations) goes inside these margins.
 
 | Edge | Margin | What covers it |
 |---|---|---|
 | Top | **210 px** | platform tabs, search, camera |
-| Bottom | **500 px** | handle, title, description, music ticker (measured on a real phone: Shorts reaches about y = 1420) |
-| Right | **180 px** | like, comment, share and remix rail |
+| Bottom | **320 px** | the lowest band of handle / title / description / music ticker (on a phone Shorts can reach about y = 1420: accepted overlap for a fuller frame; keep the most important line, e.g. a payoff number, above ~y 1450) |
+| Right | **60 px** | breathing room (the like/share rail is ignored on purpose: content stays centered) |
 | Left | **60 px** | breathing room |
 
-That leaves a **safe rectangle of 840 × 1210 px** from (60, 210) to (900, 1420).
+That leaves a **safe rectangle of 960 × 1390 px** from (60, 210) to (1020, 1600).
+(Until v2.6: bottom 500, right 180, a 840 × 1210 rectangle; shorts made before v2.7 used it.)
 
-- **Centered content stays symmetric:** anything centered on the screen keeps within x 180 → 900
-  (720 px wide), so it clears the right rail without looking off-center.
+- **Centered content is centered on the screen** (x 540), not on the safe rectangle's old
+  off-center middle.
 - **Glow and stars may bleed past the margins.** They are atmosphere, not information.
 - **Debug overlay:** every composition can draw the safe zones, plus the caption lane, on top of
   itself.

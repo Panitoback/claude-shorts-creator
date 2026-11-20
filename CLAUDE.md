@@ -41,7 +41,7 @@ vertical shorts where every pixel is Remotion TSX.
   gen_voice.py defaults. We write one delivery tag per line in `tts` (the API has no "auto tags";
   see make-short Stage 4). Narration pace ~2.4 words/s (measured with it; re-measure with
   `shorts/_calibration/` if the voice or model changes).
-- **SFX library:** every clip in `media/library/sfx/clips/` is ours: 36 generated with **our**
+- **SFX library:** every clip in `media/library/sfx/clips/` is ours: 38 generated with **our**
   ElevenLabs account (`eleven_text_to_sound_v3`, ~10 credits/s measured) and 4 physics sounds
   synthesized in code (`tools/synth_sfx.py`: redshift glide, pulsar ticks at a real period,
   gravitational-wave chirp; free, deterministic). Recipes in `palette.json`, source/model/license

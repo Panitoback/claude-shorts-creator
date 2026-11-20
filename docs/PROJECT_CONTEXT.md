@@ -3,7 +3,7 @@
 > **For:** the planning project where topics, aesthetics and scripts are developed.
 > **Pair it with:** `brand.md` (the visual and sound style contract — read it for colors, type,
 > captions, annotations, motion, safe zones and sound taste; this file never repeats it).
-> **Version:** v0.18.1 · 2026-11-19 · phase: *sun-moon-400 published; first Race short in production (race board + spacecraft built)*
+> **Version:** v0.19.1 · 2026-11-19 · phase: *first Race short final; second Race (no voice, car + runner) in production: runner, car, two-race board built*
 >
 > This file describes **what can be asked for**, not how it is built. If a script asks for
 > something listed here, it can be made. If it asks for something not listed, flag it as a
@@ -206,7 +206,13 @@ For a single big count-up, use the **Hero number** (3.1).
 | Light ray (light crossing space, redshifting) | Idea, not designed |
 | **Race board** (for the Race format, §4): rows from one starting line to each destination, all movers departing together and arriving one by one in order, the real value written on each row as it arrives, the RULE LINE in small type under the board, a soft cue per arrival, the movers gliding back for the loop | **Built** (v0.18.1, first Race short). Up to 8 rows; one value can be gold (the payoff) |
 | **Spacecraft** (the Race mover): a small stylized craft in the brand style (soft shading, warm light, a faint engine glow; no outlines, no agency logos, no real mission markings) | **Built** (v0.18.1): a generic probe (body, dish, boom) with an idling engine glow that brightens on departure and a short trail |
-| **Car** and **Runner silhouette** (alternative Race movers for extended versions: a generic car with no brand marks; a sober runner in profile, like the ground-view observer) | Planned, after the spacecraft |
+| **Car** (a Race mover): a small generic car in profile, warm ivory-grey, no badge or recognizable model, turning wheels, a tiny warm headlight that idles and brightens on departure, a short trail | **Built** (v0.19.0, "car-and-runner-to-every-planet") |
+| **Runner silhouette** (a Race mover, or a figure on its own): a generic sprinter in profile, near-black with a soft warm rim light, singlet and shoe colors as muted depictions (ask for the colors); poses: crouched start, sprint cycle, upright stop, idle breathing; any size from a board row (~40 px) to a hero (~110 px+), and it can grow smoothly between them. Never a celebration or a famous pose, never a portrait of a real athlete | **Built** (v0.19.0) |
+| **Two races on one board**: a second set of movers races the same lanes after the first (the first ones stay parked; the second park behind them), each race's value in its own line next to the planet (first above, second below, the second slightly smaller); the gold can move from one value to another | **Built** (v0.19.0) |
+| **Single-lane hook**: one lane alone (at its final row position) with its value big in the middle of the frame, which unfolds into the full board (the lane duplicates into the other rows) and folds back for the loop | **Built** (v0.19.0) |
+| **Title swap**: a short on-screen title that changes in place (old words fade and fall, new rise), one gold word each; for shorts without a voice the title IS the question | **Built** (v0.19.0) |
+| **Speed header changes**: the speed header can change to a new mover mid-video, and a second small line can join under it (two movers named top-to-bottom like their values) | **Built** (v0.19.0) |
+| **Elapsed clock** ("YEARS PASSED"): a small counter that runs during a race and lands exactly on each row's value as that mover arrives, resetting for a second race; it makes a compressed race read as a time-lapse (use it whenever a slower mover would otherwise cross the screen faster than a quicker one) | **Built** (v0.19.0) |
 
 ### 3.7 Everyday objects and the arrow of time (built, brand style)
 
@@ -391,7 +397,15 @@ in order. Example: Earth → each planet, at a probe's speed.
   (it still applies to any extra annotation). Production tags the race scene as *intentional*,
   so the automatic checks for stills and small content don't flag it; empty frames are still checked.
 - **Rules it keeps:** every value sourced; captions for whatever is spoken; no call to action;
-  a seamless loop; one mover kind per short.
+  a seamless loop; one mover kind per race.
+- **Variant: no voice, two races (v0.19.0, built with "car-and-runner-to-every-planet").** A Race
+  may have no voice at all: the hook question is then an on-screen title (Title swap), the hook may
+  open on a **single lane** whose value lands as a big number before the board unfolds, and the
+  board may host **two races** one after the other (e.g. car, then runner) with a title swap
+  between them, the speed header changing to name each mover. Ask for an **elapsed clock** whenever
+  the second race is slower in reality but paced faster on screen (otherwise the eye says the slow
+  mover is faster). Length 25–35 s. Sound: the music bed is the program (there is no voice to sit
+  under), with a soft start cue for each departure and the arrival ticks.
 
 Ideas for future formats (to be decided): *myth vs fact*, *"what if"*, *one number explained*.
 
@@ -463,10 +477,11 @@ Ideas for future formats (to be decided): *myth vs fact*, *"what if"*, *one numb
 - **Annotations:** at most **2 on screen at once**, and every one must state a checked fact.
 
 ### Where things can go
-- The apps cover the screen edges: tabs at the top, the title and description across the bottom,
-  and the like/share buttons on the right. Everything important lives in the middle **safe area**
-  (about the central 840 × 1210 px of the 1080 × 1920 frame). Atmosphere such as glow and stars
-  may spill past it.
+- The apps cover the screen edges: tabs at the top, the title and description across the bottom.
+  Since v0.19.1 (brand v2.7) the layout is **centered and fills the frame**: the like/share rail on
+  the right is ignored (equal margins left and right) and the bottom margin is moderate, so the
+  **safe area** is about 960 × 1390 px of the 1080 × 1920 frame (from y 210 to y 1600). Ask for
+  big graphics: there is room. Atmosphere such as glow and stars may spill past it.
 - In practice: the hero number sits in the upper part, the hero object in the middle, and the
   caption just above the bottom area. There is room for about one hero object plus one or two
   small annotations.
@@ -556,7 +571,7 @@ BEATS FOR A RACE (FORMAT: Race uses these three beats INSTEAD of 1–6 above):
 > Row names and values belong to the race board: they are not annotations and don't count
 >   toward the 2-annotation limit. No HERO NUMBER, no QUIZ.
 
-MOVER: <spacecraft (built with the first Race short) | car | runner (both planned, §3.6)>
+MOVER: <spacecraft | car | runner (all built, §3.6); a no-voice Race may run two of them one after the other (§4 Race, variant)>
 SPEED HEADER: <what is racing and how fast, shown big above the board for the whole video:
   label / value, e.g. "NEW HORIZONS' LAUNCH SPEED" / "36,000 mph"> [label ≤ 30 characters, value ≤ 12]
 START: <the shared starting line, e.g. "Earth">
@@ -795,6 +810,19 @@ What worked and what didn't. Newest first.
   itself is ~16 s without voice: the music bed has to sit higher than in a narrated short (about
   10 dB under the voice instead of 19) so the video still reaches delivery loudness, and the arrival
   cues stay soft. Gaps of ~1.6 → 3 s between arrivals read well; 7 rows fit the safe area.
+- **Race with two movers (v0.19.0):** pacing the second race's arrivals faster than the first's made
+  the runner look faster than the car on screen while the numbers said it was twice as slow; an
+  elapsed clock that lands on each value fixed the contradiction (the clock visibly spins faster in
+  the second race). Two values per row don't fit above and below the lane at 7 rows (they collide
+  with the next row): they sit in a column right of the planet instead, so plan short values
+  (≤ 12 characters). A board-size runner needs ~40 px of height and a warm rim light to read on a
+  phone; a standing runner in pure profile reads as a stick, so the stop pose has a stride and bent
+  arms. With no voice, the music bed carries the loudness: it sits ~13 dB under a voice's level,
+  with the arrival ticks 3 dB above where a narrated Race had them.
+- **Safe area (v0.19.1):** the user found ~20 % of the frame black at the bottom and content
+  pushed off-center by the right-rail margin (also in the first Race). New rule: centered layout,
+  right rail ignored, bottom margin 320 px instead of 500, so boards, numbers and titles render
+  ~15–20 % bigger.
 
 ---
 
@@ -824,8 +852,10 @@ total and annular eclipses, the angle cone, and two hand-offs into space view. T
 "sun-moon-400" (the Sun–Moon size coincidence): published. Next: the moon illusion.
 
 **Race format: defined (v0.18).** A calm, single-scene comparison (§4): rows from one starting
-line, movers arriving one by one, the real value written on each row. Its race board and the
-spacecraft get built with the first Race short; the car and the runner come later.
+line, movers arriving one by one, the real value written on each row. First Race ("How Long to
+Fly to Every Planet?", spacecraft): final. Second Race ("How Long to Run or Drive to Every
+Planet?", no voice, car then runner on one board, v0.19.0): in production; runner, car, two-race
+board, single-lane hook, title swap and elapsed clock built (3.6).
 
 **Next:** the custom skills (`script-to-short`,
 `new-component`); section 6 becomes final when `script-to-short` exists. Then Manim, only for
