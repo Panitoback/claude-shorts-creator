@@ -74,7 +74,7 @@ def probe_duration(path):
     return float(out.strip())
 
 
-def tts_line(key, voice, model, text, prev_text, next_text, out_path):
+def tts_line(key, voice, model, text, prev_text, next_text, out_path, stability=0.5):
     """TTS with character-level timestamps -> writes the mp3 AND <out_path>.words.json
     (per-word start/end seconds in the RAW clip) so captions can sync exactly.
 
@@ -85,7 +85,7 @@ def tts_line(key, voice, model, text, prev_text, next_text, out_path):
     if model.startswith("eleven_v4"):
         # v4 / v4 Turbo use only Stability and Similarity (no Style/Speed, no SSML). Context
         # stitching was accepted in the 2026-11-15 calibration, so it stays.
-        body["voice_settings"] = {"stability": 0.5, "similarity_boost": 0.75}
+        body["voice_settings"] = {"stability": stability, "similarity_boost": 0.75}
         if prev_text:
             body["previous_text"] = prev_text
         if next_text:

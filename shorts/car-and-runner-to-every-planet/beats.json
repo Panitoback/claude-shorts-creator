@@ -19,12 +19,13 @@
     "start": "Earth",
     "rule": "STRAIGHT LINE · STEADY SPEED / NO STOPS · EACH PLANET AT ITS CLOSEST",
     "hook": {
-      "depart_s": 0.3,
+      "depart_s": -0.2,
       "arrive_s": 2.2,
-      "value": "11,000 years"
+      "value": "11,000 years",
+      "note": "first-second pass 2026-11-20: frame 0 is 6 frames into the sprint (a clone replays the start after the rewind, 29.4 s); the years count live 0 -> 11,000 under the lane; hook framing 1.6x"
     },
     "car": {
-      "header": "A CAR ON CRUISE CONTROL / 60 mph",
+      "header": "A CAR ON CRUISE CONTROL · 60 MPH (small speed line)",
       "depart_s": 4.8,
       "rows": [
         {

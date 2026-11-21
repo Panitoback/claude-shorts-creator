@@ -24,7 +24,7 @@ export type BoardRow = { label: string; dest: PlanetKind };
 export type RaceDef = {
   mover: MoverKind;
   size: number; // car / spacecraft length or runner height, px
-  depart: number; // frame
+  depart: number; // frame; may be negative (v2.8: the movers are already leaving on frame 0)
   arrive: (number | null)[]; // per row (null = this row doesn't run in this race)
   values?: (string | null)[]; // per row: "45 YEARS" (first word = number, rest = unit)
   valuePos?: 'above' | 'below';
@@ -40,6 +40,8 @@ export type RaceDef = {
   lift?: number; // runner only: 0 = centered on the lane, 1 = feet on the lane (hero size)
   rewind?: { at: number; len: number; rows?: number[]; grow?: { size: number; lift: number } };
   flash?: boolean; // arrival flash + halo on the planet (default true)
+  hideAt?: number; // the movers vanish from this frame on (a hand-off to an identical mover of another
+  // race, e.g. a clone that replays the hook's departure in the last frames so the loop seam keeps moving)
 };
 
 export type MultiRaceBoardProps = {
@@ -140,6 +142,7 @@ export const MultiRaceBoard: React.FC<MultiRaceBoardProps> = ({
       const startNow = r.mover === 'runner' ? startX + originR + 4 + size * 0.25 : s0;
       const x = (s0 + (s1 - s0) * p) * (1 - back) + startNow * back;
       let op = r.appear ? ramp(f, r.appear.at, r.appear.len) : 1;
+      if (r.hideAt != null && f >= r.hideAt) op = 0;
       if (r.out && !(r.out.keep ?? []).includes(i)) op *= 1 - interpolate(f, [r.out.at, r.out.at + r.out.len], [0, 1], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: EASE.in });
       return { a, T, p, back, size, lift, x, op, rw };
     });
@@ -227,7 +230,7 @@ export const MultiRaceBoard: React.FC<MultiRaceBoardProps> = ({
                 const go = ramp(f, r.depart, 5);
                 const stop = f >= st.a ? 1 - ramp(f, st.a, 8) : 1;
                 const run = go * stop * (1 - st.back);
-                const set = f < r.depart ? 1 - go : st.rw ? ramp(f, st.rw.at + st.rw.len - 12, 12) : 0;
+                const set = f <= r.depart ? 1 - go : st.rw ? interpolate(f, [st.rw.at + st.rw.len - 12, st.rw.at + st.rw.len], [0, 1], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' }) : 0; // linear: still settling on the last frame, so a launch right after never follows a hold
                 const breath = f >= st.a + 8 && !moving ? 0.5 + 0.5 * Math.sin((f - st.a) / 14) : 0;
                 const ground = y + h * 0.48 * (1 - st.lift);
                 return <Runner key={ri} x={st.x} y={ground} h={h} run={run} set={Math.max(set, f < r.depart ? 1 : 0)} phase={phase} breath={breath} opacity={st.op * lo} />;

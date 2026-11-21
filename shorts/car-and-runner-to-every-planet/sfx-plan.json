@@ -11,18 +11,18 @@
   },
   "events": [
     {
-      "at_s": 0.3,
+      "at_s": 0.04,
       "sfx_id": "sprint-start",
       "gain_db": 0,
       "align": "attack",
-      "cue": "hook: the runner explodes out of the crouch (phone-audible start cue)"
+      "cue": "hook: frame 0 is already mid-burst (first-second pass): start cue at its earliest legal time (phone-audible)"
     },
     {
-      "at_s": 0.433,
+      "at_s": 0.27,
       "sfx_id": "whoosh-soft",
       "gain_db": -5,
       "align": "peak",
-      "cue": "hook: light whoosh as it reaches full sprint"
+      "cue": "hook: light whoosh as it reaches full sprint (frame 0 is 6 frames into it)"
     },
     {
       "at_s": 2.2,

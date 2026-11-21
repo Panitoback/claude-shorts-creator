@@ -14,6 +14,11 @@ import { Spacecraft } from './Spacecraft';
 // it; on arrival a small soft gold flash on the destination and the row's value fades in and rises.
 // `rewind` glides every mover back to the start together (the Race loop), so the last frame can match
 // frame 0. The board's names and values are part of it: they are not annotations (§6 limit).
+// First-second rule (PROJECT_CONTEXT v0.21.0 / brand v2.8): the speed goes in `speedLine` (one small
+// line; the question title above the board is the big element, drawn by the shot), and the movers can
+// already be LEAVING on frame 0: give a negative `depart` (e.g. −6) plus `loopTotal`, and the last
+// −depart frames of the video replay the start of the departure after the rewind, so the loop seam
+// never holds still. `header` (the big v0.18 speed header) is kept only for the published first Race.
 // Every vertical position comes from props (defaults derived from SAFE_RECT): 16:9-ready.
 export type RaceRow = {
   label: string; // e.g. "EARTH → VENUS" (shown uppercase)
@@ -41,6 +46,10 @@ export type RaceBoardProps = {
   // SPEED HEADER above the board: names the mover / its speed so the viewer knows what is racing,
   // e.g. { label: "NEW HORIZONS' LAUNCH SPEED", value: "36,000 mph" } (first word = number, rest = unit, gold italic)
   header?: { label: string; value: string };
+  speedLine?: string; // v2.8: the speed as ONE small line, e.g. "NEW HORIZONS' LAUNCH SPEED · 36,000 MPH"
+  speedLineY?: number; // top of the speed line (default SAFE_RECT.y + 4)
+  speedLineSize?: number; // default TYPE.annotation (28): the rule line's size
+  loopTotal?: number; // composition length; with depart < 0 the departure straddles the loop seam
   headerY?: number; // top of the header block (default SAFE_RECT.y + 4)
   launchEase?: number; // frames of acceleration at departure (default 6)
   valuesOut?: number; // frame the values start fading (bottom row first, 1 frame apart)
@@ -55,7 +64,8 @@ const dist = (tau: number, L: number) => (tau <= 0 ? 0 : tau < L ? (tau * tau) /
 export const RaceBoard: React.FC<RaceBoardProps> = ({
   rows, depart, origin = 'earth', top = SAFE_RECT.y + 110, gap, startX = SAFE_RECT.x + 50,
   destX = SAFE_RECT.x + SAFE_RECT.w - 80, valueRight = SAFE_RECT.x + SAFE_RECT.w - 20, destR = 26, originR = 13,
-  moverLength = 56, rule, ruleY, header, headerY = SAFE_RECT.y + 4, launchEase = 6, valuesOut, rewind, at = 0, warm = false,
+  moverLength = 56, rule, ruleY, header, headerY = SAFE_RECT.y + 4, speedLine, speedLineY = SAFE_RECT.y + 4,
+  speedLineSize = TYPE.annotation.fontSize, loopTotal, launchEase = 6, valuesOut, rewind, at = 0, warm = false,
 }) => {
   const [hNum, ...hUnit] = header ? header.value.split(' ') : [''];
   const f = useCurrentFrame();
@@ -66,7 +76,10 @@ export const RaceBoard: React.FC<RaceBoardProps> = ({
   const shipFrom = startX + originR + moverLength * 0.62;
   const shipTo = destX - destR - moverLength * 0.62;
   const laneEnd = destX - destR - 8;
-  const back = rewind ? EASE.inOut(Math.min(1, Math.max(0, (f - rewind.at) / rewind.len))) : 0;
+  // the loop's lead-in: the last −depart frames replay the departure (frame 0 continues it)
+  const lead = loopTotal != null && depart < 0 && f >= loopTotal + depart;
+  const fm = lead ? f - loopTotal! : f; // the frame the movers live on
+  const back = lead ? 0 : rewind ? EASE.inOut(Math.min(1, Math.max(0, (f - rewind.at) / rewind.len))) : 0;
   const lastY = laneY(rows.length - 1);
   const ruleLines = rule ? rule.split('\n').map((l) => l.split(' · ')) : [];
 
@@ -83,13 +96,17 @@ export const RaceBoard: React.FC<RaceBoardProps> = ({
           </div>
         </div>
       )}
+      {speedLine && (
+        <div style={{ position: 'absolute', left: 540 - 450, width: 900, top: speedLineY, textAlign: 'center', ...TYPE.annotation,
+          fontSize: speedLineSize, letterSpacing: 3, color: PALETTE.sciText, whiteSpace: 'nowrap', lineHeight: 1.35 }}>{speedLine}</div>
+      )}
       {/* lanes, START line, traveled parts */}
       <svg width="100%" height="100%" style={{ position: 'absolute', inset: 0, overflow: 'visible' }}>
         <line x1={startX} x2={startX} y1={laneY(0) - G * 0.32} y2={lastY + G * 0.32} stroke={PALETTE.ivory} strokeOpacity={0.35} strokeWidth={2} />
         {rows.map((r, i) => {
           const d = r.depart ?? depart;
           const T = Math.max(1, r.arrive - d);
-          const p = Math.min(1, dist(f - d, launchEase) / dist(T, launchEase)) * (1 - back);
+          const p = Math.min(1, dist(fm - d, launchEase) / dist(T, launchEase)) * (1 - back);
           const shipX = shipFrom + (shipTo - shipFrom) * p;
           const y = laneY(i);
           return (
@@ -103,17 +120,17 @@ export const RaceBoard: React.FC<RaceBoardProps> = ({
       {rows.map((r, i) => {
         const d = r.depart ?? depart;
         const T = Math.max(1, r.arrive - d);
-        const raw = Math.min(1, dist(f - d, launchEase) / dist(T, launchEase));
+        const raw = Math.min(1, dist(fm - d, launchEase) / dist(T, launchEase));
         const p = raw * (1 - back);
         const y = laneY(i);
         const shipX = shipFrom + (shipTo - shipFrom) * p;
-        const moving = f >= d && f < r.arrive;
+        const moving = fm >= d && fm < r.arrive;
         // engine: idle flicker → flare at departure → cruising → idle after arrival
         const idle = 0.22 + 0.06 * Math.sin(f / 9 + i * 1.3);
-        const flare = ramp(f, d, 6) * (1 - 0.35 * ramp(f, d + 6, 14));
-        const settle = 1 - ramp(f, r.arrive, 12);
-        const engine = Math.max(idle, f >= d ? flare * settle : 0);
-        const trail = moving ? ramp(f, d, launchEase) : f >= r.arrive ? 1 - ramp(f, r.arrive, 8) : 0;
+        const flare = ramp(fm, d, 6) * (1 - 0.35 * ramp(fm, d + 6, 14));
+        const settle = 1 - ramp(fm, r.arrive, 12);
+        const engine = Math.max(idle, fm >= d ? flare * settle : 0);
+        const trail = moving ? ramp(fm, d, launchEase) : fm >= r.arrive ? 1 - ramp(fm, r.arrive, 8) : 0;
         // arrival
         const k = f - r.arrive;
         const flashLen = r.gold ? 18 : 12;
