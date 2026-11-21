@@ -6,7 +6,7 @@
 > **Reference scene:** the `BrandReference` composition is this document rendered on screen. If
 > it looks right, the brand is right.
 >
-> v2.9 · 2026-11-20 · direction: *Deep Field hybrid* (cinematic and editorial, with a few
+> v2.9.1 · 2026-11-20 · direction: *Deep Field hybrid* (cinematic and editorial, with a few
 > scientific annotations) · **energy curve**: a high-energy hook, a calm body, bursts on the peaks ·
 > **visual variety**: scenes change, and every number is shown · **whip transitions** approved as a
 > hand-off (§8) · **dynamism** (v2.3): shape match cuts, fly-throughs, a living camera, punch-ins,
@@ -102,7 +102,10 @@ sans. Both are free Google fonts, so nothing has to be installed.
   spoken are faint ivory, and the keyword turns gold as it is said.
 - **At most 4 words on screen at once**, in one line, centered.
 - **The caption lane** is centered at y = 1500 (v2.7; 1350 before), at most 720 px wide, and
-  symmetric around the center of the screen (§9).
+  symmetric around the center of the screen (§9). **Checked on real phones (2026-11-20):** the
+  user viewed published shorts from another account on YouTube, Instagram and Facebook, and
+  captions at y = 1500 are not covered on any of them. It stays at 1500; re-check if a platform
+  changes its UI.
 - **One keyword per caption chunk at most.** The keyword is the word that carries the idea
   ("*Sun*", "*falling*", "*sideways*"), not just any long word.
 - Captions follow the narration exactly. Word timings come from the real voice, never estimates.
@@ -385,7 +388,7 @@ Nothing that matters (text, hero objects, annotations) goes inside these margins
 | Edge | Margin | What covers it |
 |---|---|---|
 | Top | **210 px** | platform tabs, search, camera |
-| Bottom | **320 px** | the lowest band of handle / title / description / music ticker (on a phone Shorts can reach about y = 1420: accepted overlap for a fuller frame; keep the most important line, e.g. a payoff number, above ~y 1450) |
+| Bottom | **320 px** | the lowest band of handle / title / description / music ticker (the caption lane at y = 1500 was checked on real devices on 2026-11-20 and stays clear on YouTube, Instagram and Facebook; re-check if a platform changes its UI) |
 | Right | **60 px** | breathing room (the like/share rail is ignored on purpose: content stays centered) |
 | Left | **60 px** | breathing room |
 

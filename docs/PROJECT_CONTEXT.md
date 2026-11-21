@@ -3,7 +3,7 @@
 > **For:** the planning project where topics, aesthetics and scripts are developed.
 > **Pair it with:** `brand.md` (the visual and sound style contract — read it for colors, type,
 > captions, annotations, motion, safe zones and sound taste; this file never repeats it).
-> **Version:** v0.21.2 · 2026-11-20 · phase: *hook keeps the answer for the end (§7) · voice default: warm, confident, conversational, no delivery tags (§2) · the first-second rule built (race board: small speed line, movers already leaving on frame 0, a seam that never holds; "car-and-runner" reworked to it) · (from the first Race's Instagram data): frame 0 states the question in plain words, large, and already moves; the Race speed becomes a small line; new FRAME 0 TEXT field in §6*
+> **Version:** v0.21.3 · 2026-11-20 · phase: *caption lane at y 1500 verified on real phones (§5, §7) · hook keeps the answer for the end (§7) · voice default: warm, confident, conversational, no delivery tags (§2) · the first-second rule built (race board: small speed line, movers already leaving on frame 0, a seam that never holds; "car-and-runner" reworked to it) · (from the first Race's Instagram data): frame 0 states the question in plain words, large, and already moves; the Race speed becomes a small line; new FRAME 0 TEXT field in §6*
 >
 > This file describes **what can be asked for**, not how it is built. If a script asks for
 > something listed here, it can be made. If it asks for something not listed, flag it as a
@@ -528,7 +528,10 @@ Ideas for future formats (to be decided): *myth vs fact*, *"what if"*, *one numb
   **safe area** is about 960 × 1390 px of the 1080 × 1920 frame (from y 210 to y 1600). Ask for
   big graphics: there is room. Atmosphere such as glow and stars may spill past it.
 - In practice: the hero number sits in the upper part, the hero object in the middle, and the
-  caption just above the bottom area. There is room for about one hero object plus one or two
+  caption just above the bottom area, at y = 1500. That caption position was **checked on real
+  phones on 2026-11-20** (published shorts viewed from another account on YouTube, Instagram and
+  Facebook): nothing covers it on any of the three. It stays there; re-checked only if a platform
+  changes its UI. There is room for about one hero object plus one or two
   small annotations.
 
 ---
@@ -727,6 +730,11 @@ BEATS:
 ## 7. Learnings
 
 What worked and what didn't. Newest first.
+
+- **The caption lane at y = 1500 is clear on real phones.** The user checked published shorts from
+  another account on YouTube, Instagram and Facebook (2026-11-20): captions at y = 1500 are not
+  covered on any platform, so the old caution ("keep the most important line above ~y 1450") is
+  dropped. A real-device check beats estimated UI margins; repeat it when a platform redesigns.
 
 - **Filling the first second must not spend the payoff (the user's note on "car-and-runner").** The
   first-second rework filled the empty center with the years counting live 0 → 11,000 and kept the
