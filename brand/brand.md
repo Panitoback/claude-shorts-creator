@@ -6,7 +6,7 @@
 > **Reference scene:** the `BrandReference` composition is this document rendered on screen. If
 > it looks right, the brand is right.
 >
-> v2.7 · 2026-11-19 · direction: *Deep Field hybrid* (cinematic and editorial, with a few
+> v2.8 · 2026-11-20 · direction: *Deep Field hybrid* (cinematic and editorial, with a few
 > scientific annotations) · **energy curve**: a high-energy hook, a calm body, bursts on the peaks ·
 > **visual variety**: scenes change, and every number is shown · **whip transitions** approved as a
 > hand-off (§8) · **dynamism** (v2.3): shape match cuts, fly-throughs, a living camera, punch-ins,
@@ -15,7 +15,9 @@
 > SPACE VIEW (the default, §1–§10) and **GROUND VIEW**, the sky as seen from Earth (§11) ·
 > **Race format** (v2.6): one calm continuous scene, the exception to the hook burst, the new-idea
 > rhythm and hero size (§5, §8) · **centered, fuller safe area** (v2.7): right rail ignored, bottom
-> margin 320 instead of 500, a 960 × 1390 safe rectangle (§9)
+> margin 320 instead of 500, a 960 × 1390 safe rectangle (§9) · **the first second** (v2.8): frame 0
+> states the question in plain words, large, already moves, and its key elements read at feed size;
+> in a Race the speed is a small secondary line (§8, §10)
 
 ---
 
@@ -251,13 +253,18 @@ than bouncing. What changes along the energy curve (§1) is speed and camera. Ti
 
 | Part | Motion | Rules |
 |---|---|---|
-| **Hook** (first ~3 s) | **high energy** | fast camera moves with a **strong ease-out** (`EASE.punch`: the bulk of the move in its first 12–24 frames, then a soft landing, ~1.5 s at most in all; big zooms are eased in log scale so the zoom looks even); ignition / zoom reveals; a **kinetic title synced to the voice** (word by word, each word arriving on its spoken time with a fast rise); **parallax depth** (2–3 star layers moving at different speeds during camera moves); **a clear visual change every 2–3 s** for the first ~10 s |
+| **Hook** (first ~3 s) | **high energy** | fast camera moves with a **strong ease-out** (`EASE.punch`: the bulk of the move in its first 12–24 frames, then a soft landing, ~1.5 s at most in all; big zooms are eased in log scale so the zoom looks even); ignition / zoom reveals; **moving on frame 0** (the move is already under way on the first frame: `EASE.punch` starts fast, no hold before it); **the question in big plain words from frame 0**, its words lighting up on their spoken times (a title that arrives word by word would leave frame 0 without its question, so it comes only after the question is up); **parallax depth** (2–3 star layers moving at different speeds during camera moves); **a clear visual change every 2–3 s** for the first ~10 s |
 | **Body** | **calm, cinematic** | the table below: slow arrivals, ease in-out camera moves, ambient life |
 | **Peaks** (main reveal, twist) | **a burst, then settle** | one fast move or ignition (`EASE.punch`, its bulk in 12–24 frames) on the beat, synced to its sound; then back to body pacing within ~1 s |
 
-**Race (v2.6) is calm end to end:** no hook burst, no peaks, no punch-ins or whips. Frame 0 is the
-full board; the movers depart together on the hook line (smooth ease-in, then a steady cruise) and
-each one eases to a stop on arrival. Sound: a calm bed, a soft cue on each arrival, no hook hit.
+**Race (v2.6) is calm end to end:** no hook burst, no peaks, no punch-ins or whips. **Frame 0 (v2.8)
+leads with the question in plain words**, large at the top (title size, the biggest text on screen),
+over the full board. The mover's speed is **one small secondary line** under the title or next to
+the rule line (Inter 600 caps, `sciText`, the rule line's size), never the big top element. The
+movers are **already leaving on frame 0**: a short ease-in that moves from the first frame (≤ ~6
+frames to cruise), then a steady cruise; each eases to a stop on arrival. The loop's glide back
+hands straight into the departure, with no still hold at the seam. Sound: a calm bed, a soft cue
+on each arrival, no hook hit.
 
 ### Hand-offs between scenes
 
@@ -286,14 +293,16 @@ move**, a **morph**, an **object carried** into the next scene, and the **whip t
   than ~3 Hz.
 
 - **Constant motion:** something always moves (a slow drift, infalling gas, the camera), so no
-  frame is a still, especially in the hook.
+  frame is a still, especially in the hook: **frame 0 already moves visibly** (v2.8), and the loop
+  seam doesn't hold still.
 
 ### Dynamism (v2.3)
 
 - **A living camera:** the whole body sits inside one virtual camera (`Camera`) with a slow drift
   (~10 px, ~12 s period, a ±0.5 % breathing zoom) and **parallax**: the far star layer moves at
   ~0.15–0.45 of the objects (`CameraLayer depth`). The drift fades to zero in the hook's first frame
-  and the loop's last, so frame 0 still matches the last frame. Captions stay outside the camera.
+  and the loop's last, so frame 0 still matches the last frame (so the drift never counts as frame 0's
+  motion: the hook's own move or the movers must be under way). Captions stay outside the camera.
 - **Punch-in instead of shake:** on the **big hits only** (the main reveal, the final peak such as
   "heat death"): zoom 1 → 1.03 in 6 frames (ease-out), then it settles back over ~1.2 s (ease
   in-out). No overshoot. Shake stays banned. At most 2–3 per short.
@@ -394,11 +403,21 @@ That leaves a **safe rectangle of 960 × 1390 px** from (60, 210) to (1020, 1600
 - **1080×1920, 30 fps**, rendered at full scale. **Length depends on the format** (ranges in
   `docs/PROJECT_CONTEXT.md` §5); hard ceiling 180 s, only with explicit approval.
 - **Frame 0 is composed, but it is not the cover.** It is a complete, readable image with no fade
-  from black (the subject is already there), and it is the *start* of the hook's motion, not its
+  from black (the subject is already there), and it is already *inside* the hook's motion, not its
   payoff: a dormant black hole about to ignite, an extreme close-up about to pull back. **The
   cover (thumbnail) is chosen at upload** from any frame (usually the hook's payoff or the main
   reveal). (The 5-second reference scene animates in from empty; a real short pre-rolls so frame
   0 is already complete.)
+- **The first second (v2.8, every format).** Half the viewers decide in the first ~2 s (measured on
+  the first Race: retention 100 % → ~45 % in 2–3 s, then nearly flat). Frame 0 must:
+  1. **state the curiosity in plain words, large**: the question (or claim) the short opens, at
+     title size (§3), readable in the feed in under a second; it is the first and biggest text;
+  2. **not open on jargon**: no technical label, unexplained term or bare number as the first thing
+     read (labels, speeds, rules and units come after it, small);
+  3. **move visibly**: the hook's motion is under way on frame 0 (the camera drift alone doesn't
+     count, §8), and the loop's last frames don't hold still before the seam;
+  4. **read at feed size**: the question and the hero are big and inside the safe area, not a
+     small detail in an empty frame.
 - **The last frame leads back into frame 0**, so the loop is seamless: the ending returns to the
   hook's starting state, not to its payoff. There are no subscribe or comment-bait outros.
 - **Audio: −14 LUFS integrated (±0.5), true peak ≤ −2.0 dBTP measured on the final encoded file**,

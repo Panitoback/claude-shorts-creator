@@ -12,7 +12,8 @@ TARGET LENGTH: XX s
 TITLE: <the short's title, as it would appear on YouTube> [≤ 60 characters]
 SLUG: <folder name: lowercase-with-dashes, e.g. sun-volume> [2–4 words]
 TONE: <calm awe | playful | eerie | matter-of-fact>
-HOOK FRAME: <what the very first frame shows: composed, subject already there, no fade from black. It is the START of the hook's motion, not the cover (the cover is picked at upload)>
+HOOK FRAME: <what the very first frame shows: composed, subject already there, no fade from black, and something already MOVING on it (the hook's motion is under way on frame 0, no still hold). It is the start of the hook's motion, not the cover (the cover is picked at upload). Key elements big enough to read at feed size>
+FRAME 0 TEXT: <the curiosity in plain words, shown LARGE on frame 0 and readable in the feed in under a second: the question (or claim) the short opens, e.g. "How long to fly to every planet?". Everyday words: never a technical label, a number without its context or a term to decode as the first thing read> [≤ 7 words; ≤ 3 lines of ~12–14 characters]
 HOOK MOVE: <the fast change in the first ~3 s that delivers the surprise: ignition, pull-back, dive-in, zoom, or a whip montage (rapid related pictures, ~0.6–1 s each, joined by whip transitions)…> <Race: write "none (Race)": the movers' departure is the hook's motion>
 SCALE: <true | not to scale> <required if any scene is about size or distance; say which scenes>
 > Race: SCALE is "not to scale (Race timing)": the arrival ORDER is true, the gaps between arrivals are not.
@@ -43,7 +44,7 @@ BEATS:
 
 1. HOOK (0–3 s) [VO ≤ 7 words]
    VO: "<first line: the surprising claim>"
-   VISUAL: <starts on the HOOK FRAME; the HOOK MOVE lands the surprising thing by ~3 s>
+   VISUAL: <starts on the HOOK FRAME, already moving, FRAME 0 TEXT large on screen; the HOOK MOVE lands the surprising thing by ~3 s>
    HERO NUMBER: <optional>
    KEYWORD: <word>
    ANNOTATIONS: <optional, max 2>
@@ -84,19 +85,21 @@ BEATS FOR A RACE (FORMAT: Race uses these three beats INSTEAD of 1–6 above):
 >   toward the 2-annotation limit. No HERO NUMBER, no QUIZ.
 
 MOVER: <spacecraft | car | runner (all built, §3.6); a no-voice Race may run two of them one after the other (§4 Race, variant)>
-SPEED HEADER: <what is racing and how fast, shown big above the board for the whole video:
-  label / value, e.g. "NEW HORIZONS' LAUNCH SPEED" / "36,000 mph"> [label ≤ 30 characters, value ≤ 12]
+SPEED LINE: <what is racing and how fast, in ONE SMALL secondary line (under the FRAME 0 TEXT, or
+  next to the RULE LINE) for the whole video; never the big top element: the FRAME 0 TEXT is,
+  e.g. "NEW HORIZONS' LAUNCH SPEED · 36,000 MPH"> [≤ 44 characters]
 START: <the shared starting line, e.g. "Earth">
 RULE LINE: <the one small line under the board stating how every value was worked out: the
-  path and which distance (the speed is in the SPEED HEADER), e.g. "STRAIGHT LINE · AVERAGE DISTANCE"> [≤ 48 characters]
+  path and which distance (the speed is in the SPEED LINE), e.g. "STRAIGHT LINE · AVERAGE DISTANCE"> [≤ 48 characters]
 ROWS: [3–8 rows, listed in ARRIVAL ORDER, first arrival first]
 - <destination> — <real value exactly as written on the row, e.g. "6 months"> [name ≤ 12 characters, value ≤ 12 characters]
 - <destination> — <value>
 
 1. HOOK (0–3 s) [VO ≤ 7 words]
-   VO: "<the question or claim the race answers, naming the mover, e.g. '…by spacecraft?'>"
-   VISUAL: frame 0 = the board already in place (rows named, movers on the starting line, RULE
-     LINE visible); the movers depart together by the end of the line
+   VO: "<the question the race answers, naming the mover, e.g. '…by spacecraft?' (usually the FRAME 0 TEXT, spoken)>"
+   VISUAL: frame 0 = the FRAME 0 TEXT large at the top, over the board already in place (rows
+     named, SPEED LINE and RULE LINE small); the movers are ALREADY LEAVING the starting line on
+     frame 0 (a short smooth ease-in, visible from the first frames; no waiting for the voice)
    KEYWORD: <word>
 
 2. RACE [no VO]
@@ -105,7 +108,7 @@ ROWS: [3–8 rows, listed in ARRIVAL ORDER, first arrival first]
 
 3. LOOP [VO ≤ 10 words, or none]
    VO: "<optional closing line, after the last arrival>"
-   VISUAL: the movers glide back to the starting line, so the last frame matches frame 0
+   VISUAL: the movers glide back to the starting line and roll straight into frame 0's departure (no still hold at the seam)
 
 ---
 
@@ -129,14 +132,17 @@ PRONUNCIATION: <word — how to say it, e.g. 'quasar — KWAY-zar'; only
 - [ ] VO has no symbols/abbreviations; every KEYWORD appears verbatim in its VO
 - [ ] SCALE stated for any scene about size or distance
 - [ ] The HOOK FRAME is composed, and the HOOK MOVE shows the surprising thing within ~3 s
-      (Race: frame 0 is the full board, movers on the starting line; HOOK MOVE "none (Race)")
+      (Race: frame 0 is the FRAME 0 TEXT over the full board, movers already leaving; HOOK MOVE "none (Race)")
+- [ ] First second: FRAME 0 TEXT states the curiosity in plain words, large (≤ 7 words); the
+      first thing read is not jargon, a technical label or a bare number; something visibly
+      moves on frame 0; the key elements are big enough to read at feed size
 - [ ] Each REVEAL step shows its claim visually (comparison, diagram, bars/meter, timeline or
       counter), and a new visual idea arrives at least every ~5–10 s (not for Race: its constant
       motion replaces this rule)
 - [ ] The LOOP returns to the hook, with no call to action
 - [ ] Race only: 10–40 s; 3–8 ROWS listed in arrival order, each value written as it should
-      appear and backed by SOURCES (or by sourced distances + the speed in the SPEED HEADER); one
-      SPEED HEADER naming the mover and its speed; one RULE LINE naming path and which distance;
+      appear and backed by SOURCES (or by sourced distances + the speed in the SPEED LINE); one
+      small SPEED LINE naming the mover and its speed; one RULE LINE naming path and which distance;
       VO = hook ≤ 7 words naming the mover + optional closing line, nothing during the race
 
 ---

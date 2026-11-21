@@ -3,7 +3,7 @@
 > **For:** the planning project where topics, aesthetics and scripts are developed.
 > **Pair it with:** `brand.md` (the visual and sound style contract — read it for colors, type,
 > captions, annotations, motion, safe zones and sound taste; this file never repeats it).
-> **Version:** v0.20.1 · 2026-11-20 · phase: *"Fold Paper 42 Times" (Scale) in production: exponential-growth kit built (paper fold stack, altitude ascent, generic tower, space station, altitude line, field ribbon)*
+> **Version:** v0.21.0 · 2026-11-20 · phase: *the first-second rule (from the first Race's Instagram data): frame 0 states the question in plain words, large, and already moves; the Race speed becomes a small line; new FRAME 0 TEXT field in §6*
 >
 > This file describes **what can be asked for**, not how it is built. If a script asks for
 > something listed here, it can be made. If it asks for something not listed, flag it as a
@@ -22,8 +22,8 @@
   real proportions, numbers that actually count up. Because of that, every short can be
   re-edited, restyled or re-voiced later without starting over.
 - **Minimalist and cinematic, with an energy curve.** The first ~3 seconds hit hard (a fast
-  camera move or an ignition, the title arriving word by word with the voice, a sound you hear
-  even on a phone); the body is calm and cinematic; the main reveal and the twist get a short
+  camera move or an ignition already under way on the first frame, the question in big plain words
+  from frame 0, a sound you hear even on a phone); the body is calm and cinematic; the main reveal and the twist get a short
   burst, then settle (the **Race** format, §4, is the one calm exception: no burst, the movers
   carry it). One idea per short, one hero object on screen at a time, lots of
   dark space. Warm starlight on near-black, big editorial serif numbers, gold for the word that
@@ -131,7 +131,7 @@ All of these can arrive already in place on the first frame, so they work in a h
 | **Marker + leader line** | A ring that settles around an object, a thin blue line, a label (+ value) | what it points at, label, value, which side the label sits (below, above, left, right), a dot for objects too small to see |
 | **Scale bar** | A measured span with end ticks that draws from its center outward, with a label | what it spans, label, second line, label above or below |
 | **Data label** | A free-standing fact next to an object: small label + serif value, no line | label, value, alignment, value in gold italic when it is *the* number of the scene |
-| **Kinetic title** *(new, for hooks)* | A big title that arrives word by word, each word landing exactly as the voice says it, with a fast rise (no bounce) | the words (from the hook line), which word is gold, size, when it leaves |
+| **Kinetic title** *(new, for hooks)* | A big title that arrives word by word, each word landing exactly as the voice says it, with a fast rise (no bounce). Since v0.21.0 the hook's question must already be readable on frame 0, so in a hook the words are on screen from the start and light up as spoken; the word-by-word arrival is for later titles | the words (from the hook line), which word is gold, size, when it leaves |
 | **Depth stars** *(new, for hooks)* | A sky with real depth for fast camera moves: diving in, near stars stream past while far ones barely move; pulling back, the sky gathers in around the object. Stars stay small points | dive-in or pull-back, how far the camera travels, how many stars stream past |
 | **Scale comparison** | Two or more bodies side by side at **true relative size**, names underneath. Anything that would be smaller than a few pixels is drawn as a dot with a ring, so it stays findable without lying about its size. | which bodies (any planet/moon above, the Sun, or a star with its real radius), the names, an optional value under each, bottoms aligned or centers aligned |
 
@@ -211,7 +211,7 @@ For a single big count-up, use the **Hero number** (3.1).
 | **Two races on one board**: a second set of movers races the same lanes after the first (the first ones stay parked; the second park behind them), each race's value in its own line next to the planet (first above, second below, the second slightly smaller); the gold can move from one value to another | **Built** (v0.19.0) |
 | **Single-lane hook**: one lane alone (at its final row position) with its value big in the middle of the frame, which unfolds into the full board (the lane duplicates into the other rows) and folds back for the loop | **Built** (v0.19.0) |
 | **Title swap**: a short on-screen title that changes in place (old words fade and fall, new rise), one gold word each; for shorts without a voice the title IS the question | **Built** (v0.19.0) |
-| **Speed header changes**: the speed header can change to a new mover mid-video, and a second small line can join under it (two movers named top-to-bottom like their values) | **Built** (v0.19.0) |
+| **Speed line changes**: the mover's speed line can change to a new mover mid-video, and a second small line can join under it (two movers named top-to-bottom like their values) | **Built** (v0.19.0, as a big header; since v0.21.0 it is shown as a small secondary line under the title) |
 | **Elapsed clock** ("YEARS PASSED"): a small counter that runs during a race and lands exactly on each row's value as that mover arrives, resetting for a second race; it makes a compressed race read as a time-lapse (use it whenever a slower mover would otherwise cross the screen faster than a quicker one) | **Built** (v0.19.0) |
 
 ### 3.7 Everyday objects and the arrow of time (built, brand style)
@@ -312,13 +312,23 @@ base rules it replaces). Lengths and word budgets are in §5.
 
 | Beat | Time | Purpose |
 |---|---|---|
-| **Hook** | 0–3 s (always fixed) | **High energy.** The first frame is composed (no fade from black) and is the start of a fast move (ignition, pull-back, dive-in) that lands the surprising thing within ~3 s, with the title arriving word by word on the voice and a sound heard even on a phone. A clear visual change every 2–3 s for the first ~10 s. The cover is picked at upload, not frame 0. **The hook opens a question, it doesn't spend the payoff:** if the short has a bigger reveal later (a twist, a last rung), the hook line points at it as a question instead of stating the full answer up front ("Just 42 folds to reach the Moon. How many to cross the universe?"), so the viewer stays to find out. |
+| **Hook** | 0–3 s (always fixed) | **High energy.** The first frame is composed (no fade from black), shows the question in big plain words (FRAME 0 TEXT), and is already inside a fast move (ignition, pull-back, dive-in: visibly moving on frame 0, no hold before it) that lands the surprising thing within ~3 s, the words lighting up on the voice and a sound heard even on a phone. A clear visual change every 2–3 s for the first ~10 s. The cover is picked at upload, not frame 0. **The hook opens a question, it doesn't spend the payoff:** if the short has a bigger reveal later (a twist, a last rung), the hook line points at it as a question instead of stating the full answer up front ("Just 42 folds to reach the Moon. How many to cross the universe?"), so the viewer stays to find out. |
 | **Setup** | ~20% | Show the situation fast; build the tension the hook promised. |
 | **Quiz** *(optional)* | ~2.5 s | "Pause. Can you guess?" Drives comments and rewatches. |
 | **Reveal** | ~45% | The payoff in 2–4 steps, each step landing on a spoken word **and shown with its own picture** (comparison, diagram, bars, timeline, counter). |
 | **Twist** | ~20% | A reframe or bonus insight: the "send this to a friend" moment. |
 | **Loop** | last ~3–4 s | The last frame visually matches the first, so the replay is seamless. |
 
+> **The first second (every format, v0.21.0).** About half the viewers decide in the first ~2 s
+> (§7), so frame 0 does three jobs: **(1) it states the curiosity in plain words, large**: the
+> question (or claim) the short opens, at title size, readable in the feed in under a second; the
+> first thing read is never jargon, a technical label or a number without its context ("LAUNCH
+> SPEED / 36,000 mph", "0 folds"); **(2) something visibly moves on frame 0**: the hook's motion is
+> already under way (no still hold, no slow start from rest; the camera drift alone doesn't count),
+> and the loop's seam doesn't stop either; **(3) the key elements are big enough to read at feed
+> size**: the question and the hero, not a small detail in an empty frame. The script writes the
+> words as FRAME 0 TEXT (§6). Brand: `brand.md` §8 and §10.
+>
 > **Visual variety (every format, every beat):** one hero object per scene, but the scenes
 > change: a new visual idea at least every ~5–10 s, and every number or comparison in the VO is
 > shown on screen, not just said. Scenes hand over smoothly: preferably a **shape match cut**
@@ -335,7 +345,7 @@ base rules it replaces). Lengths and word budgets are in §5.
 | **Impossible Fact** | "That can't be true." One counter-intuitive fact, proven fast | 30–60 s | The object on frame 0; the fact (hero number or title) lands fast with the voice | Hero number, Caption with keyword, Data label, Marker, Glowing body / Planet |
 | **Scale** | "I finally *feel* how big that is." A size, distance or time next to something familiar | 40–75 s | A fast zoom or pull-back that puts the big thing and the familiar thing side by side, or lands the hero number over the big thing | Scale comparison, Hero number, Scale bar, Marker, Glowing body / Planet |
 | **How It Works** | "Oh, *that's* how it works." A mechanism explained step by step | 60–120 s | The end result switching on or revealed fast (what the short will explain) | Any of the base kit and the visual variety kit (3.5), plus whatever new components the steps need (listed under NEW COMPONENTS NEEDED; all of them get built) |
-| **Race** | "Who gets there first, and how long does it take?" A calm, single-scene comparison | 10–40 s | No burst: the full board on frame 0, movers departing together on the hook line | Race board + one mover (spacecraft; later car or runner), Starfield, Planet / Glowing body as destination markers (3.6) |
+| **Race** | "Who gets there first, and how long does it take?" A calm, single-scene comparison | 10–40 s | No burst: the question in big plain words over the full board on frame 0, the movers already leaving the start | Race board + one mover (spacecraft; later car or runner), Starfield, Planet / Glowing body as destination markers (3.6) |
 
 ### Impossible Fact
 
@@ -392,21 +402,29 @@ in order. Example: Earth → each planet, at a probe's speed.
   1.5–4 s apart), not proportional to the real values. The **real value is written on each row
   the moment its mover arrives**: that text is the claim, so it must be in SOURCES. No separate
   "not to scale" tag: SCALE says *not to scale (Race timing)* and the written values carry the truth.
-- **Say what is racing and how fast.** A SPEED HEADER above the board names the mover and its
-  speed in big type for the whole video (e.g. "NEW HORIZONS' LAUNCH SPEED" / "36,000 mph"), and the
-  hook line names the mover ("…by spacecraft?"). A verb like "fly" alone leaves the viewer
-  guessing whether it is a plane or a probe (learned on the first Race).
+- **Lead with the question; the speed is a small line.** The big top element is the question in
+  plain words (FRAME 0 TEXT, e.g. "How long to fly to every planet?"), at title size, readable in
+  the feed in under a second and on screen for the whole video (a no-voice Race may swap it). The
+  mover and its speed go in **one small SPEED LINE** under the title or next to the rule line (e.g.
+  "NEW HORIZONS' LAUNCH SPEED · 36,000 MPH"): it is there for whoever looks closer, never the first
+  thing read (the first Race led with a big speed header and lost half its viewers in 2 s, §7).
+  The question or the hook line still names the mover ("…by spacecraft?"): a verb like "fly" alone
+  leaves the viewer guessing whether it is a plane or a probe (learned on the first Race).
 - **The rule behind the numbers is on screen**, in one small line under the board (RULE LINE):
   the path (e.g. straight line) and which distance was used (average, closest approach…), e.g.
-  "STRAIGHT LINE · AVERAGE DISTANCE". Every value on the board must follow from the SPEED HEADER
+  "STRAIGHT LINE · AVERAGE DISTANCE". Every value on the board must follow from the SPEED LINE
   and that one rule.
-- **Hook:** calm. Frame 0 is the complete board (speed header, rows named, movers on the starting line, rule
-  line visible); the movers depart by the end of the spoken hook (≤ 7 words). No hook burst, no
-  fast camera move, no kinetic title required; the hook line appears as a normal caption.
+- **Hook:** calm, but moving from frame 0. Frame 0 is the question title over the complete board
+  (rows named, speed line and rule line small) with the movers **already leaving the starting
+  line**: a short, smooth ease-in that is visible from the first frames, then the steady cruise.
+  Nothing waits for the voice: the spoken hook (≤ 7 words) runs over the departure. No hook burst,
+  no fast camera move. When the hook line says the title's words, the title is its caption;
+  otherwise the line appears as a normal caption.
 - **Body:** the race itself, with **no narration**. Something is always moving until the last
   arrival; the camera keeps its slow drift.
 - **Loop:** an optional closing line (≤ 10 words) after the last arrival, then the movers glide
-  back to the starting line, so the last frame matches frame 0.
+  back to the starting line and roll straight into frame 0's departure: the last frame matches
+  frame 0 and the seam never holds still.
 - **Sound:** a calm music bed and a **soft cue on each arrival** (automatic, one per row); no
   hook hit, no peak bursts. SOUND MOOD can still describe the feel.
 - **Rules it replaces** (so the script needs no exceptions): the six-beat structure (it uses
@@ -421,7 +439,9 @@ in order. Example: Earth → each planet, at a probe's speed.
   may have no voice at all: the hook question is then an on-screen title (Title swap), the hook may
   open on a **single lane** whose value lands as a big number before the board unfolds, and the
   board may host **two races** one after the other (e.g. car, then runner) with a title swap
-  between them, the speed header changing to name each mover. Ask for an **elapsed clock** whenever
+  between them, the speed line changing to name each mover. The single lane still obeys the first
+  second: the question big at the top, the mover already running on frame 0, the lane big enough
+  to read in the feed. Ask for an **elapsed clock** whenever
   the second race is slower in reality but paced faster on screen (otherwise the eye says the slow
   mover is faster). Length 25–35 s. Sound: the music bed is the program (there is no voice to sit
   under), with a soft start cue for each departure and the arrival ticks.
@@ -482,7 +502,8 @@ Ideas for future formats (to be decided): *myth vs fact*, *"what if"*, *one numb
   5–10 shorts.
 - **Scene length:** each scene or reveal step lasts 3–8 seconds; a beat can contain several steps. A single visual held longer than ~8 seconds
   needs something changing on screen. (A Race is one scene by design; its arrivals are the change.)
-- **Hook:** the first spoken line should land within the first 3 seconds.
+- **Hook:** the first spoken line should land within the first 3 seconds, but the first second
+  does not wait for it: the question is on screen and something moves from frame 0 (§4).
 
 ### Text on screen
 - **Captions:** up to **4 words** at a time, on one line of **about 22 characters**, with **at
@@ -492,6 +513,9 @@ Ideas for future formats (to be decided): *myth vs fact*, *"what if"*, *one numb
 - **Subject line** under the number: 1–2 words ("Earths", "light-years").
 - **Titles** (statements without a number): up to 3 lines, about **12–14 characters per line**
   at full size.
+- **Frame 0 text** (the question or claim on the first frame): title size, ≤ 7 everyday words
+  within the title limits above; the first thing read, so no jargon, technical label or bare
+  number. Labels, speeds and rules come after it, small.
 - **Labels and annotations:** 1–4 words, short ("EARTH ×1", "109 × EARTH'S WIDTH").
 - **Annotations:** at most **2 on screen at once**, and every one must state a checked fact.
 
@@ -519,7 +543,8 @@ TARGET LENGTH: XX s
 TITLE: <the short's title, as it would appear on YouTube> [≤ 60 characters]
 SLUG: <folder name: lowercase-with-dashes, e.g. sun-volume> [2–4 words]
 TONE: <calm awe | playful | eerie | matter-of-fact>
-HOOK FRAME: <what the very first frame shows: composed, subject already there, no fade from black. It is the START of the hook's motion, not the cover (the cover is picked at upload)>
+HOOK FRAME: <what the very first frame shows: composed, subject already there, no fade from black, and something already MOVING on it (the hook's motion is under way on frame 0, no still hold). It is the start of the hook's motion, not the cover (the cover is picked at upload). Key elements big enough to read at feed size>
+FRAME 0 TEXT: <the curiosity in plain words, shown LARGE on frame 0 and readable in the feed in under a second: the question (or claim) the short opens, e.g. "How long to fly to every planet?". Everyday words: never a technical label, a number without its context or a term to decode as the first thing read> [≤ 7 words; ≤ 3 lines of ~12–14 characters]
 HOOK MOVE: <the fast change in the first ~3 s that delivers the surprise: ignition, pull-back, dive-in, zoom, or a whip montage (rapid related pictures, ~0.6–1 s each, joined by whip transitions)…> <Race: write "none (Race)": the movers' departure is the hook's motion>
 SCALE: <true | not to scale> <required if any scene is about size or distance; say which scenes>
 > Race: SCALE is "not to scale (Race timing)": the arrival ORDER is true, the gaps between arrivals are not.
@@ -550,7 +575,7 @@ BEATS:
 
 1. HOOK (0–3 s) [VO ≤ 7 words]
    VO: "<first line: the surprising claim>"
-   VISUAL: <starts on the HOOK FRAME; the HOOK MOVE lands the surprising thing by ~3 s>
+   VISUAL: <starts on the HOOK FRAME, already moving, FRAME 0 TEXT large on screen; the HOOK MOVE lands the surprising thing by ~3 s>
    HERO NUMBER: <optional>
    KEYWORD: <word>
    ANNOTATIONS: <optional, max 2>
@@ -591,19 +616,21 @@ BEATS FOR A RACE (FORMAT: Race uses these three beats INSTEAD of 1–6 above):
 >   toward the 2-annotation limit. No HERO NUMBER, no QUIZ.
 
 MOVER: <spacecraft | car | runner (all built, §3.6); a no-voice Race may run two of them one after the other (§4 Race, variant)>
-SPEED HEADER: <what is racing and how fast, shown big above the board for the whole video:
-  label / value, e.g. "NEW HORIZONS' LAUNCH SPEED" / "36,000 mph"> [label ≤ 30 characters, value ≤ 12]
+SPEED LINE: <what is racing and how fast, in ONE SMALL secondary line (under the FRAME 0 TEXT, or
+  next to the RULE LINE) for the whole video; never the big top element: the FRAME 0 TEXT is,
+  e.g. "NEW HORIZONS' LAUNCH SPEED · 36,000 MPH"> [≤ 44 characters]
 START: <the shared starting line, e.g. "Earth">
 RULE LINE: <the one small line under the board stating how every value was worked out: the
-  path and which distance (the speed is in the SPEED HEADER), e.g. "STRAIGHT LINE · AVERAGE DISTANCE"> [≤ 48 characters]
+  path and which distance (the speed is in the SPEED LINE), e.g. "STRAIGHT LINE · AVERAGE DISTANCE"> [≤ 48 characters]
 ROWS: [3–8 rows, listed in ARRIVAL ORDER, first arrival first]
 - <destination> — <real value exactly as written on the row, e.g. "6 months"> [name ≤ 12 characters, value ≤ 12 characters]
 - <destination> — <value>
 
 1. HOOK (0–3 s) [VO ≤ 7 words]
-   VO: "<the question or claim the race answers, naming the mover, e.g. '…by spacecraft?'>"
-   VISUAL: frame 0 = the board already in place (rows named, movers on the starting line, RULE
-     LINE visible); the movers depart together by the end of the line
+   VO: "<the question the race answers, naming the mover, e.g. '…by spacecraft?' (usually the FRAME 0 TEXT, spoken)>"
+   VISUAL: frame 0 = the FRAME 0 TEXT large at the top, over the board already in place (rows
+     named, SPEED LINE and RULE LINE small); the movers are ALREADY LEAVING the starting line on
+     frame 0 (a short smooth ease-in, visible from the first frames; no waiting for the voice)
    KEYWORD: <word>
 
 2. RACE [no VO]
@@ -612,7 +639,7 @@ ROWS: [3–8 rows, listed in ARRIVAL ORDER, first arrival first]
 
 3. LOOP [VO ≤ 10 words, or none]
    VO: "<optional closing line, after the last arrival>"
-   VISUAL: the movers glide back to the starting line, so the last frame matches frame 0
+   VISUAL: the movers glide back to the starting line and roll straight into frame 0's departure (no still hold at the seam)
 
 ---
 
@@ -635,14 +662,17 @@ PRONUNCIATION: <word — how to say it, e.g. 'quasar — KWAY-zar'; only
 - [ ] VO has no symbols/abbreviations; every KEYWORD appears verbatim in its VO
 - [ ] SCALE stated for any scene about size or distance
 - [ ] The HOOK FRAME is composed, and the HOOK MOVE shows the surprising thing within ~3 s
-      (Race: frame 0 is the full board, movers on the starting line; HOOK MOVE "none (Race)")
+      (Race: frame 0 is the FRAME 0 TEXT over the full board, movers already leaving; HOOK MOVE "none (Race)")
+- [ ] First second: FRAME 0 TEXT states the curiosity in plain words, large (≤ 7 words); the
+      first thing read is not jargon, a technical label or a bare number; something visibly
+      moves on frame 0; the key elements are big enough to read at feed size
 - [ ] Each REVEAL step shows its claim visually (comparison, diagram, bars/meter, timeline or
       counter), and a new visual idea arrives at least every ~5–10 s (not for Race: its constant
       motion replaces this rule)
 - [ ] The LOOP returns to the hook, with no call to action
 - [ ] Race only: 10–40 s; 3–8 ROWS listed in arrival order, each value written as it should
-      appear and backed by SOURCES (or by sourced distances + the speed in the SPEED HEADER); one
-      SPEED HEADER naming the mover and its speed; one RULE LINE naming path and which distance;
+      appear and backed by SOURCES (or by sourced distances + the speed in the SPEED LINE); one
+      small SPEED LINE naming the mover and its speed; one RULE LINE naming path and which distance;
       VO = hook ≤ 7 words naming the mover + optional closing line, nothing during the race
 
 ### Example (three beats)
@@ -695,6 +725,17 @@ BEATS:
 ## 7. Learnings
 
 What worked and what didn't. Newest first.
+
+- **The first second decides (Instagram data, "How Long to Fly to Every Planet?").** Skip rate
+  58 % (flagged by Instagram as high); retention falls from 100 % to ~45 % in the first 2–3 s and
+  then stays almost flat to the end; like and share rates above typical; 10 s average watch time.
+  So **half the viewers leave in the first 2 s, and those who stay watch to the end**: the race
+  holds, the opening doesn't. Its frame 0 led with the big speed header ("NEW HORIZONS' LAUNCH
+  SPEED / 36,000 mph": a technical label and a number, no question), and nothing visible moved
+  until the movers left on the hook line. New rule for every format (§4, §5, §6, brand §8 and §10):
+  frame 0 states the curiosity in plain words, large; something visibly moves on frame 0; the key
+  elements are readable at feed size. In a Race the question title leads, the speed is a small
+  line, and the movers are already leaving on frame 0.
 
 - **Don't spend the payoff in the hook (the user's note on "Fold Paper 42 Times").** "Just 42 folds
   to reach the Moon" gives the answer in the first line, and the short's biggest number (103 folds
@@ -892,7 +933,9 @@ total and annular eclipses, the angle cone, and two hand-offs into space view. T
 line, movers arriving one by one, the real value written on each row. First Race ("How Long to
 Fly to Every Planet?", spacecraft): final. Second Race ("How Long to Run or Drive to Every
 Planet?", no voice, car then runner on one board, v0.19.0): in production; runner, car, two-race
-board, single-lane hook, title swap and elapsed clock built (3.6).
+board, single-lane hook, title swap and elapsed clock built (3.6). **First-second rule (v0.21.0)**
+after the first Race's Instagram data (§4, §7): the question leads frame 0, the speed is a small
+line, the movers are already leaving on frame 0.
 
 **Next:** the custom skills (`script-to-short`,
 `new-component`); section 6 becomes final when `script-to-short` exists. Then Manim, only for
