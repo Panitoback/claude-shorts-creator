@@ -32,6 +32,9 @@ Kept only for re-voicing shorts that were animated before voice-first became the
 
 Needs ELEVENLABS_API_KEY in .env. ffmpeg/ffprobe on PATH.
 Default voice: the channel voice (JYUzXNeyCPmymMkfcicu). Override with --voice.
+Default delivery (chosen by ear 2026-11-20, hook-tone test in shorts/_calibration/voice/hook-tone-test/):
+NO delivery tag + stability 0.50 = warm, confident, conversational. Write `tts` without a [tag];
+the tool warns when a line still starts with one. --stability only for auditions.
 """
 import argparse
 import hashlib
@@ -45,6 +48,7 @@ import urllib.request
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DEFAULT_VOICE = "JYUzXNeyCPmymMkfcicu"  # the channel voice (CLAUDE.md)
 DEFAULT_MODEL = "eleven_v4_turbo"  # chosen 2026-11-15 by ear (v4 family >> v2); x0.5 credits
+DEFAULT_STABILITY = 0.5  # with no delivery tag: the channel default since 2026-11-20 (take "a" of the hook-tone test)
 MAX_ATEMPO = 1.3  # never speed a line up more than 30%
 
 
@@ -74,7 +78,7 @@ def probe_duration(path):
     return float(out.strip())
 
 
-def tts_line(key, voice, model, text, prev_text, next_text, out_path, stability=0.5):
+def tts_line(key, voice, model, text, prev_text, next_text, out_path, stability=DEFAULT_STABILITY):
     """TTS with character-level timestamps -> writes the mp3 AND <out_path>.words.json
     (per-word start/end seconds in the RAW clip) so captions can sync exactly.
 
@@ -193,11 +197,18 @@ def emit_ts(vo, path, hooks=None, duration=None):
         f.write("\n".join(lines))
 
 
+def stab_key(args):
+    """Cache-key suffix: empty at the default stability, so existing voice caches stay valid."""
+    return "" if args.stability == DEFAULT_STABILITY else f"|stab{args.stability}"
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--beats", required=True, help="path to the short's beats.json")
     ap.add_argument("--voice", default=DEFAULT_VOICE)
     ap.add_argument("--model", default=DEFAULT_MODEL)
+    ap.add_argument("--stability", type=float, default=DEFAULT_STABILITY,
+                    help="v4 stability (default 0.50, the channel default; change only to audition)")
     ap.add_argument("--mux", help="optional rendered mp4 to mux the voice onto (-voiced.mp4)")
     ap.add_argument("--emit-ts", help="write the VO (with exact word times) as a TS module, e.g. remotion/src/shots/short-2/vo.gen.ts")
     ap.add_argument("--force", action="store_true")
@@ -207,6 +218,10 @@ def main():
     ap.add_argument("--natural", action="store_true",
                     help="(default now; accepted for old commands) voice-first, natural pace")
     args = ap.parse_args()
+    _vo = json.load(open(args.beats, encoding="utf-8")).get("vo", [])
+    _tagged = [l for l in _vo if str(l.get("tts", l.get("text", ""))).lstrip().startswith("[")]
+    if _tagged:
+        print(f"  note: {len(_tagged)} line(s) start with a delivery tag; the channel default since 2026-11-20 is NO tag (brand 7)")
     if not args.fit_windows:
         return natural(args)
 
@@ -228,7 +243,7 @@ def main():
         next_start = float(vo[i + 1]["start"]) if i + 1 < len(vo) else total - 0.3
         window = next_start - start - 0.05
         tts_text = line.get("tts", line["text"])  # optional tagged/phonetic variant for TTS
-        h = hashlib.sha1(f"{args.voice}|{args.model}|{tts_text}".encode()).hexdigest()[:8]
+        h = hashlib.sha1(f"{args.voice}|{args.model}|{tts_text}{stab_key(args)}".encode()).hexdigest()[:8]
         raw = os.path.join(vdir, f"line-{i:02d}-{h}.mp3")
         fit = os.path.join(vdir, f"line-{i:02d}-{h}-fit.wav")
 
@@ -239,7 +254,7 @@ def main():
         if args.force or not os.path.exists(raw) or not os.path.exists(raw + ".words.json"):
             prev_text = vo[i - 1].get("tts", vo[i - 1]["text"]) if i > 0 else None
             next_text = vo[i + 1].get("tts", vo[i + 1]["text"]) if i + 1 < len(vo) else None
-            tts_line(key, args.voice, args.model, tts_text, prev_text, next_text, raw)
+            tts_line(key, args.voice, args.model, tts_text, prev_text, next_text, raw, stability=args.stability)
 
         dur = probe_duration(raw)
         tempo = 1.0
@@ -321,13 +336,13 @@ def natural(args):
 
     def clip(tag, line, prev_line, next_line):
         tts_text = line.get("tts", line["text"])
-        h = hashlib.sha1(f"{args.voice}|{args.model}|{tts_text}".encode()).hexdigest()[:8]
+        h = hashlib.sha1(f"{args.voice}|{args.model}|{tts_text}{stab_key(args)}".encode()).hexdigest()[:8]
         raw = os.path.join(vdir, f"line-{tag}-{h}.mp3")
         if args.force or not os.path.exists(raw) or not os.path.exists(raw + ".words.json"):
             prev_text = prev_line.get("tts", prev_line["text"]) if prev_line else None
             next_text = next_line.get("tts", next_line["text"]) if next_line else None
             print(f"    generating {tag}: {tts_text}")
-            tts_line(key, args.voice, args.model, tts_text, prev_text, next_text, raw)
+            tts_line(key, args.voice, args.model, tts_text, prev_text, next_text, raw, stability=args.stability)
         return raw, probe_duration(raw), json.load(open(raw + ".words.json", encoding="utf-8"))
 
     # hook variants -> one fixed slot (the longest), so everything after is shared

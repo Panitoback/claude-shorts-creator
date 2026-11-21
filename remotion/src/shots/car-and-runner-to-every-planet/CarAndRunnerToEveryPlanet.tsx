@@ -1,14 +1,15 @@
 import React from 'react';
-import { AbsoluteFill, interpolate, useCurrentFrame } from 'remotion';
-import { CANVAS, EASE, MOTION, PALETTE, SAFE_RECT, TYPE } from '../../brand';
+import { AbsoluteFill, useCurrentFrame } from 'remotion';
+import { CANVAS, PALETTE, SAFE_RECT, TYPE } from '../../brand';
 import { Camera, CameraLayer, ElapsedCounter, Grain, MultiRaceBoard, SpeedHeader, Starfield, TitleSwap } from '../../components';
 import type { BoardRow, RaceDef, TitleWord } from '../../components';
 import { speedLineHeight } from '../../components/SpeedHeader';
-import { CL, kf, Keys } from '../../components/anim';
+import { kf, Keys } from '../../components/anim';
 
 // "How Long to Run or Drive to Every Planet?" — shorts/car-and-runner-to-every-planet/guion.md.
 // FORMAT: Race, no voice (PROJECT_CONTEXT §4 + the departures listed in the guion's NOTES): a single-lane
-// hook (the runner sprints to Neptune, "11,000 years" lands big), a morph into the full board, the car
+// hook (the runner sprints toward Neptune under a big "? years" and is cut off mid-lane: the answer is
+// kept for the end), a morph into the full board, the car
 // race (values above the lanes), a title swap, the runner race on the same lanes (values below), and a
 // loop that folds the board back into the hook frame. Production change agreed with the user: a
 // YEARS PASSED clock in both races (so the faster-running compression reads as a time-lapse, not a
@@ -27,7 +28,8 @@ export const compositionConfig = { id: 'CarAndRunnerToEveryPlanet', durationInSe
 // ---- timeline (guion) ----
 const SEAM = 882; // the rewind lands here and the hook runner's clone leaves at once
 const LEAD = TOTAL - SEAM; // frame 0 is LEAD frames into the sprint
-const HOOK = { depart: -LEAD, arrive: 66, numIn: 66, out: 108 };
+// the hook runner never arrives: `arrive` only sets its pace (~70 % of the lane when the morph cuts it at `out`)
+const HOOK = { depart: -LEAD, arrive: 157, out: 108 };
 const MORPH = { title: 110, fold: [112, 130] as const, rowsIn: 124, carsIn: 130 };
 const CAR = { depart: 144, arrive: [186, 228, 270, 318, 369, 423, 483] };
 const SWAP2 = { title: 519, runnersIn: 524 };
@@ -171,29 +173,17 @@ const Framed: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return <AbsoluteFill style={{ transformOrigin: '0 0', transform: `translate(${tx}px, ${ty}px) scale(${s})` }}>{children}</AbsoluteFill>;
 };
 
-// the hook's number COUNTS the years while the runner runs (steady speed: years ∝ distance covered, so
-// the count is honest at every frame), dimmer while counting, landing full on 11,000 at the arrival. It
-// fills the middle of the frame from frame 0; on the fold back it returns at 0 so the seam matches.
-const HOOK_YEARS = 11000;
+// the hook's open question: a big "? years" under the lane from frame 0. The hook never shows the answer
+// (PROJECT_CONTEXT §4: the hook opens a question, it doesn't spend the payoff): the runner is cut off
+// mid-lane by the morph, and 11,000 lands only at the end of the runner race. It fades out on the morph
+// and back in on the fold, so the seam matches frame 0.
 const NUM_OP: Keys = [[HOOK.out, 1], [HOOK.out + 8, 0], [LOOP.fold[1], 0], [SEAM, 1]];
 const HookNumber: React.FC = () => {
-  const f = useCurrentFrame();
-  const op = kf(f, NUM_OP, 1);
+  const op = kf(useCurrentFrame(), NUM_OP, 1);
   if (op <= 0.001) return null;
-  const fr = f >= LOOP.fold[1] ? f - TOTAL : f; // the loop's last frames count the clone's sprint (0 until it leaves)
-  const p = Math.min(1, Math.max(0, (fr - HOOK.depart) / (HOOK.arrive - HOOK.depart)));
-  const landed = f >= HOOK.arrive && f < LOOP.fold[1];
-  const years = landed ? HOOK_YEARS : Math.min(HOOK_YEARS - 100, Math.round((HOOK_YEARS * p) / 10) * 10);
-  const land = landed ? interpolate(f, [HOOK.arrive, HOOK.arrive + MOTION.rise], [0, 1], { ...CL, easing: EASE.out }) : 0;
-  const numStyle: React.CSSProperties = { ...TYPE.number, fontSize: NUM_SIZE, fontVariantNumeric: 'tabular-nums' };
   return (
     <div style={{ position: 'absolute', top: NUM_TOP, left: 0, width: CANVAS.W, textAlign: 'center', opacity: op }}>
-      {/* the final value sets the width; the count sits right-aligned in it, so nothing jumps */}
-      <div style={{ position: 'relative', display: 'inline-block' }}>
-        <div style={{ ...numStyle, visibility: 'hidden' }}>11,000</div>
-        <div style={{ ...numStyle, position: 'absolute', right: 0, top: 0, color: PALETTE.ivory, opacity: 0.72 + 0.28 * land,
-          transform: `scale(${1 + 0.04 * Math.sin(Math.PI * land)})`, transformOrigin: '50% 60%' }}>{years.toLocaleString('en-US')}</div>
-      </div>
+      <div style={{ ...TYPE.number, fontSize: NUM_SIZE, color: PALETTE.ivory }}>?</div>
       <div style={{ ...TYPE.numberUnit, fontSize: Math.round(NUM_SIZE * 0.62), color: PALETTE.gold, marginTop: 4 }}>years</div>
     </div>
   );

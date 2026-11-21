@@ -6,7 +6,7 @@
 > **Reference scene:** the `BrandReference` composition is this document rendered on screen. If
 > it looks right, the brand is right.
 >
-> v2.8 · 2026-11-20 · direction: *Deep Field hybrid* (cinematic and editorial, with a few
+> v2.9 · 2026-11-20 · direction: *Deep Field hybrid* (cinematic and editorial, with a few
 > scientific annotations) · **energy curve**: a high-energy hook, a calm body, bursts on the peaks ·
 > **visual variety**: scenes change, and every number is shown · **whip transitions** approved as a
 > hand-off (§8) · **dynamism** (v2.3): shape match cuts, fly-throughs, a living camera, punch-ins,
@@ -17,7 +17,8 @@
 > rhythm and hero size (§5, §8) · **centered, fuller safe area** (v2.7): right rail ignored, bottom
 > margin 320 instead of 500, a 960 × 1390 safe rectangle (§9) · **the first second** (v2.8): frame 0
 > states the question in plain words, large, already moves, and its key elements read at feed size;
-> in a Race the speed is a small secondary line (§8, §10)
+> in a Race the speed is a small secondary line (§8, §10) · **the voice** (v2.9): warm, confident,
+> conversational, never intense or emphatic; no delivery tags (§7)
 
 ---
 
@@ -192,7 +193,7 @@ Sound follows the **energy curve** (§1, §8):
 
 | Part | Sound energy | What it means |
 |---|---|---|
-| **Hook** (first ~3 s) | **high, heard on a phone** | a prominent, phone-audible hit in the first second: `hook-hit` on frame 0, or a short riser → hit landing on the hook's visual change; a motion cue (whoosh) on the camera move, one whoosh per whip in a whip montage (§8). The hook VO line may get a more intense delivery tag |
+| **Hook** (first ~3 s) | **high, heard on a phone** | a prominent, phone-audible hit in the first second: `hook-hit` on frame 0, or a short riser → hit landing on the hook's visual change; a motion cue (whoosh) on the camera move, one whoosh per whip in a whip montage (§8). The hook's energy comes from the picture and the sound, never from a louder read: the voice stays in its default delivery (below) |
 | **Body** | **calm, felt rather than heard** | sound seasons the edit and never becomes the show |
 | **Peaks** (the main reveal, the twist) | **a burst, heard on a phone** | the reveal combo (riser → silence → hit + `hook-hit` phone layer); the twist gets a phone-audible hit or swell; then the sound settles back |
 
@@ -209,6 +210,10 @@ Choose every cue by its FUNCTION:
 | **Cosmic events** | signature sounds | the object or event itself, named in the script | `supernova`, `stellar-collapse`, `star-ignite`, `gamma-flash`, `jet-launch`, `light-speed-pass`, `photon-travel`, `event-horizon-fade`, `spaghettify-stretch`, `radiation-hum`, `solar-flare-surge` (crackle: **pauses only**, flagged `not_under_narration`) |
 | **Physics (code)** | synthesized from the real numbers | the sound IS the data | `redshift-slide` (falling pitch), `pulsar-ticks` (a real period: 1.34 s), `pulsar-ticks-fast` (716 Hz), `gw-chirp` (black-hole merger); new variants from `tools/synth_sfx.py` |
 
+- **The voice (v2.9, chosen by ear 2026-11-20).** The channel voice reads **warm, confident and
+  conversational**, the same in every line, hook included: a good guide talking to one person,
+  **never intense or emphatic**. In practice: no delivery tag, stability 0.50 (the default in
+  `tools/gen_voice.py`). A `[curious]` or `[emphatic]` tag sounded more performed than the plain read.
 - **Always under the voice.** Never louder than the narration, even in the hook and on the peaks
   (they are louder than the body, not louder than the voice). Silence is part of the mix; never
   fill wall to wall. Space is quiet, and the body of the mix can be too.

@@ -3,7 +3,7 @@
 > **For:** the planning project where topics, aesthetics and scripts are developed.
 > **Pair it with:** `brand.md` (the visual and sound style contract — read it for colors, type,
 > captions, annotations, motion, safe zones and sound taste; this file never repeats it).
-> **Version:** v0.21.1 · 2026-11-20 · phase: *the first-second rule built (race board: small speed line, movers already leaving on frame 0, a seam that never holds; "car-and-runner" reworked to it) · (from the first Race's Instagram data): frame 0 states the question in plain words, large, and already moves; the Race speed becomes a small line; new FRAME 0 TEXT field in §6*
+> **Version:** v0.21.2 · 2026-11-20 · phase: *hook keeps the answer for the end (§7) · voice default: warm, confident, conversational, no delivery tags (§2) · the first-second rule built (race board: small speed line, movers already leaving on frame 0, a seam that never holds; "car-and-runner" reworked to it) · (from the first Race's Instagram data): frame 0 states the question in plain words, large, and already moves; the Race speed becomes a small line; new FRAME 0 TEXT field in §6*
 >
 > This file describes **what can be asked for**, not how it is built. If a script asks for
 > something listed here, it can be made. If it asks for something not listed, flag it as a
@@ -67,9 +67,11 @@ animated, at its natural pace, and the animation is timed to the real voice.
 2. **Fact check.** Every number and claim is verified before anything is animated. If a fact
    turns out to be wrong or misleading, the script changes, not the truth.
 3. **Voice.** ElevenLabs reads each line (the channel voice on Eleven v4 Turbo) at its natural
-   pace: nothing is sped up to fit a slot. Each line gets one light delivery direction
-   (intrigued, awed, emphatic…) added at this step, matched to the beat; it shapes the reading
-   and never appears on screen. The real timing of every spoken word is captured, and **the
+   pace: nothing is sped up to fit a slot. **The delivery is the same for every short and every
+   line, the hook included: warm, confident, conversational, never intense or emphatic** (no
+   per-line delivery directions since v0.21.2: the plain read won a by-ear test against "curious"
+   and "emphatic"). So a script doesn't need delivery hints; the hook's energy comes from the
+   picture and the sound, and the words carry the rest. The real timing of every spoken word is captured, and **the
    short's timeline is built from it**: its length, where each scene starts, and when each reveal
    lands all follow the voice.
 4. **Animation.** The scenes are built from the visual components in section 3 and timed to the
@@ -725,6 +727,14 @@ BEATS:
 ## 7. Learnings
 
 What worked and what didn't. Newest first.
+
+- **Filling the first second must not spend the payoff (the user's note on "car-and-runner").** The
+  first-second rework filled the empty center with the years counting live 0 → 11,000 and kept the
+  runner arriving at Neptune in the hook, so the short's answer was on screen in 2 s: movement and
+  size passed every check, but the hook no longer opened a question. Fixed: a big "? years" under the
+  lane from frame 0, the runner cut off mid-lane by the morph, 11,000 kept for the end of the runner
+  race. Rule of thumb: the first second shows the QUESTION big and moving, never the ANSWER; any number
+  on screen in the hook must not be the payoff.
 
 - **The first second decides (Instagram data, "How Long to Fly to Every Planet?").** Skip rate
   58 % (flagged by Instagram as high); retention falls from 100 % to ~45 % in the first 2–3 s and

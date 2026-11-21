@@ -112,12 +112,12 @@ python tools/gen_voice.py --beats shorts/<slug>/beats.json \
 - Voice: the channel voice `JYUzXNeyCPmymMkfcicu` on **Eleven v4 Turbo** (`eleven_v4_turbo`,
   ×0.5 credits) are gen_voice.py's defaults (no `--voice`/`--model` needed; pass them only to
   audition). v4 takes only Stability + Similarity; no Style/Speed, no SSML `<break>`.
-- **Delivery tags (we write them; the API has no "auto tags").** The app's "Enhance" button is an
-  LLM writing tags into the text; by API we do that job: put ONE light, narration-fit tag at the
-  start of each line's `tts` (`"tts": "[awed] That light has crossed…"`; tags used in the
-  calibration: `[intrigued]`, `[building excitement]`, `[awed]`, `[emphatic]`). Match the beat's
-  intent (hook = intrigue, payoff = awe/emphasis); never comedic or theatrical tags. Tags are
-  filtered out of the word map and never captioned. They count as billed characters.
+- **Delivery: no tags (channel default since 2026-11-20, brand §7).** Every line, hook included, is
+  sent WITHOUT a delivery tag at stability 0.50 (gen_voice.py defaults): warm, confident,
+  conversational, never intense or emphatic. The by-ear test (`shorts/_calibration/voice/hook-tone-test/`:
+  no tag vs `[curious]` vs `[emphatic]` vs no tag at 0.65) picked the plain read. Use `tts` only for
+  pronunciation; gen_voice.py prints a note if a line still starts with a `[tag]`. (Older shorts
+  used one tag per line, e.g. `[intrigued]`, `[awed]`, `[emphatic]`; their caches keep them.)
 - ElevenLabs is paid: state roughly what will be generated before calling it.
 - **Pronunciation (guion.md `PRONUNCIATION:`):** for a name the voice may misread, add a per-line
   `tts` field in beats.json next to `text` (e.g. `"text": "Quasars outshine galaxies."`,

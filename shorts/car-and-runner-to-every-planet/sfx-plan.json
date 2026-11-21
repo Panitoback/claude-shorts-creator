@@ -25,20 +25,6 @@
       "cue": "hook: light whoosh as it reaches full sprint (frame 0 is 6 frames into it)"
     },
     {
-      "at_s": 2.2,
-      "sfx_id": "impact-soft",
-      "gain_db": -2,
-      "align": "attack",
-      "cue": "hook: arrival at Neptune + '11,000 years' lands (body)"
-    },
-    {
-      "at_s": 2.2,
-      "sfx_id": "pop-reveal",
-      "gain_db": -3,
-      "align": "attack",
-      "cue": "hook: landing hit, mid layer (phone)"
-    },
-    {
       "at_s": 3.967,
       "sfx_id": "whoosh-soft",
       "gain_db": -4,
